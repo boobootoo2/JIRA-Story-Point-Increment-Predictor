@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "JSDCLOUD-9472",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-12T09:32:14.000+0000",
+      "description": "h3. Problem Definition\r\nIf you add an hyperlink to the request type description it will show on the customer portal but clicking it will redirect to the request type in question and not the hyperlink that is on the description\r\n\r\nh3. Suggested Solution\r\nAllow for the hyperlink to redirect to the correct webpage when clicked from the request type description on the customer portal\r\n\r\nh3. Workaround\r\nAdding the hyperlink to the Portal desk information. ",
+      "summary": "Allow for hyperlinks to work in request type description instead of redirect to request type"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9471",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-12T03:57:40.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently, in the public JIRA Service Desk REST API documention, there are no rest api to search request type based on issuetypeid. The REST API below is a non public REST API :-\r\n\r\n{{GET /rest/servicedesk/<servicedeskid>/servicedesk/request/<requesttypeID>/request-type}}\r\nh3. Suggested Solution\r\nMake the REST API to public \r\n\r\nh3. Why this is important\r\nUser able to search request type based on issue type ID",
+      "summary": "Ability to search request type based on Issue type ID via REST API"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9470",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-10-22T00:40:31.000+0000",
+      "created": "2020-10-09T16:08:16.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen a user having \"Swedish\" language as profile language uses basic search to find issues created between a date range and that involves month October, they get an error\r\nh3. Steps to Reproduce\r\n # Change your profile language to \"Swedish\".\r\n # Go to issues searcha and click on \"All issues\" filter(Alla \u00e4renden in Swedish)\r\n # Click on +More to add created date field(Skapad) and try to insert a date range involving month of October\r\n\r\nh3. Expected Results\r\n\r\nIt will return the issues.\r\nh3. Actual Results\r\n\r\nYou get the below error:\r\n !image-2020-10-09-21-32-44-426.png!\r\n*Notes*\r\n * This happens because when you choose the value from October month, say 2nd October, it gets filled as 02-Oct, however, in Swedish, it is spelled as \"Oktober\", so Jira tries to look for \"02-Okt\" and since, it is unable to find the date with \"Okt\", it throws the error.\r\n * This error will also appear for the month of \"May\" as well as in Swedish, it is spelled as \"Maj\"\r\n * It does not affect users using English language as the spelling remains the same\r\n\r\nh3. Workaround\r\n\r\nFor now, the workaround would be that either when you choose the date from October month, after choosing it, you change it to \"Okt\" from \"Oct\" or I would recommend you to use Advanced issue search by clicking on \"Byt till JQL\" and using the query as below:\r\n{code:java}\r\ncreated >= 2020-09-28 AND created <= 2020-10-02 order by created DESC{code}",
+      "summary": "User having \"Swedish\" language as profile language gets error when doing search on a date field"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9469",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-09T15:57:19.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen a new project is created by *Share settings with an existing project* and if there is an *Jira Service Desk Automation* which gets triggered because of an *SLA*, the Automation is run *twice* in the parent project, and the logs of the Automation is visible in the *Child* project.\r\nh3. Steps to Reproduce\r\n # In an existing Jira Service Desk project create an Automation which is triggered with an *SLA* like below:\r\n !image-2020-10-09-21-13-57-511.png!\r\n # Now create a New Project and choose *Share Setting with an existing project*, and select the project where you have the above Automation configured.\r\n # Now in the *Parent* Project create an issue and have the conditions set such that the Automation is run.\r\n # The actions set in the Automation is run twice, also if we check the Child project, and check the Automation Log, there will be entries of the parent project.\r\n\r\n*Parent Automation Logs in Child Project:*\r\n !image-2020-10-09-21-19-19-756.png!\r\n\r\n*Action to Alert the user set in the Automation is run twice in the parent issue:*\r\n !image-2020-10-09-21-21-09-452.png!\r\nh3. Expected Results\r\n\r\nAutomation is run only once and Parent project Automation logs should not be visible in the Child Project Automation log\r\nh3. Actual Results\r\n\r\nAutomation is run twice, and Parent project Automation logs is visible in the Child project Automation log.\r\nh3. Workaround\r\n\r\nWorkaround is to Create a new SLA in the Child project with same Goals and Conditions and edit the Automation trigger to the new SLA.",
+      "summary": "Automation running twice when SLA is the trigger for an Automation and project was created by \"Share Settings with an existing project\" "
+    }
+  },
+  {
+    "key": "JSDCLOUD-9468",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-09T15:26:43.000+0000",
+      "description": "We would like to the ability to add fields such as the Customer's Organisation to the Subject Line of Agent Notification Emails, this will save us time when responding to new and existing tickets.",
+      "summary": "Agent Notification Emails"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9467",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-08T22:23:37.000+0000",
+      "description": "I'd like to see more options to embed a widget onto a website. For example, the only option right now is by copying/pasting the code. I'm not sure if this is a Google Sites restriction, but when I embed it that way, it creates a giant white box with the button in the bottom right corner.\u00a0\r\n\r\nI'd like to be able to choose the mechanism in which the widget is on the site, and customer interacts with it. For example, I'd like to be able to embed a fully-functional form that doesn't require being opened by clicking the ? button for example.\u00a0\r\n\r\n\u00a0\r\n\r\n\u00a0\r\n\r\n\u00a0",
+      "summary": "More customizable configuration options for Widget"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9466",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-08T11:38:26.000+0000",
+      "description": "h3. Problem Definition\r\n * When a request is resolved, Jira Service Desk will send an email containing links to submit a cSAT/satisfaction survey\r\n * At the moment we don't present a confirmation screen to end-users who are providing a cSAT rating in regards to a completed request\r\n * We allow the end-user to set a cSAT score as many times as they need to without a confirmation dialog\r\n\r\nh3. Suggested Solution\r\n * Allow project admins to configure a confirmation dialog box before a cSAT rating is submitted\r\n\r\nh3. Why this is important\r\n * Email link scanning or web security software/services may inadvertently cause the request to be sent to update a cSAT rating\r\n * Mail clients such as Outlook may cause the request to be sent to update a cSAT rating\r\n\r\nh3. Workaround\r\n * No known workarounds - a workaround would be added here if found",
+      "summary": "cSAT Satisfaction: Allow a confirmation screen to be configured when providing a cSAT/satisfaction rating"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9465",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-08T07:29:16.000+0000",
+      "description": "At moment it is not possible to add a text between fields in the customer portal. It will be nice to be able to add\u00a0customised text between fields in the portal like an introduction label for grouping the fields",
+      "summary": "Ability to add predefined customised text between fields in the portal like an introduction label for grouping the fields"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9464",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-07T23:52:03.000+0000",
+      "description": "As an admin, I want to disable internal and/or customer comments by role so I can:\r\n* Ensure certain user groups cannot comment directly to customer (i.e. non-customer facing teams)\r\n* Remove comments from certain request types (i.e. sub-tasks)\r\n\r\nOriginal recommendation provided by Greg from GoDaddy. \r\n\r\n\"Let us choose whether the comment is on that transition screen at all (make it more like a field for our screens)\r\nAlso, let us control the split between internal and reply to customer in all scenarios\r\nThere are issue types, statuses, and transitions that only need to have internal comments in our workflow, so it would be great if admins can lock the public comment to our desire (let us lock it to certain roles, groups, statuses, screens, transitions, issue types, etc.)\r\nLet us hide the comments from the full issue screen all together too (again by role, group, issue type all together)\r\nWe don't want people commenting on subtasks at all... we also might not want them commenting on certain standard issue types that were not created by the customer\r\nWe want to be able to have full control over the comments and where they live.  We can always have people go to the portal if they absolutely need to write something public or we can just use automation to send emails in certain scenarios.\"\r\n\r\nSee: https://jira.atlassian.com/browse/JSDCLOUD-1733",
+      "summary": "As an admin, I want to disable internal and/or customer comments by role"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9463",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-07T09:52:32.000+0000",
+      "description": "This ticket was created to follow up on this ticket (https://jira.atlassian.com/browse/JSDCLOUD-1733) which has been solved in the new issue view where:\r\n* The comment box requires you to select \"Add internal note\" or \"Reply to customer\", which means there is no default for clickthrough navigation to commenting\r\n* Pressing \"m\" opens up a \"Reply to customer\" comment\r\n\r\nHowever, this has not yet been solved for transition screen comments so this ticket will capture that requirement. The need is to make sure that agents don't accidentally share comments with customers unwittingly due to being unfamiliar with the tool. ",
+      "summary": "Need to make internal comments the default for comments in transitions"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9462",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-11-10T00:47:56.000+0000",
+      "created": "2020-10-07T07:08:43.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCreating an organization using the REST API returns status 201 if an organization with the same name already exists.\r\n\r\nAccording to the [public API documentation|https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-organization/#api-rest-servicedeskapi-organization-post], the create organization endpoint should return a 400 status if an organization with the specified name already exists.\r\nh3. Steps to Reproduce\r\n # Create a customer organization using the REST API endpoint \"/rest/servicedeskapi/organization\".\r\n # Send the same request trying to create an organization with the same name.\r\n\r\nh3. Expected Results\r\n\r\nA 400 status is returned.\r\nh3. Actual Results\r\n\r\nA status 201 is returned.\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Creating an organization using the REST API returns 201 when an organization with the same name exists"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9461",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-10-12T04:17:42.000+0000",
+      "created": "2020-10-07T01:50:17.000+0000",
+      "description": "h3. Summary\r\n\r\nCustomer notifications are not being sent, affecting all projects on an instance, the job responsibilities to process the notifications queue gets stuck at some point due to a failure to remove it, after that, JIRA does not try to remove it again and no longer creates a new job to process the next notifications.\r\n\r\nh3. Steps to reproduce\r\n\r\nNot able to reproduce the error to delete the job.\r\n\r\nh3. Expected Behaviour\r\n\r\nThe job 'sd.custom.notification.batch.job.runner' is created, processes the customer notifications and gets deleted.\r\n\r\nh3. Actual Results\r\n\r\nThe job is not deleted and gets stuck, no notifications are processed afterwards.\r\n\r\nThe error triggering this issue follows below:\r\n{code}\r\ndeleteTenantJobByJobId failed for config=CronmanLocalClientConfig{tenantId=TenantId{id=<TenantId>}, asapIssuer=com.atlassian.jira.scheduler.JiraCronmanAsapIssuer$$Lambda$144/1851488762@40a9ec78, timeZone=sun.util.calendar.ZoneInfo[id=\"America/New_York\",offset=-18000000,dstSavings=3600000,useDaylight=true,transitions=235,lastRule=java.util.SimpleTimeZone[id=America/New_York,offset=-18000000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=3,startMonth=2,startDay=8,startDayOfWeek=1,startTime=7200000,startTimeMode=0,endMode=3,endMonth=10,endDay=1,endDayOfWeek=1,endTime=7200000,endTimeMode=0]], bucketId=com.atlassian.jira.SchedulerServiceRegistrar$$Lambda$89/1597494596@4a09f0ed, notificationMethod=SQS, notificationUrl=NotificationUrl{urlString=<urlString>}, wrapPayloadFunction=com.atlassian.scheduler.cronman.service.AmqSqsConfig$$Lambda$3848/1978512511@12632fda, unwrapPayloadFunction=com.atlassian.scheduler.cronman.service.AmqSqsConfig$$Lambda$3849/1200323983@74bc55e9} jobId=sd.custom.notification.batch.send\r\n{code}\r\nStack trace\r\n{code}\r\ncom.atlassian.scheduler.SchedulerRuntimeException: deleteTenantJobByJobId failed for config=CronmanLocalClientConfig{tenantId=TenantId{id=<TenantId>}, asapIssuer=com.atlassian.jira.scheduler.JiraCronmanAsapIssuer$$Lambda$144/1851488762@40a9ec78, timeZone=sun.util.calendar.ZoneInfo[id=\"America/New_York\",offset=-18000000,dstSavings=3600000,useDaylight=true,transitions=235,lastRule=java.util.SimpleTimeZone[id=America/New_York,offset=-18000000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=3,startMonth=2,startDay=8,startDayOfWeek=1,startTime=7200000,startTimeMode=0,endMode=3,endMonth=10,endDay=1,endDayOfWeek=1,endTime=7200000,endTimeMode=0]], bucketId=com.atlassian.jira.SchedulerServiceRegistrar$$Lambda$89/1597494596@4a09f0ed, notificationMethod=SQS, notificationUrl=NotificationUrl{urlString=<urlString>}, wrapPayloadFunction=com.atlassian.scheduler.cronman.service.AmqSqsConfig$$Lambda$3848/1978512511@12632fda, unwrapPayloadFunction=com.atlassian.scheduler.cronman.service.AmqSqsConfig$$Lambda$3849/1200323983@74bc55e9} jobId=sd.custom.notification.batch.send at com.atlassian.scheduler.cronman.service.CompositeSchedulerService.unscheduleJob(CompositeSchedulerService.java:253) at com.atlassian.scheduler.core.DelegatingSchedulerService.unscheduleJob(DelegatingSchedulerService.java:80) at sun.reflect.GeneratedMethodAccessor214.invoke(Unknown Source) at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.lang.reflect.Method.invoke(Method.java:498) at com.atlassian.plugin.util.ContextClassLoaderSettingInvocationHandler.invoke(ContextClassLoaderSettingInvocationHandler.java:26) at com.sun.proxy.$Proxy457.unscheduleJob(Unknown Source) at sun.reflect.GeneratedMethodAccessor214.invoke(Unknown Source) at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.lang.reflect.Method.invoke(Method.java:498) at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:302) at org.eclipse.gemini.blueprint.service.importer.support.internal.aop.ServiceInvoker.doInvoke(ServiceInvoker.java:56) at org.eclipse.gemini.blueprint.service.importer.support.internal.aop.ServiceInvoker.invoke(ServiceInvoker.java:60) at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) at org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:133) at org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:121) at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) at org.eclipse.gemini.blueprint.service.util.internal.aop.ServiceTCCLInterceptor$1.run(ServiceTCCLInterceptor.java:61) at org.eclipse.gemini.blueprint.util.internal.PrivilegedUtils.executeWithCustomTCCL(PrivilegedUtils.java:130) at org.eclipse.gemini.blueprint.service.util.internal.aop.ServiceTCCLInterceptor.invokePrivileged(ServiceTCCLInterceptor.java:58) at org.eclipse.gemini.blueprint.service.util.internal.aop.ServiceTCCLInterceptor.invoke(ServiceTCCLInterceptor.java:50) at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) at org.eclipse.gemini.blueprint.service.importer.support.LocalBundleContextAdvice.invoke(LocalBundleContextAdvice.java:57) at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) at org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:133) at org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:121) at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:208) at com.sun.proxy.$Proxy4510.unscheduleJob(Unknown Source) at com.atlassian.servicedesk.plugins.notifications.internal.scheduler.NotificationBatchJobRunner.unscheduleBatchSending(NotificationBatchJobRunner.java:93) at com.atlassian.servicedesk.plugins.notifications.internal.scheduler.NotificationBatchJobRunner.sendNotifications(NotificationBatchJobRunner.java:88) at com.atlassian.servicedesk.plugins.notifications.internal.scheduler.NotificationBatchJobRunner.runWithClusterLock(NotificationBatchJobRunner.java:107) at com.atlassian.servicedesk.plugins.notifications.internal.scheduler.NotificationBatchJobRunner.processMessage(NotificationBatchJobRunner.java:81) at com.atlassian.messagequeue.internal.core.NestedMessageConsumer.consume(NestedMessageConsumer.java:116) at com.atlassian.messagequeue.internal.sqs.SQSMessageConsumer.processReceiveMessageResult(SQSMessageConsumer.java:110) at com.atlassian.messagequeue.internal.sqs.SQSMessageConsumer.run(SQSMessageConsumer.java:62) at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) at java.lang.Thread.run(Thread.java:748) Caused by: com.atlassian.scheduler.cronman.client.CronmanLocalClientException: deleteTenantJobByJobId failed for config=CronmanLocalClientConfig{tenantId=TenantId{id=6753a4af-f227-446d-9ae6-d99c3eaf95c9}, asapIssuer=com.atlassian.jira.scheduler.JiraCronmanAsapIssuer$$Lambda$144/1851488762@40a9ec78, timeZone=sun.util.calendar.ZoneInfo[id=\"America/New_York\",offset=-18000000,dstSavings=3600000,useDaylight=true,transitions=235,lastRule=java.util.SimpleTimeZone[id=America/New_York,offset=-18000000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=3,startMonth=2,startDay=8,startDayOfWeek=1,startTime=7200000,startTimeMode=0,endMode=3,endMonth=10,endDay=1,endDayOfWeek=1,endTime=7200000,endTimeMode=0]], bucketId=com.atlassian.jira.SchedulerServiceRegistrar$$Lambda$89/1597494596@4a09f0ed, notificationMethod=SQS, notificationUrl=NotificationUrl{urlString=https://sqs.us-west-2.amazonaws.com/234617365107/rps-prod-west2-jira-prod-us-9-amq}, wrapPayloadFunction=com.atlassian.scheduler.cronman.service.AmqSqsConfig$$Lambda$3848/1978512511@12632fda, unwrapPayloadFunction=com.atlassian.scheduler.cronman.service.AmqSqsConfig$$Lambda$3849/1200323983@74bc55e9} jobId=sd.custom.notification.batch.send at com.atlassian.scheduler.cronman.client.CronmanLocalClient.getException(CronmanLocalClient.java:231) at com.atlassian.scheduler.cronman.client.CronmanLocalClient.delete(CronmanLocalClient.java:160) at com.atlassian.scheduler.cronman.service.CronmanJobScheduler.unscheduleJob(CronmanJobScheduler.java:256) at com.atlassian.scheduler.cronman.service.CompositeSchedulerService.unscheduleJob(CompositeSchedulerService.java:250) ... 38 more at com.atlassian.scheduler.cronman.rest.client.CronmanClient.callUnverified(CronmanClient.java:282) at com.atlassian.scheduler.cronman.rest.client.CronmanClient.deleteTenantJobByJobId(CronmanClient.java:225) at com.atlassian.scheduler.cronman.client.CronmanLocalClient.delete(CronmanLocalClient.java:156) ... 40 more Caused by: java.net.SocketTimeoutException: timeout at okio.Okio$4.newTimeoutException(Okio.java:227) at okio.AsyncTimeout.exit(AsyncTimeout.java:284) at okio.AsyncTimeout$2.read(AsyncTimeout.java:240) at okio.RealBufferedSource.indexOf(RealBufferedSource.java:325) at okio.RealBufferedSource.indexOf(RealBufferedSource.java:314) at okhttp3.internal.http1.Http1Codec.readResponse(Http1Codec.java:191) at okhttp3.internal.http1.Http1Codec.readResponseHeaders(Http1Codec.java:132) at okhttp3.internal.http.CallServerInterceptor.intercept(CallServerInterceptor.java:54) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:92) at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.java:45) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:92) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:67) at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.java:93) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:92) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:67) at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.java:93) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:92) at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.java:120) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:92) at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:67) at okhttp3.RealCall.getResponseWithInterceptorChain(RealCall.java:179) at okhttp3.RealCall.execute(RealCall.java:63) at com.atlassian.scheduler.cronman.rest.client.CronmanClient.callUnverified(CronmanClient.java:275) ... 42 more Caused by: java.net.SocketException: Socket closed at java.net.SocketInputStream.read(SocketInputStream.java:204) at java.net.SocketInputStream.read(SocketInputStream.java:141) at sun.security.ssl.InputRecord.readFully(InputRecord.java:465) at sun.security.ssl.InputRecord.read(InputRecord.java:503) at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:973) at sun.security.ssl.AppInputStream.read(AppInputStream.java:105) at okio.Okio$2.read(Okio.java:138) at okio.AsyncTimeout$2.read(AsyncTimeout.java:236) ... 63 more\r\n{code}\r\n\r\nTo confirm that the job is stuck, check the 'Next Run' date with the query below on JIRA database:\r\n{code}\r\nSELECT * FROM clusteredjob WHERE job_runner_key='sd.custom.notification.batch.job.runner'\r\n{code}\r\n\r\nh3. Workaround\r\n\r\nContact the [Atlassian Support|http://support.atlassian.com] for assistance.",
+      "summary": "Customer notification not sent to customers for all projects - (Caused by deleteTenantJobByJobId failed)"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9460",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-06T06:09:52.000+0000",
+      "description": "It would be great for users who have knowledge base pages scattered among multiple spaces.",
+      "summary": "Ability to link multiple confluence spaces as knowledge base"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9459",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-10-08T02:25:07.000+0000",
+      "created": "2020-10-05T17:55:08.000+0000",
+      "description": "h3. Problem Definition:\r\nThe *link* button doesn't work in the comment box in the customer portal.\r\n\r\nh3. How to reproduce the behavior:\r\nIn the comment box click in the *Link* button and try to *paste a link* and *Text to display*;\r\nClicking ENTER and other keys don't work.\r\n!Screen Shot 2020-10-05 at 14.50.04.png|thumbnail!\r\n\r\nAlso, this issue is occurring to the *clear button*;\r\n!Screen Shot 2020-10-05 at 14.49.32.png|thumbnail!\r\n\r\n*There are no errors in the console for these issues.*\r\n\r\nh3. Workaround:\r\nPasting/typing a word, then you can hover over that link so the \"Edit Link\" option shows up.\r\n[^Screen Recording 2020-10-05 at 14.39.11.mov]",
+      "summary": "Link button doesn't work in comment box in the customer portal"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9457",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-10-27T01:25:31.000+0000",
+      "created": "2020-10-05T10:54:09.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen the values are quite long, the text will overlap with the next column.\r\n\r\nh3. Steps to Reproduce\r\n\r\n# Have a JSD project and have some fields with long text\r\n# Add some of the fields in queue and save it\r\n\r\nh3. Expected Results\r\n\r\nThe text values are shown correctly\r\n\r\nh3. Actual Results\r\n\r\nThe text is overlapping with the text in the next column. Below example is for Status and Reporter (whose customer's name is using email address):\r\n*  !screenshot-1.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nMove the field (in this case Reporter) to the right most.",
+      "summary": "Text is overlapping in Queue"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9456",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-02T19:53:16.000+0000",
+      "description": "Due to the [Additional SPF validation being added to incoming mail in Jira Cloud|https://community.atlassian.com/t5/Jira-discussions/Additional-SPF-validation-being-added-to-incoming-mail-in-Jira/td-p/1432137] requests that fail SPF or DKIM are being rejected. When this happens the person sending the email will receive a reply with details about the error, it would be good to have logs or notifications of rejected messages available for the site admins. ",
+      "summary": "Provide admin logs for SPF or DKIM fails "
+    }
+  },
+  {
+    "key": "JSDCLOUD-9455",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-10-07T00:32:40.000+0000",
+      "created": "2020-10-02T10:25:26.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen user search any issue from Issue Navigator, they can see the Time waiting for support and Time to resolution values as per issue-navi.png screenshot.\r\nExport issues to Excel also able to show the Time waiting for support and Time to resolution values as per xls.png screenshot.\r\nHowever, the data is not shown in XML format as per xml2.png screenshot.\r\n\r\nh3. Steps to Reproduce\r\n # Have some issues with SLA\r\n # Export to XML format\r\n\r\nh3. Expected Results\r\n\r\nThe exported XML file doesn't contain SLA values\r\n{noformat}\r\n<customfield id=\"customfield_15111\" key=\"com.atlassian.servicedesk:sd-sla-field\">\r\n<customfieldname>Time to approve normal change</customfieldname>\r\n<customfieldvalues> </customfieldvalues>\r\n</customfield>\r\n{noformat}\r\n\r\nh3. Actual Results\r\n\r\nIt should show the SLA value just as when we export to CSV/excel\r\n\r\nh3. Workaround\r\n\r\nExport to CSV format",
+      "summary": "Service Desk SLA Custom Field values are excluded in XML format"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9454",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-02T09:20:18.000+0000",
+      "description": "Customers can't search or filter on Status or Priority. This would be nice to have.",
+      "summary": "Customer Portal: Search and filtering options"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9453",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-02T09:17:59.000+0000",
+      "description": "When viewing all issues on the customer portal you don't see the priority until you open an issue. Please list the priority when viewing the list as well.",
+      "summary": "Show priority when viewing issue list in customer portal"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9452",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-10-02T09:13:42.000+0000",
+      "description": "Portal users have no way of sorting their issues. It would be nice if they could sort on priority or status.",
+      "summary": "Sorting options for Portal customers"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9451",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-10-02T02:35:25.000+0000",
+      "created": "2020-10-02T01:52:01.000+0000",
+      "description": "h3. Issue Summary\r\nWhen uploading a new logo to a JSD next-gen project, the new logo is not saved\r\nh3. Steps to Reproduce\r\n # Access the portal settings of a next-gen project\r\n # Upload a logo to replace an existing one\r\n\r\nh3. Expected Results\r\nThe new logo is saved\r\nh3. Actual Results\r\nThe logo still saves the old logo\r\n\r\nh3. Workaround\r\nIn Chrome, enable inspect network activity. Ensure that the \"Disable cache\" is enabled and upload the logo again.",
+      "summary": "Uploading a new logo in a next-gen project is not saved"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9450",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-10-01T00:31:40.000+0000",
+      "created": "2020-10-01T08:17:18.000+0000",
+      "description": "h3. Summary\r\nTwo CSAT emails are sent out because there are two actions in the workflow that triggers a survey. The feedback link in the former CSAT email is invalid and reports an error if the customer tries to fill it.\r\n\r\nh3. Steps to Reproduce\r\n# For a classic JSD project set the workflow with a Resolved and Closed status \r\n# Make sure that the category type for the status is (Done- Green color)\r\n# Allow issue transition to Resolved status without setting the Resolution field\r\n# For the transition that moves the issue from *Resolved* to *Closed*, set the Resolution field using a post function or a resolve screen\r\n# Transition the issue to Resolved status \r\n# Transition the issue to Closed status\r\n\r\nh3. Expected Results\r\nFor classic JSD projects, when an issue is transitioned to Resolved status with done category Or the Resolution field is set whatever comes first, a survey is triggered and the customer is able to fill it. \r\n\r\nIf the survey is triggered once for an issue already, another survey should not be triggered. \r\n\r\nh3. Actual Results\r\nWhen the issue is transitioned to Resolved status, a survey is triggered. And when the issue is transitioned to Closed status and a Resolution is set, another survey is triggered. The feedback link in the former CSAT email is invalid and reports the following error if the customer tries to fill it:\r\n{noformat}\r\nSomething bad happened\r\nSorry! That link doesn't work anymore!\r\n{noformat}\r\n \r\nh3. Notes\r\nFor next-gen JSD projects, only Status Category is used to determine if a ticket is resolved, so a survey is triggered when the issue is moved to a Done status category.\r\nFor classic JSD projects, the Done Status category as well as a setting the Resolution field for the first time, both marks an issue as resolved so both actions can trigger a survey\r\n\r\nh3.Workaround\r\nTo prevent multiple surveys to be sent an issue, make sure that you set the Resolution field in the same transition that moves the issue to the first Done category status (green color)",
+      "summary": "Multiple CSAT/survey email sent for an issue. Filling a former survey link reports error \"That link doesn't work anymore!\""
+    }
+  },
+  {
+    "key": "JSDCLOUD-9449",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-30T11:44:19.000+0000",
+      "description": "h3. Problem Definition\r\nWhen Jira Service Desk integrates with the AWS Service Catalog using the \"AWS Service Catalog Connector for Jira Service Desk\", comments are added by the \"AWSSC+JSD Connector\" user when the status of the request is provisioning, updating, terminating, and failed, but not when a request is \"Pending approval\".\r\n\r\nWithout a comment added by the connector when the status is \"Pending approval\", it's not possible to configure automation rules that can transition the request to another status when a \"Request AWS Product\" request is pending approval.\r\n\r\nh3. Suggested Solution\r\nHave the \"AWSSC + JSD Connector\" user add a comment when a request is pending approval.\r\n\r\nh3. Workaround\r\nManually transition the request when the AWS Service Catalog request is pending approval.",
+      "summary": "Automatically add a comment when an AWS Service Catalog request is pending approval"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9448",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2018-01-26T12:27:57.000+0000",
+      "description": "Hello,\r\n\r\nPlease allow the possibility to bulk delete customers in Jira Service Desk projects. This could save a lot of time for many people.",
+      "summary": "Ability to bulk delete customers from a project"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9447",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-29T07:41:30.000+0000",
+      "description": "On classic project, we can restrict to articles with labels like below image.\r\n *  !Screen Shot 2020-09-29 at 16.37.38.png|thumbnail! \r\n\r\n It would be great if JSD next-gen projects have the same ability.",
+      "summary": "Ability to restrict to knowledge base articles with labels"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9446",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-28T17:20:31.000+0000",
+      "description": "When a user lacks the browse users and groups global permission and attempts to create a user-based search they get the following error:\r\n\r\n\"The JIRA server was contacted but has returned an error response. We are unsure of the result of this operation.\"\r\n\r\nUsers should either get an error that they lack permission or better, should not have the basic search options for searching on a user at all.\r\n\r\nEither way, THIS looks like a system failure.\u00a0 This error gets people calling the admin team, asking why Jira is failing.",
+      "summary": "When a user does not have the global permission to browse users they get an error that appears to be a system failure"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9445",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-28T17:20:05.000+0000",
+      "description": "When a user lacks the browse users and groups global permission and attempts to create a user-based search they get the following error:\r\n\r\n\"The JIRA server was contacted but has returned an error response. We are unsure of the result of this operation.\"\r\n\r\nUsers should either get an error that they lack permission or better, should not have the basic search options for searching on a user at all.\r\n\r\nEither way, THIS looks like a system failure.\u00a0 This error gets people calling the admin team, asking why Jira is failing.",
+      "summary": "When a user does not have the global permission to browse users they get an error that appears to be a system failure"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9444",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-28T16:27:38.000+0000",
+      "description": "I have integrated Jira Service Desk Cloud with OpsGenie as described at [https://docs.opsgenie.com/docs/jiraservicedesk-integration.]\u00a0This uses Jira's webhook function to create an OpsGenie alert when Jira issues that match certain criteria are created.\r\n\r\nCurrently when Jira creates an OpsGenie alert there is no indication on the Jira issue that the alert was created, what the alert id is, or a link to the alert. The Jira user has no way of knowing that there is a corresponding alert in OpsGenie. My product recommendation is to have the integration add a link to the OpsGenie alert, either as a link on the Jira issue or as a comment added with a URL link.\r\n\r\nI originally opened this with OpsGenie support (OGSP-50350) but their support representative Nick indicated that this would be a feature for the Jira team and not the OpsGenie team.",
+      "summary": "integration with OpsGenie should link to the OpsGenie alert"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9443",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-28T05:03:44.000+0000",
+      "description": "Currently, it is not possible to force the Jira service desk email handler to process the emails in the connected custom email channel that arrived before the email channel was established. The suggestion is to allow the service desk admin to configure the \"pulled from\" date for the email handler.",
+      "summary": "Allow service desk admin to configure the \"pulled from\" date for the email handler"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9442",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-27T21:13:01.000+0000",
+      "description": "When you provide anonymous access to the users, Jira Service Desk *requires* all users to provide an email confirmation, \"Email confirmation to\", however, some projects don't need any communication with their customers. Is it possible to make this field optional?\r\n\r\n\u00a0\r\n\r\nThanks!",
+      "summary": "Allowing customers to submit Service Desk tickets anonymously"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9441",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-25T19:29:38.000+0000",
+      "description": "When using the Office macro to add Word, PowerPoint, or Excel files, customers won't be able to click on the view to download or preview it when viewing the articles in the customer portal.\r\n\r\nThe Office macro is more friendly when using Confluence, but it's impossible for customers to view or download this file in the portal.\r\n\r\nIt would be great if there was an option to preview these types of documents in the portal.",
+      "summary": "Allow customers to preview or download attachments from the customer portal"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9440",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-25T16:41:02.000+0000",
+      "description": "We use JSD as a support tool for our clients (external and internal), and it would be useful \r\nif we could click-drag tickets into priority order as we are able to do on a standard Jira taskboard. Since our support clients operate in a Kanban fashion where the top priority may change on a regular basis, this feature would be very helpful for both my team and the clients' Business teams to visually track current priorities.",
+      "summary": "As a user, I would like the ability to stack rank issues in JSD queues."
+    }
+  },
+  {
+    "key": "JSDCLOUD-9439",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-16T06:51:46.000+0000",
+      "created": "2020-09-24T17:51:29.000+0000",
+      "description": "h3. Issue Summary\r\nAt the customer portal, users are able to submit a request before the attachment upload has been concluded\r\n\r\nh3. Steps to Reproduce\r\n# Access Jira Service Desk portal\r\n# Try to raise a request and upload a file along with the request\r\n# Submit the request before the upload finishes up\r\n\r\nh3. Expected Results\r\n* User should not be able to raise the request until the upload is finished up.\r\n\r\nh3. Actual Results\r\nThe ticket is created without the attachment\r\n \r\nh3. Notes\r\n* To reproduce that try to upload large files so you can submit the request before the upload finishes up.\r\n* If you try to upload a file after the ticket was created the comment button stays grayed out until the upload is finished.",
+      "summary": "At the customer portal, users are able to submit a request before the attachment upload has been concluded"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9438",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-24T13:27:24.000+0000",
+      "description": "h3. Current Behavior\r\nIf a customer sends an email to multiple JSD *cloud* mail handlers (Vertimail) provided by Atlassian, then the email will be processed only *Once* by one of these mail handlers. Which mail handler will process the email cannot be determined. \r\n\r\nThe behavior is the same when you send an email to a default Jiar cloud mail handler as well as a JSD cloud mail handler. In this case also the email will be processed only *Once* by one of these mail handlers. \r\n\r\nh3. Expected Behavior\r\nIf the email is addressed to multiple JSD *cloud* mail handlers (Vertimail) provided by Atlassian, then all these mail handlers should process the email. \r\n\r\nh3. Workaround\r\nCurrently, the desired behavior can only be achieved by addressing it to a custom mail handler as well so that it gets processed by JSD *cloud* mail handler, as well as the custom mail handler",
+      "summary": "Allow an email to be processed by multiple JSD cloud mail handlers the email is sent to"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9437",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-01-15T11:15:13.000+0000",
+      "created": "2020-09-24T07:50:18.000+0000",
+      "description": "Currently, we can fetch all the users in an organisation via [Get users in organisations|https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-organization/?&_ga=2.125851269.943282506.1600743490-1113232597.1539571435#api-rest-servicedeskapi-organization-organizationid-user-get] API, but there is no way to retrieve organisation a user belong to. \r\n\r\nI think this would be good addition to [Get customers|https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-servicedesk/?_ga=2.25057970.943282506.1600743490-1113232597.1539571435#api-rest-servicedeskapi-servicedesk-servicedeskid-customer-get] API, which is currently experimental.\r\n\r\nGot this feedback from a developer in a CDAC thread - https://community.developer.atlassian.com/t/get-organization-associated-with-a-customer-user/40635",
+      "summary": "Get customer API doesn't have organisation details a customer belongs to"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9436",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-23T13:51:36.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe \"Request Resolved\" KB report will display inconsistent data if issues created on different days are resolved on the same day.\r\n\r\nh3. Steps to Reproduce\r\n# On day 1, create a ticket and link a KB article to it.\r\n# On day 2, create a new ticket and link a KB to it.\r\n# Resolve both tickets on day 2.\r\n\r\nh3. Expected Results\r\n\r\nBoth tickets will appear in the \"Request resolved\" report.\r\n\r\nh3. Actual Results\r\n\r\nJust one of the tickets will appear on the drill down.\r\n\r\n !image-2020-09-23-10-50-40-458.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nNo workaround so far.",
+      "summary": "Request resolved KB report shows discrepant data"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9434",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-22T23:44:57.000+0000",
+      "description": "The customer would like to have a detailed customer survey from their customers (who are non-jira users), when an issue is resolved, which is similar to an add-on - add on https://marketplace.atlassian.com/apps/1213103/surveys-for-jira-jira-customer-surveys?hosting=cloud&tab=overview. \r\n\r\nThe customer would like to have an in-house Jira feature to allow the non-Jira users to submit a satisfaction survey.",
+      "summary": "Customer satisfication survey in JSD using Google form"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9432",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-22T17:24:56.000+0000",
+      "description": "It would be very helpful to have the ability to set Customer Notification settings on a per-Organization level.\r\n\r\nSince different Organizations may have different requirements in terms of notifications, the ability to granularly control those notifications on a per-Org level would be a useful feature to have.",
+      "summary": "Customer Notification Settings based on Organization/Groups"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9431",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-22T16:28:09.000+0000",
+      "description": "Currently, there's no endpoint documented to retrieve data from JSD reports via the API.\r\n\r\nSuggestion: allow/create an endpoint to retrieve data from JSD reports (custom or default).",
+      "summary": "Allow JSD reports' data to be pulled from the API"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9430",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-22T16:27:23.000+0000",
+      "description": "Suggestion: create a report that stores the search terms used by customers in order to get to specific reports on the Knowledge Base.",
+      "summary": "Create a report of search terms used that lead to specific articles on the Knowledge Base"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9429",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-22T16:26:42.000+0000",
+      "description": "Currently, there is a \"Jira Service Desk Reports\" gadget available for dashboards. However, that gadget does not allow the use of default JSD reports, such as CSAT or Requests Deflected.\r\n\r\nSuggestion: enable those reports on the gadget as well.",
+      "summary": "Add ability of using the default JSD reports on the JSD Reports gadget"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9428",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-22T13:08:47.000+0000",
+      "description": "At this time if the user has access to a single portal they are redirected to the Help Center, but if that portal has only a single [request type group|https://support.atlassian.com/jira-service-desk-cloud/docs/organize-request-types-into-groups/] then all the request types of that group are laid out within the Help Center and there is no easy way to access the link to the portal itself:\r\n{noformat}\r\nsite.atlassian.net/servicedesk/customer/portal/ID\r\n{noformat}\r\n\r\n*Use case*:\r\nIf there is an announcement added to the portal the user hardly ever is going to see it.\r\n\r\n*Workaround*\r\nCreate a secondary group under the request type configuration and add a request type to this group so the group cards are displayed and if the user clicks on it they are redirected to the portal.",
+      "summary": "Improve UX for users that have access to a single portal and the portal has only a single group of request types"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9426",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-10-01T07:41:11.000+0000",
+      "created": "2020-09-21T15:50:12.000+0000",
+      "description": "h3. Summary\r\n\r\nOrg-admin without a Jira license receive an error when trying to access the service desk customer portal\r\n{noformat}\r\nYou don't have access to any service desks.\r\n{noformat}\r\nh3. Steps to Reproduce\r\n # Invite an email address as a site-admin to the cloud site first but do not provide any application access to the user, but just site access.\r\n # Then add the same email address as an org-admin to the Atlassian Organization, this cloud site is linked to\r\n # Add the user as a customer in a service desk project\r\n # From a Guest browser window log in to id.atlasian.com with this email address and try to access the help center for the cloud site.\r\n\r\nh3. Expected Results\r\n\r\nUser is able to access the customer portal and raise issues in service desk projects\r\nh3. Actual Results\r\n\r\nThe user is logged in but receives an error \"You do not have access to any service desks\" and the user can neither see restricted projects, nor the open projects.\r\n !screenshot-1.png|thumbnail!\r\n\r\nSending an email to restricted as well as open projects result in the same error in the email logs:\r\n{quote}You don't have permission to access this Service Desk.\r\n{quote}\r\nh3. Notes\r\n\r\nThe affected user can neither see restricted projects (Customer permission set to *customers my team adds to the project*), nor the Open service desk projects (Customer permission set to *Anyone* on the cloud site can open a request)\r\nh3. Workaround\r\n\r\nThe only way currently is to provide the org-admin with access to a\u00a0Jira product on the cloud site.",
+      "summary": "Org-admin without a Jira license receive an error when trying to access service desk customer portal"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9425",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-09-21T00:29:37.000+0000",
+      "created": "2020-09-21T13:23:32.000+0000",
+      "description": "h3. Issue Summary\r\nLinking a space with multiple projects causes the KB redirect to wrong URL. When this happen, it looses the Original portal/project hierarchy and ability to submit a new request (at the end of the page).\r\n\r\nh3. Steps to Reproduce\r\n * Link a space to multiple JSD projects\r\n * Navigate to JSD main portal and browse through the KB articles.\r\n * Click the KB article that belongs to the space which is linked to multiple JSD projects\r\n * It redirects to: [https://xxxx.atlassian.net/servicedesk/customer/kb/view/12345]\r\n\r\nh3. Expected Results\r\nJSD should redirect to [https://xxxx.atlassian.net/servicedesk/customer/portal/7/article/88704364]\r\n\r\nh3. Actual Results\r\nJSD redirects to : [https://xxxx.atlassian.net/servicedesk/customer/article/23756904]\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Linking a space with multiple projects causes the KB redirect to wrong URL"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9424",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-09-22T00:29:38.000+0000",
+      "created": "2020-09-18T13:56:13.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nRequired fields on the Portal display error messages in English, instead of Estonian\r\nh3. Steps to Reproduce\r\n # Have profile set to Estonian\r\n # Make a field required (either on the Field Configuration on the Request Type settings)\r\n # Create a ticket on the Portal for that Issue/Request Type\r\n # Leave a required field blank\r\n\r\nh3. Expected Results\r\n\r\nYou see the error message in Estonian\r\nh3. Actual Results\r\n\r\nAn error in\u00a0*English*\u00a0saying that the field is required\r\n!Screenshot 2020-09-18 at 7.24.39 PM.png|thumbnail!\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Required fields on the Portal display error messages in English, instead of Estonian Language"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9423",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-18T13:11:02.000+0000",
+      "description": "h3. Problem Definition\r\n * It's not currently possible to natively remove(or add) fields to the requests view\r\n !Screenshot 2020-09-18 at 14.58.57.png|thumbnail! \r\n\r\nh3. Suggested Solution\r\n * Allow admins to remove fields or customize the request view in the portal\r\n\r\nh3. Why this is important\r\n * Admins would like customize the request view to simplify the portal UI\r\n\r\nh3. Workaround\r\n * No known workarounds to remove fields from the request view. If one is found, then the details of the workaround will be added here",
+      "summary": "Portal: Request view - remove fields"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9421",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-18T08:26:04.000+0000",
+      "description": "h3. Problem statement\r\n\r\nWhen the Approver field is missing from the Edit Issue screen, while it is not possible to add an approver due to the field not configured to the screen, it displays the message \"Only agents can add approvers\" while the actual problem is that the field is not configured to the screen.\r\n\r\nh3. Suggestion\r\n\r\nShow information to why it is not possible to add an approver. Display a message to let users know that the field requires to be configured on the screens",
+      "summary": "Improve the information message when Approver field is missing from screen"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9420",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-18T08:04:10.000+0000",
+      "description": "{color:#0747a6}*4 Jan, 2022 Update:*{color}\r\n\r\n{color:#0747a6}*The rollout of Forms to all JSM customers is now in progress.*\u00a0{color}\r\n\r\n{color:#0747a6}*Regards,*{color}\r\n\r\n{color:#0747a6}*Simon*{color}\r\n\r\n{color:#0747a6}*Principal Product Manager, Jira Service Management*{color}\r\n----\r\nh3. Issue Summary\r\n\r\nIt will be nice to have a table in the customer portal so the customer can enter data into a table to show their dependencies.\r\n\r\nFor example:\r\n\r\nHostname\u00a0 \u00a0 \u00a0Source IP address\u00a0 \u00a0 \u00a0Destination IP\r\nABC\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0193.233.12.15\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0192.200.1.2\r\nXYZ\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0193.233.12.45.\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 192.200.1.3\r\nh3. Workaround\r\n\r\nProForma 3rd party add-on\r\n[https://marketplace.atlassian.com/apps/1215833/proforma-forms-checklist-for-jira?hosting=cloud&tab=overview]",
+      "summary": "Ability to have a table in the Customer portal"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9419",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-17T18:16:52.000+0000",
+      "description": "Currently, there isn't a way to hide the number shown next to *Requests* (in the upper right hand corner) of the portal or help center.\r\n\r\nSome users would like to be able to hide this/disable it from showing.",
+      "summary": "Ability to hide the number next to Requests in portal/help center"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9418",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-09-21T08:37:47.000+0000",
+      "created": "2020-09-17T14:36:38.000+0000",
+      "description": "h3. Summary\r\n\r\nWhen a Service Desk request is approved, the following section is added to the request on the portal view:\r\n !screenshot-1.png|thumbnail! \r\nThe status on the Approval section within the portal view of an issues does not get correctly translated based on the status translation set for any of the sections. \r\n\r\nh3. Steps to Reproduce\r\n# Go to the \"Statuses\" configuration in Jira > Add a translation for the workflow statuses for a language of choice (mainly the status of the approval stage). \r\n# Create a Service Desk request that has an approval step\r\n# Approve the Service Desk request\r\n# Open this request from the customer portal\r\n# Change the language of the customer who is viewing the request from the portal to a language with the translated status.\r\n\r\nh3. Expected Results\r\n\r\nThe status found on the approval section should reflect the correct translation set.\r\n\r\nh3. Actual Results\r\n\r\nThe status is not translated in the Approval section on the ticket. While the status is translated correctly in the activity section.\r\nFor example: \"Waiting for support\" status is not translated:\r\n !screenshot-2.png|thumbnail! \r\n\r\nh3.Workaround\r\nNone \r\n",
+      "summary": "Statuses in the Approval section on the portal view is not translated to selected language"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9417",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-09-17T00:26:44.000+0000",
+      "created": "2020-09-17T10:40:19.000+0000",
+      "description": "h3. Problem\r\n\r\nWhen we try to add a user having Atlassian Account in a project under \"People\" section, we do not see their profile picture until they are added in the project.\r\nh3. Steps to Reproduce\r\n\r\nTry to add an AA user in a service desk project by going to *Project Settings > People > Add People*.\r\nh3. Expected Results\r\n\r\nThe user listed should have a profile picture displayed alongside their name if it is set up\r\nh3. Actual Results\r\n\r\nThe profile picture is not displayed\r\n !Image 2020-09-15 at 7.45.08 PM.png|width=180,height=100!\r\nh3. Workaround\r\n\r\nNo workaround as of now\r\nh3. Notes\r\n\r\nThis becomes confusing if you have multiple users with same names and you have to identify which user you want to add. In this case, it's better to enter their email address to ensure that their user is only displayed.",
+      "summary": "User's profile picture does not appear while adding them in the service desk project"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9416",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-17T07:46:56.000+0000",
+      "description": "*Problem Definition*\r\n\r\nWhen a ticket is resolved, the customer receives an email asking them to rate and comment on their experience. However, this email is only sent to the \"reporter\", and not to all request participants.\r\n\r\n*Suggested Solution*\r\n\r\nFlexibility in *Satisfaction settings*\u00a0to define the recipients of the survey.\r\n\r\n*Why this is important*\r\n\r\nThe opinion from request participant matters as they're also active members of the ticket.\r\n\r\n*Workaround*\r\n None",
+      "summary": "Send customer satisfaction to all request participants"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9415",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-16T20:11:56.000+0000",
+      "description": "Use case: if a ticket has two or more Organizations added to it, they can interact with each other and see the other's comments.\r\n\r\nSuggestion: add the possibility to have contents from one organization to not be shown to others within the same ticket.",
+      "summary": "Add ability to set comment/content visibility based on Organizations"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9414",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-16T14:21:58.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nTime to first response SLA stops ticking when reporter is updated and/or if the ticket contains attachment\r\nh3. Steps to Reproduce\r\n # Create a JSD project\u00a0\r\n # Add some customer and agent\r\n # Don't make any changes to the project configuration, leave it to the default settings.\r\n ** !screenshot-1.png|thumbnail!\r\n # Create a new ticket as customer via portal and add the attachment at the same time\r\n # Once the ticket is created, change the reporter to any other user (or even anonymous)\r\n\r\nh3. Expected Results\r\n\r\nTime to first response SLA is still ticking\r\nh3. Actual Results\r\n\r\nTime to first response SLA stops ticking\r\n * !screenshot-2.png|thumbnail!\r\n\r\nh3. Notes\r\n * It works fine if the ticket is created *without* attachment.\r\n * It affects tickets created via portal, email and API \r\n * It also affects if an agent raise a request with an attachment on behalf of a customer\r\n\r\nh3. Workaround\r\n\r\nNone",
+      "summary": "Time to first response SLA stops ticking when reporter is updated and/or if the ticket contains attachment"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9413",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-16T12:59:10.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nThe timestamp on the portal shows relative time (day and time) instead of the exact timestamp, i.e, date and time\r\nh3. Suggested Solution\r\n\r\nAllow admins to configure the timestamp format on the customer portals.\r\nh3. Workaround\r\n\r\nCustomers can hover over time to see the exact timestamp.\r\n\r\n!Screenshot 2020-09-16 at 6.27.14 PM.png|thumbnail! \u00a0\u00a0",
+      "summary": "Allow admins to configure the timestamp format on the customer portals"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9412",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-16T10:25:28.000+0000",
+      "description": "h3. Problem Definition\r\nThe *AWS Service Catalog for JSD Cloud* app supports adding tags to the requested resources in AWS, which can be great for keeping track of which users requested the resources but requires the tags to be manually added.\r\n\r\nh3. Suggested Solution\r\nAllow admins to configure automatic tagging of AWS resources with the reporter's name.\r\n\r\nh3. Workaround\r\nManually add the reporter's name as a tag in AWS when requesting the resource.",
+      "summary": "Allow automatic tagging of AWS resources"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9411",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-11-03T00:27:24.000+0000",
+      "created": "2020-09-15T19:04:22.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nOn the documentation, it mentions that in order to delete a service registry we can click on ... > Delete service, however, this option is not available.\r\n\r\n[Edit or delete a service in your service registry|https://support.atlassian.com/jira-service-desk-cloud/docs/create-a-service/]\r\nh3. Steps to Reproduce\r\n # On an ITSM project, go to Service registry > Create service. \r\n # Click on ... (more).\r\n\r\nh3. Expected Results\r\n\r\nIt shows the options Edit service and Delete service.\r\nh3. Actual Results\r\n\r\nOnly Edit service is available. \r\n\r\n!Screen Shot 2020-09-15 at 16.03.01.png|width=381,height=239!\r\nh3. Workaround\r\n\r\n\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Delete service not available on ITSM projects"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9410",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-15T13:52:46.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently, when using GET  /rest/servicedeskapi/servicedesk or /rest/servicedeskapi/servicedesk/{serviceDeskId} will not return \"Name\" and \"Introduction Text\" for the project. \r\n\r\nh3. Suggested Solution\r\nReturn the \"Name\" and \"Introduction Text\" for the respective project.\r\n\r\nh3. Why this is important\r\nUser will be able to retrieve the data via API and not required to update their report manually.",
+      "summary": "Ability to get \"Service Desk Information\" which is Name and Introduction text when using REST API"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9409",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-09-24T00:29:40.000+0000",
+      "created": "2020-09-15T11:47:48.000+0000",
+      "description": "h3. Issue Summary\r\nUsers with no *Link Issues* permission _can_ link Software issues with Service Desk tickets\r\n\r\nh3. Steps to Reproduce\r\nHave an user with no Link Issues permission in the JSD project. Try linking a JSW issue to a JSD ticket.\r\n\r\nh3. Expected Results\r\nUser can't link those issues\r\n\r\nh3. Actual Results\r\nThe issues will be linked\r\n\r\nh3. Workaround\r\nN/A",
+      "summary": "Users can bypass Link Issues permission"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9408",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-14T08:04:03.000+0000",
+      "description": "h3. Issue Summary\r\nWhen the date format set as dd.mm.yyyy, choosing the date from the calendar in Request Form will display correctly. However, when user type the date , for example start with 11 (which by right it should be the day date ) , the calendar show as year 1900 , then continue typing as 11.09.2020 , the calendar show November 09 , 2020.\r\n\r\nh3. Steps to Reproduce\r\n# Set the advance settings as below :-\r\n* jira.date.picker.java.format : dd.mm.yyyy\r\n* jira.date.picker.javascript.format : %e.%m.%y\r\n # Create a date picker custom field.\r\n # Then, add the field to the request form.\r\n# Then, open the request at customer portal\r\n# Type in the date , 11.09.2020\r\n\r\nh3. Expected Results\r\nIn the calendar , it will show September , 2020 and select 11.\r\n\r\nh3. Actual Results\r\n !Screenshot 2020-09-14 at 3.58.42 PM.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available.\r\n\r\nIf it's okay to use a different template , use the default template :-\r\n* jira.date.picker.java.format : d/MMM/yy\r\n* jira.date.picker.javascript.format : %e/%b/%y\r\n\r\n !Screenshot 2020-09-14 at 4.02.23 PM.png|thumbnail! ",
+      "summary": "In Customer Portal, the Date picker format when typing in not the same as display in the calendar"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9407",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-09-15T05:56:18.000+0000",
+      "created": "2020-09-14T04:46:06.000+0000",
+      "description": "h3. Issue Summary\r\nBy default, when creating a new queue, the admin will be able to drag the new queue to reorder the queue list. However, recently it doesn't work as the queue goes back to the bottom.\r\n\r\nh3. Steps to Reproduce\r\n # Create new queue\r\n # Then , reorder the queue list. \r\n\r\nh3. Expected Results\r\nThe queue list remains.\r\n\r\nh3. Actual Results\r\nThe new goes back to the bottom of the list.\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "New queue created can't be re order"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9406",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-11T19:32:23.000+0000",
+      "description": "Currently, it is only possible to specify the *Project default* or the *User who triggered the rule* for individual rules, but some users would like the ability to specify any user licensed user in the project per rule.",
+      "summary": "Ability to specify a user other than \"Project default\" or \"User who triggered rule\" in individual Automation rules"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9405",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-11T13:34:26.000+0000",
+      "description": "Currently, if a user is removed from the 'Approvers' field after approving a ticket, it will stop showing at the 'Approvals history' page in the customer portal.\r\n\r\nThis can be confusing due to the fact that removing a user from the Approvers after a ticket is approved won't change the fact that the ticket was approved by that user.\r\nh4. Suggestion\r\n\r\nChange the filter used in the 'Approvals history' page to consider all tickets approved by the user (regardless of the Approvers field).",
+      "summary": "Approvals history should display approved tickets even when the user was removed from the Approvers field"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9404",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-09-11T00:25:18.000+0000",
+      "created": "2020-09-11T10:14:40.000+0000",
+      "description": "h3. Problem\r\n\r\nWhen using \"Update Jira linked issues\" service desk automation rule and the user who triggers the rule has their profile language set as Spanish, the comment added by Automation rule has emojis in it\r\nh3. Environment\r\n\r\nUser Profile Language preference: Spanish\r\n .\r\nh3. Steps to Reproduce\r\n # Change your profile language to Spanish.\r\n # Transition a linked issue to trigger the automation rule\r\n\r\nh3. Expected Results\r\n\r\nThe comment should be added in Spanish with proper translation\r\nh3. Actual Results\r\n\r\nThe comment is added as below:\r\n !Image 2020-09-11 at 3.40.44 PM.png|width=407,height=66!\r\nh3. Workaround\r\n\r\nYou can use Project automation as a workaround that allows you to edit the text for the comment added when the linked issue is transitioned.",
+      "summary": "Incorrect translation of text in Spanish in automation rule leads to insertion of emoji"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9403",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-11T00:56:14.000+0000",
+      "description": "Hi JSD Product Team,\r\n\r\nMy name is Ahmed and I manage the Support Team at Noggin. We have recently migrated to JSD from Zendesk and we found a few items that need to be addressed from your end to make our Support process a little smoother.\r\n\u00a0\r\n*1)*\u00a0*JSD creating duplicate tickets*: Noggin uses 2 email domains (Noggin.io and Noggin.com.au). Both domains are pointed to the same mailbox. When an internal staff raises a support request from the\u00a0[noggin.io|http://noggin.io/]\u00a0email domain and then\u00a0responds using\u00a0the\u00a0[noggin.com.au|http://noggin.com.au/]\u00a0email domain, JSD is currently considering this as a new ticket (as opposed to considering it as coming from the same sender). When the support analyst finds this response sitting in the new tickets queue, they will need to mark it as solved and copy-paste the response in the original ticket. This is quite a time consuming and inefficient process.\r\n\r\n*Solution:*\u00a0Update JSD to identify that\u00a0[noggin.io|http://noggin.io/]\u00a0and\u00a0[noggin.com.au|http://noggin.com.au/]\u00a0email domains are the\u00a0same and link back to the same ticket.\r\n\u00a0\r\n*2)*\u00a0*Unable to merge tickets in JSD*: Continuing from (1), Zendesk had merge functionality that would automatically copy all the data from a ticket, paste it in the new ticket, and notify the user that the ticket has been merged and close that ticket. Please advise if we can add similar functionality in JSD as well?\r\n\u00a0\r\n*3)*\u00a0*Marking tickets as SPAM*: We receive spam emails every now and then. We simply mark them as \"Cancelled\". However, this doesn't stop the same sender from sending spam again in the future. When you mark a ticket as Spam in Zendesk and next time when the same sender is sending a ticket again, it doesn't go straight to the support queue. Instead, it goes into the suspended tickets section where all the spam tickets are recorded. Please advise if JSD has a similar \"Mark as Spam\" option?\r\n\u00a0\r\nThanks,--\r\n\r\n|[!https://ci3.googleusercontent.com/proxy/AeAd4jWDSOZeWmIBS5Vs-7p_aed38uNVOnElXMCb4DQSTqVjjuE1UOg5tulDCB8kpeqIN6Aj2ytV4n4AibDiKkfO_GhL1Q=s0-d-e1-ft#http://sig0.ngcache.net/static/email/logo2018v2.png|width=90!|https://www.noggin.io/]|Ahmed Ali Mohammed|\r\n|_Support Services Lead, Noggin_|\r\n|\r\n|\u00a0\u00a0\u00a0t:|+61 (0)2 9054 2153|\u00a0\u00a0\u00a0m:|+61 (0)404 134 755|\r\n|\u00a0\u00a0\u00a0e:|[amohammed@noggin.io|mailto:amohammed@noggin.io]|\u00a0\u00a0\u00a0w:\u00a0|[www.noggin.io|https://www.noggin.io/]|\u00a0|\r\n|\u00a0\u00a0\u00a0a:\u00a0|Level 22, 175 Liverpool Street, Sydney, NSW, Australia, 2000|\r\n|",
+      "summary": "Areas on improvement on Jira Service Desk for Noggin"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9402",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-10T13:37:29.000+0000",
+      "description": "Problem\r\nPDF files can be embedded in knowledge base articles, but when a customer clicks on it, they are either prompted to download the PDF or view it in a preview mode.\r\n\r\nSuggested resolution\r\nThe PDF could be fully loaded within the page and allow a customer to scroll through it, click links, etc. It would also be nice for the text contained the PDF to be indexed so that the content is searchable when people are trying to find help.\r\n\r\nNotes\r\nThere's an add-on called PDF Macro which does this in Confluence.",
+      "summary": "Have the ability to \"index\" PDF attachments in the portal"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9401",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-10T13:20:54.000+0000",
+      "description": "h3. Problem\r\nWhen there are several interactions with customers on an SD ticket, the customer notifications for those interactions will be sent all together on a single email. So for example, if the agent comments twice and then close the issue, the customer will only receive one notification with all the interactions.\r\n\r\nh3. Suggested resolution\r\nHave the ability to disable this feature and send one customer notification to each interaction.",
+      "summary": "Ability to disable customer batch notifications"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9400",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-10T07:17:20.000+0000",
+      "description": "Hello, as mentioned on the title,\u00a0Service Desk portal search does not find obvious search requests.\u00a0\r\nFor example, if a request is named Request new email and you rephrase it to Email new Request, it doesn't produce the same result, even if the same words are used.\u00a0\r\n\r\nSecond example:\u00a0I can type in two simple words. Of the three request types it suggests, two of them have neither of the two words in the title, help text, or any fields. However, one of the other request types that has both of those words in its title does not show up. (example given in this [question )|https://community.atlassian.com/t5/Jira-Service-Desk-questions/Service-Desk-portal-search-does-not-find-obvious-request-types/qaq-p/658051#U1477471]\r\n\r\n\r\n\r\nAnother issue is that the default portal *does not show the whole description of a request type* (if you have multiple lines it shows up to a point) also, Wiki Markup used in the description shows as plain text ( ** for bold show as an actual * not bold text)\u00a0\u00a0\r\n\r\nCan you please fix that? For the first issue maybe giving the option to add keywords would help.\u00a0",
+      "summary": "Service Desk portal search does not find obvious request types"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9399",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-10-02T13:22:58.000+0000",
+      "created": "2020-09-09T20:46:58.000+0000",
+      "description": "h3. Issue Summary\r\nWhen a user scrolls down the queue in Jira Service Desk and then opens an issue, Jira doesn't remember the scroll location when going back to the queue.\r\nh3. Steps to Reproduce\r\n # Open a JSD project and visit the queue.\r\n# Scroll down the list of issues.\r\n# Open an issue and press back. Jira takes you to the top of the list again.\r\n\r\nh3. Expected Results\r\nIt should remember the scroll position so that the users don't need to scroll it all back again.\r\nh3. Actual Results\r\nJira takes you back to the top of the list of issues.\r\n\r\nh3. Workaround\r\n\r\nThere are no workarounds at the moment.",
+      "summary": "Jira Service Desk forgets scroll location when the user goes back to the queue"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9398",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-09T17:47:32.000+0000",
+      "description": "The idea is to have an Instant Messenger box application where if we @mention an agent in IM - it opens on their screen and they can immediately review/respond the ticket.\r\n\r\nThis idea would improve the agents' interaction with each other and increase the speed of responses to tickets.",
+      "summary": "Instant Messenger box for agents "
+    }
+  },
+  {
+    "key": "JSDCLOUD-9397",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-11-24T04:30:34.000+0000",
+      "created": "2020-09-09T12:55:56.000+0000",
+      "description": "I think it would be a great improvement if there where some more fields in the customer section. So that you would be able to put in additional information about the customer.",
+      "summary": "Add fields to Customer section"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9396",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-08T16:08:17.000+0000",
+      "description": "h3. Problem\r\n\r\nAn agent can add a customer to the project from UI with only Service Desk Team role and creating customer account for that user at User Management is handled by the application. But in the case of API, the permission needed is\u00a0Jira Administrator Global permission to create the customer and\u00a0Service desk administrator permission to add the customer to a service desk project.\r\n [The Jira Service Desk Cloud REST API - Create Customer|https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-customer/#api-rest-servicedeskapi-customer-post]\r\n [The Jira Service Desk Cloud REST API - Add Customer|https://developer.atlassian.com/cloud/jira/service-desk/rest/api-group-servicedesk/#api-rest-servicedeskapi-servicedesk-servicedeskid-customer-post]\r\nh3. Why This Is Important\r\n\r\nGiving Global level permission to create a portal-only customer (which is essentially adding a customer to the project) is not appropriate. Creating a portal only customer should require only _Service desk administrator_ permission or adding the customer to the project through API should handle the create customer part.",
+      "summary": "Create Customer API should require only Service desk administrator permission and not Jira Administrator Global permission"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9395",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-08T12:57:47.000+0000",
+      "description": "h3. Issue Summary\r\nWhen the field \"Affected Services\" is updated on an ITSM project, it sends a Jira notification, but the field is not user friendly shown in the notification, it shows the database value. The issue history will also show the database value.\r\n\r\nh3. Steps to Reproduce\r\n# Create an ITSM project and create an issue;\r\n# Edit the \"Affected Service\" field and wait for the notification.\r\n\r\nh3. Expected Results\r\nJira shows the field value instead of the database value.\r\n\r\nh3. Actual Results\r\nThe notification and the issue history shows the database value.\r\n !Screen Shot 2020-09-08 at 09.46.03.png|thumbnail!  !Screen Shot 2020-09-08 at 09.54.45.png|thumbnail! \r\n\r\nh3. Workaround\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Notification and issue history for \"Affected Services\" field change on ITSM projects is encoded"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9394",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-08T10:19:42.000+0000",
+      "description": "Want custom properties, eg. Organization, to be filterable with \"is EMPTY\" or \"= NULL\" in JQL to create SLA and Reports\r\n\r\nCurrently I have to create a massive long JQL statement where, Organization = 1 OR Organization = 2\u00a0OR Organization =3, etc. for over 30 organizations and then repeat that for every rule - about 5 which is very tedious and time consuming.\r\n\r\nPlease allow these operators to be able to use, NULL and/or EMPTY",
+      "summary": "Want custom properties, eg. Organization, to be filterable with \"is EMPTY\" or \"= NULL\" in JQL to create SLA and Reports"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9393",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-07T01:06:41.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nA Knowledge Base article\u00a0with lot of mathematical equations, when viewed in the the customer portal, will fail to load and give an error.\r\nh3. Steps to Reproduce\r\n # Create a confluence\u00a0page with a _significant_ amount of latex using one of the math latex marketplace plugin.\r\n # Connect confluence to Jira Service Desk using Knowledge base plugin.\r\n # Try to open the page in Portal and notice it fails to render.\r\n\r\nh3. Expected Results\r\n\r\n**Page should successfully render in Service Desk portal.\r\nh3. Actual Results\r\n\r\nThe below exception is thrown in the xxxxxxx.log file:\r\n{noformat}\r\n{\"errorMessage\":\"There was a problem contacting the application.\"}\r\n],\"reasonKey\":\"sd.applinks.error.bad.request\",\"reasonCode\":\"500\"}\"\r\n{noformat}\r\nh3. Workaround\r\n\r\nTo workaround this problem, screenshot sections of the page with latex and import it as single image. The reason for this bug is that every latex symbol/equation is rendered as its own image. Importing a few screenshot of a collection of those equations will result in far less images to render and the page will work as expected.\u00a0",
+      "summary": "Opening a KB page with a significant amount of latex on JSD-portal fails to render"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9392",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-04T17:54:50.000+0000",
+      "description": "h3. Description\r\nWhile configuring the Jira Service Desk mail handler we can configure a username, but this username can't be used in more than one mail handler configuration.\r\n\r\n!image-2020-09-04-14-53-20-685.png|thumbnail! \r\n\r\nh3. Suggestion\r\nAllow users to use the same username in more than one mail configuration. \r\n",
+      "summary": "Add support to use the same username in multiple mail handlers' configurations in Jira Service Desk"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9391",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-09-16T00:26:20.000+0000",
+      "created": "2020-09-04T14:06:54.000+0000",
+      "description": "h3. Summary\r\nBetter handle reply to Jira notification sent from the [k9 mail app| https://play.google.com/store/apps/details?id=com.fsck.k9] to a service desk mail handler\r\n\r\nh3. Steps to Reproduce\r\n# Configure the [k9 android mail app| https://play.google.com/store/apps/details?id=com.fsck.k9] on your phone\r\n# Trigger a Jira notification that lands in this mailbox \r\n# Reply to this Jira notification from the k9 mobile app. \r\n\r\nh3. Expected Results\r\nEmail is processed successfully by the Jira service desk mail handler and comment is added to the ticket\r\n\r\nh3. Actual Results\r\nEmail is processed successfully by the Jira service desk mail handler and comment is added to the ticket, however, we see some additional html content posted in the comment along with the reply:\r\n !screenshot-1.png|thumbnail! \r\n{quote}\r\n<!DOCTYPE html PUBLIC \"//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">     <!-  <!--[if (gte mso 9)|(IE)]>      Replying from k9 to jira notification this time\r\n{quote}\r\n \r\n\r\nh3. Notes\r\nThis does not affect when you reply to a customer notification or when you send a new email from the k9 mobile app \r\n\r\nh3.Workaround\r\nEmail sent from other mail clients still work fine.\r\nIf you have to use the k9 app, then send a fresh email with the issue key in the summary of the email to add a comment to an existing issue.",
+      "summary": "Better handle reply to Jira notification sent from the k9 app to a service desk mail handler"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9390",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-09-07T00:03:38.000+0000",
+      "created": "2020-09-03T21:03:30.000+0000",
+      "description": "h3. Issue Summary\r\nThe automation screen gets cut-off when selecting an option for the Custom Rule creation\r\nh3. Steps to Reproduce\r\n # Access the Automation screen of the project\r\n # Try to create a new Custom Rule \r\n\r\nh3. Expected Results\r\nView all options correctly from the dropdown field\r\nh3. Actual Results\r\nThe dropdown options hide behind the *save*/*cancel* panel\r\n[^AutomationJSDIssue.webm]\r\nh3. Workaround\r\n Currently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Automation screen gets cut-off when selecting an option for the Custom Rule creation"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9389",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-09-07T03:57:02.000+0000",
+      "created": "2020-09-03T15:57:54.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIssue \"Share\" button does not work with Teams on Next-gen Service Desk projects\r\nh3. Steps to Reproduce\r\n # Access a ticket on a Next-gen JSD project\r\n # Click the \"Share\" button on the top-right corner of the screen\r\n ** !Screen Shot 2020-09-03 at 12.38.36.png|thumbnail!\r\n # Select a Team and click send\r\n\r\nh3. Expected Results\r\n\r\nThe an email will be sent to Team members\r\nh3. Actual Results\r\n\r\nThe action will fail with the following response:\r\n{noformat}\r\n{\"errorMessages\":[\"No users or e-mails to share with were provided.\"],\"errors\":{}}\r\n{noformat}\r\n*Note* this process works on Next-Gen Software projects.\r\nh3. Workaround\r\n\r\nAdd each user or the team you want to share with in the input field.",
+      "summary": "Issue \"Share\" button does not work with Teams on Next-gen Service Desk projects"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9388",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-03T13:43:56.000+0000",
+      "description": "h3. Problem\r\nIt isn't possible to search for the widget usage in Jira, for example, if people have searched for an article and didn't create an issue.\r\n\r\nh3. Suggested resolution\r\nCreate a report of the widget usage.\r\n",
+      "summary": "Create a widget usage report"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9387",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-02T09:18:49.000+0000",
+      "description": "At this moment all users with \"Trusted\" role are automatically counted towards Jira SD agent licenses. This also documented here: [https://confluence.atlassian.com/jirakb/jira-service-desk-agents-license-count-seems-to-be-incorrect-779160879.html]\r\n\r\nHowever, this situation is very unfortunate and inconsistent with the other roles.\r\n\r\nThere are currently 3 roles in the cloud JIRA:\r\n * Basic\r\n * Trusted\r\n * Site Admin\r\n\r\nBoth Basic and Site Admin roles can be assigned an access to Jira SD either directly or via group membership. This, however doesn't work for Trusted users as they always have an access to Jira SD, regardless of their group settings.\r\n\r\nTherefore the only solution is either to \"downgrade\" the users to Basic role or \"upgrade\" their role to Site Admin. Both have undesirable consequences.",
+      "summary": "It should be possible to remove product access to JIRA SD from Trusted Users"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9386",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-09-16T03:49:28.000+0000",
+      "created": "2020-09-01T18:42:35.000+0000",
+      "description": "h3. Steps to Reproduce\r\n # Insert the 'Include page' macro to a Confluence article and add it to the\u00a0Jira Service Desk knowledge base\r\n # Open the article using Mozilla Firefox.\r\n\r\nh3. Expected Results\r\n\r\nThe macro is correctly rendered just like when using Google Chrome.\r\nh3. Actual Results\r\n\r\nThe error below is displayed:\r\n{noformat}\r\nUnable to render {include}. The included page could not be found.\r\n{noformat}\r\nh3. !print.png|thumbnail!\r\nh3. Workaround\r\n\r\nCopy the content from the page you want to include instead of using the macro.",
+      "summary": "\"Include page\" macro won't render correctly in KB articles for all browsers"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9385",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-09-01T09:03:39.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen a Connect addon that uses the ACT_AS_USER scope is included on a Confluence page and accessed through the JSD Knowledge Base, the contents of the addon fail to render.\r\n\r\n\u00a0\r\nh3. Steps to Reproduce\r\n # Link a Confluence space to a JSD Cloud instance to be used as a Knowledge Base\r\n # Add a connect addon that uses the ACT_AS_USER scope e.g. MultiExcerpt macro, on a Confluence page in the Confluence space used in step 1\r\n # Login-in with a customer user from the JSD portal (without an Atlassian account on the instance)\r\n # Access the page created in step 2 through the portal\r\n\r\nh3. Expected Results\r\n\r\nThe page should show the contents of the connect addon for customers logged into the portal.\r\n\r\ne.g. with the\u00a0MultiExcerpt macro we see the following:\r\n\r\n!image-2020-09-01-18-51-09-150.png!\r\nh3. Actual Results\r\n\r\nPages containing these connect addons show an error for customers logged into the portal. Customers are unable to view the contents of the macro.\r\n\r\ne.g. with the\u00a0MultiExcerpt macro we see the following:\r\n\r\n!Screen Shot 2020-09-01 at 6.49.30 pm.png!\r\n\r\n\u00a0\r\nh3. Workaround\r\n\r\nIf the JSD Portal allows for anonymous access, users can access the Knowledge Base articles as expected in an incognito tab.\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Knowledge Base articles do not show macro contents for JSD customers who do not have atlassian account"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9384",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-31T21:07:42.000+0000",
+      "description": "Currently, if you search for the issue number without without the project key, it does not return the ticket.\r\n\r\neg searching for \"1234\" on the My Requests page does return ticket \"ABC-1234\".",
+      "summary": "Allow searching on the portal (My Requests) for issue key number without project key"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9383",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-31T17:36:17.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nI want to be able to configure the default values for customer permission when creating a service desk project. When the user creates a new service desk project, the customer permission default values are:\u00a0\r\n * Anyone can send a request via\u00a0the portal.\r\n * Other customers in their organization. This option only allows them to search for customers in their organization.\r\n\r\nI want to be able to set the default customer permission to \"Customers my team adds to the project\" instead of \"Anyone can send a request via\u00a0the portal\".\r\n\r\n\u00a0",
+      "summary": "Be able to set the default values for customer permission "
+    }
+  },
+  {
+    "key": "JSDCLOUD-9382",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-09-01T00:23:38.000+0000",
+      "created": "2020-08-31T14:42:45.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen we look at profile for the same user in Jira and in customer portal, the timezone deviation is different.\r\nh3. Steps to Reproduce\r\n # Go to *Cogwheel > Atlassian account settings. Under account preferences, change it to US/eastern (-04:00)\r\n # Within Jira, click on your avatar and go to *Profile*. Verify the timezone in Jira\r\n !Image 2020-08-31 at 8.02.07 PM.png|width=234,height=75!\r\n # Now, got to customer portal. Click on avatar on top-right corner and click on Profile.\r\n # Check the timezone\r\n\r\nh3. Expected Results\r\n\r\nIt should be same as seen in Jira i.e. in this case GMT -04:00\r\nh3. Actual Results\r\n\r\nIt is different i.e. -05:00 which is one hour behind \r\n !image-2020-08-31-20-10-06-902.png|width=345,height=65!\r\n\r\nAdditionally, it does not happen for all the timezones.\r\n\r\nh3. Workaround\r\nNo workaround at the moment",
+      "summary": "When viewing timezone in the profile of a user within Jira and customer portal, they display different values"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9381",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-09-24T03:17:23.000+0000",
+      "created": "2020-08-28T15:15:44.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe 'Learn more' link in the 'Notification email' settings page in next-gen Jira Service Desk projects directs to\r\n\r\n[https://confluence.atlassian.com/adminjiracloud/configuring-jira-cloud-to-send-emails-on-behalf-of-your-domain-900996548.html].\r\n\r\nThis URL no longer hosts the relevant documentation, and the link should instead direct to\r\n\r\n[https://confluence.atlassian.com/adminjiracloud/configuring-jira-cloud-to-send-emails-on-behalf-of-your-domain-979428371.html]\r\nh3. Steps to Reproduce\r\n # Open a Jira Service Desk next-gen project.\r\n # Go to Project settings > Notifications > Notification email.\r\n # Click the 'Learn more' link.\r\n\r\nh3. Expected Results\r\n\r\nThe link should open the page [https://confluence.atlassian.com/adminjiracloud/configuring-jira-cloud-to-send-emails-on-behalf-of-your-domain-979428371.html]\r\nh3. Actual Results\r\n\r\nThe link opens the page [https://confluence.atlassian.com/adminjiracloud/configuring-jira-cloud-to-send-emails-on-behalf-of-your-domain-900996548.html] which redirects to a login page. After logging in you see the message:\r\n{quote}Looks like we\u2019re off the beaten track\r\n They say that all roads, lead to Rome.\u2028 \r\n But we\u2019ve lost our way, so let\u2019s try going home.\r\n Head to our documentation homepage that does exist.\r\n{quote}\r\nh3. Workaround\r\n\r\nUse the link below to access the relevant documentation:\r\n\r\n[Configuring Jira Cloud to send emails on behalf of your domain|https://confluence.atlassian.com/adminjiracloud/configuring-jira-cloud-to-send-emails-on-behalf-of-your-domain-979428371.html]",
+      "summary": "Learn more link in next-gen project leads to incorrect page"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9380",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-28T00:23:07.000+0000",
+      "created": "2020-08-28T09:21:49.000+0000",
+      "description": "h3. Issue Summary\r\nWhen opening issue from the queue page and using the old issue , there are no issue screen left margin. The issue text too close with the left sidebar.\r\n\r\nh3. Steps to Reproduce\r\n # Open the queue\r\n # Click one of the issue\r\n# Change to old issue view \r\n\r\nh3. Expected Results\r\n !Screenshot 2020-08-28 at 5.19.59 PM.png|thumbnail! \r\nh3. Actual Results\r\n !Screenshot 2020-08-28 at 5.19.29 PM.png|thumbnail! \r\n\r\nh3. Workaround\r\nOpen the issue outside the queue page. For example :-\r\nThis is the link from the queue page : https://nroslan.atlassian.net/jira/servicedesk/projects/TIG/queues/custom/19/TIG-234?oldIssueView=true\r\nThis is the link outside the queue page : https://nroslan.atlassian.net/browse/TIG-234?oldIssueView=true",
+      "summary": "No issue view screen left margin when opening issue from the Queue page using the old issue view"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9379",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-10-29T06:03:35.000+0000",
+      "created": "2020-08-27T14:40:05.000+0000",
+      "description": "Currently, Knowledge Base search will only match the Confluence Pages title or text, and it will not match labels.\r\n\r\nAs an admin, it'd be optimal to have the KB searching for labels as well.",
+      "summary": "Allow Knowledge Base articles to be searched by Confluence Labels"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9377",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-27T00:23:05.000+0000",
+      "created": "2020-08-27T06:26:45.000+0000",
+      "description": "h3. Issue Summary\r\nIn Next Gen project, user have the option to add Checkbox custom field in request form and preselect the value. However, when customer uncheck all the preselected value and create the issue , the preselected value still remains.\r\n\r\nh3. Steps to Reproduce\r\n # Open next gen project\r\n # Add Checkbox custom field to a request form\r\n# Then, add multiple options and preselect a few values.\r\n !Screenshot 2020-08-27 at 2.24.57 PM.png|thumbnail! \r\n# Once done, open the request form and untick all options and create the issue\r\n\r\nh3. Expected Results\r\nAll checkbox value will be removed\r\nh3. Actual Results\r\nThe preselected value still remain after creating the issue\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available.\r\n\r\nUnfortunately, the only way is to disable the preselected value.",
+      "summary": "Creating issue via Customer Portal after uncheck all \"Preselected\" value for Checkbox custom field in Request Form for Next gen project , still retain the preselected value"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9376",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-27T05:03:46.000+0000",
+      "description": "h3. Summary\r\n\r\nCurrently, the Jira service desk organization listing is limited to 5 pages even if there are more organizations.\r\nh3. Environment\r\n\r\nJira service desk cloud\r\nh3. Steps to Reproduce\r\n # Create more than 250+ organizations.\r\n # Try to browse through the listing after 5 pages.\r\n\r\nh3. Expected Results\r\n * Should be able to browse all the organizations.\r\n\r\nh3. Actual Results\r\n * Can only browse up to the 5th page.\r\n\r\nh3. Workaround\r\n\r\nUse the filter search on the organization page to filter and see the remaining ones.",
+      "summary": "Jira service desk organizations listing is limited to 5 pages"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9374",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-26T14:53:41.000+0000",
+      "description": "*Problem*\r\n\r\nOnce AWS service catalog is integrated using \"AWS Service Catalog for JSD Cloud\" with Jira Service Desk\u00a0and the account is connected,\u00a0we can see the status as _connection successful_. But there's no notification whenever there's a problem with this connectivity.\r\n\r\n*Why this is Important*\r\n\r\nIt will be really helpful to get this notification instead of manually checking the connection every time where there is a high number of connected accounts.\r\n\r\n*Workaround*\r\n\r\nThe connection test can be triggered manually at the configuration page. To do that navigate to the configuration page, select an account, and click _test connectivity_ button.\r\n\r\n\u00a0",
+      "summary": "Notification when connection is disrupted for accounts in AWS Service Catalog "
+    }
+  },
+  {
+    "key": "JSDCLOUD-9373",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-26T00:23:03.000+0000",
+      "created": "2020-08-25T22:31:55.000+0000",
+      "description": "h3. Issue Summary\r\nCreating an automation rule in a classic project and specifying a status (that is also present in a next-gen project) as part of the condition causes the next-gen status to show as well.\r\n\r\nh3. Steps to Reproduce\r\n # Create a classic JSD project\r\n # Create a next-gen JSD project\r\n # Add a similarly named status to one of the next-gen project's workflows (e.g., *PENDING*)\r\n # Create an automation rule (not to be confused with *Project automation*)\r\n # Set the condition to match on that status\r\n # Save the rule\r\n # Edit the rule and see that the condition shows multiple instances of the same status with a red exclamation mark next to the next-gen variant\r\n\r\nh3. Expected Results\r\nOnly statuses for that project should be shown.\r\n\r\nh3. Actual Results\r\nAll statuses (even from next-gen projects) matching that name show.\r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Creating Automation rules based on status can pull in next-gen statuses"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9372",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-25T12:23:11.000+0000",
+      "description": "h1. Display date and time on Service Desk queue, now it is only displayed the date and not the time.",
+      "summary": "display date and time on Service Desk queue"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9371",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-25T02:04:38.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nPressing enter when selecting a result coming from a search macro makes confluence being render inside JSD\r\n\r\n\r\nh3. Steps to Reproduce\r\n # \u00a0Create a confluence article and add a live search macro on it\r\n\r\n # Open this article in the jsd-portal or kb hub and make a search\r\n\r\n # \u00a0Move the cursor to a result and press enter\r\n\r\nh3. Expected Results\r\n\r\nThe article is open in a different page. Same behavior as when you click on a result\r\nh3. Actual Results\r\n\r\nConfluence is rendered inside JSD.\r\nh3. Workaround\r\n\r\nThe only known workaround is to click on the result rather than pressing enter.",
+      "summary": "Pressing enter when selecting a result coming from a search macro makes Confluence render inside JSD"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9370",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-21T18:27:01.000+0000",
+      "description": "Hola Actualmente Jira serive desk cuando el cliente ve sus solicitudes no aparece el campo de fecha de creaci\u00f3n, me gustar\u00eda saber si existe una forma de a\u00f1adir este campo en la tabla o si est\u00e1n pensando en a\u00f1adir esto en alguna versi\u00f3n futura\r\n\r\n!image-2020-08-21-13-26-34-165.png!",
+      "summary": "Ver Fecha de creaci\u00f3n en Portal del cliente"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9369",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-21T16:23:15.000+0000",
+      "description": "h3. Summary\r\nUsers with Jira Core/Software license and Browse project permission are not able to navigate filters within Jira service desk project, if the new issue view is turned off\r\n\r\nWhen they try to navigate to another issue, the page refreshes and gets back to the first ticket in the current filter.\r\n\r\nh3. Steps to Reproduce\r\n# Provide a user with the Jira software license\r\n# Add the user to Browse project permission in a service desk project\r\n# Turn off the new issue view for the user\r\n# Navigate to the project to view the filters and try to view the next issue from the list returned by the filter\r\n\r\nh3. Expected Results\r\nAbel to see and navigate to different issues within the filter\r\n\r\nh3. Actual Results\r\nWhen they try to navigate to another issue, the page refreshes and gets back to the first ticket in the current filter.\r\n \r\nh3. Notes\r\nThe filers in Advanced search still works fine. \r\n\r\nh3.Workaround\r\nEnable the new issue view from personal settings - https://<yourinstance>.atlassian.net/secure/ViewPersonalSettings.jspa to view and navigate through the filters within JSD project ",
+      "summary": "Users with Jira Core/Software license not able to navigate filters within JSD project if the new issue view is turned off"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9368",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-08-21T15:46:18.000+0000",
+      "description": "Hello!\r\n\r\nMost of my time in Jira is spent inside the Service Desk answering tickets that are coming in from our clients.\r\n\r\nI'm not sure if you have something like this - Looked myself and had my Dev team look as well but to no avail-\r\n\r\nI would be nice though if on the Dashboard Gadgets for Filter Results, if there could be a field to visually show if there is an unanswered response on the ticket. In our old ticket system we had a column that would simply say OPEN in red if the ticket was new and hadn't responded to, ANSWERED in green once one of our reps responded to the ticket, and then from there if the customer responds back the status would display PENDING in yellow. Alternating between ANSWERED and PENDING until the ticket is closed out.\r\n\r\n\u00a0 \u00a0- This would be beneficial because we can quickly tell from our Dashboards if the tickets in our queue are awaiting a response from us or from the client. Also will eliminate the need to take the time to open each ticket to see the most recent response.\r\n\r\n\r\n\r\nThank you for your time!",
+      "summary": "Adding \"responseStatus\" column to Filter Results gadget"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9366",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-08-27T23:06:30.000+0000",
+      "created": "2020-08-20T05:42:04.000+0000",
+      "description": "h3. Issue Summary\r\nCurrently, when user setup approvals for next-gen project, user need to create a new custom field. If they use *Approvals* name, it allows them to create it. However, in the field layout it throw warning as below :-\r\n\r\n{noformat}\r\nAlready exists. Use the previously-created field or try another name.\r\n{noformat}\r\n\r\nThis is because JSD have a system field using the same name. User not able to remove the new custom field created previously with \"Approvals\" name. This only happen when setting up Approvals for next gen project for the first time in the instance.\r\n\r\nh3. Steps to Reproduce\r\n # Open Next gen project\r\n # Edit workflow\r\n# Click *Create Approvals*\r\n# Then, for \"Approver field\" , type *Approvals*. \r\n\r\nh3. Expected Results\r\nIt should reject the name and show *Already exists. Try another name.* error.\r\n\r\nh3. Actual Results\r\nThe custom field created successfully. Then , at the field layout , the warning show as below :-\r\n !Screenshot 2020-08-20 at 1.41.03 PM.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nRaise ticket to support to remove the field. ",
+      "summary": "For Next-gen project, if user create \"Approvals\" custom field for their Approvals setup , it throw warning at the field layout"
+    }
+  },
+  {
+    "key": "JSDCLOUD-9365",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18512",
+        "id": "18512",
+        "key": "JSDCLOUD",
+        "name": "Jira Service Management Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18512&avatarId=106190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18512&avatarId=106190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18512&avatarId=106190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18512&avatarId=106190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-21T00:21:01.000+0000",
+      "created": "2020-08-20T05:12:36.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nJira Service Desk fails to render a preview of the attachment in the description if the request was created by email and the attachment contains a special character such as _?_.\r\nh3. Steps to Reproduce\r\n # Create a request in the service desk using email and include an attachment with a special character in the name (e.g ?)\r\n # View the created request in Jira Service Desk\r\n\r\nh3. Expected Results\r\n\r\nThe request is created and contains the attachments and a preview of the attachments in the description.\r\nh3. Actual Results\r\n\r\nThe description fails to render a preview of the attachment as it will try and use the original filename (with special character).\r\n\r\nNote:\r\n The attachment can be viewed from the comments section when viewing the request. The request is created and attachments are uploaded as expected. Attachments with filenames containing special characters are renamed to replace special characters with _. e.g. a file named my?attachment.png would be uploaded as an attachment to the created ticket as my_attachment.png\r\n\r\n!image-2020-08-20-15-23-02-237.png|width=653,height=544!\r\nh3. Workaround\r\n\r\nRename the attachment in the description.\r\n\r\n\u00a0",
+      "summary": "Email attachments containing special characters for new requests do not render in the description"
+    }
+  }
+]

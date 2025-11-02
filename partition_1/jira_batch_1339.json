@@ -1,0 +1,2202 @@
+[
+  {
+    "key": "ID-7551",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-19T10:46:43.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nRe-linking an Atlassian Account to an IDP account leads to a login error if the old Atlassian Account is deactivated before the user's next login\r\n\r\nh3. Steps to Reproduce\r\n\r\n1. As the end user, SSO login into Atlassian (ie. _primaryemail@domain.com_) \r\n\r\n2. On org managed accounts, change the email address of the account to something else. (ie. _primaryemail@domain.com -> primaryemail_free@domain.com_ )\r\n\r\n3. Deactivate the old account in managed accounts (ie. _primaryemail_free@domain.com_)\r\n\r\n4. In AA org managed accounts, migrate another existing Atlassian account to use the SSO email address. (ie. _alias@domain.com -> primaryemail@domain.com_)\r\n\r\n5. As the end user, try to perform an SSO login again. \r\n\r\nh3. Expected Results\r\n\r\nThe user should be able to login into Atlassian Account that matches the SSO email address. \r\n\r\nh3. Actual Results\r\n\r\nAfter a successful authentication on the IDP, the user is redirected to a login error on Atlassian side. \r\n\r\n{panel}\r\nHmm... We're having trouble logging you in.\r\nThis account has been deactivated. Please contact your organization admin\r\n{panel}\r\n\r\n !Error.png|thumbnail! \r\n\r\n\r\nh3. Workaround\r\n\r\nReactivate the old account to allow the re-link to happen. \r\n\r\nAs the org admin, reactivate the old account (ie.  primaryemail_free@domain.com)\r\nAs the end user, perform an SSO login to re-link (ie. primaryemail@domain.com)\r\nAs the org admin, deactivate and delete the old account again (ie.  primaryemail_free@domain.com)",
+      "summary": "SAML re-link failure for deactivated accounts"
+    }
+  },
+  {
+    "key": "ID-7546",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-30T06:56:26.000+0000",
+      "created": "2020-05-13T14:16:12.000+0000",
+      "description": "h3. Problem Description\r\nWhen a user tries to log in to [https://id.atlassian.com] and the user is logged in with a google email address in the browser, the user receives an option on the top right to *SignIn to id.atlassian.com with Google* even when this gsuite domain is not integrated with any Atlassian cloud:\r\n !Screenshot 2020-05-13 at 7.40.05 PM.png|thumbnail! \r\n\r\n\r\nh3. Suggested Resolution\r\nRemove the *SignIn to id.atlassian.com with Google*  in the login page when the gsuite domain is not integrated with the Atlassian cloud. \r\n\r\n\r\n",
+      "summary": "Disable SignIn to id.atlassian.com with Google option"
+    }
+  },
+  {
+    "key": "ID-7544",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-05-14T01:40:57.000+0000",
+      "created": "2020-05-13T08:13:46.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen signing up in Trello, users may encounter an error when signing up with Google. \r\n\r\nh3. Steps to Reproduce\r\n # Go to https://trello.com/signup\r\n # Click on *Continue with Google*\r\n # Sign in using the Google account. \r\n\r\nh3. Expected Results\r\n\r\nUser should be allowed to sign up in Trello\r\n\r\nh3. Actual Results\r\n\r\nError is returned \r\n\r\n{code}\r\n{\"error\":\"SIGNUP_MANAGED_ATLASSIAN_ACCOUNT_RESTRICTION\",\"message\":\"Email is restricted to Atlassian account signup\"}\"\r\n{code}\r\n\r\nh3. Workaround\r\n\r\nDo not use the Google option from the Trello sign up page. \r\n\r\n- Go to https://trello.com/signup\r\n- Enter the email address and click on *Continue*\r\n- On the next page (id.atlassian.com), use the *Continue with Google* ",
+      "summary": "Google users failing to signup in Trello"
+    }
+  },
+  {
+    "key": "ID-7542",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-12T16:11:09.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nIf a blog owner shares a Blog with a group and lets say this user groups have users without Site Access, an access request will be created on behalf of the Blog owner for these users' product access (confluence) in this case. Usually the Blog Owners are unaware of the fact that they have requested for access for the users who are no longer part of their Userbase.\r\n\r\nh3. Suggested Solution\r\n\r\nMake the \"Request Access \" on behalf of other users feature more transparent, so when a Blog is shared, current users are aware of the fact that they are requesting for access for other Users and then decide accordingly.\r\n\r\n*Current Workaround*\r\n\r\nWhile disabling the user's Site access, they have to be removed from all the groups they are a member of so an access request is not created for them if a permission is granted to the groups.",
+      "summary": "Improvement to Access Request Feature"
+    }
+  },
+  {
+    "key": "ID-7540",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-10-12T03:17:54.000+0000",
+      "created": "2020-05-11T22:07:25.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nSigning up to a managed domain using the \"Login with Google\" button results in an error: \"Email is restricted to Atlassian account signup\"\r\n\r\nthe\u00a0account creation page, enter your email address in the email field first, and then proceed onto the next account creation screen where you may then use the Google button to complete the account registration.\r\nh3. Steps to Reproduce\r\n # On the account creation page, without entering an email, click \"Continue with Google\"\r\n # Error will show: \"Email is restricted to Atlassian account signup\"\r\n\r\nh3. Expected Results\r\n\r\nThe user should be able to use their existing Google login to signup for an Atlassian account\r\nh3. Actual Results\r\n\r\nThe user receives an error.\u00a0\r\n\r\n{code}\r\n{\"error\":\"SIGNUP_MANAGED_ATLASSIAN_ACCOUNT_RESTRICTION\",\"message\":\"Email is restricted to Atlassian account signup\"}\"\r\n{code}\r\n\r\nh3. Workaround\r\n\r\nDo not use the Google option from the Trello sign up page.\r\n\r\n- Go to https://trello.com/signup\r\n- Enter the email address and click on Continue\r\n- On the next page (id.atlassian.com), use the Continue with Google",
+      "summary": "Signing up for a Trello account with a Google login gives an error \"Email is restricted to Atlassian account signup\""
+    }
+  },
+  {
+    "key": "ID-7538",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-06-04T17:13:35.000+0000",
+      "created": "2020-05-11T19:08:45.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nSometimes when a user tries to create a new Trello account that ends up being managed, they cannot find the verification email in their inbox. Therefore, the banner message to confirm their email is always displayed on their Trello account.\r\nh3. Steps to Reproduce\r\n # Create a new Trello account linked to an Atlassian account\r\n # Try to confirm your account by using the links to send an email\r\n\r\nh3. Expected Results\r\n\r\nAn email is available to the user through their mail client.\r\nh3. Actual Results\r\n\r\nUser is not able to find the email.\r\nh3. Workaround\r\n\r\nThe user can reset their Atlassian account password at\u00a0[https://id.atlassian.com/login/resetpassword], which will confirm the account.\u00a0",
+      "summary": "Some newly created Atlassian accounts from Trello are not able to confirm their accounts"
+    }
+  },
+  {
+    "key": "ID-7532",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-06T19:01:37.000+0000",
+      "description": "h3. Problem Definition\r\nSome companies have multiple sites and sites admins, org admins and IDP admins might be different people.\r\nIf a site admin requests a group to be unassigned from the IDP, users will be deactivated and it might impact different sites. Also, if and IDP group is provisioned and removed, it might impact other sites.\r\n\r\nh3. Suggested Solution\r\nOn site management, add a flag to the provisioned groups shared with multiple sites\r\n\r\nh3. Workaround \r\nN/A",
+      "summary": "Add a flag to the provisioned groups shared with multilple sites"
+    }
+  },
+  {
+    "key": "ID-7529",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-05T14:01:14.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nFrom\u00a0[https://support.google.com/accounts/troubleshooter/1699308?visit_id=637242348410340378-2424293974&hl=en&rd=1#ts=1699315]:\r\n\r\nA Google Account may be created using any standard email address that can receive mail. Because of this, you may have used your G\u00a0Suite email address to create a\u00a0_conflicting account_. A conflicting account is a personal Google Account that was created using the email address of a G\u00a0Suite account. For this reason, any G\u00a0Suite user could have two accounts with the same email address.\r\n\r\n*Here's a common scenario*\r\n # Jane decides to go to www.google.com/photos and creates a Google Account with her corporate email address 'Jane@altostrat.com.'\r\n # Jane's company, Altostrat, upgrades to G\u00a0Suite \u2013 which means each employee's email address is now that employee's username for a corporate Google Account.\r\n # Jane now has two Google Accounts \u2013 one G\u00a0Suite account, and one Google Account, that share the same primary email address, but are completely unrelated.The most common reason that you may have a conflicting account is that you used Google Reader, Google Voice, or Picasa Web Albums with your\u00a0*@my-domain.com*\u00a0email.\r\n\r\nh3. Steps to Reproduce\r\n # Having a Google Account created with the corporate email address prior to having G Suite on the company, login to Atlassian using social login.\r\n # (System) A link is now created using the Google ID of this account into the Atlassian account.\r\n # Company now has a SAML integration, the end user logs in by company SSO, creating the SAML ID link with the Atlassian account.\r\n # Company now has G Suite in place. (Not integrated with Atlassian)\r\n # (System) Google now changes the pre-G Suite Google Account email to @gtempaccount.com\r\n # End user uses social login again with Atlassian with an existing session for the pre-G Suite Google Account.\r\n\r\nh3. Expected Results\r\n\r\nWith SAML SSO in place, the Google ID should have been cleared from the account, so no profile changes are propagated from Google anymore through social link.\r\nh3. Actual Results\r\n\r\nThe Atlassian account gets updated from Google to [name%domain@gtempaccount.com|mailto:name%domain@gtempaccount.com]\r\nh3. Notes\r\n\r\nThe issue can reoccur if the end user uses social login again.\r\nh3. Workaround\r\n\r\nIf the new gtempaccount.com email address is still accessible, perform an email change back to the original one, if another Atlassian account is already using it, access the new duplicated account and change its email to an alias such as name+alias@domain.com, then perform the change on the original account.\r\n * [https://confluence.atlassian.com/cloudkb/changing-atlassian-account-email-addresses-969508513.html]\r\n\r\nIf you are not able to perform the steps above, please engage our Atlassian support by raising a ticket on our support.atlassian.com portal.",
+      "summary": "Social log in causing email change to @gtempaccount.com for SAML linked accounts"
+    }
+  },
+  {
+    "key": "ID-7522",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-29T19:07:49.000+0000",
+      "description": "When you are adding a user to a group, the dropdown list shows all groups even if the user is nested in one of those groups. And you can add the user to the same group many times.\r\n\r\nSee below:\r\n\r\n [^addingUser.mp4] \r\n\r\nIt would be awesome to don't show up groups which the user is nested.",
+      "summary": "Adding a user to a group show ALL groups"
+    }
+  },
+  {
+    "key": "ID-7516",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-23T18:36:38.000+0000",
+      "description": "At this moment, the user management page seamlessly covers access to Jira Cloud and Confluence Cloud under one roof. \r\nHowever, Org admins can't define Trello access for managed accounts.\r\n\r\nPlease unify the products from a user management perspective, so that access can be granted easier to any of the Atlassian products.",
+      "summary": "Unify user management between Jira/Confluence Cloud and Trello"
+    }
+  },
+  {
+    "key": "ID-7515",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-30T04:15:57.000+0000",
+      "created": "2020-04-23T15:02:07.000+0000",
+      "description": "h3. Issue Summary\r\nWhen allowing users from your @domain to get access to your site, we make sure that your organization will be able to log in to your Atlassian site - even if we disable new users to be granted with product access, at least the users are created there.\r\nThough, if a regular user either share a JIRA issue or Confluence page with someone that is/is not added to the user management, this user is added to the site and granted with product access.\r\n\r\nh3. Steps to Reproduce\r\n*Part #1: Make sure to allow users from your domain to have access in your site*\r\n# Go to your *Site Administration > Site Access*;\r\n# Check the second option *Approve the following domains*;\r\n# Add your @domain.com and hit enter;\r\n# Click on *Save Changes*.\r\n\r\n*Part #2: Disable new users with product access*\r\n# Go to your *Site Administration > Product Access*;\r\n# Untoggle all the *New users have access to this product* options.\r\n\r\n*Part #3: Reproducing the issue*\r\n# Log in with a regular user with no admin or site-admin permissions;\r\n# Access either a Confluence page or JIRA issue with this user;\r\n# In the content you accessed, hit the *share* option;\r\n# Type an email address from a user that doesn't have access to the site or have access to the site but with no product access - be sure this email address belongs to the @domain.com you set on *Step #1*;\r\n# Copy the URL;\r\n# On an incognito window, paste the link and log in to the site with the email you shared the content.\r\n\r\nh3. Expected Results\r\nYou are supposed to fall in a screen asking to request access to that product.\r\n\r\nh3. Actual Results\r\nYou are able to log in on the site, seeing the content that was shared.\r\n\r\n*NOTES*:\r\n* even if the shared content has some permissions/restrictions that prevent the user to see that content, the product access was granted - with your *site-admin* account, access this user profile and you will that.\r\n\r\nh3. Workaround\r\nRemove the @domain.com from the *Site Access*, for now.",
+      "summary": "Defining a domain to aprove site access allows regular users to add and grant new users with product access"
+    }
+  },
+  {
+    "key": "ID-7511",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-03-30T05:50:10.000+0000",
+      "created": "2019-12-31T10:15:38.000+0000",
+      "description": "Please provide an ability to link 2 Atlassian organization with the same G Suite Account(single G suit account).\r\n\r\nCurrently, if we try to link two Atlassian organizations with G suit it states that the G Suite organization is already linked to another Atlassian organization.\r\n\r\nTest case: \r\n1.I have two Atlassian organisations \"abc\" and \"xyz\".\r\n2.I want to link them both to the same G Suite account \"AAA\"\r\n3.When I try to do that for \"abc\" it correctly states that the G Suite organization \"AAA\" is already linked to another Atlassian organization \"xyz\" ",
+      "summary": "Ability to link more than one org with a G suit account"
+    }
+  },
+  {
+    "key": "ID-7509",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-22T02:56:14.000+0000",
+      "description": "This is coming out of a discussion with eco-system and Identity teams on misuse of api token.\r\n\r\nEventually ecosystem decide on the overall strategy around API token usage. But before that,  we should be able to at least have the information on api token access. Admin need to at least be able to know what resources api token accessed at what time.\r\nSuggest event to be include:\r\napi token creation/deletion\r\napi token access resource\r\n\r\nThis work will need both identity and Admin Experience team's effort. So this ticket is for identity side of work\r\n\r\nHope this is the right place for it.",
+      "summary": "Ability to have api token related event in audit log"
+    }
+  },
+  {
+    "key": "ID-7505",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-21T20:40:25.000+0000",
+      "description": "h2.Problem\r\nIt's not possible to see in the admin page, G Suite tab, who is the user that set the G Suite integration.\r\n\r\nh2.Suggestion\r\nAdd a field in the G Suite tab showing the information. That will allow users to manage G Suite admins without causing problems to the integration.",
+      "summary": "It's not possible to see in the admin page, G Suite tab, who is the user that set the G Suite integration"
+    }
+  },
+  {
+    "key": "ID-7503",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-23T23:40:22.000+0000",
+      "created": "2020-04-21T07:00:34.000+0000",
+      "description": "h3. Summary\r\nWhen a tenant that is linked to an Atlassian organization is destroyed, it removes all the verified domains in this org from verification\r\n\r\nh3. Steps to Reproduce\r\n# Create a test site and link it to a test organization that has at least one verified domain\r\n# Proceed with deleting the test site \r\n\r\nh3. Expected Results\r\nThe site in unliked from the org and the site is destroyed without impacting org and its verified domains.\r\n\r\nh3. Actual Results\r\nWhen the site gets destroyed, it removes the org's verified domain from verification. In the organization audit log, there will be an entry that Atlassian Internal System has removed the domain from verification\r\n !log.png|thumbnail! \r\n\r\nh3.Workaround\r\nUnlink the site from the organization before deleting the site.",
+      "summary": "When a tenant that is linked to an Atlassian organization is destroyed, it removes all the verified domains in this org from verification"
+    }
+  },
+  {
+    "key": "ID-7502",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-05-12T00:46:25.000+0000",
+      "created": "2020-04-20T20:50:56.000+0000",
+      "description": "User reported this via CAC: [https://community.atlassian.com/t5/Trello-questions/Can-t-sign-up-for-Trello-account-using-Microsoft-365-account/qaq-p/1353985]\r\n\r\nHello,\r\n\r\nI am trying to sign up for a Trello account using \"Continue with Microsoft\" sign up feature. I am working to get my entire organization to use Trello and using the Microsoft sign up feature would be a low hurdle for everyone to overcome. We're a nonprofit and use a .org email address.\r\n\r\nDoes anyone know how I could possibly fix this? See below for error message from Atlassian:\r\nh2. Hmm... We're having trouble logging you in.\r\n\r\nSorry, we had trouble logging you in with your Microsoft account. Your specific Azure Active Directory configuration is not currently supported. We are working on it!\r\n\r\nFor now, please enter your email in the login form and click continue and we will direct you to the most appropriate login method.",
+      "summary": "User can't sign up for Trello account using Microsoft 365 account (need help)"
+    }
+  },
+  {
+    "key": "ID-7501",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-20T12:06:08.000+0000",
+      "description": "{panel:title=Bug Fix Policy|titleBGColor=#e0efff}\r\nAt the moment, we can't set an ETA for the fix to be released, since there's a number of factors that determine how our product team prioritizes bugfixes.\r\n Consider adding yourself as a watcher to be kept informed as to the state of the bug moving forward. With that way, if our development team updates the ticket, you'll be notified via email.\r\n You can learn more by reading [Atlassian Cloud Bug Fixing Policy|https://confluence.atlassian.com/support/atlassian-cloud-bug-fixing-policy-206865884.html].\r\n{panel}\r\nh3. Issue Summary\r\n\r\nUsers on managed accounts cannot disable their two-step verification if the organization enforces the two-step verification. Although that is expected behavior, the system doesn't take account of it.\r\nh3. Steps to Reproduce\r\n # Create an organization (without user provisioning) and enforce 2-step verification\r\n # As a managed user, try to disable the 2SV at [https://id.atlassian.com/manage-profile/security/two-step-verification]\r\n # Notice that the system shows \"Something went wrong\"\r\n\r\n!Screenshot 2020-04-20 20.29.45.png|thumbnail!\r\nh3. Expected Results\r\n\r\nShow a specific error message corresponding to the Atlassian Access setting.\r\nh3. Actual Results\r\n\r\nThe system shows a general error saying \"Something went wrong\".\r\n\r\nThe relevant POST request towards [https://id.atlassian.com/manage/rest/two-step-verification/unenroll] gets a 403 response with the content body below:\r\n{code:none}\r\nThe request was a legal request, but the server is refusing to respond to it.\r\n{code}\r\nh3. Workaround\r\n\r\nThe organization admin can temporarily exclude users from two-step verification.\r\n Refer to [https://confluence.atlassian.com/cloud/enforced-two-step-verification-938859738.html] for more details.\r\n\r\n!Screenshot 2020-04-20 20.57.36.png|thumbnail!",
+      "summary": "2SV enforced user only sees \"Something went wrong\" when trying to disable 2SV"
+    }
+  },
+  {
+    "key": "ID-7499",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-10-12T02:37:40.000+0000",
+      "created": "2020-04-17T14:37:23.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen creating an Atlassian account, there is a validation check on the *Enter full name* box that blocks emails from being used as your full name.\r\n\r\n !Sign_up_-_Log_in_with_Atlassian_account.png|thumbnail! \r\n\r\nOnce the account is created, the validation check is no longer there and you can use an email as you _Full name_ or _Public name_ which is not ideal and comes with its own risks.\r\n\r\nh3. Steps to Reproduce\r\n # Create an Atlassian account through the [signup page|https://id.atlassian.com/signup] with a normal full name\r\n # Go to your [Profile And Visibility|https://id.atlassian.com/manage-profile/profile-and-visibility] settings and change your *Full name* or *Public name* to an actual email.\r\n\r\nh3. Expected Results\r\n\r\nThere should be a validation check that blocks you from doing so, prohibiting the format of \"string+@+domain\".\r\n\r\nh3. Actual Results\r\n\r\n !Atlassian_account.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behaviour. A workaround will be added here when available",
+      "summary": "Full name email check is not implemented once an account is created"
+    }
+  },
+  {
+    "key": "ID-7494",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-05-12T00:14:21.000+0000",
+      "created": "2020-02-04T02:00:01.000+0000",
+      "description": "h3. Issue Summary\r\nUnlicensed product users are prompted with a screen indicating a delay rather than a product licensing problem\r\n\r\nh3. Steps to Reproduce\r\n# Create a user with Confluence license only, but not Jira.\r\n# Attempt accessing a Jira issue via direct link to issue ie: https://<myinstance>.atlassian.net/browse/<issue number>\r\n> user is prompted with a screen where he can request access - this is expected\r\n# *However* when same user attempts accessing a Jira board URL via direct link. User gets the message \"Your operation is taking longer than usual\"\r\n\r\nh3. Expected Results\r\nThe user should be prompted to request access the same as for the Jira issue.\r\n\r\nh3. Actual Results\r\nThe user gets the message \"Your operation is taking longer than usual\"\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behaviour. A workaround will be added here when available",
+      "summary": "Unlicensed product users are prompted with a screen indicating a delay rather than a product licensing problem"
+    }
+  },
+  {
+    "key": "ID-7493",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-13T14:38:39.000+0000",
+      "description": "As a user, we don't have knowledge about the error when the G Suite sync fails because the initiator no longer has G Suite admin rights.\r\n\r\nIt only displays that an unexpected error happened and to try again or contact support.\r\n\r\nIt would be good if the error points to the information that the G Suite sync failed because the initiator no longer has G Suite admin rights.",
+      "summary": "Provide a more detailed response when G Suite sync fails because the initiator no longer has G Suite admin rights"
+    }
+  },
+  {
+    "key": "ID-7492",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-14T16:04:52.000+0000",
+      "created": "2020-04-10T08:50:05.000+0000",
+      "description": "h3. Issue Summary\r\nUsers on managed account (without Atlassian Access) cannot set up individual 2FA\r\n\r\nh3. Steps to Reproduce\r\n # As a managed user without Atlassian Access, login to https://id.atlassian.com/manage-profile/security/two-step-verification\r\n # Notice that 2FA is not available, even though there is no identity provider involved\r\n\r\nh3. Expected Results\r\nManaged users can enable 2FA individually\r\n\r\nh3. Actual Results\r\n\r\nAn error is thrown, mentioning that the org admin mandated an IDP login. However, no IDP is involved:\r\n !2FA_error.png|thumbnail! \r\n\r\n\r\nh3. Workaround\r\n\r\nRemove the verified domain.\r\n\r\n !Screenshot 2020-04-13 17.47.44.png|thumbnail! ",
+      "summary": "Users on managed account (without Atlassian Access) cannot set up individual 2FA"
+    }
+  },
+  {
+    "key": "ID-7490",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-10T03:44:37.000+0000",
+      "description": "h3. Summary\r\nImprove the username update behavior for linked G Suite instance users that are not included in the synced group\r\n\r\nh3. Steps to Reproduce\r\n# Integrate a Cloud site with a G Suite instance\r\n# Sync one of the G Suite groups\r\n# The users that belong to the G Suite group will be added to the site.\r\n** At the same time, for all the users that use the domain managed by the G Suite instance, their Atlassian accounts will be managed by G Suite. This disables updating their username from id.atlassian.com\r\n# From G Suite, update the username of a user that doesn't belong to the synced group\r\n\r\nh3. Expected Results\r\nThe Atlassian account username is updated\r\n\r\nh3. Actual Results\r\nThe Atlassian account username is not updated.\r\n\r\nh3. Problem Definition\r\nSince the users' Atlassian account is managed by G Suite, updating the username from id.atlassian.com is disabled. For this, there is no way for the affected user to update their username\r\n\r\nh3. Suggested Solution\r\nUpon the four hours interval group-to-site sync, sync the users' information that don't belong to the synced group as well\r\n\r\nh3. Notes\r\nThe Atlassian account username update for the affected users may happen randomly. However there are no known triggers so far",
+      "summary": "Improve the username update behavior for linked G Suite instance users that are not included in the synced group"
+    }
+  },
+  {
+    "key": "ID-7486",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-16T23:44:51.000+0000",
+      "created": "2020-04-08T09:16:56.000+0000",
+      "description": "h3. Issue Summary\r\nUser is not able to upload an image header from the user profile\r\n\r\nh3. Steps to Reproduce\r\n # Access user profile from https://id.atlassian.com/manage-profile/profile-and-visibility\r\n# Select *Update your header image*\r\n# Error pops up \"Ops, something went wrong\"\r\n\r\nh3. Expected Results\r\nHeader image updated accordingly. \r\n\r\nh3. Actual Results\r\nError from the Jira:\r\n !image-2020-04-08-17-14-52-401.png|thumbnail! \r\nThe below exception is thrown in the xxxxxxx.log file:\r\n{code}\r\n{\"error\":{\"code\":\"JwtAuthoriser:AuthenticationError\",\"title\":\"Token verification failed: invalid signature\",\"href\":\"https://api.media.atlassian.com#UnauthorizedError\"}}\r\n{code}\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Error when uploading header image from user profile. "
+    }
+  },
+  {
+    "key": "ID-7482",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-07T12:39:52.000+0000",
+      "description": "h3. Current Scenario\r\nWhen users are facing login issues, they may end up on a dead-end, without know where to ask for help to solve their issue. They may not know our support channels, and how to find them.\r\n\r\nh3. Suggested Solution\r\nWhen users face login issues, a proposed solution would be to bring our help to their direct view, and provide a quick way to reach out to us:\r\n{quote}\r\n A \"help\" link that is displayed on an error screen when a user can not log in should NOT take the user to a location where they need to log in to submit a ticket. With an additional option to \"click here to send an email to Atlassian support\" or provide some other avenue for users to contact you besides hunting around your website hoping to find a way to get in touch.{quote}",
+      "summary": "Provide users that face login issues with quick troubleshooting help and a direct way to reach out to support"
+    }
+  },
+  {
+    "key": "ID-7475",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-06T08:08:18.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nSometimes, the group membership for a synced group in the site does not match the group membership with the SCIM directory data\r\n\r\nh3. Steps to Reproduce\r\n # Setup User provisioning with a third party IDP\r\n # Provision some groups from the IDP to the site\r\n # Turn on provisioning from the IDP to run the initial sync\r\n # Wait for awhile and allow the data to be synced\r\n # Check the group membership synced\r\n\r\nh3. Expected Results\r\n\r\nThe group membership on the site matches with the AD groups on the IDP.\r\n\r\nh3. Actual Results\r\n\r\nFrom the User provisioning configuration page, the group membership shows the expected count and matches with the group members \r\n of the AD groups. There should be no errors reported for those group in the Troubleshooting log section. This indicates that the sync from the IDP to the SCIM directory was successful.\r\n\r\n !dir group.png|thumbnail! \r\n\r\nOn the site (https://<site>.atlassian.net/admin/group), the provisioned group does not have the correct group members. \r\n\r\n_*Note* : This bug does not apply if the User provisioning configuration page reports errors for the groups or the group summary does not match with the data on the AD groups._. \r\n\r\nh3. Workaround\r\n\r\nThe scim directory data may not be in sync with the site group data. \r\n\r\n1. Add or remove group members on the AD group to trigger another sync.\r\n2. If problem persists, please contact Atlassian support. ",
+      "summary": "Site group membership not in sync with SCIM directory data"
+    }
+  },
+  {
+    "key": "ID-7467",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-02T23:30:03.000+0000",
+      "created": "2020-03-27T17:09:22.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen you try to impersonate a user that is using *Dansk/Danish* language on profile settings, the button to \"switch back\" doesn't appear.\r\n\r\nh3. Steps to Reproduce\r\n # Ask for a user to change the language to *Dansk/Danish* on *profile settings > account preferences*.\r\n # Try to impersonate that user.\r\n\r\nh3. Expected Results\r\n\r\nThe \"switch back\" button should appear.\r\nh3. Actual Results\r\n\r\nThe \"switch back\" button doesn't appear and you should log out every time and log in again in your main account.\r\n\r\nh3. Workaround\r\n\r\nAsk for the user to use another language instead of *Danish* and the user can be impersonated.",
+      "summary": "Impersonate \"switch back\" button not available in Danish"
+    }
+  },
+  {
+    "key": "ID-7459",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-10-05T06:09:24.000+0000",
+      "created": "2020-03-30T09:06:06.000+0000",
+      "description": "With the addition of Trello to Atlassian Access, it now uses the generic Atlassian Account.\r\n\r\nHowever, in Trello one could customize the initials of their user, while in the Atlassian Account, this is no longer possible.\r\n\r\nPlease provide the possibility of customizing the initials for the Atlassian Account as well.",
+      "summary": "Support setting of initials in Atlassian account for profile avatar"
+    }
+  },
+  {
+    "key": "ID-7458",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-09T01:35:36.000+0000",
+      "created": "2020-03-30T09:01:38.000+0000",
+      "description": "h3. Issue Summary\r\nWhen a site admin use 'Login as user' feature, the *Switch back* option to login as the site-admin account is not working. \r\n\r\nh3. Steps to Reproduce\r\n# Login as one user \r\n# Use the Switch back option to login as the original account\r\n\r\nh3. Expected Results\r\n- The site admin should be able to switch back to the original account without issue. \r\n\r\nh3. Actual Results\r\n- Switch back option to original account is not working. The browser console is throwing the error below. \r\n{code}\r\nhttps://<site>.atlassian.net/gateway/api/adminhub/um/site/undefined/users/5b0fe6095c9a7940e417bec1/impersonate/release 403\r\n{code}\r\n\r\nh3. Workaround\r\n- No workaround",
+      "summary": "Issue on Login as user feature "
+    }
+  },
+  {
+    "key": "ID-7457",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-27T16:34:33.000+0000",
+      "description": "h4. Problem Definition\r\nAt the moment, when exporting organization members via the \"Export Accounts\" function under managed accounts, it does not include the group membership of these users.\r\n\r\nh4. Suggested Solution\r\nProvide the Ability to include the group membership when exporting organization members via the \"Export Accounts\" function under managed accounts. This functionality is already available when exporting the users at a site level.\r\n\r\nh4. Workaround\r\nNone at the moment.",
+      "summary": "Ability to include the group membership when exporting organization members via the \"Export Accounts\" function under managed accounts"
+    }
+  },
+  {
+    "key": "ID-7455",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-26T13:42:53.000+0000",
+      "description": "h3. Issue Summary\r\nWhen special characters (for example, \u00c6, \u00d8, \u00c5) are added as a first letter to the account names in id.atlassian.com, the initials from the user profile will be removed.\r\n\r\nh3. Steps to Reproduce\r\n# Login to https://id.atlassian.com/ > Profile and visibility > About you > Full name\r\n# Add a special character as a first letter in the account full name\r\n# The initials from the user account avatar are removed.\r\n\r\nh3. Expected Results\r\nThe account initials should be shown even when a special character is used in the user name of the account.\r\n\r\nh3. Actual Results\r\nThe user initials in the avatar are removed.\r\n\r\nh3. Workaround\r\nThere is no workaround at the moment",
+      "summary": "Special characters in the account name removes initials in the avatar"
+    }
+  },
+  {
+    "key": "ID-7444",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-10T12:51:42.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAfter changing the email address of a managed account to an unmanaged one, the SAML link for the account persists on the unmanaged account causing problems. \r\n\r\nh3. Steps to Reproduce\r\n # Login via SAML using a managed account\r\n # Change the email address of the managed account to unmanaged. \r\n\r\nh3. Expected Results\r\n\r\nAfter converting to an unmanaged account, the SAML link should clear out. \r\n\r\nh3. Actual Results\r\n\r\nThe SAML link generated on the managed account persists after the email address change. \r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "SAML link persists for unmanaged accounts"
+    }
+  },
+  {
+    "key": "ID-7443",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-05-06T04:49:00.000+0000",
+      "created": "2020-01-09T14:07:02.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAzure will sometimes report a 500 internal server error for provisioning into Atlassian. \r\n\r\nh3. Steps to Reproduce\r\n # Setup provisioning between Azure AD and Atlassian Access\r\n # Azure will regularly call the Atlassian SCIM APIs to check if the synced data is up to date or to update data. \r\n\r\nh3. Actual Results\r\n\r\nAzure will sometime receive a 500 internal server error response from the API calls and will warn the users. \r\n{code}\r\nWhile attempting to validate our authorization to access your System for Cross Domain Identity Management service, we received this unexpected response:\r\nReceived response from Web resource.\r\n\r\nResource: https://api.atlassian.com/scim/directory/<DIRECTORYID>/scim/XXXX\r\nOperation: GET\r\nResponse Status Code: InternalServerError\r\nResponse Content: \r\n{\"timestamp\":\"20XX-XX-XXT11:52:31.911+0000\",\r\n\"status\":500,\r\n\"error\":\"Internal Server Error\",\r\n\"exception\":\"com.netflix.zuul.exception.ZuulException\",\r\n\"message\":\"GENERAL\"}\r\n{code}\r\n\r\nOr in some cases, Azure will receive the same 500 response but a different exception:\r\n{code}\r\nResource: https://api.atlassian.com/scim/directory/<DIRECTORYID>/scim/XXXX\r\nOperation: GET\r\nResponse Status Code: InternalServerError\r\nResponse Content: \r\n{\"timestamp\":\"20XX-XX-XXT11:52:31.911+0000\",\r\n\"status\":500,\r\n\"error\":\"Internal Server Error\",\r\n\"exception\":\"io.atlassian.stargate.GatewayException\",\r\n\"message\":\"GENERAL\"}\r\n{code}\r\n\r\nh3. Expected Results\r\n\r\nThere should be better handling for the message by Azure or messaging for the 500 response code should be improved.\r\n\r\nh3. Workaround\r\n\r\nWhen Azure encounters an error, there will be a retry mechanism that will kick in. Usually the message can be ignored. If the Atlassian Cloud app in Azure has been quarantined due to too much errors, contact support. ",
+      "summary": "Azure reporting 500 internal server error for provisioning"
+    }
+  },
+  {
+    "key": "ID-7442",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-20T17:26:32.000+0000",
+      "description": "h3. Problem Definition\r\nAt this moment, users and admins have only the https://id.atlassian.com/manage/api-tokens webpage to track the usage of the API Token. However, the page shows only when was the last time the Token was used.\r\n\r\nh3. Suggested Solution\r\nHave more complete logs about the usage, such as IP address, the agent who accessed it, and more entries.\r\n\r\nh3. Why this is important\r\nThis can be seen as a security breach according to some companies security policies.\r\n\r\nh3. Workaround\u00a0\r\nAt this moment, there is none.",
+      "summary": "Have more thorough logs about the API Token usage"
+    }
+  },
+  {
+    "key": "ID-7435",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-18T12:57:53.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen an account is managed within an organization that implements SSO, the email address of that account cannot be changed to an address that is not under the organization's claimed domains. \r\n\r\nh3. Steps to Reproduce\r\n1. Claim a domain and setup SSO \r\n2. Change a managed account's email address to an address that is not under the organization's claimed domains. \r\n\r\nie. user@domainwithSSO.com -> user@anotherdomain.com\r\n\r\n3. A verification email will be sent to the new email address. \r\n\r\n !verify.png|thumbnail! \r\n\r\n\r\nh3. Expected Results\r\n\r\nWhen verifying the change, the end user should be redirected to the current account's SSO. Once authenticated, the email address change should complete. \r\n\r\nh3. Actual Results\r\n\r\n !password.png|thumbnail! \r\n\r\nUser is prompted to enter the account's Atlassian login password to complete. Since the account is still enforced with SSO, there is no available password to use here. \r\n\r\n\r\nh3. Workaround\r\n[Contact support|https://support.atlassian.com/contact/] and mention them about this bug(ID-7435)\r\n",
+      "summary": "SSO blocks email address change"
+    }
+  },
+  {
+    "key": "ID-7434",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-12-02T04:01:28.000+0000",
+      "created": "2020-03-18T03:16:15.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUsers on instances where \"Approve any domain\" has been selected at Site Access page, will also see the following screen at the Site Access page. There is an incorrect message here implying that only Trusted Users can add/invite user, see item circled in red below. For this option, any and all users can invite other users.\r\n !screenshot-1.png|thumbnail!\r\nh3. Steps to Reproduce\r\n # Create a Basic user with the simple configuration\r\n # Go to Administration - > Site access - > Approved domains select \"Approve any domain\". The other settings are set as default.\r\n # Please note the highlighted section in the screenshots which says only Site admin and trusted users can invite anyone to any product.\r\n # Login as a Basic user\r\n # Go to Projects - > Create project - > Try a next-gen project to create a new project\r\n # Go to Project settings -> Access -> Add people. It allows inviting anyone from any domain\r\n\r\nh3. Expected Results\r\n # When selecting the options below, updates that mention only site admins and trusted users can invite other users should be removed.\r\n # Go to Administration - > Site access - > Approved domains select \"Approve any domain\". The other settings are set as default.\r\n\r\nh3. Actual Results\r\n\r\nThere is confusion caused to admins on the screen above, there is the implication that only Trusted users can invite user. This is incorrect as the basic user is now also able to invite users.\r\nh3. Workaround\r\n\r\nAt Site Access select *Don't approve any domain* so that only Site admins and trusted users can invite anyone to any product(s).",
+      "summary": "Non Trusted Users of instances with Site Access set to \"Approve any domain\" can approve all users"
+    }
+  },
+  {
+    "key": "ID-7431",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-14T11:32:27.000+0000",
+      "description": "h3. Problem Definition\r\nAt the moment it is not possible to add a user's manager information in their profile and visibility settings\r\n\r\nh3. Suggested Solution\r\nAdd the ability to add a user's manager information in their profile settings.\r\n",
+      "summary": "Ability to add manager's information in users profile and visibility settings"
+    }
+  },
+  {
+    "key": "ID-7402",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-03-30T05:50:53.000+0000",
+      "created": "2020-02-27T09:10:31.000+0000",
+      "description": "At the moment, once you have Gsuite integration, all your user details will be sync to your Atlassian account including your full name. It would be beneficial for the user to disallow name to be sync to Atlassian account so that they could keep their name from Google side. \r\n\r\nh4. Current Behavior\r\n\r\nUser details will be synced to Atlassian Account\r\n\r\nh4. Suggestion\r\n\r\nTo have the ability to choose if the user wanted the user details to be sync to Jira. ",
+      "summary": "Ability to disallow name to be sync from Gsuite integration"
+    }
+  },
+  {
+    "key": "ID-7401",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-06-22T03:31:31.000+0000",
+      "created": "2020-02-27T08:52:56.000+0000",
+      "description": "h3. Issue Summary\r\nWhen you put or name with a special character such as Cyrillic or Romanian name from id.atlassian.com. A weird encoding will be breaking the name form the marketplace or community. \r\n\r\nh3. Steps to Reproduce\r\n # Create a name with a special character\r\n# Accessing marketplace or community\r\n# Noticed that your name contains weird encoding such as \"\ufffd\ufffd\"\r\n\r\nh3. Expected Results\r\nThe name will be displayed correctly as per the Jira account.\r\n\r\nh3. Actual Results\r\nName contains weird encoding. \r\n\r\n !screenshot-1.png|thumbnail! \r\n\r\n !screenshot-2.png|thumbnail! \r\nh3. Workaround\r\n\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Name with special character contains weird encoding from Atlassian System"
+    }
+  },
+  {
+    "key": "ID-7400",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-24T14:05:40.000+0000",
+      "created": "2020-02-26T18:12:13.000+0000",
+      "description": "{panel:borderStyle=solid|borderColor=#6A8EB3 |bgColor=#F8F8F8}\r\nA fix for this behavior was deployed to production on March 5, 2020. The 5K limit will only be applied to managed accounts, that is, synced accounts that are related to the domains listed under your [Organization|https://confluence.atlassian.com/cloud/organization-administration-938859734.html] (at *Directory* > *Domains*).\r\n\r\nThat being said, this bug will be closed :)\r\n{panel}\r\n\r\nh3. Issue Summary\r\nWhen syncing unmanaged accounts (not related to your verified domains at Atlassian side) those will still count as a synced user even knowing that it is not a valid one. \r\n\r\nh3. Steps to Reproduce\r\n# Create a [user provisioning|https://confluence.atlassian.com/cloud/user-provisioning-959305316.html] integration \r\n# Sync both managed and unmanaged users from you IdP\r\n\r\nh3. Expected Results\r\nIf you have more than 5000 accounts (from both your verified and unverified domain) only the accounts related to the verified domain(s) should count towards the sync.\r\n\r\nh3. Actual Results\r\nAll accounts count towards the sync.\r\n\r\nh3. Workaround\r\nIn this scenario there are two options:\r\n- *Delete the accounts at the IdP* (you can do that with a tool at the IdP or by using the [SCIM REST API|https://developer.atlassian.com/cloud/admin/user-provisioning/rest/#api-scim-directory-directoryId-Users-userId-patch] to create a script)\r\n- *Recreate the external directory at Atlassian* ",
+      "summary": "Unmanaged accounts provisioned through SCIM counts towards the 5000 users' external directory limit"
+    }
+  },
+  {
+    "key": "ID-7398",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-03-22T23:31:50.000+0000",
+      "created": "2020-02-26T12:49:59.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen a single GSuite has been connected to two different cloud sites, users in the organisation will be sent multiple notifications that their organization integrated with Google\r\nh3. Steps to Reproduce\r\n # Setup domain users in GSuite\r\n # Connect GSuite with an *.atlassian.net site\r\n # Connect the same GSuite with a second *.atlassian.net site\r\n\r\nh3. Expected Results\r\n\r\nThe 1st connection should be superseded (and stopped) or the 2nd connection should be blocked from being connected.\r\nh3. Actual Results\r\n\r\n2 sites have been connected to the same GSuite. The domain will be reclaimed back and forth between the 2 organizations, with the end users will receiving notifications each time that happens:\r\n{quote}Your administrator made some changes to your account Just a heads up!\r\n Your administrator for <domain> connected your organization to Google Apps\r\n{quote}\r\nUsers will also receive notifications regarding the [Trello Changes|https://confluence.atlassian.com/cloud/manage-accounts-with-trello-access-980454116.html]\r\nh3. Workaround\r\n\r\nDisconnect GSuite from one of the *.atlassian.net sites.",
+      "summary": "Multiple notifications for GSuite integrations from two different site"
+    }
+  },
+  {
+    "key": "ID-7397",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2018-11-01T22:01:58.000+0000",
+      "description": "h4. Summary\r\nWhen configuring Azure to use the user.mail as the Unique User Identifier (Name ID), the IDP initiated log in will not work, giving the following error:\r\n\r\n !image-2018-11-01-18-56-54-426.png|thumbnail! \r\n\r\nAnd on the URL there will be more details:\r\n{code}\r\nhttps://id.atlassian.com/error?client_id=<redacted>&connection=<redacted>&lang=en-US%2Cen%3Bq%3D0.9%2Cpt%3Bq%3D0.8&error=access_denied&error_description=verify-saml-domains%3Amalformed-email-address&tracking=<redacted>\r\n{code}\r\n\r\nh4. How to reproduce\r\n# When integrating with Azure, the recommended set up is to use the Unique User Identifier (or Name ID) as user.mail.\r\n# Add the Relay State as your instance's URL\r\n\r\nh5. Expected behaviour\r\nYou are able to launch your Atlassian Cloud application on myapps.microsoft.com (IDP initaited log in)\r\n\r\nh5. Actual result\r\nThis set up will cause a malfunction from Azure when sending the Name ID on the SAML response, it's an unidentifiable string instead of the user's email address.\r\n\r\nh4. Additional notes\r\nThis problem is not reproducible if you use user.userprincipalname as the Name ID, but this will not always serve as a workaround as the information on this field may not be the same as for the user.mail field, a validation of the Name ID sent on the SAML Response is needed before using it as workaround on your configuration.",
+      "summary": "IDP initiated log in with Azure is not working with Name ID set as user.mail"
+    }
+  },
+  {
+    "key": "ID-7396",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-24T14:49:21.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUsers still can edit *Full name*, *Job title*, *Department* and\u00a0*Organization*\u00a0fields on their Atlassian Accounts details at [https://id.atlassian.com/manage-profile] even when user provisioning is enabled. This should not happen and might be disruptive to the company since the information may not reflect the information that is on their internal directory.\r\nh3. Steps to Reproduce\r\n # Enable [User provisioning|https://confluence.atlassian.com/cloud/user-provisioning-959305316.html]\r\n # Sync a user\r\n # Ask the user to access [https://id.atlassian.com/manage-profile] and change one of those fields\r\n\r\nWhen the user does this manual change it overwrites the field. Unless the IdP sends a PATCH to update that information the field won't reflect the IdP information.\r\nh3. Expected Results\r\n\r\nWhen User provisioning enables the users should not be able to edit those fields. The Org admins which should have that ability for edge cases don't have.\r\nh3. Actual Results\r\n\r\nThe users can edit them.\r\nh3. Workaround\r\n\r\nTo get the information reflecting the IdP side you should trigger a change on the users' profile there. Each IdP implemented the [User provisioning REST API|https://developer.atlassian.com/cloud/admin/user-provisioning/rest/] differently so it is recommended that you engage their support team gets more details on how they trigger those updates.",
+      "summary": "Some fields are still editable at https://id.atlassian.com/manage-profile even with SCIM integration enabled"
+    }
+  },
+  {
+    "key": "ID-7382",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-02-25T02:39:39.000+0000",
+      "created": "2020-02-20T04:42:44.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nFor some connected sites, the G Suite admin UI is showing the 'Something went wrong' screen, preventing reconfiguration, disconnection or viewing actual status.\r\nh3. Steps to Reproduce\r\n # Visit [https://admin.atlassian.com/] and navigate to the G Suite tab\r\n # Step 2\r\n\r\nh3. Expected Results\r\n\r\nFor a connected site, details of the most recent synchronisation.\r\nh3. Actual Results\r\n{quote}Something went wrong\r\nG Suite configuration could not be retrieved.\r\n{quote}\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Admin UI for G Suite integration shows 'G Suite configuration could not be retrieved' for some connected sites"
+    }
+  },
+  {
+    "key": "ID-7378",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-05-05T09:07:02.000+0000",
+      "created": "2020-02-19T00:49:50.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUsers re-activated, or re-created, in Google do not have \"Has access on site\" enabled by the G Suite integration.\r\n\r\nRe-creation is when an Google user is created with the same email address as a previously deleted user.\r\nh3. Steps to Reproduce\r\n\r\nWhere\u00a0[G Suite integration|https://confluence.atlassian.com/cloud/g-suite-integration-938859740.html] is in use:\r\n # Un-suspend a previously suspended user in G Suite\r\n # Wait for the user to be synced by the G Suite integration\r\n\r\nh3. Expected Results\r\n\r\nThe user has \"Has access on site\" enabled.\r\nh3. Actual Results\r\n\r\nThe user does not have \"Has access on site\" enabled.\r\nh3. Workaround\r\n\r\nManually toggle \"\"Has access on site\" via user management",
+      "summary": "GSuite integration is not enabling \"Has access on site\" when a user is re-activated or re-created"
+    }
+  },
+  {
+    "key": "ID-7376",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-03-30T05:52:06.000+0000",
+      "created": "2020-02-18T22:02:29.000+0000",
+      "description": "Hi,\r\nI would like to open this Feature Request regarding this issue:\r\n\r\nCustomer had issues to re-sync his G Suite and in order to achieve this he had to remove and re-add the Gsuite account.\r\n\r\nThe suggestion is that there is a way that customer can update the password without removing the entire GSuite account because removing and re-adding causes that everyone connected receives a notification of a change and also removes all groups.\r\n\r\nCustomer commented: \r\n\"You could allow a re login without causing a change to the entire system.\r\nThat's how most services like this work. Oh, sync failed? Please reenter\r\ncredentials or reinitiate the sync to fix as opposed to having to remove it\r\nentirely which causes system wide changes.\"",
+      "summary": "GSuite stopped syncing"
+    }
+  },
+  {
+    "key": "ID-7369",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-27T06:56:36.000+0000",
+      "created": "2020-02-14T13:36:53.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen cookies are blocked in Safari, login returns an error message telling the customer to contact that the identity provider has problems. \r\n\r\nh3. Steps to Reproduce\r\n # Block all cookies in Safari settings\r\n # Login to https://id.atlassian.com\r\n\r\nh3. Expected Results\r\n\r\nThe browser should return an error indicating that cookies are not allowed. \r\n\r\nh3. Actual Results\r\n\r\nError returned : There seems to be a problem with your identity provider. \r\n\r\n !Screen Shot 2020-02-14 at 2.21.05 PM.png|thumbnail! \r\n\r\nThis is incorrectly returned even if the login account does not use SAML-SSO\r\n\r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "ID returns an incorrect message when cookies are blocked from Safari"
+    }
+  },
+  {
+    "key": "ID-7365",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-03-30T05:52:21.000+0000",
+      "created": "2020-02-11T17:26:53.000+0000",
+      "description": "h3. Problem Definition\r\nAt this moment, after a user authenticated using OKTA, the session will remain active even if the device's network is changed (from an internal network to LTE network, for example).\r\n\r\nh3. Suggested Solution\r\nJira Cloud should trigger the OKTA authentication process whenever the device's network changes.\r\n\r\nh3. Why this is important\r\nThis can be seen as a security breach according to some companies security policies.\r\n\r\nh3. Workaround\u00a0\r\nAt this moment, there is none.",
+      "summary": "Jira Cloud should trigger the OKTA authentication process whenever the device's network changes"
+    }
+  },
+  {
+    "key": "ID-7364",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-11T14:53:15.000+0000",
+      "description": "h3. Issue Summary\r\nIt is possible to set as *Default Access Group* groups that are synced with external directories through SCIM. When doing so, Marketplace apps when installed,* will be added to that group to gain access to the Application* (this is not visible to end-users, third-party apps users are hidden). After the first sync *SCIM will remove the app user from the group*, revoking the third-party app access from the application.\r\n\r\nGroups synced through SCIM can be identified with the lock, as the screenshot below:\r\n !screenshot-1.png|thumbnail!\r\n\r\nh3. Steps to Reproduce\r\n# [Configure SCIM|https://confluence.atlassian.com/cloud/configure-user-provisioning-966659579.html#Configureuserprovisioning-Configureproductaccessfortheprovisionedgroupsandusers]\r\n# Sync a group and make it the *Default Access Group*.\r\n# Install an app (i.e: we tested with *PagerDuty* connector).\r\n# Check for actions that need application access, possibly 403's will happen.\r\n\r\nh3. Expected Results\r\n* SCIM does not remove third-party app accounts from the access groups.\r\n\r\nh3. Actual Results\r\n* The sync removes the access from the groups and the app has no access to Jira.\r\n\r\nh3. Workaround\r\nAdd groups that are not synced to also be default access groups.",
+      "summary": "Syncing default access groups with external directory (SCIM) can remove add-ons application access"
+    }
+  },
+  {
+    "key": "ID-7361",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-05-12T00:42:44.000+0000",
+      "created": "2020-02-07T11:12:33.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nA subset of users who use Microsoft's Social Login will now need to use another method of login. These users will hit the error page below , when they use this login method :\r\n !image-2020-02-07-19-01-26-617.png|width=524,height=425!\r\nh3. Steps to Reproduce\r\n # Use the Login with Microsoft feature\r\n # Enter the user's Microsoft login and password\r\n\r\nh3. Expected Results\r\n\r\nUser should be able to proceed directly to their landing page at Atlassian , commonly {{[https://start.atlassian.com|https://start.atlassian.com/]}}\r\nh3. Actual Results\r\n\r\nFor now these subset of users will be forced to re-login using the Atlassian login flow.\u00a0\r\nh3. Workaround\r\n\r\nClick the\u00a0*\"Try logging in again\"*\u00a0button\r\n\r\nUse login password form. If the user does not have a password or know of one use the Reset Password link to set one [https://id.atlassian.com/login/resetpassword]\r\n\r\nFor users of Azure AD who do not have SAML configured there is no restricting on logging in with a username and password, social login with Microsoft is a convenience feature but is not enforced.\r\nh3. Notes\r\n * As a result of the fix, you may hit into some small inconsistencies with the browser.\r\n * Please clear your browser cache, reset your Atlassian Account password ({{[https://id.atlassian.com/login/resetpassword]}}) and try again. That should fix it.\u00a0",
+      "summary": "Some customers logging in using Microsoft Social Login flow will be blocked and asked to relogin"
+    }
+  },
+  {
+    "key": "ID-7351",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-05-14T03:09:52.000+0000",
+      "created": "2020-01-30T10:26:11.000+0000",
+      "description": "h3. Issue Summary\r\nBy default , a site administrator account will automatically have all application access. The application access can be removed by removing the account from the product access group.  However, in the profile , it still showing as the account have all application access :-\r\n\r\n !Screenshot 2020-01-30 at 6.22.16 PM.png|thumbnail! \r\n\r\nh3. Steps to Reproduce\r\n # Give an account \"Site administrator\" role\r\n # Automatically , all application access will enabled.\r\n# Then , verify from \"Product Access\" which group have JIRA Service Desk application access , for example \"jira-servicedesk-users\" group\r\n# Then , remove the account from \"jira-servicedesk-users\". \r\n\r\nh3. Expected Results\r\nThe account no longer included to JIRA Service Desk license, and the application access in the profile disabled.\r\n\r\nh3. Actual Results\r\nThe account no longer included in the JIRA Service Desk license, but from the profile, the application access still enabled.\r\n\r\nh3. Workaround\r\nNo workaround.",
+      "summary": "For site administrator profile, the application access are not disabled after removing the product access group from the account"
+    }
+  },
+  {
+    "key": "ID-7348",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-01-30T00:59:22.000+0000",
+      "created": "2020-01-29T19:03:54.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCustomers are facing login errors when their computer clock is off or out of sync with a time server. (e.g. if the computer clock is 5 min behind. )\r\n\r\nThis seems to be impacting customers with 2FA.\r\n\r\nThis time discrepancy will trigger an error message when trying to login:\r\n\r\n\"Oops, that didn't work!\r\n\r\nTry again in a moment\"\r\n\r\n\u00a0\r\n\r\n!1.png!\r\nh3. Steps to Reproduce\r\n # Have 2FA enabled\r\n # Have a computed with an off sync clock\r\n\r\nh3. Expected Results\r\n * Users to be able to log in, or at least get a message explaining why they're unable to login.\r\n\r\nh3. Actual Results\r\n * Users receive a generic error message and are unable to login:\r\n\r\nh3. Workaround\r\n\r\nTo solve this error, sync the computer clock with a time server, this should do the trick :)",
+      "summary": "Users with 2FA unable to login if their computer clock is out of sync"
+    }
+  },
+  {
+    "key": "ID-7343",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-03-04T01:39:57.000+0000",
+      "created": "2019-11-21T00:10:35.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIf a site-admin impersonates a user and then clicks on *switch back* to stop impersonating the user, if you click on browser's back button, the pop-up will keep appearing and the *switch back* link will not do anything\r\nh3. Steps to Reproduce\r\n # Impersonate a user\r\n # A pop-up will appear to switch back to your user. Click on *switch back*\r\n # When you're redirected to User Management page, click on *browser's back button*\r\n\r\nh3. Expected Results\r\n\r\nThe site-admin user should not see the switch back pop-up.\r\nh3. Actual Results\r\n\r\nThe switch back pop-up will keep appearing even if you close the window.\r\n\r\n\u00a0\r\n\r\nNote: Some users reported that they were also able to reproduce this issue in a bit different way:\r\n # Impersonate a user\r\n # A pop-up will appear to switch back to your user. Click on *switch back*\r\n # Close the browser\r\n # Open it again, and access the Instance. You will be logged with the original account, but the pop up will still appear, and the *switch back* link will not do anything\r\n\r\nh3. Workaround\r\n\r\nA manual workaround is to have the admin to navigate to\u00a0{{<siteurl>/impersonate}}, which will reset the impersonate function. e.g. [acme.atlassian.net/impersonate|http://acme.atlassian.net/impersonate]",
+      "summary": "After impersonating a user, the \"switch back\" pop-up can still appear"
+    }
+  },
+  {
+    "key": "ID-7340",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-03-30T05:53:36.000+0000",
+      "created": "2020-01-24T11:02:08.000+0000",
+      "description": "h3. Problem Definition\r\n * When Atlassian accounts are tied to an Atlassian purchasing system/Sales OPs/Channel Partner account, the Atlassian account can't be deleted and can only be deactivated\r\n * The current messaging is \"This account is an Expert.\"\r\n * Many customers aren't aware of our terminology and what \"Expert\" actually means, so customers are unaware that the account is linked to Atlassian Sales OPs systems\r\n\r\nh3. Suggested Solution\r\n * Describe what an \"Expert\" is within the error message\r\n * Add the Sales OPs support portal URL(or a link to a KB) and describe how to create a \"Partner Program Support\" ticket\r\n\r\nh3. Why this is important\r\n * \"This account is an Expert.\" is ambiguous\r\n * Cloud Support will need to redirect users to the Sales OPs team - so it would be beneficial if customers are immediately directed to the correct support portal\r\n\r\nh3. Workaround\r\n * Navigate here:\u00a0https://partners.atlassian.com/support/#/\r\n !Screen Shot 2020-01-15 at 13.48.25.png|thumbnail! \r\n (Fill the form as per above screenshot)\r\n * The Sales OPs support team will assist with your enquiry\r\n * \"Expert\" accounts can only be deactivated and not deleted",
+      "summary": "Improve the \"This account is an Expert.\" message when deleting an Atlassian account"
+    }
+  },
+  {
+    "key": "ID-7333",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-22T10:31:58.000+0000",
+      "description": "h3.Summary\r\n\r\nThe U.S. law prohibits Atlassian, an Australian corporation with offices in the United States, from providing access to our products and services to organizations or End Users located in the following countries and regions; Crimea Region of Ukraine, Cuba, Iran, North Korea, Syria, Sudan.\r\n\r\nA notification or warning when users from the mentioned region/countries keys in their number will be helpful. Currently there is no indicator on the UI when the phone number is keyed in which leads to customer expecting a SMS from Atlassian (which never arrives due to US sanction).",
+      "summary": "Notification to inform customer from sanction countries/regions of potential errors when keying in phone number for 2FA SMS setup "
+    }
+  },
+  {
+    "key": "ID-7329",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-21T15:31:20.000+0000",
+      "description": "h3. Issue Summary\r\nIn the site access page, the site-admin has the option to whitelist certain domains, so that users in those domains can join automatically. Right under that box, there is a note saying \"We'll notify you about all new users\". However, this contradicts the tick box for notifications about new users signup at the bottom of the same page\r\n\r\nh3. Steps to Reproduce\r\n # Navigate to the site administration area, the Site Access page\r\n # Notice the text right under the whitelisted domain list\r\n\r\n !domain_whitelist.png|thumbnail! \r\n\r\nh3. Expected Results\r\nIf site-admins have an option to disable notifications when users join, the text saying that they will get a notification anyway is false\r\n\r\nh3. Actual Results\r\nThe 2 texts contradict each other\r\n\r\nh3. Workaround\r\n\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Site admis can disable notifications for when a user in the whitelisted domain joins the site. This contradicts the text right under the whitelisted domain list"
+    }
+  },
+  {
+    "key": "ID-7326",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-01-29T23:32:06.000+0000",
+      "created": "2020-01-17T20:03:03.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIt's possible to create invalid email accounts in id.atlassian.com e.g: *$&#@gmail.com, ^%$@gmail.com, these accounts shouldn't be allowed only letters, numbers and (.)\r\n\r\nh3. Steps to Reproduce\r\n # Go id.atlassian.com\r\n # Create sign up for an account with an invalid email ^%$@gmail.com\r\n\r\nh3. Expected Results\r\n\r\nValidation would bare users from creating these accounts.\r\n\r\nh3. Actual Results\r\n\r\nAn account gets created, which would allow these accounts on a Cloud instance, possibly causing issues if the customer exported this data and tried to import on another Cloud instance.\r\n\r\nh3. Workaround\r\n\r\nNot at the moment.\r\n\r\nA validation similar to what Gmail has would be great:\r\n\r\n !Screen Shot 2020-01-17 at 16.34.09.png|thumbnail! ",
+      "summary": "Email creation on id.atlassian.com allows the creation of invalid email accoutns"
+    }
+  },
+  {
+    "key": "ID-7325",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-02-13T06:19:41.000+0000",
+      "created": "2020-01-17T10:05:58.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIn the \"Product access\" page ( of User management) , if we want to add a group to a certain product ( say Jira software) , we click on 'Add group' and search for the group. Problem is , if there are more than 20 groups with the same keyword ( for eg : \"a-users\", \"b-users\",..etc ) then a search for exact group name \"users' is not returned. As the search is currently limited to showing just 20 results.\r\nh3. Steps to Reproduce\r\n # Create 20+ groups with the name \"a-users\", \"b-users\", \"c-users\" and so on till \"v-users\".\r\n # Create another group called \"users\".\r\n # Navigate to _User management --> Product access_ page. Click on 'Add group' for any of the product\r\n # A pop-up appears to search for the group name. Search for \"users\". This group is not returned in the search results.\r\n\r\nh3. Expected Results\r\n * The group \"users\" should be returned.\r\n\r\nh3. Actual Results\r\n * Currently its only restricted to 20 results, which is not allowing to add \"users\" group. ( refer screenshot)\r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behaviour. A workaround will be added here when available",
+      "summary": "Adding a group on Product access page does not return the group name in search result, if more than 20 groups with same keyword are present."
+    }
+  },
+  {
+    "key": "ID-7320",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-01-30T21:57:49.000+0000",
+      "created": "2020-01-08T22:40:15.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUsers cannot log into Jira if they have the Chrome extension \"Popup Blocker\" installed\r\n\r\nh3. Steps to Reproduce\r\n# Clear the Chrome cache to make sure any session is active\r\n# Install the extension \"Popup Blocker\" in Chrome\r\n# Try to access a Jira cloud site\r\n\r\nh3. Expected Results\r\n\r\nThe user is authenticated and the Jira home page is displayed\r\n\r\nh3. Actual Results\r\n\r\nThe user receives the following error message:\r\n\r\n{quote}Oops, you've made a malformed request{quote}\r\n\r\n !Screen Shot 2020-01-08 at 7.30.32 PM.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\n* Disable or uninstall the Chrome extension \"Popup Blocker\"\r\n* Use Chrome incognito mode\r\n* Use a different browser",
+      "summary": "Users cannot log into Jira if they have the Chrome extension \"Popup Blocker\" installed"
+    }
+  },
+  {
+    "key": "ID-7319",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-03-22T23:30:09.000+0000",
+      "created": "2019-11-28T05:57:49.000+0000",
+      "description": "h3. Issue Summary\r\nThe removed user still comes up under the newly introduced people section\r\n\r\nh3. Steps to Reproduce\r\n# Assign issues to a user and let the user work on it so that it comes up in the user comes under the 'You work section' in the people Tab\r\n # Revoke the site access of the user and still, the users come in the people section\r\n\r\nh3. Expected Results\r\nOnce a users sites access is revoked, the user details should get removed from the people section as well.\r\n\r\nh3. Actual Results\r\n\r\nThe users still come up in the people section even after the user is removed\r\n\r\n\r\nh3. Workaround\r\n\r\nNo workaround\r\n",
+      "summary": "The removed user still comes up under the newly introduced people section"
+    }
+  },
+  {
+    "key": "ID-7318",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-04-02T23:31:28.000+0000",
+      "created": "2019-11-27T17:34:12.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen you have an annual license with all the product slots in use and you chance a user from *Basic* to *Trusted* that doesn't have access to that product, the system will return the following message.\r\n{quote}We couldn't assign Trusted to _This User_\r\n You've reached the maximum number of users for one of your products. To assign a role to this user, upgrade your plan.\r\n{quote}\r\nWhen you refresh the page, in the UI the user will be displayed with the *Trusted User* label and all the products activated, however, the license will not be included and the user will not be an actual *Trusted User*.\r\n\r\nYou can check this bug in the following video.\r\n * [^Trusted_user.mov]\r\n\r\nh3. Steps to Reproduce\r\n # Access a site with an annual license with all the slots full.\r\n # Change a user that doesn't have access to a product that has no available licenses from *Basic* to *Trusted User*.\r\n # The system will return a message saying that it's not possible to finish the operation.\r\n # Refresh the page.\r\n\r\nh3. Expected Results\r\n\r\nSince in the backend the user is still a *Basic* user, the UI should not display the *Trusted User* label nor the products as active.\r\nh3. Actual Results\r\n\r\nIn the UI the user is displayed as a *Trusted User* even being a *Basic*.\r\nh3. Workaround\r\n\r\nChange the user back to *Basic*.",
+      "summary": "The account is converted to Trusted User in the UI without available licenses."
+    }
+  },
+  {
+    "key": "ID-7317",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-03-22T23:47:54.000+0000",
+      "created": "2019-11-06T13:02:36.000+0000",
+      "description": "h3. Issue Summary\r\nInconsistent result for *Worked on* result from *People* page https://instancename/jira/people/userAAID/work\r\n\r\nh3. Steps to Reproduce\r\n# Go to *People* page https://instancename/jira/people/userAAID/work\r\n# Click on *Jira* link from \r\n !workdon.png|thumbnail! \r\nh3. Expected Results\r\nConsistent result \r\n\r\nh3. Actual Results\r\nInconsistent result from the *JQL* vs *Worked on* page\r\n\r\nJQL query\r\n{code}\r\nassignee in (username) OR reporter in (username) OR creator in (username) OR watcher in (username) ORDER BY updated DESC\r\n{code}\r\n\r\nIt looks like the *Worked on* is using graphql api but when click on *Jira* link, it's using JQL as shown from the browser console\r\n{code}\r\nRequest URL: https://instancename.atlassian.net/gateway/api/worklens/api/graphql?q=WorkedOn\r\n{code}\r\n{code}\r\nquery WorkedOn($first: Int = 10, $userIds: [ID]!, $cloudIds: [ID], $objectTypes: [ActivityObjectType]) {  myActivities {    workedOn(first: $first, filter: {aaIDs: $userIds, cloudIDs: $cloudIds, objectTypes: $objectTypes}) {      nodes {        id        eventType        timestamp        contributors {          lastAccessedDate          profile {            accountId            name            __typename          }          __typename        }        containers {          name          __typename        }        object {          id          name          url          iconUrl: iconURL          provider: product          cloudId: cloudID          __typename        }        __typename      }      __typename    }    __typename  }}\r\n{code}\r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Inconsistent result for Worked on result from People page"
+    }
+  },
+  {
+    "key": "ID-7313",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-02-24T11:30:01.000+0000",
+      "created": "2020-01-10T22:16:40.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen using REST API to retrieve all groups in an instance it's not possible to paginate the results, meaning it won't be possible to fetch or paginate all groups in a Cloud instance.\r\n\r\n- https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-rest-api-3-groups-picker-get\r\n\r\nh3. Steps to Reproduce\r\n # Have more than 20 groups in a Cloud instance\r\n # Access https://cloudsite.atlassian.com/rest/api/3/groups/picker\r\n\r\nh3. Expected Results\r\n\r\nEither an option to paginate the result would exist or all the groups would be returned this way.\r\n\r\nh3. Actual Results\r\n\r\nOnly the 20 first groups are returned.\r\n\r\nh3. Workaround\r\n\r\nCurrently, there is no workaround for this behavior.",
+      "summary": "Not possible to paginate results on the Groups Picker REST API"
+    }
+  },
+  {
+    "key": "ID-7312",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-10T18:16:35.000+0000",
+      "description": "h3. Issue Summary\r\nUsers can manually be removed from the SCIM synced groups when viewing their User Details within User Management\r\n\r\nh3. Steps to Reproduce\r\n# Configure an Atlassian Organization User Provisioning and PUSH Groups with members into the Cloud Site\r\n# Locate a Pushed User within the Cloud Site's User Management and view their Details\r\n# Navigate to the Groups section, click on the ellipsis icon for a Pushed Group (indicated with a Padlock Icon), and Remove User From Group \r\n\r\nh3. Expected Results\r\nAn Admin should not be able to edit the membership of Pushed Groups as these Groups controlled/managed by the IdP with SCIM/User Provisioning\r\n\r\nh3. Actual Results\r\nUser can be removed from the Pushed Groups including the \"All Members in Directory\" group created by Atlassian\r\n !screenshot-1.png|thumbnail! \r\n !screenshot-2.png|thumbnail! \r\n\r\nIt is not possible to manually add or remove Users from Pushed Groups:\r\n !screenshot-3.png|thumbnail! \r\n\r\nh3. Workaround\r\nThe IdP should be able to add Users back into any synced Push Group, however, the User may not be pushed back into the \"All Members in Directory\" group ",
+      "summary": "Users can be removed from SCIM Groups via User Details"
+    }
+  },
+  {
+    "key": "ID-7307",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-08T11:57:44.000+0000",
+      "description": "User has requested if we can support WebAuthn for Bitbucket Cloud, login without a password, but only username + security key.\r\n \r\nSince authentication in Bitbucket Cloud is done with the linked Atlassian account, I believe this would only be possible if it was supported on the Atlassian account level.",
+      "summary": "Support WebAuthn for Atlassian accounts"
+    }
+  },
+  {
+    "key": "ID-7304",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-07T13:03:42.000+0000",
+      "description": "h3. Problem Definition \u00a0\r\n\r\nCurrently, when customers add a user to the site, they are automatically counted towards the license of the application even if they are in an \"invitation pending\" status. This seems not fair to the customer as the customer should only be charged when the user successfully joins the site.\u00a0\r\nh3. Suggested Solution\r\n\r\nCount the user in the license after the first login of the user to the site.\r\nh3. Workaround\r\n\r\nInvite users without any application access and provide them the required application access after they successfully accept the invitation.",
+      "summary": "Count user towards the license after the user successfully joins the site"
+    }
+  },
+  {
+    "key": "ID-7298",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-09-07T01:55:41.000+0000",
+      "created": "2019-12-24T18:29:44.000+0000",
+      "description": "On user management page, the status of users could be 'Deactivated' instead of 'No site access'.",
+      "summary": "Label users as 'Deactivated' instead of 'No site access'"
+    }
+  },
+  {
+    "key": "ID-7294",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-12-23T02:43:44.000+0000",
+      "created": "2019-12-19T18:18:19.000+0000",
+      "description": "h3. Issue Summary\r\nUser iaaliahmad@gmail.com is disabled. \r\nChecked Splunk to verify if the user has flagged the Atlassian account for deletion but it seems like he didn't: https://splunk.paas-inf.net/en-US/app/search/search?sid=1576681383.839076_2326B28B-B8FD-4BA2-BA3E-48E8244F5823\r\n\r\nh3. Steps to Reproduce\r\nUsername\tiaaliahmad@gmail.com\r\nAtlassian account ID\t5db13d232299c90da01332f6\r\n\r\nh3. Expected Results\r\nthe account should be active\r\n\r\nh3. Actual Results\r\ncouldn't identify if the user requested account deletion\r\n\r\nh3. Workaround\r\nNone\r\n\r\nsupport ticket https://getsupport.atlassian.com/browse/BBS-124651",
+      "summary": "User account disabled"
+    }
+  },
+  {
+    "key": "ID-7293",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-19T13:38:16.000+0000",
+      "description": "h3. *Summary:*\r\n\r\nAt the moment, the *Last seen* date from the user management UI captures user activity at a product family level ( Jira, Confluence, etc ). That said, JSD, JSW, and Jira Core share the same *Last seen* information.\r\n\r\n!Screen Shot 2019-12-19 at 10.36.44.png|thumbnail!\r\n\r\nWith that in mind, it would be great if customers could identify which Jira product their users aren't active even though they have a seat for the application, this way customers will have better management of their users.",
+      "summary": "Last seen date per Jira product"
+    }
+  },
+  {
+    "key": "ID-7292",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-09-14T03:32:59.000+0000",
+      "created": "2019-12-19T12:02:59.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAccording to [the documentation for the https://api.atlassian.com/users/\\{account_id}/manage UM REST API endpoint|https://developer.atlassian.com/cloud/admin/user-management/rest/?_ga=2.184979945.1354938109.1576579054-1080961822.1564054573#api-users-account-id-manage-get], the response should include information about MFA settings for the user:\r\n{quote} \r\n- *mfa.read*: read the current MFA enrollment state for the user\r\n- *mfa.unenroll*: unenroll the user from MFA\r\n{quote}\r\n\r\nHowever this is not working. Indeed:\r\n # Calling [https://api.atlassian.com/users/\\{account_id}/manage] does not include above properties in the response\r\n # Calling [https://api.atlassian.com/users/\\{account_id}/manage?privileges=mfa.read] (or mfa.unenroll) always returns {{\"allowed\":true}}, whether you have MFA enabled or not:\r\n{noformat}\r\ncurl -H 'Authorization: Bearer <API_KEY>' -H 'Accept: application/json' -X GET https://api.atlassian.com/users/<ACCOUNT_ID>/manage?privileges=mfa.read\r\n\r\n{\"mfa.read\":{\"allowed\":true}}\r\n{noformat}\r\n\r\nh3. Steps to Reproduce\r\n # Being an Organization administrator, go to admin.atlassian.com and [Create an API KEY|https://confluence.atlassian.com/cloud/create-an-admin-api-key-969537932.html]\r\n # Use the api key to authorize a REST API call against the endpoint [https://api.atlassian.com/users/\\{account_id}/manage] (replace account_id with the account-id of a [managed account|https://confluence.atlassian.com/cloud/managed-accounts-873871203.html])\r\n \r\n h3. Expected Results\r\n \r\n Among the other properties, also *mfa.read* and *mfa.unenroll* are returned.\r\n h3. Actual Results\r\n \r\n Everything is returned, but *mfa.read* and *mfa.unenroll*\r\n\r\n Also:\r\n - Calling: [https://api.atlassian.com/users/\\{account_id}/manage?privileges=mfa.read] or [https://api.atlassian.com/users/\\{account_id}/manage?privileges=mfa.unenroll] always returns {{\"allowed\":true}} regardless MFA being enabled or not.\r\n{noformat}\r\ncurl -H 'Authorization: Bearer sDXXXXXXXXXXXXaa' -H 'Accept: application/json' -X GET https://api.atlassian.com/users/5acbXXXXXXXXXXXXede/manage?privileges=mfa.read,mfa.unenroll\r\n\r\n{\"mfa.read\":{\"allowed\":true}}\r\n{noformat}\r\n\r\n \r\n - Calling [https://api.atlassian.com/users/\\{account_id}/manage?privileges=mfa.read,mfa.unenroll] returns empty response:\r\n{noformat}\r\ncurl -H 'Authorization: Bearer sDXXXXXXXXXXXXaa' -H 'Accept: application/json' -X GET https://api.atlassian.com/users/5acbXXXXXXXXXXXXede/manage?privileges=mfa.read,mfa.unenroll\r\n\r\n{}\r\n{noformat}\r\n\r\nh3. Workaround\r\n\r\nNo workaround available at the moment.",
+      "summary": "User Management REST API not returning MFA information"
+    }
+  },
+  {
+    "key": "ID-7284",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-12-19T09:35:48.000+0000",
+      "created": "2019-12-13T14:23:21.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen clicking the link to navigate to the old experience, \"Something went wrong\" error is shown. Because of this site-admins cannot impersonate users with the *Log in as user* button.\r\n\r\nh3. Steps to Reproduce\r\n\r\n # Go to *Users* in the *Site administration* \r\n # Pick any user and click on *Log in as user*\r\n\r\nh3. Expected Results\r\n\r\nYou're expected to be redirected to the old User management where you can then proceed to impersonate the user account.\r\n\r\nh3. Actual Results\r\n\r\nYou get an error:\r\n\r\n !Administration.png|thumbnail! \r\n\r\nThe URL is stuck with a {{?noMigrationRedirect=true}} at the end.\r\n\r\nConsole from Google Chrome:\r\n{code}\r\nAccess to script at 'https://admin.atlassian.com/vendors~site-user-details-page.a3184baf6230fd5d1011-5.js' from origin 'https://sansan-inc.atlassian.net' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.\r\n{code}\r\n\r\n{code}\r\nGET https://admin.atlassian.com/vendors~site-user-details-page.a3184baf6230fd5d1011-5.js net::ERR_FAILED\r\n{code}\r\n\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this bug. A workaround will be added here when available",
+      "summary": "Can't Log in as user"
+    }
+  },
+  {
+    "key": "ID-7282",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-12-18T22:44:40.000+0000",
+      "created": "2019-12-13T02:57:48.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIn the invite user screen (user management), after inserting an email, when selecting a different role (i.e Trusted or site-admin), it does not reflect the change, it still shows as basic\r\n [^Inviteuser.mp4] \r\nh3. Steps to Reproduce\r\n # In site-administration page, click on invite user\r\n # Enter the email address\r\n # Choose trusted or site-admin on the dropdown\r\n\r\nh3. Expected Results\r\n\r\nShould be able to reflect the changes\r\nh3. Actual Results\r\n\r\nIt does not reflect changes and still shows as basic\r\nh3. Workaround\r\n\r\n1. Invite the user as a basic user first\r\n2. Then, in the user's list, click on the user or click on show details of the user\r\n3. Change the role there.",
+      "summary": "Invite users - unable to select role other than basic"
+    }
+  },
+  {
+    "key": "ID-7278",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-03-29T21:36:16.000+0000",
+      "created": "2019-12-12T14:55:48.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe\u00a0[Get user management permissions|https://developer.atlassian.com/cloud/admin/user-management/rest/?_ga=2.223262363.1054603554.1575971654-1080961822.1564054573#api-users-account-id-manage-get]\u00a0documentation page is missing information about _mfa.read_ and\u00a0_mfa.unenroll_ query\u00a0parameters:\r\n{quote}\r\nh5. QUERY PARAMETERS\r\n\r\n*privileges*\r\n\r\nArray<string>\r\n{quote}\r\n{quote}Valid values:\u00a0{{profile}},\u00a0{{profile.write}},\u00a0{{profile.read}},\u00a0{{email.set}},\u00a0{{email.initiateChange - lifecycle.enablement}},\u00a0{{linkedAccounts.read}},\u00a0{{apiToken.read}},\u00a0{{apiToken.delete}},\u00a0{{avatar}},\u00a0{{privacy.set}}\r\n{quote}\r\n\u00a0\r\n\r\nHowever, the same parameters are mentioned in the \"Responses\" section:\r\n{quote}_email.set_: set a new value for the user's email address -\u00a0_email.initiateChange_: initiate an email address change -\u00a0*_mfa.read_: read the current MFA enrollment state for the user -\u00a0_mfa.unenroll_: unenroll the user from MFA* ......\r\n{quote}\r\n\u00a0\r\n\r\nThe parameter is there and it is working fine, it should therefore be added to the list of the valid values:\r\ncurl -H 'Authorization: Bearer <API_KEY>' -H 'Accept: application/json' -X GET https://api.atlassian.com/users/<ACCOUNT_ID>/manage?privileges=mfa.read\r\n\r\n\u00a0\r\n{\"mfa.read\":{\"allowed\":true}}\r\n\u00a0\r\n",
+      "summary": "Missing information about mfa.read and mfa.unenroll parameters in the 'GET User Management Permissions' REST API endpoint documentation"
+    }
+  },
+  {
+    "key": "ID-7275",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-10T05:12:28.000+0000",
+      "description": "h3. Issue Summary\r\nClicking \"Saved, let's finish\" when regenerating your recovery key doesn't proceed when using non-English language\r\n\r\nh3. Steps to Reproduce\r\n# Set your browser language to Japanese\r\n# Navigate to https://id.atlassian.com/manage/two-step-verification and click the upper link \"\u65b0\u3057\u3044\u7dca\u6025\u6642\u306e\u30ea\u30ab\u30d0\u30ea\u30ad\u30fc\u3092\u4f5c\u6210\"\r\n# Click \"\u65b0\u3057\u3044\u30ad\u30fc\u3092\u4f5c\u6210\"\r\n# Click either of the options from \"\u30aa\u30d7\u30b7\u30e7\u30f3\u3092\u4fdd\u5b58\" drop-down and click \"\u4fdd\u5b58\u3057\u307e\u3057\u305f\u3002\u3053\u308c\u3067\u5b8c\u4e86\u3067\u3059\u3002(Saved, let's finish)\".\r\n\r\nh3. Expected Results\r\nThe screen navigates back to https://id.atlassian.com/manage/two-step-verification\r\n\r\nh3. Actual Results\r\nNothing happens. The following error is found in the browser console:\r\n{code}\r\nUncaught DOMException: Failed to execute 'btoa' on 'Window': The string to be encoded contains characters outside of the Latin1 range.\r\n    at e.value (https://aid-static-assets.prod.atl-paas.net/atlassian-id/14.6.10/page/two-step-verification-regenerate-recovery-code/two-step-verification-regenerate-recovery-code.js:5:17265)\r\n    at s (https://aid-static-assets.prod.atl-paas.net/atlassian-id/14.6.10/page/two-step-verification-regenerate-recovery-code/two-step-verification-regenerate-recovery-code.js:5:14256)\r\n    at t.value (https://aid-static-assets.prod.atl-paas.net/atlassian-id/14.6.10/page/two-step-verification-regenerate-recovery-code/two-step-verification-regenerate-recovery-code.js:5:24760)\r\n    at HTMLButtonElement.<anonymous> (https://aid-static-assets.prod.atl-paas.net/atlassian-id/14.6.10/page/two-step-verification-regenerate-recovery-code/two-step-verification-regenerate-recovery-code.js:5:24640)\r\n    at HTMLButtonElement.dispatch (https://aid-static-assets.prod.atl-paas.net/atlassian-id/14.6.10/lib/jquery/dist/jquery.min.js:3:7537)\r\n    at HTMLButtonElement.r.handle (https://aid-static-assets.prod.atl-paas.net/atlassian-id/14.6.10/lib/jquery/dist/jquery.min.js:3:5620)\r\nvalue @ navigation-action.js?b5bf:23\r\ns @ index.js?efe2:48\r\nvalue @ two-step-verification-save-recovery-code.js:61\r\n(anonymous) @ two-step-verification-save-recovery-code.js:55\r\ndispatch @ jquery.min.js:3\r\nr.handle @ jquery.min.js:3\r\n{code}\r\n\r\nh3. Note\r\nDespite the button doesn't work, the new recovery key is valid so users should be able to use it without any issues.\r\n\r\nh3. Workaround\r\nChange the browser language to English.",
+      "summary": "Clicking \"Saved, let's finish\" when regenerating your recovery key doesn't proceed when using non-English language"
+    }
+  },
+  {
+    "key": "ID-7273",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-14T01:22:02.000+0000",
+      "created": "2019-12-09T00:37:43.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nAt the moment, the profile visibility options to allow *Only You and Admins* is only applicable to email address:\r\n\r\n!image-2019-12-09-08-33-58-556.png|width=500!\r\n\r\nh3. Suggested Solution\r\nAllow *Only You and Admins* options for other field\r\n\r\nh3. Why this is important\r\nUsers would want to share his information with Admin only but not the entire organization.\r\n\r\nh3. Workaround\r\nNo workaround",
+      "summary": "Allow Only You and Admin options for Full name"
+    }
+  },
+  {
+    "key": "ID-7272",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-14T01:22:01.000+0000",
+      "created": "2019-12-06T15:53:35.000+0000",
+      "description": "At the moment, organization admins or site admins need to deactivate/delete accounts that are no longer valid from Managed Accounts or Users list. \r\n\r\nSometimes organization admins or site admins will not be informed that some accounts have been deactivated/deleted from the company, especially if they are external users. Because of that, those users still have active Atlassian Accounts and be able to access the instance.\r\n\r\nAtlassian should be able to identify invalid/deactivated emails and do the same for their Atlassian Accounts.",
+      "summary": "Not allowing no longer valid emails to be able to login"
+    }
+  },
+  {
+    "key": "ID-7269",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-05T19:49:10.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhile checking the profile timezone at https://id.atlassian.com/manage-profile/account-preferences, it shows S\u00e3o Paulo as being GMT-2 when it is actually GMT-3.\r\n\r\nh3. Steps to Reproduce\r\n\r\n# Access the Account Preferences at https://id.atlassian.com/manage-profile/account-preferences\r\n# Search for S\u00e3o Paulo\r\n# It will show GMT-2\r\n\r\nh3. Expected Results\r\n\r\nS\u00e3o Paulo's timezone should show GMT-3\r\n !Screen Shot 2019-12-05 at 10.17.34.png|thumbnail! \r\n\r\nh3. Actual Results\r\n\r\nS\u00e3o Paulo's timezone is shown as GMT-2\r\n !Screen Shot 2019-12-05 at 10.14.17.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nNone at the moment.",
+      "summary": "Wrong timezones at Account preferences"
+    }
+  },
+  {
+    "key": "ID-7268",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-14T01:11:33.000+0000",
+      "created": "2019-12-05T13:53:21.000+0000",
+      "description": "h3. Summary\r\n\r\nCurrently, when we invite the user, it defaults to Trusted, then Site-Admins has to manually change it. Sometimes, users who need to be added as Basic gets invited as Trusted.\r\n\r\nh3. Proposed Solution\r\n\r\nChange the Role from Trusted to Basic as default while inviting the user.",
+      "summary": "New Users should be Basic Users by default"
+    }
+  },
+  {
+    "key": "ID-7261",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-11-26T04:00:45.000+0000",
+      "created": "2019-11-26T08:32:55.000+0000",
+      "description": "h3. Problem Definition\r\n* When trying to change the Atlassian account password via id.atlassian.com > Security > \"Change your password\", it's not obvious that the \"Current password\" field is mandatory\r\n* Some users are trying to change their password because the current password is not known to them - access to the Atlassian account can be granted via a magic link or via an already active session\r\n\r\nh3. Suggested Solution\r\n* Mark the field as required\r\n* Display a  tooltip similar to below, but not as wordy:\r\n !Screenshot 2019-11-26 at 08.28.38.png|thumbnail! \r\n\r\nh3. Why this is important\r\n* Some users have logged in via a magic link and don't know their password\r\n* Some users have forgotten their password, but still have an active session - they'd like to reset their password but don't know how to reset their password\r\n* Can cause friction because customers may be under the impression that their account doesn't have a password, but they are prompted for a password in order to be able to change their password\r\n \r\nh3. Workaround \r\n* Users must enter their current password and new password in order to enable the  \"Save changes\" button\r\n* Atlassian account passwords can be reset via https://id.atlassian.com/login/resetpassword - users will need to log out if not logged out already",
+      "summary": "Display a tooltip/mark \"Current password\" field as required when users are trying to change their password via id.atlassian.com"
+    }
+  },
+  {
+    "key": "ID-7259",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-12-13T02:29:27.000+0000",
+      "created": "2019-11-25T16:54:14.000+0000",
+      "description": "h3. Issue Summary\r\nCustomers utilizing a Proxy/VPN Service are receiving notifications from Atlassian that their connection is unusual, however, the Location returned is incorrect\r\n\r\nh3. Steps to Reproduce\r\n# Connect to a Proxy/VPN Service (like zScaler)\r\n# Access the Atlassian Cloud Environment\r\n\r\nh3. Expected Results\r\nLocation shown in email accurately reflects where the user is connected through\r\n\r\nh3. Actual Results\r\nUser receives a notification indicating that there is unusual activity with their account. \r\n\r\nEmail received\r\n{noformat}\r\nHello,\r\nWe noticed some unusual login activity with your Atlassian account.\r\nEmail <EMAIL ADDRESS>\r\n\r\nTime Thursday, November xx, 2019 hh:mm AM (America/New_York)\r\nLocation Pleasant Prairie, Wisconsin, United States\r\nDevice Unknown\r\nBrowser Chrome\r\nIP address 165.225.x.xx3\r\nTo make sure your account is secure, let us know if this was you.\r\n{noformat}\r\n\r\nIf the IP Address is checked/looked up using an online tool, the location is correct:\r\n{code}| => curl https://ipapi.co/165.225.x.xx3/json\r\n{\r\n    \"ip\": \"165.225.x.xx3\",\r\n    \"city\": \"Chicago\",\r\n    \"region\": \"Illinois\",\r\n    \"region_code\": \"IL\",\r\n    \"country\": \"US\",\r\n    \"country_name\": \"United States\",\r\n    \"continent_code\": \"NA\",\r\n    \"in_eu\": false,\r\n    \"postal\": \"60602\",\r\n    \"latitude\": 41.8483,\r\n    \"longitude\": -87.6517,\r\n    \"timezone\": \"America/Chicago\",\r\n    \"utc_offset\": \"-0600\",\r\n    \"country_calling_code\": \"+1\",\r\n    \"currency\": \"USD\",\r\n    \"languages\": \"en-US,es-US,haw,fr\",\r\n    \"asn\": \"AS22616\",\r\n    \"org\": \"ZSCALER, INC.\"\r\n}{code}\r\n\r\nh3. Workaround\r\n\r\nIf the IP Returned in this notification is recognized, acknowledge the message by clicking \"This was me\" in the notification.\r\n",
+      "summary": "Incorrect Location on Unusual Activity Email"
+    }
+  },
+  {
+    "key": "ID-7254",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-11-29T03:45:29.000+0000",
+      "created": "2019-11-20T09:07:35.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen you remove a user from User Management -> Users admin page the table of users isn't refreshed and the removed user is still visible in that table.\r\nh3. Steps to Reproduce\r\n # Go to User Management -> Users\r\n # Enter an emails address to invite user.\r\n # Invited user email appears at the bottow of the table (as Invitation pending)\r\n # Click on the user name -> we are redirected to user's detail page\r\n # Remove user (from upper right corner \"...\" button) -> we are redirected back to users page.\r\n # And... the removed user is still visible in the table... (we have to refresh a page for it to disappear)\r\n\r\nh3. Expected Results\r\n\r\nThe removed user is not visible in the table (page refresh not required)\r\nh3. Actual Results\r\n\r\nThe below exception is thrown in the xxxxxxx.log file:\r\n{noformat}\r\n...\r\n{noformat}\r\nh3. Workaround\r\n\r\nRefresh a page",
+      "summary": "Removing a user doesn't refresh table with users "
+    }
+  },
+  {
+    "key": "ID-7244",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-13T15:33:21.000+0000",
+      "description": "h3. Problem Definition (last updated on 13/Nov/2019)\r\nCurrently, the [Atlassian Account deletion process|https://confluence.atlassian.com/cloud/delete-your-atlassian-account-961259508.html] have a 14-day grace period that allow the Org Admin to cancel it. That long grace period is not ideal depending on the companies policies. \r\n\r\nh3. Suggested Solutions\r\n- Reduce the grace period to something like 3 days or so. \r\n- Create a button at the users' profile in the Org that allow the admins to expedite the account deletion.\r\n\r\n\r\n",
+      "summary": "Make it possible for Org Admins to expedite the Atlassian account deletion "
+    }
+  },
+  {
+    "key": "ID-7243",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-12-05T01:38:40.000+0000",
+      "created": "2019-11-13T15:21:04.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nOnce a user is removed from a Cloud site his associations to roles present at the projects *People* section will remain untouched.\r\n\r\nThe current behavior helps admins if a specific user returns to the company but can cause permission problems in case a new user is invited with the same email that was being used by the old off-boarded user.\r\n\r\nh3. Steps to Reproduce\r\n# Invite a user to your Cloud site.\r\n# Add the user to a role inside one of your JIRA projects.\r\n# Remove the user from your site.\r\n\r\nh3. Expected Results\r\n\r\nThe user should be removed from the roles he was associated so if a new user got the same email no permission would be miss granted.\r\nThis also means that if the user would be added back to the site he would need to be added to the permissions manually once again. \r\n\r\nh3. Actual Results\r\n\r\nThe user is removed but he remains associated with the project roles.\r\nIn case you try to grant more roles to that entry the following error is displayed:\r\n !Screen Shot 2019-11-13 at 12.17.31.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nManually delete the user entry from the People section of your projects.",
+      "summary": "Removing a user from the instance"
+    }
+  },
+  {
+    "key": "ID-7240",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-11-13T00:40:39.000+0000",
+      "created": "2019-11-12T19:44:39.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThis site probably got its organization created when we made the site-admins group READ_ONLY, this constraint has remained and is causing some issues for the customer to promote users to be site-admins only.\r\n\u00a0\r\nh3. Workaround\r\n\r\nN/A\r\nh3. Please help with\r\n\r\nRemoving the READ_ONLY constraint from the site-admins group for site id 9e73dcf9-22da-4cf9-94ca-243853f329c0",
+      "summary": "JST-524409 - DoS - Please remove the READ_ONLY constraint from the site-admins group for site id 9e73dcf9-22da-4cf9-94ca-243853f329c0"
+    }
+  },
+  {
+    "key": "ID-7239",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-11T09:24:34.000+0000",
+      "description": "h3. Summary\r\n\r\nThe [Session duration|https://confluence.atlassian.com/cloud/session-duration-management-976763148.html] feature allows session timeout under a specified duration when the session is idle.\r\n\r\nInteractions can be active (a user clicks a button) or passive (an open page auto-refreshes).\r\n\r\nThe notification services are also considered as a passive interaction which means by keeping your browser open, the session will remain active and not go idle despite not having Jira open.\r\n\r\nh3. Proposed solution\r\n\r\nExclude the notification services from being a passive interaction to assure once Jira isn't being used, the session is able to go in idle mode and timeout.",
+      "summary": "Improve what is considered passive interaction for session duration"
+    }
+  },
+  {
+    "key": "ID-7238",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-03-30T05:54:42.000+0000",
+      "created": "2019-11-10T15:18:14.000+0000",
+      "description": "If we try to integrate the G-suite with non-org admin account. It gives only error something went wrong.\r\n\r\nInstead error should be clear for the admins that it required an org-admin account to integrate Gsuite.",
+      "summary": "While integrating G-Suite with non-org admin user gives mis-leading error"
+    }
+  },
+  {
+    "key": "ID-7237",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-14T01:22:00.000+0000",
+      "created": "2019-11-08T08:40:11.000+0000",
+      "description": "h3. Problem Definition\r\n\r\n2FA is one of the best solutions to better secure the Atlassian accounts, however, enforcing the 2FA is only available under Atlassian access with many other features. The other features may or may not be of use to the customer but security is one of the primary concerns of customers when using cloud service and therefore enforcing 2FA could be of help.\r\nh3. Suggested Solution\r\n\r\nEnforcing 2FA can be provided as an independent feature for the Atlassian sites.\u00a0\u00a0",
+      "summary": "2FA Enforcement as a independent feature"
+    }
+  },
+  {
+    "key": "ID-7233",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-14T01:22:02.000+0000",
+      "created": "2019-11-06T11:01:49.000+0000",
+      "description": "h3. Problem Definition\r\n* When adding groups to existing users in User Management > Users\r\n\r\nh3. Suggested Solution\r\n* Include a \"show all\" ticket box so that all groups a visible\r\n\r\nh3. Why this is important\r\n* Forces admins to have to remember the group names\r\n* Sometimes it's easier to see a list of all groups as it eliminates uncertainty - \"Did I remember the group name correctly, or does the group even exist?\"\r\n \r\nh3. Workaround \r\n* Open User Management > Groups page in another window/browser tab",
+      "summary": "\"Add a user to groups\" modal should show all groups if there are more than 20 groups"
+    }
+  },
+  {
+    "key": "ID-7229",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-14T01:22:01.000+0000",
+      "created": "2019-11-01T13:51:35.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCurrently, you can set the visibility of your full name to *Anyone*, and your organization.\r\n\r\nThe Public name will then be displayed in Atlassian's public forums.\r\n\r\nh3. Suggestion\r\n\r\nProvide more granular options to the Full name's visibility, such as:\r\n* Organization;\r\n* Atlassian;\r\n* Atlassian Community (authenticated users);\r\n* Anyone (unauthenticated users).\r\n",
+      "summary": "Granular visibility options for Full name"
+    }
+  },
+  {
+    "key": "ID-7228",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-12-15T19:17:40.000+0000",
+      "created": "2019-11-01T12:35:23.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently, there is no easy way for a user to know that the domain of the email address will [update its account to|https://confluence.atlassian.com/cloudkb/changing-atlassian-account-email-addresses-969508513.html] is [managed|https://confluence.atlassian.com/cloud/managed-accounts-873871203.html]/verified. That could cause some unwanted side effects such as losing the ability to change the account's email address.\r\n\r\nh3. Suggested Solutions\r\nCreate a message, such as the example below, that informs the customer that the destination email address is managed by an [Organization|https://confluence.atlassian.com/cloud/organization-administration-938859734.html]:\r\n{quote}\r\n(!) You are about to change your account's email address to a [verified domain|https://confluence.atlassian.com/cloud/verify-a-domain-for-your-organization-873871234.html]. With that your account will be [managed|https://confluence.atlassian.com/cloud/managed-accounts-873871203.html] by the owner of that domain claim from now on. Do you want to proceed?\r\n{quote}",
+      "summary": "Trigger a message when updating the email of an unmanaged domain to a managed one"
+    }
+  },
+  {
+    "key": "ID-7227",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-01T11:30:40.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nwe performed the workaround available in this bug:https://jira.atlassian.com/browse/ID-7089\r\n The workaround changes the unmentionable user's username to something unique, which fixes the issue in ID-7089.\r\n But now if the same user mentions other users, they are not getting any email notifications.\r\nh3. Steps to Reproduce\r\n # Step 1 Perform the workaround available in ID-7089.\r\n # Step 2 Remove the user (ex.A) from the instance.\r\n # Step 3 Invite the user \"A\" using cookie-based Endpoint and check if mentioning works.\r\n # Step 4 Login as the same user \"A\" and @mention other users\r\n\r\nh3. Expected Results\r\n\r\nAll @mentioned user should be notified.\r\nh3. Actual Results\r\n\r\nUsers are not getting any notification.\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Mentioned users are not receiving email notifications "
+    }
+  },
+  {
+    "key": "ID-7216",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-28T20:08:41.000+0000",
+      "description": "{panel:title=Call for prototype testing}\r\nHi all,\r\n\r\nThank you so much for your votes and comments on \u2018Force managed accounts to log out.\u2019\r\n\r\nWe have created a prototype to address the feedback and would like to invite admins that are using Atlassian Administration to take part in an upcoming usability test study.\r\n\r\nWhat\u2019s involved in the study:\r\n\r\nSessions are about 30 minutes long and conducted via Zoom.\r\n\r\nI\u2019m hoping to schedule sessions beginning next week. Once we schedule the session, you will receive a calendar invite to a Zoom conference.\r\n\r\nWe\u2019ll start with a general discussion to get to know you. We will then dive deeper into your experience to learn about how you\u2019d like to require your users to log out. Lastly, we will share a prototype with you to get your feedback.\r\n\r\nIf you\u2019re interested in taking part, please email me at\u00a0[jwu3@atlassian.com|mailto:jwu3@atlassian.com], and I will contact you to schedule a time to meet.\r\n\r\nWe look forward to hearing from you.\r\n\r\nCheers,\r\n Jesse Wu\r\n Designer for Atlassian Administration, Access and Security\r\n{panel}\r\n*Problem*\r\n It's not possible to force users to log out in the *Session duration* tab on the admin page. The workaround is the *Reset password* feature in the *Org* > *Security* > *Password management* tab. That button has two different outcomes beyond ending the managed accounts' session depending on having SAML SSO or not:\r\nh3. Scenario 1: SAML SSO is enabled\r\n - The users will have their Atlassian Account session terminated and when they try to log in, they will be redirected to the Identity Provider authentication page. The users *won't* be asked to create a new password, *nor* receive any notification.\r\n\r\nh3. Scenario 2: SAML SSO is *not* enabled\r\n - The users will have their Atlassian Account session terminated and when they try to log in, after entering their current credentials, they will be prompt to create a new password. This new password must respect the Organization's [password policies].\r\n\r\n*Suggestion*\r\n Notify your users about when the logout will happen so they can avoid losing their current work. If you do changes to the session duration it might be worth it to let them know as well.",
+      "summary": "Force managed accounts to log out"
+    }
+  },
+  {
+    "key": "ID-7214",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-11-21T02:59:49.000+0000",
+      "created": "2019-10-28T14:51:11.000+0000",
+      "description": "h3. Issue Summary\r\nWhen trying to access a support ticket right after authenticating at Atlassian, you are redirected to a generic portal page. \r\n\r\nh3. Steps to Reproduce\r\n# Login at https://id.atlassian.com\r\n# Try to access a direct ticket at https://getsupport.atlassian.com (i.e. https://getsupport.atlassian.com/servicedesk/customer/portal/23/<ticket-id>)\r\n# You are redirected to https://getsupport.atlassian.com/servicedesk/customer/portals instead. \r\n\r\nh3. Expected Results\r\nYou are redirected to the URL you requested. \r\n\r\nh3. Actual Results\r\nYou are redirected to https://getsupport.atlassian.com/servicedesk/customer/portals \r\n\r\nh3. Workaround\r\nAccess the ticket a second time will redirect you to it.",
+      "summary": "Incorrect redirect when accessing a getsupport.atlassian.com ticket right after being authenticated at https://id.atlassian.com"
+    }
+  },
+  {
+    "key": "ID-7213",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2021-05-12T05:14:15.000+0000",
+      "created": "2019-08-30T14:20:35.000+0000",
+      "description": "h3. *Summary*\r\n\r\nAccessing from FireFox generate malformed request error when the time from the machine is 10 mins off the time server.\r\n\r\nh3. *Steps to Reproduce*\r\n # Set your machine time 10 -15 minutes off\r\n # Login from id.atlassian.com\r\n # Saw the error message below:\r\n {quote}\r\nOops, you've made a malformed request.\r\nOften, clearing your browser's cache and restarting your browser will solve this problem.\r\nIf that doesn't work, please contact support.{quote}\r\n\r\n\r\nh3. *Expected Results*\r\n\r\nUser should be able to login\r\n\r\nh3. *Actual Results*\r\n\r\nAn error message is displayed and users cannot log in.\r\n\r\nh3. *Notes*\r\n* User can still log in from Chrome or other browsers. The inconsistency comes when user login from FireFox\r\n* This message can also appear in FireFox:\r\n{quote}\r\nWe're having trouble logging you in. There seems to be an issue with your identity provider. Wait a few moments, then try again.\r\n{quote}\r\n\r\nh3. *Workaround*\r\n # Reset the time on your machine. ",
+      "summary": "Accessing id.atlassian.com from FireFox failed if the machine time is 10 mins off from the time server. "
+    }
+  },
+  {
+    "key": "ID-7212",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2020-07-14T01:22:02.000+0000",
+      "created": "2019-10-27T07:49:25.000+0000",
+      "description": "After revoking the site access, the user is still part of the groups. Now if we added the groups the notification scheme. The user still gets email notification.\r\n\r\nWe should remove user from groups if we revoke its site access. ",
+      "summary": "Revoking site access should remove the user from group."
+    }
+  },
+  {
+    "key": "ID-7211",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": "2019-10-25T18:44:15.000+0000",
+      "created": "2019-09-09T08:33:09.000+0000",
+      "description": "h3. Issue Summary\r\nWhen we add people in the team it shows invited but the user doesn\u2019t receive any notification and we can not remove invited user.\r\n\r\nh3. Environment\r\nConfluence cloud\r\n\r\nh3. Steps to Reproduce\r\n # Step 1 Create a team and add users in the team by using *add people* button.\r\n # Step 2 Search a user name in *Add team members* and click on confirm.\r\n !image-2019-09-09-13-53-10-135.png|thumbnail! \r\n # Step 3 It shows invitation sent successfully but the user doesn\u2019t receive any notification \r\n !image-2019-09-09-13-54-43-055.png|thumbnail! \r\n !image-2019-09-09-13-56-25-101.png|thumbnail! \r\n # Step 4 Members list shows invited user but the user is not receiving an invitation and we can not remove invited user from this members list.\r\n !image-2019-09-09-13-58-19-128.png|thumbnail!  \r\n\r\nh3. Expected Results \r\nUser should get the notification and we should be able to remove invited users.\r\n\r\nh3. Actual Results\r\nUsers are not getting any invites, notification and we can not remove invited users.\r\n\r\nh3. Workaround\r\n\r\n Currently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Unable to invite user in the team"
+    }
+  },
+  {
+    "key": "ID-7209",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-24T12:35:07.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUsers from both JIRA had already logged in via the Jira application on the Mobile device, but the session stills states as \"Never Logged In\". \r\n\r\n !image-2019-10-24-12-30-37-968.png|thumbnail! \r\n\r\nh3. Steps to Reproduce\r\n* Invite a User to Atlassian Cloud\r\n* Provide Jira product access.\r\n\r\n* The user receives the Invite Email.\r\n* Access the Email on the Mobile\r\n* Click Join the site\r\n* Use Jira application to Join the Site ( Not the Mobile device browser)\r\n* Access the required projects in Jira.\r\n\r\n* In the user management page, observe that user details suggest that the user has never logged in.\r\n\r\nh3. Expected Results\r\nThe Login time should be updated to the current time.\r\n\r\nh3. Actual Results\r\nThe login time is not updated in Jira\r\n\r\nh3. Workaround\r\n\r\n Currently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Application Access shows \"Never Logged In\" for users,  even when the users have logged in via Jira Mobile applications"
+    }
+  },
+  {
+    "key": "ID-7207",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-23T10:01:04.000+0000",
+      "description": "h3. Summary\r\n\r\nWhen attempting to configure SMS-based 2FA with a Lithuanian (LT) phone number, the verification of the phone number fails - the number appears to be invalid, even though it's valid.\r\nh3. Steps to Reproduce\r\n # Attempt to configure 2FA for an Atlassian Account.\r\n\r\n # Click on \"_Don't have a smartphone?_\" and then click on _Enable using SMS_\r\n\r\n # For the country code, choose LT (Lithuania). The prefix +370 will be added.\r\n\r\n # Add the rest of the phone number.\u00a0\r\n\r\nh3. Expected Results\r\n\r\nSince the phone number is valid, an SMS should be received\r\nh3. Actual Results\r\n\r\nAn error is thrown and an exclamation mark (!) is shown next to the phone number, indicating that it's invalid\r\n The browser console shows a 403 \"The request was a legal request, but the server is refusing to respond to it\"\r\n\r\n\u00a0 !image-2019-10-23-12-02-36-626.png|width=617,height=283!\r\nh3. Workaround\r\n\r\nNo direct workaround is available for the situation where the user does not have a smartphone.",
+      "summary": "SMS-based 2FA does not work with Lithuanian phone numbers"
+    }
+  },
+  {
+    "key": "ID-7206",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-23T08:54:41.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nManaged users (i.e whose domain has been claimed) can setup 2SV at Atlassian Account level using steps at [Two-step verification|https://confluence.atlassian.com/x/oQkvOg]. The flow to recover lost 2SV is broken based on this documentation.\r\nh3. Environment\r\n\r\nNA\r\nh3. Steps to Reproduce\r\n # Customer is a managed account but without Atlassian Access\r\n # He sets up 2SV at a personal account level\r\n # His final screen that he gets stuck at is the below screen\r\n # Clicking on this screen - makes customer go to\u00a0\u00a0  !image-2019-10-23-16-55-08-878.png!\r\n # Then he is at the page\u00a0[https://confluence.atlassian.com/cloud/two-step-verification-976161185.html#Secureyouraccountwithtwo-stepverification-Recoveryouraccount]\u00a0which only suggests customer contact Support\u00a0\u00a0\r\n\r\nh3. Expected Results\r\n\r\nCustomer should be able to fix this kind of 2SV issues on their own. This is not currently happening\r\nh3. Actual Results\r\n\r\nCustomer needs to reach out to Support every time for scenarios like these but in fact the resolution/workaround to this issue is dependent on user's organisation administrator to disable his/her 2SV (See workaround below)\u00a0\r\nh3. Workaround\r\n\r\nAt current point of time only Org Admins can unenroll users from 2SV in this flow where users setup 2SV on their own Atlassian Account. Please reach out to respective org admin's to assist to do this. Org Admins should unenroll users as explained under\u00a0[Temporarily exclude users from two-step verification|https://confluence.atlassian.com/cloud/enforced-two-step-verification-938859738.html#Enforcedtwo-stepverification-Temporarilyexcludeusersfromtwo-stepverification].\r\n{quote}They've lost their phone, and so won't be able to log in........\r\n{quote}\r\n{quote}Users who have two-step verification - excluding such users will disable two-step verification for the their account and allow them to log in with only a password.\r\n{quote}",
+      "summary": "Managed Users who setup 2SV at Atlassian Account level can never easily recover their lost 2SV"
+    }
+  },
+  {
+    "key": "ID-7203",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-03T14:25:47.000+0000",
+      "description": "h3. Summary\r\nChecking out time zones it appears our tz database is out of date. This can be seen as the new permanant change for Casablanca to GMT+1 is not reflected.\r\n\r\nh3. Environment\r\nJira - Production\r\n\r\nh3. Steps to Reproduce\r\n# Go to [https://id.atlassian.com/manage-profile]\r\n# Browse for *Casablanca* Timezone in *_Location and time zone_* section\r\n\r\nh3. Expected Results\r\nCasablanca timezone should be GMT+1\r\n\r\nh3. Actual Results\r\nCasablanca timezone is GMT+0\r\n \r\nh3. Notes\r\nI have downloaded the latest tz database and checked, it appears this indeed been implemented in the tz database.\r\n{noformat}\r\n# Zone\tNAME\t\tGMTOFF\tRULES\tFORMAT\t[UNTIL]\r\nZone Africa/Casablanca\t-0:30:20 -\tLMT\t1913 Oct 26\r\n\t\t\t 0:00\tMorocco\t+00/+01\t1984 Mar 16\r\n\t\t\t 1:00\t-\t+01\t1986\r\n\t\t\t 0:00\tMorocco\t+00/+01\t2018 Oct 28  3:00\r\n\t\t\t 1:00\tMorocco\t+01/+00\r\n{noformat}\r\n\r\nIt seems we need to run the [Oracle Timezone Updater Tool|https://www.oracle.com/technetwork/java/javase/documentation/tzupdater-readme-136440.html].\r\n\r\nh3. Workaround\r\nNone",
+      "summary": "Java timezone database out of date"
+    }
+  },
+  {
+    "key": "ID-7192",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/16810",
+        "id": "16810",
+        "key": "ID",
+        "name": "Identity",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=16810&avatarId=10011",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=16810&avatarId=10011",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=16810&avatarId=10011",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=16810&avatarId=10011"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-14T13:43:41.000+0000",
+      "description": "h3. Description\r\n\r\nAs announced on [Say goodbye to usernames in Atlassian Cloud|https://confluence.atlassian.com/cloud/blog/2018/06/say-goodbye-to-usernames-in-atlassian-cloud] we're moving away from usernames due to [European General Data Protection Regulation (GDPR)|https://www.atlassian.com/blog/announcements/atlassian-and-gdpr-our-commitment-to-data-privacy?_ga=2.147632436.2054399766.1571052388-298345919.1553604624&_gac=1.3337092.1570626111.EAIaIQobChMImNvf_J2P5QIVCXiGCh1TMwuOEAAYASAAEgKUpfD_BwE].\r\n\r\nHowever, for some customers, the option to display *usernames* would still very useful. Seeing that this would be, enable the options to toggle  usernames on/off\r\n\r\nh3. Expected Results\r\n* Allow customers to enable and option, on an instance-level, to display *usernames*, instead of Atlassian IDs. \r\n\r\n\r\nh3. Examples\r\n\r\n* This would be useful when viewing macros in Confluence that reference Jira users.\r\n\r\nh3. Observation\r\n (on) This should include an acknowledge from the customer side on these European laws.\r\n\r\n",
+      "summary": "Allow customers to enable and option to display usernames instead of Atlassian IDs"
+    }
+  }
+]

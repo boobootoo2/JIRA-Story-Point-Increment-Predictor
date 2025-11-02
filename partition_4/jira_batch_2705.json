@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "BAM-4384",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-23T01:34:33.000+0000",
+      "created": "2009-08-20T07:20:38.000+0000",
+      "description": "Hitting {{/rest/api/latest/project/?expand=projects.project.plans.plan}} or {{/rest/api/latest/plan/BAM-KEY}}on any 2.3+ Bamboo returns\r\n\r\n{code:xml}\r\n<status>\r\n<status-code>500</status-code>\r\n<message>\r\nUnknown entity class: com.atlassian.bamboo.resultsummary.BuildResultsSummaryImpl; \r\nnested exception is net.sf.hibernate.MappingException: \r\nUnknown entity class: com.atlassian.bamboo.resultsummary.BuildResultsSummaryImpl\r\n</message>\r\n</status>\r\n{code}\r\n\r\nException is:\r\n\r\n{noformat}\r\n20/08/2009 5:15:57 PM com.sun.jersey.server.impl.application.WebApplicationImpl onException\r\nSEVERE: Internal server error\r\norg.springframework.orm.hibernate.HibernateSystemException: \r\nUnknown entity class: com.atlassian.bamboo.resultsummary.BuildResultsSummaryImpl; \r\nnested exception is net.sf.hibernate.MappingException: Unknown entity class: com.atlassian.bamboo.resultsummary.BuildResultsSummaryImpl\r\nCaused by: net.sf.hibernate.MappingException: Unknown entity class: com.atlassian.bamboo.resultsummary.BuildResultsSummaryImpl\r\n\tat net.sf.hibernate.impl.SessionFactoryImpl.getPersister(SessionFactoryImpl.java:347)\r\n\tat net.sf.hibernate.impl.SessionImpl.getClassPersister(SessionImpl.java:2718)\r\n\tat net.sf.hibernate.impl.SessionImpl.getOuterJoinLoadable(SessionImpl.java:3677)\r\n\tat net.sf.hibernate.impl.SessionImpl.find(SessionImpl.java:3642)\r\n\tat net.sf.hibernate.impl.CriteriaImpl.list(CriteriaImpl.java:238)\r\n\tat com.atlassian.bamboo.resultsummary.BuildResultsSummaryHibernateDao$1.doInHibernate(BuildResultsSummaryHibernateDao.java:75)\r\n\tat org.springframework.orm.hibernate.HibernateTemplate.execute(HibernateTemplate.java:370)\r\n\tat org.springframework.orm.hibernate.HibernateTemplate.executeFind(HibernateTemplate.java:341)\r\n\tat com.atlassian.bamboo.resultsummary.BuildResultsSummaryHibernateDao.findBuildResultsSummaries(BuildResultsSummaryHibernateDao.java:67)\r\n\tat com.atlassian.bamboo.resultsummary.BuildResultsSummaryManagerImpl.getAverageBuildTime(BuildResultsSummaryManagerImpl.java:591)\r\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:304)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)\r\n\tat com.atlassian.bamboo.security.acegi.intercept.aopalliance.AuthorityOverrideMethodSecurityInterceptor.invoke(AuthorityOverrideMethodSecurityInterceptor.java:30)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:106)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n\tat $Proxy22.getAverageBuildTime(Unknown Source)\r\n\tat com.atlassian.bamboo.build.DefaultBuild.getAverageBuildDuration(DefaultBuild.java:169)\r\n\tat com.atlassian.bamboo.build.DefaultBuild$$FastClassByCGLIB$$eed095ba.invoke(<generated>)\r\n\tat net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)\r\n\tat net.sf.hibernate.proxy.CGLIBLazyInitializer.intercept(CGLIBLazyInitializer.java:108)\r\n\tat com.atlassian.bamboo.build.DefaultBuild$$EnhancerByCGLIB$$f97c4a7a.getAverageBuildDuration(<generated>)\r\n\tat com.atlassian.bamboo.plugins.rest.model.plan.RestPlan.expand(RestPlan.java:179)\r\n\tat com.atlassian.bamboo.plugins.rest.model.plan.RestPlanExpander.expandInternal(RestPlanExpander.java:17)\r\n\tat com.atlassian.bamboo.plugins.rest.model.plan.RestPlanExpander.expandInternal(RestPlanExpander.java:10)\r\n\tat com.atlassian.plugins.rest.common.expand.AbstractRecursiveEntityExpander.expand(AbstractRecursiveEntityExpander.java:9)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.CollectionEntityExpanderResolver$ListExpander.expand(CollectionEntityExpanderResolver.java:43)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.CollectionEntityExpanderResolver$ListExpander.expand(CollectionEntityExpanderResolver.java:35)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.expandFields(EntityCrawler.java:92)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.crawl(EntityCrawler.java:35)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.ListWrapperEntityExpanderResolver$ListWrapperEntityExpander.expand(ListWrapperEntityExpanderResolver.java:57)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.ListWrapperEntityExpanderResolver$ListWrapperEntityExpander.expand(ListWrapperEntityExpanderResolver.java:31)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.expandFields(EntityCrawler.java:92)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.crawl(EntityCrawler.java:35)\r\n\tat com.atlassian.plugins.rest.common.expand.AbstractRecursiveEntityExpander.expand(AbstractRecursiveEntityExpander.java:12)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.CollectionEntityExpanderResolver$ListExpander.expand(CollectionEntityExpanderResolver.java:43)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.CollectionEntityExpanderResolver$ListExpander.expand(CollectionEntityExpanderResolver.java:35)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.expandFields(EntityCrawler.java:92)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.crawl(EntityCrawler.java:35)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.ListWrapperEntityExpanderResolver$ListWrapperEntityExpander.expand(ListWrapperEntityExpanderResolver.java:57)\r\n\tat com.atlassian.plugins.rest.common.expand.resolver.ListWrapperEntityExpanderResolver$ListWrapperEntityExpander.expand(ListWrapperEntityExpanderResolver.java:31)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.expandFields(EntityCrawler.java:92)\r\n\tat com.atlassian.plugins.rest.common.expand.EntityCrawler.crawl(EntityCrawler.java:35)\r\n\tat com.atlassian.plugins.rest.common.expand.jersey.ExpandResponseFilter.filter(ExpandResponseFilter.java:39)\r\n\tat com.sun.jersey.server.impl.application.WebApplicationImpl._handleRequest(WebApplicationImpl.java:675)\r\n\tat com.sun.jersey.server.impl.application.WebApplicationImpl.handleRequest(WebApplicationImpl.java:612)\r\n\tat com.sun.jersey.server.impl.application.WebApplicationImpl.handleRequest(WebApplicationImpl.java:603)\r\n\tat com.sun.jersey.spi.container.servlet.WebComponent.service(WebComponent.java:309)\r\n\tat com.sun.jersey.spi.container.servlet.ServletContainer.service(ServletContainer.java:425)\r\n\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter$JerseyOsgiServletContainer.doFilter(RestDelegatingServletFilter.java:198)\r\n\tat com.sun.jersey.spi.container.servlet.ServletContainer.doFilter(ServletContainer.java:689)\r\n\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter.doFilter(RestDelegatingServletFilter.java:112)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter.doFilter(DelegatingPluginFilter.java:74)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:42)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter.doFilter(DelegatingPluginFilter.java:74)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:42)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter$1.doFilter(DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugins.rest.module.servlet.RestServletUtilsUpdaterFilter.doFilterInternal(RestServletUtilsUpdaterFilter.java:26)\r\n\tat com.atlassian.plugins.rest.module.servlet.RestServletUtilsUpdaterFilter.doFilter(RestServletUtilsUpdaterFilter.java:40)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter.doFilter(DelegatingPluginFilter.java:74)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:42)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:118)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:52)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.opensymphony.webwork.dispatcher.ActionContextCleanUp.doFilter(ActionContextCleanUp.java:88)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.bamboo.filter.AccessLogFilter.doFilter(AccessLogFilter.java:76)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:265)\r\n\tat org.acegisecurity.providers.anonymous.AnonymousProcessingFilter.doFilter(AnonymousProcessingFilter.java:125)\r\n\tat org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)\r\n\tat com.atlassian.bamboo.filter.SeraphLoginFilter.doFilter(SeraphLoginFilter.java:61)\r\n\tat org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)\r\n\tat org.acegisecurity.util.FilterChainProxy.doFilter(FilterChainProxy.java:149)\r\n\tat org.acegisecurity.util.FilterToBeanProxy.doFilter(FilterToBeanProxy.java:98)\r\n\tat com.atlassian.bamboo.filter.BambooAcegiProxyFilter.doFilter(BambooAcegiProxyFilter.java:25)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.bamboo.filter.LicenseFilter.doFilter(LicenseFilter.java:76)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.johnson.filters.AbstractJohnsonFilter.doFilter(AbstractJohnsonFilter.java:72)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.seraph.filter.SecurityFilter.doFilter(SecurityFilter.java:204)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.seraph.filter.BaseLoginFilter.doFilter(BaseLoginFilter.java:138)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat org.springframework.orm.hibernate.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:170)\r\n\tat com.atlassian.spring.filter.FlushingSpringSessionInViewFilter.doFilterInternal(FlushingSpringSessionInViewFilter.java:29)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:75)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:96)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:75)\r\n\tat org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1139)\r\n\tat org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:378)\r\n\tat org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)\r\n\tat org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:181)\r\n\tat org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:765)\r\n\tat org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:417)\r\n\tat org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)\r\n\tat org.mortbay.jetty.Server.handle(Server.java:324)\r\n\tat org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:535)\r\n\tat org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:865)\r\n\tat org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:539)\r\n\tat org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)\r\n\tat org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)\r\n\tat org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)\r\n\tat org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:520)\r\n\r\n{noformat}\r\n\r\nSeems to be only reproducible on Standalone, not running through IDEA. Haven't tested 2.3.2-beta WAR but functions correctly on BEAC, JBAC etc, so it would seem that the WAR versions work correctly.\r\n\r\n",
+      "summary": "Unable to view Plan in REST"
+    }
+  },
+  {
+    "key": "BAM-4381",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2009-08-19T22:15:10.000+0000",
+      "description": "This optional choice should enable the user to \r\n'keep the last N _successful_ builds'\r\n'keep all failing builds in the last 3 days'\r\n\r\nwhen build expiry is run.\r\n",
+      "summary": "Add optional condition to plan Build expiry rules to keep successful/failed builds only"
+    }
+  },
+  {
+    "key": "BAM-4379",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-11-18T04:28:00.000+0000",
+      "created": "2009-08-19T04:27:37.000+0000",
+      "description": "The logic for calculating agents names e.g. \"CentOS (123)\" loops through all persisted agents until it finds a matching name. Then it loops through the again.\r\n\r\nThe logic can be optimised fairly significantly.\r\n\r\nIt can cause agents registration to fail if this takes > 60s",
+      "summary": "Resolution of duplicate agent names performs at O^n"
+    }
+  },
+  {
+    "key": "BAM-4378",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T07:53:59.000+0000",
+      "created": "2009-08-19T02:08:43.000+0000",
+      "description": "Since most (all?) build artifacts are static, and probably never change once they are created, Bamboo should set the \"Last Modified\" header when serving any artifact.\r\nThe timestamp from the file stored on disk could be used, or if that is unavailable - the time stamp of when the build finished?\r\n\r\n!http://img.skitch.com/20090819-me3phuunma1um3acd6jpdddkxt.jpg!\r\n\r\nLarge artifacts such as the JSON needed for Clover's new Tree Map could greatly benefit from browsers doing the needful caching.",
+      "summary": "Set the \"Last Modified\" header for artifacts, so browsers can cache static resources"
+    }
+  },
+  {
+    "key": "BAM-4377",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-25T02:57:09.000+0000",
+      "created": "2009-08-19T01:54:02.000+0000",
+      "description": "Brydie to provide details on how:\r\n\r\n- change detection works\r\n- how checkout works when several remote agents are involved\r\n- limitations\r\n- workarounds.",
+      "summary": "Update Docs with a clear statement on how Bamboo and Perforce integrate, including limitations."
+    }
+  },
+  {
+    "key": "BAM-4376",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T07:25:13.000+0000",
+      "created": "2009-08-19T01:01:18.000+0000",
+      "description": "When I click \"Re-order\" in the Build Queue on Safari 4, the re-order controls flicker briefly, then the page re-draws with two rows of Dashboard tabs and no other content. (See attached screen shot)\r\n\r\nIt works OK in Firefox 3.5.",
+      "summary": "Queue re-ordering doesn't work in Safari 4"
+    }
+  },
+  {
+    "key": "BAM-4375",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T12:14:46.000+0000",
+      "created": "2009-08-18T07:45:45.000+0000",
+      "description": null,
+      "summary": "Multi-Plan gadgets - Disable or hide the favourites option when there are no favourites"
+    }
+  },
+  {
+    "key": "BAM-4374",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-02-13T09:05:32.000+0000",
+      "created": "2009-08-18T07:45:18.000+0000",
+      "description": null,
+      "summary": "Multi-Plan gadgets - \"Use Favourites\" option should be selected by default"
+    }
+  },
+  {
+    "key": "BAM-4373",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-19T08:12:10.000+0000",
+      "created": "2009-08-18T07:41:38.000+0000",
+      "description": "Currently there is the field group by which not only controls the group by but also which graph is displayed.\r\n\r\nWe should change the name of this field to \"Graph Type\" (or similar) and the options available should be written like.\r\ngraphA - group by Day\r\ngraphA - group by Auto\r\ngraphB - group by build\r\n(obviously with good graph names in place)\r\n\r\nEssentially at the moment this is all a bit weird\r\n\r\n",
+      "summary": "Plan summary gadget - changes to config options"
+    }
+  },
+  {
+    "key": "BAM-4372",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-19T04:26:40.000+0000",
+      "created": "2009-08-18T07:41:21.000+0000",
+      "description": null,
+      "summary": "Thumbnail still not working for plan summary gadget (thumbnail exists in source, but not being loaded - probably just a type or something)"
+    }
+  },
+  {
+    "key": "BAM-4371",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-24T11:08:47.000+0000",
+      "created": "2009-08-18T07:40:08.000+0000",
+      "description": null,
+      "summary": "plan status gadget - plans don't seem to be ordered (order can be different each time it is loaded)"
+    }
+  },
+  {
+    "key": "BAM-4370",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T15:08:36.000+0000",
+      "created": "2009-08-18T07:39:05.000+0000",
+      "description": null,
+      "summary": "Gadget footer (all gadgets) should href the server url so you can click on it"
+    }
+  },
+  {
+    "key": "BAM-4369",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:56:08.000+0000",
+      "created": "2009-08-18T07:38:11.000+0000",
+      "description": null,
+      "summary": "Plan status gadget requires the standard Bamboo footer (containing server information)"
+    }
+  },
+  {
+    "key": "BAM-4368",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T15:21:25.000+0000",
+      "created": "2009-08-18T07:37:33.000+0000",
+      "description": null,
+      "summary": "Heading for plan summary gadget is inconsistent - should not contain bamboo server information"
+    }
+  },
+  {
+    "key": "BAM-4367",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-04-08T04:03:56.000+0000",
+      "created": "2009-08-18T05:40:53.000+0000",
+      "description": "Confluence need Maven 2.1.0 specifically to build confluence.",
+      "summary": "Please make a Maven 2.1.0 builder available on the EC2 image"
+    }
+  },
+  {
+    "key": "BAM-4366",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-04-26T22:47:17.000+0000",
+      "created": "2009-08-18T01:12:20.000+0000",
+      "description": "The purpose for the feature is to allow SOAP calls on JIRA to be trusted apps calls.",
+      "summary": "Plugin point for adding headers etc into axis SOAP calls"
+    }
+  },
+  {
+    "key": "BAM-4365",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-10-01T23:59:59.000+0000",
+      "created": "2009-08-17T10:11:20.000+0000",
+      "description": null,
+      "summary": "UserPicker on Global Permission page returns undefined string"
+    }
+  },
+  {
+    "key": "BAM-4364",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-13T08:32:48.000+0000",
+      "created": "2009-08-17T08:02:50.000+0000",
+      "description": "There are both advanced and very simple Clover gadgets written during ShipIt attack of the Gadgets, looking for a good server home.\r\nsee also: CLOV-561\r\n\r\nThis could be a quick win piece of low hanging fruit.\r\n\r\nLets start with the simplest form of Clover gadget: \"Display the Red/Green Clover Coverage bar\".\r\ne.g.\r\n!http://img.skitch.com/20090824-ti2wwfuet8mfaqpw8hiw8h6k8a.jpg!\r\n\r\nThis gadget will:\r\n * pull the coverage data from a user specified Artifact (that is a Clover HTML report) from the latest Bamboo build for a specified Bamboo Plan\r\n * render a red/green coverage bar showing the percentage of code coverage for a specific project\r\n * display the raw total percentage figure\r\n * support all gadget display sizes\r\n\r\nIf the Artifact points to the root directory of a Clover HTML report, then the gadget can assume there will be a 'project.js' available.\r\ne.g. http://clover.atlassian.com/browse/webtest/project.js\r\n\r\nIf the Artifact points to a single .js file (presumably project.js), the gadget should just use it as the data source.\r\n\r\nAn example gadget (done during ShipIt 10) is available on Labs: http://labs.atlassian.com/browse/GOGO .\r\nThe sub-project 'clover' contains the gadget: http://labs.atlassian.com/svn/GOGO/trunk/src/clover/ .\r\nThis gadget is actually deployed and can be installed in any Open Social container. The URL is: http://labs.atlassian.com/gadgets/npellow/src/clover-gadget.xml\r\n\r\nThis gadget also uses the historical json to generate a visualization of coverage and project metric trends. This can be added to the gadget for a phase #2.\r\n\r\n\r\n\r\n\r\n",
+      "summary": "Expose a single Clover Gadget via Bamboo"
+    }
+  },
+  {
+    "key": "BAM-4363",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-28T02:23:01.000+0000",
+      "created": "2009-08-17T07:51:12.000+0000",
+      "description": "possibly in an iframe, on both the build page, and the PLAN page (show latest).",
+      "summary": "embed Clover's HTML reports into the Clover panel in the Bamboo plugin"
+    }
+  },
+  {
+    "key": "BAM-4362",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T10:09:39.000+0000",
+      "created": "2009-08-17T07:42:26.000+0000",
+      "description": null,
+      "summary": "Configure Plan link and trigger build link incorrect in plan status gadget (passes in build number rather than plan number as parameter)"
+    }
+  },
+  {
+    "key": "BAM-4361",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-02-13T09:05:21.000+0000",
+      "created": "2009-08-17T05:25:50.000+0000",
+      "description": null,
+      "summary": "Fix when 'No plans selected.' appears in Bamboo Plans gadget"
+    }
+  },
+  {
+    "key": "BAM-4360",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-23T01:35:43.000+0000",
+      "created": "2009-08-17T05:25:12.000+0000",
+      "description": "EBS volume creation, attachment & mounting is still depending on various variable timing from Amazon (especially when multiple volumes are stared simultaneously).\r\n\r\nWe should ensure that we cater for failure and perform retries for all commands.",
+      "summary": "Ensure that all commands when mounting EBS volumes handle failure recursively"
+    }
+  },
+  {
+    "key": "BAM-4359",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-04-26T23:39:34.000+0000",
+      "created": "2009-08-17T04:52:40.000+0000",
+      "description": null,
+      "summary": "Upgrade atlassian-user and atlassian-bucket"
+    }
+  },
+  {
+    "key": "BAM-4358",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T05:06:50.000+0000",
+      "created": "2009-08-17T03:37:17.000+0000",
+      "description": null,
+      "summary": "If jira not added as an oauth consumer gadget is just blank."
+    }
+  },
+  {
+    "key": "BAM-4357",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-10-14T03:03:40.000+0000",
+      "created": "2009-08-17T02:40:28.000+0000",
+      "description": "Safari 4 is broken when editing the Build Configuration",
+      "summary": "Safari 4 is broken when editing the Build Configuration"
+    }
+  },
+  {
+    "key": "BAM-4356",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-14T07:45:36.000+0000",
+      "created": "2009-08-14T05:30:20.000+0000",
+      "description": null,
+      "summary": "Not very nice error if you don't select any plans in the charts gadget"
+    }
+  },
+  {
+    "key": "BAM-4355",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-12-21T06:22:32.000+0000",
+      "created": "2009-08-14T04:25:58.000+0000",
+      "description": null,
+      "summary": "Update plugin to not use sun's Base64Encoder"
+    }
+  },
+  {
+    "key": "BAM-4352",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-13T17:44:38.000+0000",
+      "created": "2009-08-13T14:01:09.000+0000",
+      "description": null,
+      "summary": "Unsupported feature: [atlassian.util] when adding gadget to igoogle (AG-939)"
+    }
+  },
+  {
+    "key": "BAM-4351",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-13T10:51:29.000+0000",
+      "created": "2009-08-13T10:44:23.000+0000",
+      "description": null,
+      "summary": "Missing oauth-related images in gadget"
+    }
+  },
+  {
+    "key": "BAM-4350",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-28T00:22:50.000+0000",
+      "created": "2009-08-13T09:19:30.000+0000",
+      "description": "Maven 2.1 uses the M2_HOME to resolve what to actually run regardless of where the ./bin is. If there are multiple Maven builders on the same box, this could be a problem",
+      "summary": "Maven 2.1 will not respect path if not already the default M2_HOME"
+    }
+  },
+  {
+    "key": "BAM-4349",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-20T14:25:00.000+0000",
+      "created": "2009-08-13T01:42:03.000+0000",
+      "description": "Can the order of agents please be sorted",
+      "summary": "Sort the view capabilities page lexicographically "
+    }
+  },
+  {
+    "key": "BAM-4348",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-01T07:00:57.000+0000",
+      "created": "2009-08-13T01:11:56.000+0000",
+      "description": "If an external user has been deleted from LDAP etc \r\nand plans were set to notify watchers\r\nand the user had a plan on his favourites\r\n\r\nthe user will still be notified via email",
+      "summary": "deleted (external) users get watcher notifications if they had plans on their favourite list."
+    }
+  },
+  {
+    "key": "BAM-4347",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-10-19T08:29:28.000+0000",
+      "created": "2009-08-13T00:22:49.000+0000",
+      "description": "Get rid of dojo, yui",
+      "summary": "Update Bamboo to use jQuery"
+    }
+  },
+  {
+    "key": "BAM-4346",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-07T14:32:05.000+0000",
+      "created": "2009-08-12T10:05:07.000+0000",
+      "description": "Use Atlassian Hibernate instead of bucket. Confluence absorbed bucket and deleted it.",
+      "summary": "Use Atlassian Hibernate instead of bucket"
+    }
+  },
+  {
+    "key": "BAM-4345",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-24T13:09:53.000+0000",
+      "created": "2009-08-12T07:49:57.000+0000",
+      "description": "This feature is also provided by Apache's collection-commons 3.2 (we are using 3.1), so once we upgrade this functionality can be removed.",
+      "summary": "Add null-safe isEmpty and isNotEmpty methods to com.atlassian.bamboo.util.CollectionUtils"
+    }
+  },
+  {
+    "key": "BAM-4344",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-12-06T02:45:19.000+0000",
+      "created": "2009-08-12T05:40:38.000+0000",
+      "description": null,
+      "summary": "Rendering issue on home screen when plan name cannot be wrapped"
+    }
+  },
+  {
+    "key": "BAM-4343",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-07T14:32:05.000+0000",
+      "created": "2009-08-12T05:36:32.000+0000",
+      "description": "I favourite a plan because I want that plan to show up in the \"My Bamboo\" tab. However, this does not mean that I want to be emailed about every failure of that plan. Its made worse since notification settings are plan specific and then the emails that are received seem completely random.\r\n\r\nThe only way to stop Bamboo spamming me is to either turn off notifications or stop favouriting a plan, neither is ideal.\r\n\r\nBamboo should separate the concept of favourites from watchers.",
+      "summary": "Favourites and Watches should be different"
+    }
+  },
+  {
+    "key": "BAM-4342",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-25T05:24:04.000+0000",
+      "created": "2009-08-12T04:55:06.000+0000",
+      "description": "Plugins 2 xwork plugins are throwing ClassNotFoundExceptions, because although there is a PluginAwareConfiguration class in Bamboo that should work, it is not being used.",
+      "summary": "Plugins 2 xwork plugins throw ClassNotFoundException"
+    }
+  },
+  {
+    "key": "BAM-4341",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-11-19T03:58:01.000+0000",
+      "created": "2009-08-12T01:05:27.000+0000",
+      "description": "Round trip errors occur on the EC2/instance screen when an invalid number of instances are requested",
+      "summary": "Roundtrip error w/ input validation during EC2 instance startup"
+    }
+  },
+  {
+    "key": "BAM-4339",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-04-30T06:16:10.000+0000",
+      "created": "2009-08-11T01:02:15.000+0000",
+      "description": "when a lot of plans are selected the report page/graphs becomes unusable.\r\n",
+      "summary": "Report Graphs fails to scale as number of selected plans increases"
+    }
+  },
+  {
+    "key": "BAM-4338",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-04-02T03:44:12.000+0000",
+      "created": "2009-08-10T14:12:27.000+0000",
+      "description": "For a given release, we now build 12 different products (Bamboo projects) each of which have four different build plans (hourly, daily, promote, comprehensive) = 48+ plans!      Bamboo does not currently have the ability to do \"bulk\" clone for creating ad setting up new plans for a new branch.  Therefore, we must  manually go through the Create Plan wizard to clone/tweak each plan for a new branch which is very tedious, error prone and time-consuming.  See the attachment for example of what our current build plan strategy looks like for a given project. \r\n\r\nI'd like to see a new Bamboo wizard feature that will allow us to clone several build plans across several projects from say \"trunk\" to \"branches/newrelease\" all at once.  I'd be prompted to answer a few questions/fields:\r\n\r\nTarget plan name prefix:      // this would be pre-pended to each new plan created to give a user-friendly context .  E.g.  \"8.0.0\"   would be prefixed to the cloned build plan name so that it would show up as \"8.0.0 DAILY\"\r\n\r\nTarget plan key prefix:     // This would be pre-pended to the new cloned plan key. Example:  \"RELEASE800BRANCH\"  would be pre-pended to the source plan key \"DAILY\" to make the new cloned plan key:  RELEASE800BRANCHDAILY\r\n\r\n\r\nTarget branch:    // This would be the name of the branch.  It would be exposed as new bamboo property that that would get substituted in the Source Repository, Builder, and other pages in the Configuration tab.  Example:   \r\n\r\nBranch:   featurexyz  \r\n\r\nThis would allow bamboo.branchName to be embedded in the Source Repository like https://my.svn.server/product/foo/branches/$bamboo.branchName and also in the Builder like:   ant -Dbranch=$bamboo.branchName.\r\n\r\nQ:  Is there a Bamboo API that exposes \"Create Plan\" objects that would allow us to automate this bulk clone from a command line  script? \r\n\r\n\r\nThanks for advice/suggestions.\r\n-Greg\r\n",
+      "summary": "Add a feature to allow bulk \"clone\" of  multiple build plans for a new branch"
+    }
+  },
+  {
+    "key": "BAM-4337",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-13T23:29:04.000+0000",
+      "created": "2009-08-10T09:52:28.000+0000",
+      "description": "New system property _bamboo.svn.wc.format_ has been added. It can be specified via command line (_-Dbamboo.svn.wc.format_) and take values: \"1.3\", \"1.4\", \"1.5\", \"1.6\"\r\nThis option will set format for all newly created Subversion workspaces. It does not affect existing workspaces.\r\nPlease also make a note that option _bamboo.svn.compatibility.14_ is deprecated in favor of _bamboo.svn.wc.format_",
+      "summary": "Document usage of system option bamboo.svn.wc.format"
+    }
+  },
+  {
+    "key": "BAM-4336",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-11T09:11:02.000+0000",
+      "created": "2009-08-10T07:16:56.000+0000",
+      "description": "download bamboo 23\r\ndisconnect internet\r\ninstall\r\n\r\nProblem occurs when Spring attempts to resolve http://activemq.apache.org/schema/core/activemq-core-5.2.0.xsd and it is unavailable.\r\n\r\n{noformat}\r\n2009-08-10 07:46:33,481 WARN [25094328@qtp-23268025-0] [XmlBeanDefinitionReader] Ignored XML validation warning                                                        \r\norg.xml.sax.SAXParseException: schema_reference.4: Failed to read schema document 'http://activemq.apache.org/schema/core/activemq-core-5.2.0.xsd', because 1) could not find the document; 2) the document could not be read; 3) the root element of the document is not <xsd:schema>.\r\n{noformat}\r\n\r\nSimilar issue to https://issues.apache.org/activemq/browse/AMQ-1638\r\n\r\nIt'd be great to be able to patch it.",
+      "summary": "Cannot install Bamboo 2.3 without internet connection"
+    }
+  },
+  {
+    "key": "BAM-4335",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-14T10:13:20.000+0000",
+      "created": "2009-08-10T05:31:06.000+0000",
+      "description": "if there is a null entry in author table for author_name then\r\njava.lang.NullPointerException\r\nat com.atlassian.bamboo.ww2.validators.UniqueAuthorNameValidator.validate(UniqueAuthorNameValidator.java:44)\r\nat com.opensymphony.xwork.validator.DefaultActionValidatorManager.validate(DefaultActionValidatorManager.java:190)\r\nat com.opensymphony.xwork.validator.DefaultActionValidatorManager.validate(DefaultActionValidatorManager.java:97)\r\nat com.opensymphony.xwork.validator.DefaultActionValidatorManager.validate(DefaultActionValidatorManager.java:84)\r\nis thrown\r\nwhen an alias is added for a user.\r\n\r\nthe null entry could be caused by a 3rd  party macro and we should be more defensive in UniqueAuthorNameValidator#validate \r\n\r\n",
+      "summary": "UniqueAuthorNameValidator throws NPE when reposoitory alias is added and table author contains {{null}} entries"
+    }
+  },
+  {
+    "key": "BAM-4333",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T06:17:20.000+0000",
+      "created": "2009-08-10T03:52:43.000+0000",
+      "description": null,
+      "summary": "Plugin - Add link to download Bamboo in the admin section for Bamboo Server Configuration"
+    }
+  },
+  {
+    "key": "BAM-4332",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-08-28T02:08:58.000+0000",
+      "created": "2009-08-10T01:35:23.000+0000",
+      "description": "A bug in xwork and/or the JDK is causing Bamboo to fail to run in Cargo on OSX.  The bug is on line 139 and 165 of [com.opensymphony.xwork.util.ResourceScanner|http://svn.opensymphony.com/fisheye/browse/xwork/branches/xwork_1-2/src/java/com/opensymphony/xwork/util/ResourceScanner.java?r=1691] in the xwork 1.2.x branch.  This takes a URL that has been returned from {{ClassLoader.getResources()}}, converts it to a String and URL decodes it.  The problem is, at least on OSX, if if the path to the jarfile that resource lives in contains a \"\\+\", that \"\\+\" won't be url encoded, and so the decoder replaces it with a space.  This causes an exception to be thrown at line 190, because the path being passed to the {{JarFile}} constructor doesn't exist.  To make things worse, a bug in the finally clause on line 209 which checks if the wrong thing is null causes this exception to be lost, and an NPE to be thrown instead.\r\n\r\nThis problem shows itself particularly on OSX, which uses weird temp directories (eg, {{/var/folders/Sf/Sf4cBN1TFHeKxBY206ipp++++TM/\\-Tmp\\-/}}), and when running Bamboo in cargo, which installs tomcat into the tmp directory, and so the {{ResourceScanner}} fails when scanning the tomcat jars.\r\n\r\nDiscussions with Don said a similar problem has been encountered with plugins 2, and the solution was not to decode the URL, but do some other manual substitutions, because the content of the returned URLs varies greatly between JDKs on different platforms.",
+      "summary": "Bamboo fails to run in Cargo on OSX"
+    }
+  },
+  {
+    "key": "BAM-4331",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-01T04:59:30.000+0000",
+      "created": "2009-08-09T22:36:13.000+0000",
+      "description": "Bamboo will not destory EBS volumes that it has created but was not able to mount. When starting an elastic instance it appears that it is possible for bamboo to create a volume and not mount it. For instance, this happened to me (BAM-4288):\r\n\r\n{code}\r\n+ ec2-attach-volume vol-b9fe14d0 --instance i-bd2538d4 --device /dev/sdh\r\nClient.IncorrectState: Instance 'i-bd2538d4' is not 'running'.\r\n++ exit\r\n{code}\r\n\r\nIn this case, when we shut the agent down we still need to destroy the EBS so we don't have the manually manage the volumes. I would also be happy to destroy the volume when we detect that it could not be mounted.",
+      "summary": "Bamboo does not destroy EBS volumes that it is not able to mount."
+    }
+  },
+  {
+    "key": "BAM-4330",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-12T01:30:49.000+0000",
+      "created": "2009-08-07T18:11:26.000+0000",
+      "description": "Our build queue regularly has 20+ minutes worth of builds in it, and if an emergency build needs to get through we have a tendency to cancel the builds above it in the queue.\r\n\r\nCanceling builds from the queue seems to result in no notification whatsoever, which can be confusing and frustrating if those builds were started manually and someone is waiting for them to complete.  Canceling builds that are currently running is even worse - it results in a failure error and half the time corrupts that build so it needs to be manually cleared out before it can run again.  It would help if one of these were true:\r\n\r\n- there was a \"move to top of queue\" or \"pause all builds and do this one immediately\" button for each item in the queue\r\n\r\n- builds could be temporarily paused instead of canceled\r\n\r\n- notifications were sent out for builds in the queue that are manually canceled, at least to the person who started them if they were started manually\r\n\r\n- builds that have been manually started were indicated in bold so it is obvious they are important and shouldn't be manually canceled\r\n",
+      "summary": "Move to top of queue button"
+    }
+  },
+  {
+    "key": "BAM-4329",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-09T10:58:02.000+0000",
+      "created": "2009-08-07T16:12:01.000+0000",
+      "description": "Clicking on \"Re-order\" in Build Queue view makes \"View Build log\" and \"Stop Build\" controls disappear in list of currently building builds",
+      "summary": "Controls disappearing in \"Currently building\" list"
+    }
+  },
+  {
+    "key": "BAM-4327",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-06T05:44:38.000+0000",
+      "created": "2009-08-06T05:44:28.000+0000",
+      "description": null,
+      "summary": "Plugin-able toop level navigation and footers"
+    }
+  },
+  {
+    "key": "BAM-4326",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-06T05:43:08.000+0000",
+      "created": "2009-08-06T05:42:40.000+0000",
+      "description": null,
+      "summary": "Automatically control starting and stopping of elastic instances by a schedule"
+    }
+  },
+  {
+    "key": "BAM-4325",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-06T05:34:45.000+0000",
+      "created": "2009-08-06T05:34:33.000+0000",
+      "description": null,
+      "summary": "Ability to specify availability zones for Elastic Agents"
+    }
+  },
+  {
+    "key": "BAM-4324",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-06T05:32:17.000+0000",
+      "created": "2009-08-06T05:32:10.000+0000",
+      "description": null,
+      "summary": "Show success rate on a particular build agent"
+    }
+  },
+  {
+    "key": "BAM-4323",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-12-08T00:45:07.000+0000",
+      "created": "2009-08-06T05:28:39.000+0000",
+      "description": "Similar to the ability to bulk edit SCM details, but ability to bulk edit the builder configuration settings such as Maven goals.",
+      "summary": "Bulk Edit Builder Configuration"
+    }
+  },
+  {
+    "key": "BAM-4322",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-06-02T04:42:44.000+0000",
+      "created": "2009-08-05T13:48:18.000+0000",
+      "description": null,
+      "summary": "Update REST API documentation"
+    }
+  },
+  {
+    "key": "BAM-4321",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T20:32:22.000+0000",
+      "created": "2009-08-05T08:34:03.000+0000",
+      "description": null,
+      "summary": "REST plugin should honor Enable/Disable remote api call administration option"
+    }
+  },
+  {
+    "key": "BAM-4320",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-07T14:49:04.000+0000",
+      "created": "2009-08-05T07:49:33.000+0000",
+      "description": "We have this:\r\n\r\n* BuildA is triggered on the repository.\r\n* BuildA triggers BuildB on success.\r\n* BuildA time << BuildB time.\r\n\r\nBuildA triggers BuildB. BuildA runs again before BuildB passes. BuildB will not be run again after it completes meaning it will not see the changes that triggered BuildA the second time.\r\n\r\nIt would be nice if bamboo kept a note that BuildA completed while BuildB was running and run BuildB again after it finishes. \r\n\r\nMaybe this could be a property on the dependency between BuildA and BuildB. In JIRA we would not need the repository version to be kept, we just want the build to kick off again (though keeping the repository version would be nice).\r\n\r\n\r\n",
+      "summary": "Build trigger forgotten when dependent build currently running."
+    }
+  },
+  {
+    "key": "BAM-4319",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:24:27.000+0000",
+      "created": "2009-08-05T07:03:54.000+0000",
+      "description": null,
+      "summary": "Show latest activity for project"
+    }
+  },
+  {
+    "key": "BAM-4318",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:23:58.000+0000",
+      "created": "2009-08-05T07:03:40.000+0000",
+      "description": null,
+      "summary": "Show latest activity for all plans"
+    }
+  },
+  {
+    "key": "BAM-4317",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:23:14.000+0000",
+      "created": "2009-08-05T07:02:58.000+0000",
+      "description": null,
+      "summary": "Run build for plan - add to the queue"
+    }
+  },
+  {
+    "key": "BAM-4316",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:22:42.000+0000",
+      "created": "2009-08-05T07:02:35.000+0000",
+      "description": null,
+      "summary": "View build queue"
+    }
+  },
+  {
+    "key": "BAM-4315",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:22:03.000+0000",
+      "created": "2009-08-05T07:02:08.000+0000",
+      "description": null,
+      "summary": "Search build result by favourite label"
+    }
+  },
+  {
+    "key": "BAM-4314",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:21:43.000+0000",
+      "created": "2009-08-05T07:01:49.000+0000",
+      "description": null,
+      "summary": "Search build results by label"
+    }
+  },
+  {
+    "key": "BAM-4313",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:20:45.000+0000",
+      "created": "2009-08-05T07:01:26.000+0000",
+      "description": null,
+      "summary": "Search build results by JIRA issues"
+    }
+  },
+  {
+    "key": "BAM-4312",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:20:28.000+0000",
+      "created": "2009-08-05T07:01:07.000+0000",
+      "description": null,
+      "summary": "View JIRA issues related to build"
+    }
+  },
+  {
+    "key": "BAM-4311",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:20:09.000+0000",
+      "created": "2009-08-05T07:00:51.000+0000",
+      "description": null,
+      "summary": "View commits for build"
+    }
+  },
+  {
+    "key": "BAM-4310",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:19:39.000+0000",
+      "created": "2009-08-05T07:00:28.000+0000",
+      "description": null,
+      "summary": "View test results for build"
+    }
+  },
+  {
+    "key": "BAM-4309",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:19:21.000+0000",
+      "created": "2009-08-05T06:59:54.000+0000",
+      "description": null,
+      "summary": "View/add build result labels"
+    }
+  },
+  {
+    "key": "BAM-4308",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T11:18:36.000+0000",
+      "created": "2009-08-05T06:59:29.000+0000",
+      "description": null,
+      "summary": "View/add build result comments"
+    }
+  },
+  {
+    "key": "BAM-4307",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-28T14:59:45.000+0000",
+      "created": "2009-08-05T06:58:50.000+0000",
+      "description": null,
+      "summary": "Make REST API complete"
+    }
+  },
+  {
+    "key": "BAM-4306",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-07T14:31:25.000+0000",
+      "created": "2009-08-04T22:59:43.000+0000",
+      "description": "n the JIRA team we have a developerment rule that says you cant checkin when the build is RED. But its more complicated than that.\r\n\r\nWe have a series of defined builds (1.6 unit tests and func test batch builds) that make up the check in rule.\r\n\r\nWe sue a greasy monkey script to \"collate\" these builds as green or red and then show a big green box when the collective state of all these defined builds is green.\r\n\r\nit would be great if we could define that in Bamboo. Imagine we had a \"arbitary build groups\" and then have bamboo answer the question \"is this build group GREEN?\"\r\n\r\nThis could then be used by the IDE connectors such that on checkin it could ask a defined \"build group\" if its cool to check in right now.\r\n\r\nPlus customers would not need Greasy Monkey scripts to work this out either.\r\n\r\nThis is not really related to chained builds.  This is an arbitary collections of builds that are defined by the customer as beeing GREEN or RED",
+      "summary": "Allow logical groups of builds to be define and then have Bamboo report Green/Red depending on the state of all the builds in the group"
+    }
+  },
+  {
+    "key": "BAM-4304",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-03-24T16:22:55.000+0000",
+      "created": "2009-08-04T02:00:43.000+0000",
+      "description": "When importing a large instance during setup no activity indication is displayed.\r\n\r\nBamboo UI should indicate that the import is in progress.\r\n\r\nA user not staring at the logs may get bored and click around or think bamboo is hung.\r\n\r\n",
+      "summary": "Bamboo to display an activity indication during import step in setup wizard"
+    }
+  },
+  {
+    "key": "BAM-4303",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-07T14:33:54.000+0000",
+      "created": "2009-08-04T01:58:33.000+0000",
+      "description": "Currently we just say 'A Continuous Integration Server'.  Much more informative to list the version information too.  We should also fix the capitalisation of the service name, ie 'Bamboo Build Server'.  We should probably mention Atlassian in there too right !!!",
+      "summary": "Add the Bamboo version number in the description for the Bamboo Windows Server."
+    }
+  },
+  {
+    "key": "BAM-4302",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-12-31T00:04:29.000+0000",
+      "created": "2009-08-04T01:48:09.000+0000",
+      "description": " when you switch between operations and reorder on the curent activity page you should not remove the 'controls' for the current running build for a given agent.\r\n\r\n!http://content.screencast.com/users/sladey/folders/Jing/media/7f260af8-b763-43ad-86f4-50b5ecf9a839/2009-08-04_1149.png!\r\n\r\n!http://content.screencast.com/users/sladey/folders/Jing/media/dc4de924-f465-4f06-b37e-4ec0d16203c0/2009-08-04_1149.png!",
+      "summary": " when you switch between operations and reorder on the curent activity page you should not remove the 'controls' for the current running build for a given agent"
+    }
+  },
+  {
+    "key": "BAM-4301",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-03-24T16:21:57.000+0000",
+      "created": "2009-08-03T07:27:47.000+0000",
+      "description": "A set of critical plans should be identified (through favorites for user critical perhaps) and the wallboard should be of status\r\nGO or NO GO \r\n",
+      "summary": "Go / no go wallboard and notifications: Identify a set of critical plans that must pass at all times"
+    }
+  },
+  {
+    "key": "BAM-4299",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-05T11:43:06.000+0000",
+      "created": "2009-08-03T00:48:14.000+0000",
+      "description": "* Default to a weight (so old non weighted plugins still work)\r\n* Weighted items get precedence\r\n* Sort by plugin key if weight ==\r\n* What should the order of existing items be?\r\n** (Edwin / chai to confirm)\r\n** Clover wants to have their plugin up the top",
+      "summary": "Allow the Clover plugin to set a 'weight' so its order in the Builder config can be defined"
+    }
+  },
+  {
+    "key": "BAM-4298",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-10T02:09:41.000+0000",
+      "created": "2009-08-03T00:19:43.000+0000",
+      "description": null,
+      "summary": "Plugin - Fix status summary for multiple servers so that if one is down, the others will be still shown while waiting for timeout"
+    }
+  },
+  {
+    "key": "BAM-4297",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-03T01:48:05.000+0000",
+      "created": "2009-07-31T10:20:36.000+0000",
+      "description": "Id is not available in GUI - name should be used",
+      "summary": "startElasticInstances REST method should use configuration name instead of id"
+    }
+  },
+  {
+    "key": "BAM-4294",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2009-07-30T14:19:41.000+0000",
+      "description": "Add ability to change build configuration on the fly prior to kicking off a build via the UI\r\n\r\nPerhaps we can have an additional pre-build step before building, where the user is prompted with a build launch screen to edit/confirm the plan configuration for the next build.",
+      "summary": "Add a Build Launch Screen to manual build process"
+    }
+  },
+  {
+    "key": "BAM-4293",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-31T07:15:59.000+0000",
+      "created": "2009-07-30T14:14:05.000+0000",
+      "description": "We have the need to pull the current build number from Bamboo into a file that is distributed as part of our software. This allows us to view what build a customer is using when we get support issues (through a Help/About window).\r\n\r\nWe have tried using 'getLatestBuildResults.action' in our build script, but this returns the PREVIOUS build details not the CURRENT build.\r\n\r\nThis would be a great feature for us, and hope you'll consider implementation.\r\n\r\nh3. Solution\r\nIn order to refer to the Bamboo build number please use {{${bamboo.buildNumber}}} build variable.\r\n\r\n",
+      "summary": "Get current (running) build details"
+    }
+  },
+  {
+    "key": "BAM-4292",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-04T06:09:03.000+0000",
+      "created": "2009-07-30T06:48:30.000+0000",
+      "description": "I've attached the dependency tree for an Atlassian plugin that imports bamboo-web 2.3-rc1-r2.  Bamboo web is pulling in atlassian-core 3.6, indirectly through atlassian johnson.  atlassian-core 3.6 does not include the com.atlassian.core.i18n package, so if the plugin defines action that extends BambooActionSupport, the compilation will fail saying that com.atlassian.core.i18n cannot be found.  The work around for this is to explicitly define a dependency on atlassian-core 4.5 in dependency managament section of the plugins pom, the fix is for Bamboo web to explicitly defining this dependency, if that's what it depends on.",
+      "summary": "Maven builds importing bamboo web get atlassian-core 3.6"
+    }
+  },
+  {
+    "key": "BAM-4291",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-02-21T14:55:49.000+0000",
+      "created": "2009-07-30T06:40:16.000+0000",
+      "description": "Bamboo seems to be able to think that it is still running builds on an agent that is shutdown. The build does not appear that it wants to finish. It is not even possible to stop the build using the web UI.\r\n\r\nCheck out https://jbac/browse/BASIC-JDK15/log  (BASIC-JDK15-5331)\r\n\r\nIt appears that the agent got killed in the middle of the checkout if this helps.",
+      "summary": "Bamboo still seems to be running build on elastic agent that was shut down."
+    }
+  },
+  {
+    "key": "BAM-4290",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-04T23:38:42.000+0000",
+      "created": "2009-07-30T04:11:02.000+0000",
+      "description": "{quote}\r\njava.lang.NoSuchMethodError: com.atlassian.bamboo.v2.build.BuildPlanDefinition.getRepository()Lcom/atlassian/bamboo/v2/build/repository/RepositoryV2;\r\n    at com.sysbliss.bamboo.plugins.prepostcmd.runner.AbstractCommandRunner.setCommonBuildData(AbstractCommandRunner.java:95)\r\n    at com.sysbliss.bamboo.plugins.prepostcmd.runner.AbstractCommandRunner.run(AbstractCommandRunner.java:48)\r\n    at com.sysbliss.bamboo.plugins.prepostcmd.action.PreBuildCommandAgentAction.call(PreBuildCommandAgentAction.java:49)\r\n    at sun.reflect.GeneratedMethodAccessor446.invoke(Unknown Source)\r\n    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n    at java.lang.reflect.Method.invoke(Method.java:585)\r\n    at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:304)\r\n    at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)\r\n    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)\r\n    at org.springframework.orm.hibernate.HibernateInterceptor.invoke(HibernateInterceptor.java:117)\r\n    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n    at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n    at $Proxy94.call(Unknown Source)\r\n    at com.atlassian.bamboo.build.pipeline.tasks.PrepareBuildTask.call(PrepareBuildTask.java:59)\r\n    at sun.reflect.GeneratedMethodAccessor446.invoke(Unknown Source)\r\n    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n    at java.lang.reflect.Method.invoke(Method.java:585)\r\n    at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:304)\r\n    at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)\r\n    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)\r\n    at org.springframework.orm.hibernate.HibernateInterceptor.invoke(HibernateInterceptor.java:117)\r\n    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n    at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n    at $Proxy101.call(Unknown Source)\r\n    at com.atlassian.bamboo.v2.build.agent.DefaultBuildAgent.build(DefaultBuildAgent.java:188)\r\n    at com.atlassian.bamboo.v2.build.agent.BuildAgentControllerImpl.waitAndPerformBuild(BuildAgentControllerImpl.java:90)\r\n    at com.atlassian.bamboo.v2.build.agent.DefaultBuildAgent$1.run(DefaultBuildAgent.java:101)\r\n    at com.atlassian.bamboo.build.pipeline.concurrent.NamedThreadFactory$1.run(NamedThreadFactory.java:34)\r\n    at edu.emory.mathcs.backport.java.util.concurrent.helpers.ThreadHelpers$1.run(ThreadHelpers.java:34)\r\n    at java.lang.Thread.run(Thread.java:595)\r\n\r\n{quote}",
+      "summary": "Pre-post build plugin is broken for 2.3"
+    }
+  },
+  {
+    "key": "BAM-4289",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-03T06:46:28.000+0000",
+      "created": "2009-07-30T02:16:49.000+0000",
+      "description": "Seems to be a problem with 1.6.1 upgrading to 1.6.5 has fixed the problem",
+      "summary": "Quartz jobs randomly stops"
+    }
+  },
+  {
+    "key": "BAM-4288",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-03T06:46:40.000+0000",
+      "created": "2009-07-30T01:20:34.000+0000",
+      "description": "When starting new elastic instances, bamboo does not seem to detect that it is not able to mount an EBS volume. This happens mainly when starting a lot of agents at the same time.\r\n\r\nThe EBS volume appears to be attached to the instance, it just that it is not mounted.\r\n\r\n\r\n\r\n",
+      "summary": "Elastic Bamoo Agents do not detect failed EBS mounts"
+    }
+  },
+  {
+    "key": "BAM-4287",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-14T04:25:15.000+0000",
+      "created": "2009-07-29T06:57:47.000+0000",
+      "description": null,
+      "summary": "Plugin - pulling in rogue commons-lang library thats kiling the jira gadgets"
+    }
+  },
+  {
+    "key": "BAM-4286",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-11T05:57:43.000+0000",
+      "created": "2009-07-29T06:48:58.000+0000",
+      "description": null,
+      "summary": "Plugin - convert to a plugins 2 plugin"
+    }
+  },
+  {
+    "key": "BAM-4285",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-28T01:24:35.000+0000",
+      "created": "2009-07-29T06:48:44.000+0000",
+      "description": null,
+      "summary": "Plugin - Do some validation on the bamboo server creation stuff."
+    }
+  },
+  {
+    "key": "BAM-4284",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T05:06:00.000+0000",
+      "created": "2009-07-29T06:48:16.000+0000",
+      "description": null,
+      "summary": "Plugin - Fix ui to match Jira's new UI (for versions and project tabs)"
+    }
+  },
+  {
+    "key": "BAM-4283",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T06:48:44.000+0000",
+      "created": "2009-07-29T06:47:50.000+0000",
+      "description": null,
+      "summary": "Plugin - Consolidate many branch changes into trunk (and get working)"
+    }
+  },
+  {
+    "key": "BAM-4282",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-18T05:05:38.000+0000",
+      "created": "2009-07-29T06:47:00.000+0000",
+      "description": null,
+      "summary": "Plugin - Get the bamboo gadgets to show up in the gadget browser if plugin enabled ??"
+    }
+  },
+  {
+    "key": "BAM-4281",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-19T06:54:07.000+0000",
+      "created": "2009-07-29T06:46:27.000+0000",
+      "description": "Probably needs a new rest end point behind it as well.",
+      "summary": "Gadgets - Create a summary charts gadget which just shows those two charts on the plan summary page with basic configuration"
+    }
+  },
+  {
+    "key": "BAM-4280",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-20T04:23:24.000+0000",
+      "created": "2009-07-29T06:44:35.000+0000",
+      "description": "The plan is to put the gadget in the place of where the portlet was, but not copy over any of the configuration details.  So users will see a the config screen (after oauthing)",
+      "summary": "Plugin - Upgrade to use portlets "
+    }
+  },
+  {
+    "key": "BAM-4279",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-19T07:29:48.000+0000",
+      "created": "2009-07-29T06:44:13.000+0000",
+      "description": null,
+      "summary": "Gadgets - Merge jira and bamboo javascript library"
+    }
+  },
+  {
+    "key": "BAM-4278",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T06:48:37.000+0000",
+      "created": "2009-07-29T06:43:33.000+0000",
+      "description": "Only known upgrade required at the moment is oauth.  We will however, need to upgrade atlassian-gadgets and hence atlassian-plugins, but these haven't been released just yet.",
+      "summary": "Gadgets - Required library upgrades"
+    }
+  },
+  {
+    "key": "BAM-4277",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-07-30T06:49:23.000+0000",
+      "created": "2009-07-29T06:42:55.000+0000",
+      "description": "The remote agent does not respect the port param of the server location url\r\n\r\n(excessive debug removed)\r\n{noformat}\r\n@400000004a6fedca0cf6429c Agent bootstrap using baseUrl: http://j2ee_jira.bamboo.atlassian.com.mgmt:8080/agentServer/\r\n@400000004a6fedca12cb16ac Requesting fingerprintRequestUrl: http://j2ee_jira.bamboo.atlassian.com.mgmt:8080/agentServer/GetFingerprint.action?hostName=atlassian15.managed.contegix.com\r\n@400000004a6fedca142858d4 101 [main] DEBUG org.apache.commons.httpclient.HttpMethodDirector  - Attempt number 1 to process request\r\n@400000004a6fedca1429a4dc 101 [main] DEBUG org.apache.commons.httpclient.HttpConnection  - enter HttpConnection.open()\r\n@400000004a6fedca142aa6ac 101 [main] DEBUG org.apache.commons.httpclient.HttpConnection  - Open connection to j2ee_jira.bamboo.atlassian.com.mgmt:80\r\n{noformat}\r\n\r\nThis prevents agent startup.",
+      "summary": "Bamboo remote agent does not respect the port parameter of the server location"
+    }
+  },
+  {
+    "key": "BAM-4276",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-23T01:34:53.000+0000",
+      "created": "2009-07-29T06:41:55.000+0000",
+      "description": null,
+      "summary": "Convert the Jira Bamboo Plugin to use Gadgets"
+    }
+  },
+  {
+    "key": "BAM-4274",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-03-09T04:27:14.000+0000",
+      "created": "2009-07-28T06:11:30.000+0000",
+      "description": "CVS calls from Bamboo don't time out at all.  This means that if there are any issues with the connection, Bamboo just sits there. ",
+      "summary": "CVS Repository Calls dont time out"
+    }
+  },
+  {
+    "key": "BAM-4271",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-10-16T00:27:06.000+0000",
+      "created": "2009-07-27T02:53:20.000+0000",
+      "description": "{noformat}\r\n@400000004a6d16750802878c 2009-07-26 21:52:27,132 ERROR [TP-Processor17] [runtime] \r\n@400000004a6d16750802972c \r\n@400000004a6d16750802972c Expression item.link.id is undefined on line 30, column 48 in fragments/adminMenu.ftl.\r\n@400000004a6d167508029efc The problematic instruction:\r\n@400000004a6d16750802a2e4 ----------\r\n@400000004a6d16750802a6cc ==> if adminCrumb == item.link.id || item.link.getDisplayableUrl(req)?ends_with(ctx.getCurrentUrl(req)) [on line 30, column 29 in fragments/adminMenu.ftl]\r\n@400000004a6d16750802ae9c  in include \"/fragments/adminMenu.ftl\" [on line 7, column 9 in decorators/admin.ftl]\r\n@400000004a6d16750802f8d4 ----------\r\n@400000004a6d16750802fcbc \r\n@400000004a6d1675080300a4 Java backtrace for programmers:\r\n@400000004a6d16750803048c ----------\r\n@400000004a6d167508030874 freemarker.core.InvalidReferenceException: Expression item.link.id is undefined on line 30, column 48 in fragments/adminMenu.ftl.\r\n@400000004a6d167508031044 \tat freemarker.core.TemplateObject.assertNonNull(TemplateObject.java:124)\r\n@400000004a6d167508031fe4 \tat freemarker.core.ComparisonExpression.isTrue(ComparisonExpression.java:122)\r\n@400000004a6d1675080327b4 \tat freemarker.core.OrExpression.isTrue(OrExpression.java:68)\r\n@400000004a6d167508032b9c \tat freemarker.core.ConditionalBlock.accept(ConditionalBlock.java:77)\r\n@400000004a6d16750803336c \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d167508033754 \tat freemarker.core.MixedContent.accept(MixedContent.java:92)\r\n@400000004a6d1675080346f4 \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d1675080371ec \tat freemarker.core.IteratorBlock$Context.runLoop(IteratorBlock.java:167)\r\n@400000004a6d1675080375d4 \tat freemarker.core.Environment.visit(Environment.java:416)\r\n@400000004a6d1675080379bc \tat freemarker.core.IteratorBlock.accept(IteratorBlock.java:102)\r\n@400000004a6d16750803818c \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d167508038574 \tat freemarker.core.MixedContent.accept(MixedContent.java:92)\r\n@400000004a6d167508039514 \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d167508039ce4 \tat freemarker.core.IteratorBlock$Context.runLoop(IteratorBlock.java:167)\r\n@400000004a6d16750803a0cc \tat freemarker.core.Environment.visit(Environment.java:416)\r\n@400000004a6d16750803a4b4 \tat freemarker.core.IteratorBlock.accept(IteratorBlock.java:102)\r\n@400000004a6d16750803ac84 \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d167508040e2c \tat freemarker.core.MixedContent.accept(MixedContent.java:92)\r\n@400000004a6d167508041214 \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d1675080419e4 \tat freemarker.core.ConditionalBlock.accept(ConditionalBlock.java:79)\r\n@400000004a6d167508041dcc \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d1675080421b4 \tat freemarker.core.MixedContent.accept(MixedContent.java:92)\r\n@400000004a6d167508043924 \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d167508045864 \tat freemarker.core.Environment.include(Environment.java:1482)\r\n@400000004a6d167508046034 \tat freemarker.core.Include.accept(Include.java:169)\r\n@400000004a6d16750804641c \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d167508046804 \tat freemarker.core.MixedContent.accept(MixedContent.java:92)\r\n@400000004a6d167508046fd4 \tat freemarker.core.Environment.visit(Environment.java:209)\r\n@400000004a6d167508047f74 \tat freemarker.core.Environment.process(Environment.java:189)\r\n@400000004a6d16750804835c \tat freemarker.template.Template.process(Template.java:237)\r\n@400000004a6d167508048b2c \tat com.atlassian.bamboo.ww2.FreemarkerRequestDispatcherPageFilter.applyDecorator(FreemarkerRequestDispatcherPageFilter.java:66)\r\n@400000004a6d167508048f14 \tat com.opensymphony.webwork.sitemesh.TemplatePageFilter.applyDecorator(TemplatePageFilter.java:86)\r\n@400000004a6d16750804a29c \tat com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:59)\r\n@400000004a6d16750804a684 \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750804ae54 \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d16750804b624 \tat com.opensymphony.webwork.dispatcher.ActionContextCleanUp.doFilter(ActionContextCleanUp.java:88)\r\n@400000004a6d16750804d94c \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750804dd34 \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d16750804e504 \tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n@400000004a6d16750804ecd4 \tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n@400000004a6d16750805082c \tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n@400000004a6d167508050ffc \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d1675080517cc \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508052b54 \tat com.atlassian.bamboo.filter.AccessLogFilter.doFilter(AccessLogFilter.java:76)\r\n@400000004a6d167508052f3c \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750805370c \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508055a34 \tat org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:265)\r\n@400000004a6d167508056204 \tat org.acegisecurity.providers.anonymous.AnonymousProcessingFilter.doFilter(AnonymousProcessingFilter.java:125)\r\n@400000004a6d1675080565ec \tat org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)\r\n@400000004a6d167508056dbc \tat com.atlassian.bamboo.filter.SeraphLoginFilter.doFilter(SeraphLoginFilter.java:61)\r\n@400000004a6d167508057d5c \tat org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)\r\n@400000004a6d16750805852c \tat org.acegisecurity.util.FilterChainProxy.doFilter(FilterChainProxy.java:149)\r\n@400000004a6d167508058cfc \tat org.acegisecurity.util.FilterToBeanProxy.doFilter(FilterToBeanProxy.java:98)\r\n@400000004a6d1675080590e4 \tat com.atlassian.bamboo.filter.BambooAcegiProxyFilter.doFilter(BambooAcegiProxyFilter.java:25)\r\n@400000004a6d16750805d34c \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750805db1c \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d16750805df04 \tat com.atlassian.bamboo.filter.LicenseFilter.doFilter(LicenseFilter.java:76)\r\n@400000004a6d1675080611cc \tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n@400000004a6d16750806199c \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d167508061d84 \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508062554 \tat com.atlassian.johnson.filters.AbstractJohnsonFilter.doFilter(AbstractJohnsonFilter.java:72)\r\n@400000004a6d167508064c64 \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750806504c \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d16750806581c \tat com.atlassian.seraph.filter.SecurityFilter.doFilter(SecurityFilter.java:204)\r\n@400000004a6d167508065c04 \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d167508067374 \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508067b44 \tat com.atlassian.seraph.filter.BaseLoginFilter.doFilter(BaseLoginFilter.java:138)\r\n@400000004a6d167508067f2c \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750806a63c \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d16750806ae0c \tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n@400000004a6d16750806b1f4 \tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter$1.doFilter(DelegatingPluginFilter.java:66)\r\n@400000004a6d16750806b9c4 \tat com.atlassian.oauth.serviceprovider.internal.servlet.OAuthFilter.doFilter(OAuthFilter.java:59)\r\n@400000004a6d16750806d904 \tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter.doFilter(DelegatingPluginFilter.java:74)\r\n@400000004a6d16750806e0d4 \tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:42)\r\n@400000004a6d16750806e8a4 \tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n@400000004a6d167508070014 \tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n@400000004a6d1675080707e4 \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d1675080736c4 \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508073aac \tat org.springframework.orm.hibernate.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:170)\r\n@400000004a6d16750807427c \tat com.atlassian.spring.filter.FlushingSpringSessionInViewFilter.doFilterInternal(FlushingSpringSessionInViewFilter.java:29)\r\n@400000004a6d167508075604 \tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:75)\r\n@400000004a6d167508075dd4 \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d1675080761bc \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d16750807a80c \tat com.planetj.servlet.filter.compression.CompressingFilter.handleDoFilter(CompressingFilter.java:203)\r\n@400000004a6d16750807abf4 \tat com.planetj.servlet.filter.compression.CompressingFilter.doFilter(CompressingFilter.java:193)\r\n@400000004a6d16750807b3c4 \tat com.atlassian.bamboo.filter.CompressingFilter.doFilter(CompressingFilter.java:65)\r\n@400000004a6d16750807b7ac \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750807debc \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d16750807e68c \tat com.atlassian.bamboo.filter.RequestCacheThreadLocalFilter.doFilter(RequestCacheThreadLocalFilter.java:26)\r\n@400000004a6d16750807ea74 \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d16750807f244 \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508080d9c \tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n@400000004a6d167508081184 \tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n@400000004a6d167508081954 \tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n@400000004a6d167508082cdc \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d1675080834ac \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508083894 \tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:96)\r\n@400000004a6d167508085bbc \tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:75)\r\n@400000004a6d167508085fa4 \tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n@400000004a6d167508086774 \tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n@400000004a6d167508086f44 \tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:210)\r\n@400000004a6d1675080886b4 \tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:174)\r\n@400000004a6d167508088a9c \tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127)\r\n@400000004a6d16750808926c \tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:117)\r\n@400000004a6d167508089654 \tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:108)\r\n@400000004a6d16750808a9dc \tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:151)\r\n@400000004a6d16750808adc4 \tat org.apache.jk.server.JkCoyoteHandler.invoke(JkCoyoteHandler.java:200)\r\n@400000004a6d16750808b594 \tat org.apache.jk.common.HandlerRequest.invoke(HandlerRequest.java:283)\r\n@400000004a6d16750808b97c \tat org.apache.jk.common.ChannelSocket.invoke(ChannelSocket.java:773)\r\n@400000004a6d16750808dca4 \tat org.apache.jk.common.ChannelSocket.processConnection(ChannelSocket.java:703)\r\n@400000004a6d16750808e474 \tat org.apache.jk.common.ChannelSocket$SocketConnection.runIt(ChannelSocket.java:895)\r\n@400000004a6d16750808e85c \tat org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:685)\r\n@400000004a6d16750808f02c \tat java.lang.Thread.run(Thread.java:619)\r\n{noformat}",
+      "summary": "Freemarker exception when accessing the administration screen (in logs only)"
+    }
+  },
+  {
+    "key": "BAM-4270",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11011",
+        "id": "11011",
+        "key": "BAM",
+        "name": "Bamboo",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11011&avatarId=105290",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11011&avatarId=105290",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11011&avatarId=105290",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11011&avatarId=105290"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-11-09T01:42:30.000+0000",
+      "created": "2009-07-27T02:03:45.000+0000",
+      "description": "Currently you can override build expiry to set specific details but there is no nice way to just turn it off for a specific plan.",
+      "summary": "Be able to disable global build expiry config for a specific plan"
+    }
+  }
+]

@@ -1,0 +1,2202 @@
+[
+  {
+    "key": "API-26",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-04-03T16:57:52.000+0000",
+      "created": "2019-03-12T00:18:40.000+0000",
+      "description": "h3. Summary\r\nWhen using the Jira Cloud for Sheets to import Story points, if the number has a decimal part, the add-on will not consider this decimal number and will only import the integer number. \r\n\r\nh3. Environment\r\nJira Cloud.\r\n\r\nh3. Steps to Reproduce\r\n# Go to Google Sheets, click \"Add-Ons\" and click on \"Import Jira data\"\r\n# Choose a Jira filter (with a Story point column) on the dropdown\r\n# Click on Get Data\r\n\r\nh3. Expected Results\r\nThe value should be the same from the Story point on the Issue.\r\n\r\nh3. Actual Results\r\nThe decimal value from Story point will disappear on the Sheet.\r\n\r\nh3. Workaround\r\nNo workaround found. ",
+      "summary": "Jira Cloud for Sheets doesn't save the decimal number of story point "
+    }
+  },
+  {
+    "key": "API-25",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-03-11T09:08:29.000+0000",
+      "created": "2019-03-07T07:51:28.000+0000",
+      "description": "h3. Issue Summary\r\nAfter installing [Jira Server for Slack (Official)|https://marketplace.atlassian.com/apps/1220099/jira-server-for-slack-official?hosting=server&tab=overview] on JIRA (running on Oracle database), navigating to the Slack configuration page results in 500 error page. The same error does not happen when JIRA is running on PostgreSQL database.\r\n\r\nh3. Environment\r\n* [Jira Server for Slack (Official)|https://marketplace.atlassian.com/apps/1220099/jira-server-for-slack-official?hosting=server&tab=overview] version *1.1.2*.\r\n* JIRA 7.6.6 running on Oracle 12c database.\r\n\r\nh3. Steps to Reproduce\r\n# Install [Jira Server for Slack (Official)|https://marketplace.atlassian.com/apps/1220099/jira-server-for-slack-official?hosting=server&tab=overview].\r\n# Navigate to {{Administration > Applications > Slack}}.\r\n\r\nh3. Expected Results\r\nThe configuration page shows as per:\r\n!image-2019-03-07-13-55-01-817.png|thumbnail! \r\n(i) This is the same instance running on PostgreSQL database.\r\n\r\nh3. Actual Results\r\n* 500 error page:\r\n!image-2019-03-07-13-46-13-652.png|thumbnail! \r\n* The below exception is thrown in the {{atlassian-jira.log}} file:\r\n{noformat}\r\n2019-03-07 05:40:22,568 http-nio-8080-exec-23 ERROR      [c.a.j.web.servlet.InternalServerErrorServlet] {error\r\nId=f203536d-807b-4c54-8b6b-0259b3676473, interpretedMsg=, cause=com.atlassian.activeobjects.internal.ActiveObj\r\nectsInitException: bundle [com.atlassian.jira.plugins.jira-slack-server-integration-plugin], stacktrace=com.at\r\nlassian.activeobjects.internal.ActiveObjectsInitException: bundle [com.atlassian.jira.plugins.jira-slack-serve\r\nr-integration-plugin]\r\n        at com.atlassian.activeobjects.osgi.TenantAwareActiveObjects$1$1$1.call(TenantAwareActiveObjects.java:95) [?:?]\r\n        at com.atlassian.activeobjects.osgi.TenantAwareActiveObjects$1$1$1.call(TenantAwareActiveObjects.java:86) [?:?]\r\n        at com.atlassian.sal.core.executor.ThreadLocalDelegateCallable.call(ThreadLocalDelegateCallable.java:38) [?:?]\r\n        at java.util.concurrent.FutureTask.run(FutureTask.java:266) [?:1.8.0_151]\r\n        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [?:1.8.0_151]\r\n        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_151]\r\n        at java.lang.Thread.run(Thread.java:748) [?:1.8.0_151]\r\n    Caused by: com.atlassian.activeobjects.internal.ActiveObjectsSqlException: There was a SQL exception thrown by the Active Objects library:\r\n        Database:\r\n                - name:Oracle\r\n                - version:Oracle Database 12c Standard Edition Release 12.1.0.2.0 - 64bit Production\r\n                - minor version:1\r\n                - major version:12\r\n        Driver:\r\n                - name:Oracle JDBC driver\r\n                - version:12.2.0.1.0\r\n\r\n        java.sql.SQLException: ORA-01408: such column list already indexed\r\n\r\n        at com.atlassian.activeobjects.internal.EntityManagedActiveObjects.migrate(EntityManagedActiveObjects.java:53) [?:?]\r\n        at com.atlassian.activeobjects.internal.AbstractActiveObjectsFactory$1.doInTransaction(AbstractActiveObjectsFactory.java:77) [?:?]\r\n        at com.atlassian.activeobjects.internal.AbstractActiveObjectsFactory$1.doInTransaction(AbstractActiveObjectsFactory.java:72) [?:?]\r\n        at com.atlassian.sal.core.transaction.HostContextTransactionTemplate$1.doInTransaction(HostContextTransactionTemplate.java:21) [?:?]\r\n        at com.atlassian.jira.DefaultHostContextAccessor.doInTransaction(DefaultHostContextAccessor.java:34) [classes/:?]\r\n        at sun.reflect.GeneratedMethodAccessor209.invoke(Unknown Source) [?:?]\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) [?:1.8.0_151]\r\n        at java.lang.reflect.Method.invoke(Method.java:498) [?:1.8.0_151]\r\n        at com.atlassian.plugin.util.ContextClassLoaderSettingInvocationHandler.invoke(ContextClassLoaderSettingInvocationHandler.java:26) [atlassian-plugins-core-4.5.0.jar:?]\r\n        at com.sun.proxy.$Proxy68.doInTransaction(Unknown Source) [?:?]\r\n        at sun.reflect.GeneratedMethodAccessor209.invoke(Unknown Source) [?:?]\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) [?:1.8.0_151]\r\n        at java.lang.reflect.Method.invoke(Method.java:498) [?:1.8.0_151]\r\n        at com.atlassian.plugin.osgi.bridge.external.HostComponentFactoryBean$DynamicServiceInvocationHandler.invoke(HostComponentFactoryBean.java:136) [?:?]\r\n        at com.sun.proxy.$Proxy68.doInTransaction(Unknown Source) [?:?]\r\n        at com.atlassian.sal.core.transaction.HostContextTransactionTemplate.execute(HostContextTransactionTemplate.java:18) [?:?]\r\n        at sun.reflect.GeneratedMethodAccessor385.invoke(Unknown Source) [?:?]\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) [?:1.8.0_151]\r\n        at java.lang.reflect.Method.invoke(Method.java:498) [?:1.8.0_151]\r\n        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:302) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.eclipse.gemini.blueprint.service.importer.support.internal.aop.ServiceInvoker.doInvoke(ServiceInvoker.java:56) [?:?]\r\n        at org.eclipse.gemini.blueprint.service.importer.support.internal.aop.ServiceInvoker.invoke(ServiceInvoker.java:60) [?:?]\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:133) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:121) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.eclipse.gemini.blueprint.service.util.internal.aop.ServiceTCCLInterceptor.invokeUnprivileged(ServiceTCCLInterceptor.java:70) [?:?]\r\n        at org.eclipse.gemini.blueprint.service.util.internal.aop.ServiceTCCLInterceptor.invoke(ServiceTCCLInterceptor.java:53) [?:?]\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.eclipse.gemini.blueprint.service.importer.support.LocalBundleContextAdvice.invoke(LocalBundleContextAdvice.java:57) [?:?]\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:133) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:121) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:208) [spring-aop-4.2.5.RELEASE.jar:4.2.5.RELEASE]\r\n        at com.sun.proxy.$Proxy3469.execute(Unknown Source) [?:?]\r\n        at com.atlassian.activeobjects.internal.AbstractActiveObjectsFactory.create(AbstractActiveObjectsFactory.java:72) [?:?]\r\n        at com.atlassian.activeobjects.internal.DelegatingActiveObjectsFactory.create(DelegatingActiveObjectsFactory.java:32) [?:?]\r\n        at com.atlassian.activeobjects.osgi.TenantAwareActiveObjects$1$1$1.call(TenantAwareActiveObjects.java:91) [?:?]\r\n        ... 6 more\r\n    Caused by: java.sql.SQLException: ORA-01408: such column list already indexed\r\n\r\n        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:494) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:446) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1054) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:623) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:252) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:612) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:213) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:37) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:896) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1119) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.OracleStatement.executeUpdateInternal(OracleStatement.java:1661) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.OracleStatement.executeLargeUpdate(OracleStatement.java:1626) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.OracleStatement.executeUpdate(OracleStatement.java:1613) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at oracle.jdbc.driver.OracleStatementWrapper.executeUpdate(OracleStatementWrapper.java:282) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:234) [commons-dbcp2-2.1.jar:2.1]\r\n        at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:234) [commons-dbcp2-2.1.jar:2.1]\r\n        at net.java.ao.DatabaseProvider.executeUpdate(DatabaseProvider.java:2246) [?:?]\r\n        at net.java.ao.DatabaseProvider.executeUpdateForAction(DatabaseProvider.java:2302) [?:?]\r\n        at net.java.ao.DatabaseProvider.executeUpdatesForActions(DatabaseProvider.java:2274) [?:?]\r\n        at net.java.ao.schema.SchemaGenerator.migrate(SchemaGenerator.java:91) [?:?]\r\n        at net.java.ao.EntityManager.migrate(EntityManager.java:128) [?:?]\r\n        at com.atlassian.activeobjects.internal.EntityManagedActiveObjects.migrate(EntityManagedActiveObjects.java:51) [?:?]\r\n        ... 44 more\r\n    Caused by: Error : 1408, Position : 73, Sql = CREATE INDEX \"index_ao_b7d8d8_aos1760530893\" ON \"AO_B7D8D8_AOSLACK_LINK\"(\"TEAM_ID\"), OriginalSql = CREATE INDEX \"index_ao_b7d8d8_aos1760530893\" ON \"AO_B7D8D8_AOSLACK_LINK\"(\"TEAM_ID\"), Error Msg = ORA-01408: such column list already indexed\r\n\r\n        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:498) [ojdbc8-atlassian-hosted-12.2.0.1.jar:12.2.0.1.0]\r\n        ... 65 more\r\n    , referer=http://10.117.8.175:8080/plugins/servlet/applications/versions-licenses, servletErrorMessage=}\r\n{noformat}\r\n\r\nh3. Fix\r\nThe problem has been fixed in version *1.1.3*\r\n\r\nh3. Workaround\r\nWe can drop the index before we initialize the Slack configuration and then add the constraint back to the column:\r\n# Stop JIRA.\r\n# Run this SQL to obtain the *CONSTRAINT_NAME*:\r\n{noformat}\r\nSELECT  * FROM    all_constraints WHERE   table_name = 'AO_B7D8D8_AOSLACK_LINK' AND \"CONSTRAINT_TYPE\"='P';\r\n{noformat}\r\n# Run this SQL to drop the primary constraint:\r\n{noformat}\r\nALTER TABLE \"AO_B7D8D8_AOSLACK_LINK\" DROP CONSTRAINT \"<CONSTRAINT_NAME>\";\r\n{noformat}\r\n(i) Please replace {{<CONSTRAINT_NAME>}} with the result from the step#1.\r\n# Start JIRA and navigate to {{Administration > Applications > Slack}}.\r\n(i) Just access the page only, do not configure the integration yet.\r\n# Stop JIRA.\r\n# Run this SQL to create primary constraint that we have removed before:\r\n{noformat}\r\nALTER TABLE \"AO_B7D8D8_AOSLACK_LINK\" ADD CONSTRAINT team_id_pri_const PRIMARY KEY (\"TEAM_ID\");\r\n{noformat}\r\n# Start JIRA and proceed to configure the Slack integration.",
+      "summary": "Slack configuration page throws 500 error for JIRA running on Oracle database"
+    }
+  },
+  {
+    "key": "API-24",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-05-02T14:14:04.000+0000",
+      "created": "2019-03-08T17:23:20.000+0000",
+      "description": "For Sprint custom field, it is doing a data dump into the field.\u00a0 Would prefer to display the name of the sprint rather than the name along with all the metadata.\r\n\r\nHere is a workaround shared by the customer who reported the issue to us:\r\n{code:java}\r\n=iferror(right(index(split(<cell reference>, \",\", TRUE,TRUE), 0,4),LEN(index(split(<cell reference>, \",\", TRUE,TRUE), 0, 4))-5),){code}\r\n_*Note*:\u00a0 Additional info is not included here since this is a public board, but has been included in issue created in Jira Cloud for Google Sheets project backlog_",
+      "summary": "Custom field 'Sprint' not showing proper format"
+    }
+  },
+  {
+    "key": "API-23",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-08T12:58:33.000+0000",
+      "description": "It would be useful to be able to view and reply slack messages related to a JIRA issue directly from JIRA. E.g via a chat section or panel in the issue view. This 'chat panel' should be available for either dedicated Jira issue Slack channels or channels where an issue has been mentioned.",
+      "summary": "As a user I'd like the Slack Integration to provide a chat section or activity tab within the JIRA issue view"
+    }
+  },
+  {
+    "key": "API-20",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-05T13:45:52.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently, Slack trigger notifications for Issue Created, Assignee Updated, Comments and Issue transitions. There is no option to trigger a notification when an issue is moved from a project to another\r\n\r\nh3. Suggested Solution\r\nImplement an additional option to trigger notifications for moved issues\r\n\r\nh3. Why this is important\r\nSome customers want to keep track of issues that are being moved from one project to another by just looking to the notification on Slack instead of check issue history\r\n\r\nh3. Workaround \r\nNA",
+      "summary": "Enable \"issue moved\" notification on slack"
+    }
+  },
+  {
+    "key": "API-17",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-06-12T13:02:43.000+0000",
+      "created": "2019-03-04T17:50:19.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently\u00a0all basic field types are supported (text, number, date etc) with some additional support for custom fields too.\u00a0 But we do not have a List of supported field types at this time\r\n\r\nh3. Suggested Solution\r\nCreate a List of supported Field types and nest under the Main documentation for configuring the connection:\r\n- https://confluence.atlassian.com/servicedeskcloud/jira-cloud-for-sheets-966051744.html\r\n \r\nh3. Workaround\r\nTo identify unsupported field types use the *=jira(\"filter\",\"field_names\")* format and if the field is unsupported it is returned as \u201c[field not supported]\u201d for the value in sheets\r\n\r\nA CSV Export and manual input to your google sheet would be required to obtain the field value",
+      "summary": "List of supported Field Types for Jira Cloud for Google Sheets"
+    }
+  },
+  {
+    "key": "API-16",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-04T17:38:17.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently cascading select custom fields are not supported and return \u201c[field not supported]\u201d as the response set in Google sheets\r\n\r\nh3. Suggested Solution\r\nAdd in support for this field type",
+      "summary": "Add support for cascading select custom fields in Jira Cloud for Google Sheets"
+    }
+  },
+  {
+    "key": "API-12",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-02-27T15:01:30.000+0000",
+      "description": "Please provide a mechanism through which Jira Cloud will send a Slack notification when a _version_ is _released_. \r\n This is (at least) for Kanban boards and it would be great if the Slack notification would contain the _release note_.\r\n\r\nAdditional Jira Software events would be useful as well such as sprint related events",
+      "summary": "Slack notifications for Jira Software events"
+    }
+  },
+  {
+    "key": "API-11",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-03-01T04:08:13.000+0000",
+      "created": "2019-02-27T10:34:30.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nSome users have reported that they can't toggle the Jira function despite being the spreadsheet owner. We're investigating\r\nh3. Workaround\r\n\r\nYou can use a Jira filter for now while we work on fixing this.",
+      "summary": "Unable to toggle the =JIRA() function in Google Sheets"
+    }
+  },
+  {
+    "key": "API-10",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-03-18T15:22:06.000+0000",
+      "created": "2019-02-20T13:23:57.000+0000",
+      "description": "h3. Issue Summary\r\nAs an issue reporter, if a JIRA issue has multiple Hubspot profiles linking to it, if I try to add any more I receive an error message to 'try again later', but it doesn't go through if tried later.\r\n\r\nh3. Steps to Reproduce\r\n# Create a JIRA issue\r\n# Link with Hubspot profile\r\n# After you link to multiple profiles, the integration stops accepting more.\r\n\r\nh3. Expected Results\r\nIt should accept more.\r\n\r\nh3. Actual Results\r\nIt doesn't, throwing an error.\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "If a Jira issue has multiple Hubspot contacts linked to it, it's not possible to add more"
+    }
+  },
+  {
+    "key": "API-9",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-08-23T18:23:50.000+0000",
+      "created": "2019-02-18T07:05:39.000+0000",
+      "description": "As a user, I would like to get an issue preview in Slack when mentioning a Jira issue key.\r\n\r\nSimilar to the functionality previously found in the HipChat integration, and what looks to be functionality already available in the Jira Cloud integration (https://www.atlassian.com/partnerships/slack):\r\n\r\n!image-2019-02-18-08-03-37-791.png|width=585,height=172!",
+      "summary": "Issue preview in Jira Server integration"
+    }
+  },
+  {
+    "key": "API-8",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-03-13T09:35:32.000+0000",
+      "created": "2019-02-14T08:49:09.000+0000",
+      "description": "When was this article updated last?\r\n\r\nhttps://confluence.atlassian.com/clover/comparison-of-code-coverage-tools-681706101.html",
+      "summary": "Need information"
+    }
+  },
+  {
+    "key": "API-6",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-12-06T22:28:00.000+0000",
+      "created": "2019-02-12T00:47:34.000+0000",
+      "description": "Right now editing a comment will send the entire new comment to a Slack channel message, glutting up the channel and causing people to start ignoring messages there and complain it's too glutted up...\r\n\r\nI'd be fine with it if it showed just the edits (in green and red) like the old-gen email notifications would show... nice and simple and nothing unnecessary.\r\n\r\nThere's no project app settings to change or disable this... a new or edited comment truncated to maybe x characters might be OK, but there really should be a way to at least disable comment edit notifications.",
+      "summary": "No way to disable comment edit Slack notification"
+    }
+  },
+  {
+    "key": "API-5",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-12-06T22:26:54.000+0000",
+      "created": "2017-09-28T19:48:41.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently, Slack trigger notifications for Issue Created, Assignee Updated, Comments and Issue transitions. There is no option to trigger a notification when work is logged.\r\n\r\nh3. Suggested Solution\r\nImplement an additional option to trigger notifications for work logged on issues.\r\n\r\nh3. Why this is important\r\nSome customers want to keep track of logged work on issues through Slack, instead of checking the issue from time to time.\r\n\r\nh3. Workaround \r\nThere is an alternative where you can log work from Slack to Tempo, but not sure if this will also trigger notifications from logged work on Slack: https://tempo.io/tempo-for-slack/\r\n",
+      "summary": "Enable the 'logged work' notifications in Slack"
+    }
+  },
+  {
+    "key": "API-4",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-04-22T18:16:22.000+0000",
+      "created": "2018-07-23T15:21:32.000+0000",
+      "description": "h3. Problem Definition\r\nAt the moment, the built-in Jira Cloud-Slack integration does not support users to create issue in Jira through the slack channel\r\n\r\nh3. Suggested Solution\r\nAdd a feature which allows user to create issue in Jira through the slack channel\r\n\r\nh3. Why this is important\r\nThis feature would be helpful for users who would like to focus with their conversation in Slack, and provide better user experience.\r\n\r\nh3. Workaround \r\nUse the following add-ons:\r\n* [New Feature: Create JIRA Issues from Slack \u2013 Chatbots Life|https://chatbotslife.com/new-feature-create-jira-issues-from-slack-116e78e232bb]\r\n* [Stratejos \\- Jira Slack Integration \\- Slack App Directory|https://slack.com/apps/A0H95LXCH-jirio-jira-slack-integration]",
+      "summary": "As a user, I would like to be able to create issue in Jira through my Slack Channel"
+    }
+  },
+  {
+    "key": "API-3",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-06-10T19:44:12.000+0000",
+      "created": "2018-05-31T23:01:25.000+0000",
+      "description": "We use slack as our internal communication tool. We've set it up in a way that each slack channel is correspondent to a Jira Epic Issue. Though we've integrated slack with Jira through the native connector, we can only edit the notifications based on the issue type, priority and security level(when on). We'd like to set it up in a way that we could use a JQL to specifically show what's related to that channel/epic issue. I believe the benefits are great when you are able to customize it",
+      "summary": "Allow users to set notifications on slack based on JQL filters"
+    }
+  },
+  {
+    "key": "API-2",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-12-06T22:26:13.000+0000",
+      "created": "2019-02-05T15:30:31.000+0000",
+      "description": "At this moment, Slack notifications are sent for events like _issue created_, assigned, commented or transitioned.\r\n\r\n\u00a0\r\n\r\nIt would be nice to have notifications for a change in an issue's priority. This is especially used for the moment when a Jira issue escalates and becomes critical, having the highest priority",
+      "summary": "Send Slack notification for priority change"
+    }
+  },
+  {
+    "key": "API-1",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2018-11-15T17:16:52.000+0000",
+      "description": "When using the official connector for Slack, Jira sends wiki markup formatting to Slack, which is unable to properly render it.\r\n\r\nWith that said, it would be great to have the ability to disable the wiki markup parsing on the integration.\r\n\r\n !message.png|thumbnail! ",
+      "summary": "Disable the wiki markup in the Slack connector"
+    }
+  },
+  {
+    "key": "ACCESS-1188",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2022-01-05T13:48:31.000+0000",
+      "description": "Hi team,\r\n\r\nIn the current design, there is no warning message or in any form when granting Opsgenie permission to a user but there is actually no Opsgenie user license is available.\r\n\r\nThis sets up the incorrect expectation that the user is automatically added to Opsgenie Users List.\r\n\r\nPlease consider implementing a way to warn the administrator.\r\n\r\nThank you.",
+      "summary": "A warning message when granting Opsgenie permission to a user but no Opsgenie user license is available"
+    }
+  },
+  {
+    "key": "ACCESS-1187",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2022-01-03T16:56:26.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen an Identity Provider is sending a SAML Response without the *Audience* field inside <{*}Conditions>{*} element, we are throwing an error related to another field - the *Destination* URL:\r\n\r\n_\"Hmm... we're having trouble logging you in. You'll need to talk to your organization admin - tell them we sent you, and that there appears to be an issue with the {color:#ff0000}destination URL{color} used for your SAML single sign-on configuration.\"_\r\nh3. Steps to Reproduce\r\n\r\nMake sure that the integrated IdP is missing the *Audience* configuration is missing, like the one below:\r\n\r\n!image-2022-01-03-15-51-36-497.png|thumbnail!\r\n # Try to login into [id.atlassian.com|https://id.atlassian.com/] to see the failure\r\n # Get a [HAR file|https://confluence.atlassian.com/kb/generating-har-files-and-analysing-web-requests-720420612.html] of the failed attempt\r\n # Check the following error:\r\n ** _error=access_denied &_\r\n ** _error_description={color:#de350b}Audience is invalid. Configured:\u00a0[https://auth.atlassian.com/saml/1256cb51b-40b3-4d12-b984-5f9c4b383f4a]{color}_\r\n\r\n{code:java}\r\nRequest URL:\u00a0https://id.atlassian.com/login/callback?application=jira&continue=https://abc.atlassian.net/login?redirectCount=1&application=jira&error=access_denied&error_description=Audience is invalid. Configured: https://auth.atlassian.com/saml/1256cb51b-40b3-4d12-b984-5f9c4b383f4a&state=eyJjc3JmVG9rZW4iOiIzNzcyZDhkZC1iYmJmLTRjOTQtODk5ZC0yNmY5ODg2ODg2YWMiLCJhbm9ueW1vdXNJZCI6ImUwOGI3NDM4LWZjNTEtNDk5ZS04MzFiLWY3ODc2NDdjOTY1NyIsInF1ZXJ5IjoiP2NvbnRpbnVlPWh0dHBzJTNBJTJGJTJGdW5peGZ5LmF0bGFzc2lhbi5uZXQlMkZsb2dpbiUzRnJlZGlyZWN0Q291bnQlM0QxJTI2YXBwbGljYXRpb24lM0RqaXJhJmFwcGxpY2F0aW9uPWppcmEifQ==\r\nHTTP Version:\u00a0http/2.0\r\nRequest method:\u00a0GET\r\n\r\nFull response: HTTP 403\u00a0Forbidden{code}\r\nh3. Expected Results\r\n\r\nThe error message should state something like:\r\n\r\n_\"Looks like your Audience configuration at your Identity Provider SAML configuration is either missing or misconfigured\"._\r\nh3. Actual Results\r\n\r\nThe following error message is returned:\r\n\r\n_\"Hmm... we're having trouble logging you in. You'll need to talk to your organization admin - tell them we sent you, and that there appears to be an issue with the {color:#ff0000}destination URL{color} used for your SAML single sign-on configuration.\"_\r\n{code:xml}\r\nFailed <Condition> element:\r\n<saml:Conditions NotBefore=\"2021-12-31T00:00:49Z\" NotOnOrAfter=\"2021-12-31T00:10:49Z\"/>\r\n\r\n-------------------------------------------------------------------------------------------\r\nWorking sample - Microsoft:\r\n\r\n<Conditions NotBefore=\"2022-01-03T13:07:12.759Z\" NotOnOrAfter=\"2022-01-03T14:12:12.759Z\">\r\n   <AudienceRestriction>\r\n      <Audience>https://auth.atlassian.com/saml/31b3dbbe-87dd-4dbf-b758-aeef158c72fa</Audience>\r\n   </AudienceRestriction>\r\n</Conditions>\r\n\r\n-------------------------------------------------------------------------------------------\r\nWorking sample - Okta:\r\n\r\n<saml2:Conditions NotBefore=\"2022-01-03T13:44:54.277Z\" NotOnOrAfter=\"2022-01-03T13:54:54.277Z\" xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">\r\n   <saml2:AudienceRestriction>\r\n      <saml2:Audience>https://auth.atlassian.com/saml/31b3dbbe-87dd-4dbf-b758-aeef158c72fa</saml2:Audience>\r\n   </saml2:AudienceRestriction>\r\n</saml2:Conditions>\r\n{code}\r\n!image-2022-01-03-15-55-05-938.png|thumbnail!\r\nh3. Workaround\r\n\r\nN/A",
+      "summary": "Improve error message for SAML Response - Audience field missing/misconfigured"
+    }
+  },
+  {
+    "key": "ACCESS-1186",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2022-01-03T14:53:03.000+0000",
+      "description": "Problem:\r\n\r\nThe Current SCIM APIs we have return the list of all SCIM users however due to paginations the Org Admins have to go an extra mile to script/automate the retrieval of all users via API.\r\n\r\nNow if there are a few users that are Managed however not synced via SCIM, Admins have no way to fetch these users only.\r\n\r\nSolution:\r\n\r\nWe could extend the API call https://developer.atlassian.com/cloud/admin/user-management/rest/api-group-users/#api-users-account-id-manage-profile-get\r\n\r\nTo include Provisioned vs Non Provisioned detail (yes/no) in the API response\r\n",
+      "summary": "Retrieve all users that are not Provisioned via SCIM"
+    }
+  },
+  {
+    "key": "ACCESS-1185",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-12-21T10:28:25.000+0000",
+      "description": "At the moment, provisioning is a paid feature in Atlassian Access. We provide a non-billable policy but one limitation is that we cannot set a provisioned user as non-billable policy member. \r\n\r\nTo make a provisioned user non-billable, the integration (directory) needs to be recreated and the non-billable users should be removed from the provision scope before the initial sync. They can then be added to the non-billable policy\r\n\r\n*Suggestion*\r\n\r\nAllow for non-billable policy to override the provisioning feature.\r\n- Do not sync an account that is non-billable\r\n- Break the sync status of an account that is set to non-billable. \r\n\r\n",
+      "summary": "Allow non-billable policy to override the provisioning feature. "
+    }
+  },
+  {
+    "key": "ACCESS-1184",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-12-17T10:38:03.000+0000",
+      "description": "*Problem description*\r\n\r\nBefore the deactivation of Atlassian Access, we send email communication to billing contact for renewal. There are times when this communication is missed or not actioned upon which results in the deletion of the Atlassian Access subscription.\r\n\r\nDeletion of AA subscription causes a lot of disruption for the organization as it disables SAML SSO and deletes user provisioning configuration. Users face issues logging in via SSO and org admins have to re-do most of the configuration.\r\n\r\n\r\n\r\n{*}Suggestion{*}:\r\n\r\nImplement more ways for communicating with customers before the deletion of AA subscriptions.\r\n # Send email to all billing contacts even when a partner is assigned as the billing contact.\r\n # Explore communicating via IM like slack.\r\n # Send email to a distribution list for the customer's organization.",
+      "summary": "Implement alternate ways to inform customer before deletion of AA"
+    }
+  },
+  {
+    "key": "ACCESS-1182",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-12-16T16:08:08.000+0000",
+      "description": "*Current Scenario:*\r\n\r\nCurrently we do not have much information around User Management in Org Audit logs.\r\n\r\nInformation like:\r\n1. Who change the role\r\n2. Site Access settings\r\n3. Product Access settings\r\n\r\n*Proposed Solution:*\r\nNeed Org Audit logs to be more comprehensive to include these details.\r\n",
+      "summary": "Improvements in Org Audit logs"
+    }
+  },
+  {
+    "key": "ACCESS-1181",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-12-15T10:59:49.000+0000",
+      "description": "When a group is provisioned, the following happens. \r\n- A SCIM create group call is received\r\n- Group data is created in the directory/organization\r\n- A service will run propagating the new groups to the sites under the organization. \r\n\r\nAsynchronous propagation may sometimes introduce additional delays and this becomes a problem for automations.\r\n\r\n- The SCIM API response does not indicate if the group is already available on the site. \r\n- Further automations to use the new group on Jira and Confluence settings will not work until the groups get created on the site. \r\n\r\n\r\n*Suggestion* \r\nImmediately propagate provisioned groups to the site.  \r\n\r\n*Workaround* \r\nAdd some delays in the automation and check for group existence on the site. ",
+      "summary": "Immediately create provisioned groups in the site"
+    }
+  },
+  {
+    "key": "ACCESS-1179",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-12-13T12:28:33.000+0000",
+      "description": "h3. Summary\r\nWhen navigating to *Directory > Managed Accounts*, we are able to see all the accounts from the domains we have verified under our organization.\r\nIt is a great way to see how many Atlassian accounts we have, and we are able to sort those accounts by applying some filters in two different fields: one for account settings (active, deactivated, for deletion, with our without 2FA, etc), and the other for product access.\r\nFor the one that approaches product access, when *Product Access* is selected, it counts all the accounts, no matter if they do or do not have a product license.\r\n\r\nh3. Suggestion\r\n* Rename the *Product Access* label with something else (like \"_All accounts_\", or \"_Choose an option_\", and add the \"_No Product_\" [as a sorting option as well|https://jira.atlassian.com/browse/ACCESS-1030]) to let it clear it will include accounts that do not have access to any product.",
+      "summary": "Rename Product Access filter from Managed Accounts"
+    }
+  },
+  {
+    "key": "ACCESS-1178",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-12-10T15:18:44.000+0000",
+      "description": "Waters.com is migrating to cloud they are adding users to Azure AD which is manual to get them imported to Atlassian - They add them to AA then add them to the authentication policy for SSO which is taking a lot of time based on the UI which has been frustrating. \r\n\r\nI had them walk us through it on a screenshare here - https://atlassian.zoom.us/rec/share/LRqNVM1qQtGgEzGRXurD0qRMCdRRc93W5AbAlIuupn1HS2bxp2bmsi4MIjTITzOp.CFwl8na_sl_mpQip \r\n\r\nCan someone from product chat with the customer on potential recommendations or improvements? This is something that is a big area of frustration as they migrate to cloud.\r\n\r\nRefer to VOC ticket: https://hello.atlassian.net/jira/servicedesk/projects/VOC/queues/custom/5768/VOC-70\r\n\r\n",
+      "summary": "Access user management | Auth policies Frustration"
+    }
+  },
+  {
+    "key": "ACCESS-1177",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-12-14T16:57:27.000+0000",
+      "created": "2021-12-08T03:01:12.000+0000",
+      "description": "h3. Issue Summary\r\nUnable to view the whole text of the options in org audit log\r\n\r\nh3. Steps to Reproduce\r\n # Navigate to admin.atlassian.com > Security > Audit log\r\n # Clock the arrow next to \"All activities\"\r\n\r\nh3. Expected Results\r\nUser can see the whole text of each options\r\n\r\nh3. Actual Results\r\nThe options are trimmed and there is no way to view the whole text of them\r\n !Screen Shot 2021-12-08 at 11.55.57.png|thumbnail! \r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available\r\n\r\nh3. Note\r\nThis is critical for some languages which the verbs are located at the last part of the sentence/string. \r\n\r\nFor example, if we had an option \"Failed to update authentication policy\", in Japanese, the order is \"Authentication policy\" \"update\" \"failed\". In the current situation where the options are trimmed, the users have no way to determine the most important part(in this example, \"failed\").\r\n !Screen Shot 2021-12-08 at 11.15.03.png|thumbnail! ",
+      "summary": "Unable to view the whole text of the options in org audit log"
+    }
+  },
+  {
+    "key": "ACCESS-1176",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-11-30T12:24:55.000+0000",
+      "description": "*Problem:*\r\n\r\nWhen a SCIM synced user is removed from a provisioned group in IdP, the user immediately gets deactivated. This happens when the user's Atlassian cloud app assignment in the IdP is intact due to its membership in a single group. So the removal of user from this IdP group breaks the Atlassian application assignment for the user and the corresponding Atlassian account is de-activated.\r\n\r\n*Suggestion:*\r\n\r\nThere are cases when the users have access to multiple cloud instances some via the IdP group product access and others via accepting invitation from the site admin. So in such cases, requesting for an alternative to prevent the user's getting de-activated when their group membership is removed.\r\n\r\n",
+      "summary": "Alternative for users getting deactivated when their group membership in Identity Provider is revoked."
+    }
+  },
+  {
+    "key": "ACCESS-1175",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-11-30T10:08:43.000+0000",
+      "description": "Mobile policy allows to setup policies that can be enforced to end users when accessing Atlassian cloud sites via the mobile application. This currently does not apply when accessing the site  via the mobile browser.\r\n\r\n*Suggestion* : Block the mobile browser access via Mobile policy ",
+      "summary": "Block mobile browser access with mobile policy"
+    }
+  },
+  {
+    "key": "ACCESS-1174",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-11-25T18:30:51.000+0000",
+      "description": "{color:#172b4d}We suggest as a feature request, a new API endpoint or modifying the existing Admin API to include MFA status of the users in the organization.\u00a0{color}\r\n\r\n{color:#172b4d}The current method to get this information is through the export of the managed users in the admin page. Having such an API endpoint would be interesting for partners.{color}",
+      "summary": "Enable consulting user status for MFA through the Admin API"
+    }
+  },
+  {
+    "key": "ACCESS-1171",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-11-18T03:09:50.000+0000",
+      "description": "h3. Feature Request\r\nCurrently a few Identity Providers allow for timezones to be synced to the Atlassian accounts. GSync integration doesn't offer this capability as of now. \r\n\r\nThis feature request raised is to gather interest for the option the sync the Timezone from G Suite into their Atlassian Account.\r\n",
+      "summary": "Allow for timezone to be synced from G Suite into Atlassian Account"
+    }
+  },
+  {
+    "key": "ACCESS-1170",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2022-01-03T19:10:34.000+0000",
+      "created": "2021-11-16T12:06:39.000+0000",
+      "description": "h3. Summary\r\n\r\nWhen a Non-Admin user logs in to [https://start.atlassian.com/] the user can access the *Settings* (Cog Wheel) > *Cloud Administration* on the Top Navigation bar and they are redirected to the following URL [https://admin.atlassian.com/o/create]. This allows any Non-admin user to create an Organization of their own, and create a site under it.\r\n\r\nHere is a screen-recording of the same: [^Screen Recording 2021-11-16 at 5.33.08 PM.mov]\r\n\r\nAfter all, this may be an intended behavior as we want the users to access the [https://start.atlassian.com/] portal with their Atlassian Account and then be able to create organizations and sites and subscribe to Atlassian products. However, we have been getting support tickets where other Org admins have complained about their users being able to go to these pages and then unknowingly create Org and Sites of their own. This is creating a lot of unwanted sites to show up on their start.atlassian.com page and also unwanted redirections to these new Orgs and sites as these users created the Org and sites without knowledge.\r\nThese are also coupled with support requests where the customer received an email that they were getting billed \"Estimated bill\" for the site their users created unintentionally.\r\nh3. Suggestion\r\n * Could we try and make the flow of the Org Creation a bit more informative where the non-admin users gets a highligted banner of important notes/Information when redirected to [https://admin.atlassian.com/o/create]",
+      "summary": "Non Admin Users when logged into https://start.atlassian.com/ can go to settings > Cloud Administration and create their own organization"
+    }
+  },
+  {
+    "key": "ACCESS-1169",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2022-01-03T23:54:50.000+0000",
+      "created": "2021-11-08T21:03:13.000+0000",
+      "description": "h3. Summary\r\n\r\nWhen users are already signed into their own IDP using a browser, and they access Atlassian Products, like Jira or Confluence, they are getting automatically logged into the application instead of asking for credentials.\r\n\r\nh3. Suggestion\r\n\r\nIt would be helpful if there is an option to disable cached sessions from IDP in case the user does not have access to Atlassian Products on the current session.",
+      "summary": "Disable SSO cached login"
+    }
+  },
+  {
+    "key": "ACCESS-1168",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-11-08T01:33:36.000+0000",
+      "description": "h3. Summary\r\n\r\nCurrently, in the *Managed accounts* directory, org admins can filter user accounts based on account status or product access.\r\n\r\nThe problem is that there is no visibility to see how many users are returned based on the filter applied, they have to go through the page paginations.\r\n\r\nIn addition to that, after filtering and using the *Export accounts* feature, the returned CSV still contains all the managed accounts in the directory, not that of the filter applied.\u00a0Also, it isn't possible to sort the list of accounts.\r\nh3. Request\r\n\r\nIt would be helpful if the Manage accounts page had a feature to:\r\n * See the number of accounts returned from a search filter/criteria\r\n * Sort the list of returned accounts\r\n * Export a CSV of only the accounts returned for a particular filter, rather than all accounts.\r\n\r\nh3. Workaround\r\n-",
+      "summary": "Improve the Managed accounts list filter and export feature"
+    }
+  },
+  {
+    "key": "ACCESS-1167",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-11-04T23:07:53.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe export buttons next to products under _Active users by product_ within the *Security Insights* page are not filtering the exported CSV based on the product and data displayed for the product.\r\nh3. Steps to Reproduce\r\n # Navigate to [*Admin*|https://admin.atlassian.com/] > *Security* > *Insights*\r\n # Scroll down to _Active users by product_\r\n # Click the *Export* buttons next to the product\r\n\r\nh3. Expected Results\r\n\r\nSince each product has an export button next to it, I would expect the CSV that is exported to be filtered to provide the users for the product.\r\nh3. Actual Results\r\n\r\nThe exported CSV contains all users within the site.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Export button within Security Insights does not filter per product"
+    }
+  },
+  {
+    "key": "ACCESS-1166",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-11-02T14:37:34.000+0000",
+      "description": "APIs in Atlassian cloud uses the Atlassian Account ID when referencing to an end user account.  \r\n\r\n*Problem* : It is not possible search for the Atlassian Account ID on the organization level based on search query such as email address.  \r\n\r\nThere is an API provided by Jira cloud {{/rest/api/3/groupuserpicker?query=query}} but the account ID cannot be returned if the account does not have access to the site. \r\n\r\n*Suggestion* : Allow to extract Account ID information based on search by email address via the organization rest API.\r\n\r\n{code}\r\nGET /admin/v1/orgs/{orgId}/users/search?query=email_address\r\n{code}\r\n\r\n*Workaround* : Load the managed accounts data via the {{GET /admin/v1/orgs/ORG_ID/users/}} endpoint and search for the accountID",
+      "summary": "REST API search capability returning Atlassian Account ID"
+    }
+  },
+  {
+    "key": "ACCESS-1165",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-29T19:39:35.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nWhen transferring products between organizations, you have to transfer all the products from one organization to another. This can be troublesome in Cloud-to-Cloud migrations if a customer wishes to move only certain products, or would like to transfer back the product to the original organization once the migration is completed.\r\nh3. Suggested Solution\r\n\r\nProvide the option to select which products of the organization you would like to transfer, and don't delete the original organization after the product transfer is done.",
+      "summary": "Ability to transfer only selected products between organizations"
+    }
+  },
+  {
+    "key": "ACCESS-1164",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-28T19:24:10.000+0000",
+      "description": "At this moment, user provisioning sync all the users and groups to all the sites below the hierarchy in the Atlassian organization where it is setup.\r\n\r\nThis suggestion is to add flexibility and make it possible to configure which users and groups you want to be mapped to specific sites instead of having all to all mapping.\r\n\r\nExample of scenario:\r\nA company has an organization with multiple sites and want each of them to have only a subset of the user provisioned users and groups being synced into each site.",
+      "summary": "Ability to sync users to sites based on the groups"
+    }
+  },
+  {
+    "key": "ACCESS-1163",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-27T16:32:31.000+0000",
+      "description": "h3. Summary\r\nWhen a user that was configured to use the Atlassian Account authentication mechanism is migrated to use the Atlassian Access and SSO authentication mechanism, the Atlassian Account session timeout/token refresh will continue to allow/grant an Atlassian Account session/token and never timeout/expire as long as the user never logs out or clears their browser's cache. This is true even if the user, now under SSO control, is disabled in the SSO identity provider creating a security leak! To close this security leak, an SSO administrator will need to disable the user in the SSO and the Atlassian Account identity providers.\r\n\r\nh3. Proposed solution\r\nWhen an Atlassian Account either times out or a token refresh occurs, check the user to see if they have migrated away from using the Atlassian Account authentication mechanism to Atlassian Access and SSO. If they have, do not automatically extend the session or refresh the cookie. Rather, switch to the SSO authentication workflow which should query the SSO Identity Provider to see if the user is still active or not and respond appropriately.",
+      "summary": "Atlassian Account session timeout/token refresh is not checking if user has been migrated to Atlassian Access and SSO"
+    }
+  },
+  {
+    "key": "ACCESS-1162",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-27T08:34:21.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe tooltip for password strength configuration does not correspond to the actual password strengths accepted by the system.\r\n\r\nh3. Steps to Reproduce\r\n # Configure an authentication policy\r\n # Click on the password strength drop down menu\r\n\r\nh3. Expected Results\r\n\r\nThe tooltip should provide information about the minimum character length and the entropy score.\r\n\r\nh3. Actual Results\r\n\r\nThe tooltip specifies samples that are not accepted as it is by the system.\r\n\r\n !ps.png|thumbnail! \r\n\r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Misleading tooltip for password strength configuration"
+    }
+  },
+  {
+    "key": "ACCESS-1161",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-27T04:37:07.000+0000",
+      "description": "h3. Issue Summary\r\nUpdating password strength on authentication policy shows wrong message, indicating to the user that we will apply updates next time members log in. Which is incorrect.\r\n\r\nh3. Steps to Reproduce\r\n # Go to admin.atlassian.com of an org, as org admin\r\n # Go to Security > authentication policies\r\n # Edit one of the authentication policies\r\n # change password strength\r\n # click \"Update\" button\r\n # pop up displayed with wrong message\r\n\r\nh3. Expected Results\r\n<Message should be updated to indicate that at least the password strength will not take effect for members when they log in. It would only take effect if a Reset Password for those members is performed after updating the authentication policy\"\r\n\r\nh3. Actual Results\r\nUpdate policy\r\nWe'll apply updates next time members log in. We recommend letting your members know about updates they need to be aware of.\r\n\r\nh3. Workaround\r\nThere is no workaround for this, this is a messaging issue that might confuse customers that are trying to enforce new password strength to their customers.\r\nI guess you could point the customer to the documentation which does explain the need to \"Reset passwords\" to enforce new password policies: https://support.atlassian.com/security-and-access-policies/docs/manage-your-password-policy/",
+      "summary": "Updating password strength on authentication policy shows incorrect message"
+    }
+  },
+  {
+    "key": "ACCESS-1160",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-12-29T20:49:59.000+0000",
+      "created": "2021-10-26T13:24:21.000+0000",
+      "description": "h3. Issue Summary\r\nFilter options are duplicated at *Org* > *Security* > *Audit log* \r\n!image.png|thumbnail!\r\n\r\nh3. Steps to Reproduce\r\n# Navigate to https://admin.atlassian.com select the *Org*  > *Security* > *Audit log* \r\n# Hit the *All activities* drop-down menu\r\n\r\nh3. Expected Results\r\nEach filter option will appear once\r\n\r\nh3. Actual Results\r\nEntries are duplicated\r\n\r\nh3. Workaround\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Org Audit Log - duplicate Activities filter options"
+    }
+  },
+  {
+    "key": "ACCESS-1159",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-18T13:58:03.000+0000",
+      "description": "Atlassian Accounts are able to generate API tokens for use with Jira and Confluence cloud APIs. At the moment, org admins can only revoke these tokens but they cannot enforce policies on the token usage of their managed accounts. \r\n\r\nSuggestion :\r\n1. Allow org admins to enforce policies on API token usage\r\n- Enable or block a managed account to be able to create tokens. \r\n- Set a default expiration for the tokens that can be created (ie, 1 week, unlimited not allowed). see ID-7825\r\n\r\n2. Allow admins to track the API token usage within the sites/applications. \r\n\r\n\r\n",
+      "summary": "Org administration for API tokens"
+    }
+  },
+  {
+    "key": "ACCESS-1157",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-14T10:58:09.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCurrently there is no option available for Atlassian Org Admins to configure and receive alerts for various events happening in their Atlassian org.\r\n\r\nFor example - if Gsuite integration is broken due to invalid credentials, admin has no way to find this out unless they login to admin.atlassian.com and check the Gsuite tab, under Directory menu.\r\n\r\nSame applies for any scenario where would throw out an error or warning, be that related to user provisioning, user administration and management or SAML SSO integration.\r\nh3. Steps to Reproduce\r\n\r\nn/a\r\nh3. Expected Results:\r\n\r\nBe able to configure an alert or event notification system/service that can automatically inform admins about various events happening in their Atlassian org, based on certain triggers, rules. The notification can be sent over email \\ SMS \\ Push notification, or retrieved via an API endpoint.\u00a0\r\nh3. Actual Results:\r\n\r\nWe do have the Audit Log (under Security) or Troubleshooting log (under User Provisioning or G Suite) - but both imply the admin actually logging in to Atlassian admin hub. Ideally, admins would automatically receive notifications for such events, without this manual process.\u00a0\r\nh3. Workaround:\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available.",
+      "summary": "Create an email alert service "
+    }
+  },
+  {
+    "key": "ACCESS-1156",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-14T06:37:58.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIf the site is using the new user management interface(vortex mode), and the user deletes all the products in the Org, the organization does not get deleted automatically.\r\n\r\nh3. Steps to Reproduce\r\n # Delete all products in the org\r\n # Go to admin.atlassian.com to check list of organizations\r\n\r\nh3. Expected Results\r\nOrganization should be automatically deleted.\r\n\r\nh3. Actual Results\r\nOrganization still exists.\r\n\r\nh3. Workaround\r\nThere is no workaround. Need to contact Support to delete the Org.",
+      "summary": "Organization is not deleted automatically after all products are removed if the site is using new user management interface (vortex mode)"
+    }
+  },
+  {
+    "key": "ACCESS-1155",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-11T16:27:55.000+0000",
+      "description": "When we verify the domain, that would be awesome to customize the email notification for the users that will have their accounts claimed.\r\n\r\nAlso, there is no way to see what accounts will be notified. It would be very helpful to see a list of all users that will receive the notification due to the domain verification.",
+      "summary": "Customize email notification when claiming accounts"
+    }
+  },
+  {
+    "key": "ACCESS-1153",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-08T10:53:13.000+0000",
+      "description": "Provide OrgAdministrators with controls to change default behaviour with regards to Trello Free access assigned to brand new Atlassian accounts that are created via SCIM user provisioning in organizations that have Trello Enterprise linked to them.",
+      "summary": "Allow to disable automatic assignment of Trello Free license for Atlassian accounts created by SCIM user provisioning in organizations linked to Trello Enterprise"
+    }
+  },
+  {
+    "key": "ACCESS-1152",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-11-04T02:31:48.000+0000",
+      "created": "2021-07-12T20:50:42.000+0000",
+      "description": "It would be awesome that enforced two-step verification would be available for unmanaged accounts too even without Atlassian Access.\r\n\r\nAs many company, we are working with subcontractors that have their own domain that we can't manage.\r\n\r\nAs we need a secure connexion on our instance for every user, it would be a great security improvement to be able to enforce two-step verification for every user.\r\n\r\nIn the meantime, it makes us unable to be compliant with our security commitments.\r\n\r\n",
+      "summary": "Enforce security polices for unmanaged accounts"
+    }
+  },
+  {
+    "key": "ACCESS-1151",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-07T18:35:06.000+0000",
+      "description": "h3. Summary\r\nWhen SAML SSO is enabled in the organization, users would have two different passwords: one for their AD user, and one for their Atlassian accounts, generating some confusion when SSO is not enforced in the authentication policy.\r\n\r\nh3. Suggestion\r\n* Develop an option that would sync the user passwords between the identity provider and the Atlassian account.",
+      "summary": "Sync AD x Atlassian account passwords"
+    }
+  },
+  {
+    "key": "ACCESS-1150",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-10-05T18:04:06.000+0000",
+      "description": "h2. Summary\r\n\r\nManaged Atlassian accounts either must login via SAML SSO or must not login via SAML SSO thanks to the binary \"enforce SAML SSO\" option of [authentication policies|https://support.atlassian.com/security-and-access-policies/docs/edit-authentication-settings-and-members/#Editauthenticationsettingsandmembers-Singlesign-on-SSO-]. Managed Atlassian accounts can not be allowed to choose whether to login with SAML SSO or optionally also with their local Atlassian email/password.\r\n\r\nh2. Suggestion\r\n\r\nAllow \"Allow SAML SSO\" option in an organization's authentication policies. This setting would allow the user to login via either SAML SSO or their local Atlassian email/password.",
+      "summary": "Allow optional SAML SSO logins"
+    }
+  },
+  {
+    "key": "ACCESS-1149",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-09-30T20:32:24.000+0000",
+      "created": "2021-09-30T14:46:37.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe *Reset password* button is not sending an email to the user at the organization's member page\u00a0[https://admin.atlassian.com/o/]<org_id>/members/<atlassianaccount_id>\r\nh3. Steps to Reproduce\r\n # Login to [admin.atlassian.com|https://admin.atlassian.com/]\r\n # Make sure User Provisioning and SAML SSO are disabled.\r\n # Go to *Directory* > *Managed accounts*\r\n # Open a member's page and click on *Reset password*\r\n\r\nh3. Expected Results\r\n\r\nAn email should be sent to the end-user with instructions to reset their Atlassian account password\r\nh3. Actual Results\r\n\r\nNo emails are being triggered\r\nh3. Workaround\r\n\r\nA possible workaround is for end-users to directly reset their password using [https://id.atlassian.com/login/resetpassword], which is successfully delivering the instructions email.\r\nh3. Note\u00a0\r\n\r\nCurrent open Bugs\u00a0ACCESS-902\u00a0and\u00a0ACCESS-1112\u00a0are related to password resetting but in different scenarios.",
+      "summary": "Password reset at Organization Members page not working"
+    }
+  },
+  {
+    "key": "ACCESS-1148",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-30T11:56:56.000+0000",
+      "description": "At the moment, the user provisioning administration is quite limited. Troubleshooting sync issues from third party IDPs can be really difficult because of this. Management of synced users and groups gets even more difficult when there are thousands of objects involved.\r\n\r\n*Suggestion* :  Provide a more comprehensive interface for managing user provisioning integrations\r\n - Allow to filter by group name in the provisioning page\r\n - Allow to view the group members within the org administration without the need to switch over to the site administration groups. \r\n - Allow to export SCIM user and group data\r\n - Detailed provisioning events in the org audit log - [ACCESS-1133|https://jira.atlassian.com/browse/ACCESS-1133]\r\n - Better sync troubleshooting logs - [ACCESS-1038|https://jira.atlassian.com/browse/ACCESS-1038]\r\n - Filter capability for managed accounts based on synced status - [ACCESS-953|https://jira.atlassian.com/browse/ACCESS-953]\r\n",
+      "summary": "Improve the administration interface for User Provisioning"
+    }
+  },
+  {
+    "key": "ACCESS-1147",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-10-25T15:52:28.000+0000",
+      "created": "2021-08-25T06:14:21.000+0000",
+      "description": "h3. Summary\r\n\r\nWhen customers revoke product access for the user product arrangements/ordering gets shuffled.\r\nh3. Steps to Reproduce\r\n # Navigate to user management page > Select the user\r\n # Revoke site access\r\n # Products ordering gets changed\r\n\r\nh3. Expected Results\r\n\r\nReturn consistent Product ordering after toggling product access\r\nh3. Actual Results\r\n\r\nAfter toggling product access for the user, products arrangements/ordering gets shuffle each time.\r\n\r\n\u00a0 !Screenshot 2021-08-25 at 11.30.40 AM.png|width=159,height=188! \u00a0\r\n\r\n!Screenshot 2021-08-25 at 11.31.26 AM.png|width=196,height=244!\r\nh3. Workaround\r\n\r\nNo workaround",
+      "summary": "Arrangements/Ordering of products are displayed differently for the user after toggling product access"
+    }
+  },
+  {
+    "key": "ACCESS-1146",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2022-01-04T06:21:49.000+0000",
+      "created": "2020-10-25T20:07:07.000+0000",
+      "description": "Current audit logs in Jira, Confluence, and Atlassian Access primarily display administrator activity and some individual user actions (like logins). However, customers with extensive security or regulatory obligations require the ability to review individual user actions, like when certain issues or pages were viewed.",
+      "summary": "Provide a comprehensive log of user activity"
+    }
+  },
+  {
+    "key": "ACCESS-1145",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-10-06T15:36:46.000+0000",
+      "created": "2021-09-27T18:23:33.000+0000",
+      "description": "h3. Problem Definition\r\nWhen a user has not uploaded a personal avatar, the system will default to use their initials with that appears to be a random colored background.  However there is no easy way for the end user to change that background color of that user avatar.  This can make it difficult for some users with color blindness to be able to discern the differences between avatars.\r\n\r\nh3. Suggested Solution\r\nImplement a means for end users and/or administrators to change the background color of the default user avatar\r\n\r\nh3. Why this is important\r\nAccessibility and ease of use for identifying different users on the site\r\n\r\nh3. Workaround \r\nCurrently, the only workaround to this would be to first download the existing avatar image file, and then use an image editor to change that background color manually. Once completed, you could save that file and then upload it under https://id.atlassian.com/manage-profile/profile-and-visibility",
+      "summary": "End users should have the ability to change the background color of the default user avatar that contains their initials"
+    }
+  },
+  {
+    "key": "ACCESS-1144",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-09T09:32:06.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAn organization has 2 domains , a primary domain and a secondary domain. Their end intention is for Jira Service Desk portal customer users on their secondary domain to be forwarded to their primary domain email address and logged in successfully as a managed account.\r\nh3. Environment\r\n\r\nCustomer has claimed both the primary and secondary domains above and in this example uses Azure AD to control user management and access.\r\nh3. Steps to Reproduce\r\n # Customer claims primary domain A and secondary domain B\r\n # For the scenario where user has the domain address of primary domain and is a normal Atlassian Account , the scenario below works for them. Example , [usera@primarydomain.com|mailto:usera@primarydomain.com]\u00a0and [usera@secondarydomain.com|mailto:usera@secondarydomain.com]\r\n ## User logs in as [usera@secondarydomain.com|mailto:usera@secondarydomain.com]\u00a0at Jira or Confluence landing page or even {{id.atlassian.com}}\r\n ## User then gets forwarded to Azure AD portal and now inserts [usera@primarydomain.com|mailto:users@primarydomain.com]\u00a0 and is able to log in further and use Jira and Confluence successfully\u00a0\r\n ## The Atlassian Account holds details only of primary domain email address [usera@primarydomain.com|mailto:users@primarydomain.com]\r\n # For the scenario where a JSD customer portal user has both email address\u00a0[userb@primarydomain.com|mailto:users@primarydomain.com]\u00a0and [userb@secondarydomain.com|mailto:userb@secondarydomain.com]\u00a0, the scenario below will occur and overall fail logging in user\r\n ## Customer lands at JSD customer portal page\r\n ## Customer logs in as\u00a0[userb@secondarydomain.com|mailto:userb@secondarydomain.com]\u00a0at JSD customer portal page eg\u00a0[https://<instance>.atlassian.net/servicedesk/customer/portals|https://%3Cinstance%3E.atlassian.net/servicedesk/customer/portals]\r\n ## This user does not get forwarded to Azure AD page - this is expected , as customer email account\u00a0[userb@secondarydomain.com|mailto:userb@secondarydomain.com]\u00a0does not exist as a Atlassian Account and only exists as a customer portal account\r\n ## In normal scenarios , this account will have to be converted to Atlassian Account to allow SSO access\r\n ## However converting this account which is a secondary account into Atlassian account will still fail to access Azure AD in the way customer is planning to access with the primary domain , as the converted account will still have [userb@secondarydomain.com|mailto:userb@secondarydomain.com]\u00a0email add instead of [userb@primarydomain.com|mailto:userb@primarydomain.com]\r\n\r\nh3. Expected Results\r\n\r\nCustomer wants the landing page of the customer portal to behave exactly as the way the landing page of Jira/Confluence behaves.\u00a0\r\nh3. Actual Results\r\n\r\nThe landing page of Jira Service Desk and first level authentication of JSD customers behaves vastly different from Jira Core / Confluence landing pages.\u00a0\r\nh3. Workaround\r\n\r\nPlease ensure there is only 1 domain email address used across all products to login for each customer. This will work correctly.",
+      "summary": "Improve SAML authentication to include domain forwarding scenarios"
+    }
+  },
+  {
+    "key": "ACCESS-1143",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-11-03T19:50:21.000+0000",
+      "description": "h3. Summary\r\nWhen verifying a domain, Atlassian will send a notification about this operation to all the users with that domain even though I have just a few of them inside my organization. \r\nThe message is also not clear about how it'll impact these users\r\n\r\nh3. Suggestion\r\n* Allow an Org Admin to edit the email notification, or\r\n* Allow an Org Admin to manage only the users inside the organization, or\r\n* Allow an Org Admin to choose which users will be notified about this operation",
+      "summary": "As an org admin, I'd like to have more control under the message and the users that will be under a domain verified"
+    }
+  },
+  {
+    "key": "ACCESS-1142",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-24T08:34:13.000+0000",
+      "description": "At this moment, the only possibilities to claim a domain in Atlassian are either a DNS TXT record on the main (root) domain, or a file placed on the webserver's root page (HTTPS method).\r\n\r\nThese methods have the disadvantage of releasing this information to the public: Everyone on the internet can check if example.com is claimed in Atlassian. This creates an additional security risk for targeted phishing emails.\r\n\r\nPlease provide an alternative domain verification method using a CNAME record for a subdomain of example.com.\r\n\r\nExample:\r\n{code}\r\n<random-string-1>.example.com IN CNAME <random-string-2>.atlassian.com\r\n{code}\r\n\r\nWhere both _random-string-1_ and _random-string-2_ are generated by Atlassian inside the organization and the domain to be claimed is example.com.\r\n",
+      "summary": "Provide additional methods to claim a domain (CNAME record for a sub-domain)"
+    }
+  },
+  {
+    "key": "ACCESS-1141",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-13T13:36:42.000+0000",
+      "description": "h3. Summary\r\nThe feature that allows us to claim accounts from our existing domain is great! It lets us manage the users from our own organization, improving the user management experience. Though, when we are about to claim the accounts, no message tells us that the claimed accounts will become active users after the process is complete.\r\n\r\nh3 Suggestion\r\n* Add the information on both [public documentation|https://confluence.atlassian.com/cloud/verify-a-domain-for-your-organization-873871234.html] and claim accounts modal, that the users will become active once it is done.",
+      "summary": "Warning message when claiming accounts of a verified domain"
+    }
+  },
+  {
+    "key": "ACCESS-1140",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-12-22T14:25:38.000+0000",
+      "description": "h3. Problem Definition\r\nSAML configuration and \"managed\" Atlassian ID editing options are not available to users on non-verified domains.  There is a need for customers to be able to manage these user accounts.\r\n\r\nh3. Suggested Solution\r\n* Find a way to bring functionality to all accounts within a given Jira instance.\r\n* We may need to replace or supplement the domain verification process.\r\n* Define a \"contractor\" account type.\r\n\r\nh3. Why this is important\r\n* Customers often have \"contractors\" or teams using email domains which the customer does not own.  SAML and domain verification is not possible, so functionality is not available on these accounts.\r\n* In some cases, changes to a customer website or DNS changes can't be made due to company policy/political reasons.\r\n* An example of this being an issue is a customer has connected to their IDP using SAML, their \"contractors\" attempt to login, but are unable to gain access to the instance.  Entering a fake email address using the verified domain will allow the redirection to the IDP page to occur, but access is not granted as the contractor's domain is not verified.\r\n \r\nh3. Workaround \r\n* No workaround.",
+      "summary": "Verifying domains that are not owned by the customer"
+    }
+  },
+  {
+    "key": "ACCESS-1139",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-06T11:23:39.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nDomain Claim overview :\r\n- Domain is verified (via DNS)\r\n- Admin is requested to Claim accounts after verification. \r\n\r\nIn some organizations, the domain verification instantly claims the account. \r\n\r\nh3. Steps to Reproduce\r\n # Verify a domain\r\n\r\nh3. Expected Results\r\n\r\nThe admin should prompted to claim the accounts or do it later. \r\n\r\nh3. Actual Results\r\n\r\nSome domains instantly claims the account after verification. \r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Domain claim missing the claim account step"
+    }
+  },
+  {
+    "key": "ACCESS-1138",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-06-21T21:15:06.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIf DNS contains 28 or more unique TXT record items in the root of the domain (including the Atlassian Verification), the Domain cannot be verified or re-verified during the normal checks.\r\n\r\n\r\nh3. Environment\r\n\r\n(Optional - If Applicable)\r\n *\r\n *\r\nh3. Steps to Reproduce\r\n # set up 30 TXT record entries with a lot of text in them\r\n # Wait for the changes to propagate to our system. Please note that the change may take up to 72 hours for our system to stop caching the old results.\r\n # Attempt to claim the domain (or reclaim it)\r\n\r\nh3. Expected Results\r\nThe domain claims as expected\r\n\r\nh3. Actual Results\r\n\r\nThe domain claim fails and the following error is thrown in the logs:\r\nError: queryTxt ESERVFAIL EXAMPLE.com at QueryReqWrap.onresolve [as oncomplete] (dns.js:213:19)\r\n\r\nh3. Notes\r\n\r\n11 records is not enough to generate the issue. The threshold for the issue starts somewhere between 11 and 28 records.\r\n\r\nh3. Workaround\r\n\r\nCurrently, there are only two methods that can be used to bypass this issue:\r\n1. Delete some of the TXT record entries to 11 or below.\r\n2. Use HTTPS verification instead.",
+      "summary": "Domain Verifications Fails if Too many TXT records in DNS"
+    }
+  },
+  {
+    "key": "ACCESS-1137",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-05T09:51:32.000+0000",
+      "description": "Current default password policy from Atlassian ( if the domain is not managed and the password is not enforced) is 8-100 characters.\r\n\r\nThis needs to be made a more stringent since we don not have a way to enforce this until we claim the domain\r\n\r\nHaving a strong password policy is absolutely essential and if we can bring in some clauses in Atlassian Default password policy (like expiry, inclusion of special characters etc)",
+      "summary": "Make Default Password policy of Atlassian more stringent"
+    }
+  },
+  {
+    "key": "ACCESS-1136",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-02-09T11:37:05.000+0000",
+      "description": "1. Under the https://admin.atlassian.com/o/OrgID/passwordpolicy\r\n2. Hower the mouse on Immediate, the message is \"User will be logged out and prompted to set a new password when they next login\"\r\n3. Please update the User Interface and include the Password Expiry date will get calculated from the last date when the user has changed their password.\r\n\r\n",
+      "summary": "Update the password expiry message under https://admin.atlassian.com/o/ORG_ID/passwordpolicy"
+    }
+  },
+  {
+    "key": "ACCESS-1135",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-24T17:38:05.000+0000",
+      "description": "Under the feature Automatic product discovery in Atlassian access, the following occurs as described:\u00a0\r\n\r\n_Atlassian will proactively send an email with the number of shadow IT products created by their managed users and what the exact shadow IT product is._\r\n\r\n_Within\u00a0[admin.atlassian.com|https://admin.atlassian.com/], organization admins can also view additional information, such as the owner of these products, how many users are in that product, and the date it was created._\r\n\r\n_To start remediation, organization admins can click on the \"\u2026\" eclipses to contact the product owner._\r\n\r\nThis is not adequate just to contact the product owner. How do we manage users or user groups from being able to spin up new products.\u00a0\r\n\r\nWe can \"discover\" them, however for such large enterprise organization as us it's not scalable to reachout to each product owner every time or at the cadence we can follow up there may be too many spinning up new products.\u00a0\r\n\r\nWe like the feature however, we should be able to take this a step further.\u00a0",
+      "summary": "Need to control or manage; users or user group from creating products "
+    }
+  },
+  {
+    "key": "ACCESS-1133",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-24T07:44:55.000+0000",
+      "description": "At the moment, some provisioning activities are logged in the Organization Audit logs but they are not very descriptive.\u00a0\r\n\r\nie. Changing the account details and deactivating an account in the IDP is logged as the same activity in Audit log.\u00a0\r\n\r\n\u00a0\r\n|Identity Provider|\u00a0Updated account profile for *email@domain.com*|\r\n|Identity Provider|\u00a0Updated account profile for *email@domain.com*|\r\n\r\n\u00a0\r\n\r\n*Suggestion*\u00a0\r\n\r\nProvide more details on audit logs based on user provisioning\r\n * Specify that provisioning is the actor.\u00a0\r\n * Log specific user account changes.\r\n * Log specific group changes.\r\n\r\n\u00a0\r\n\r\nSuggestion\u00a0",
+      "summary": "Better audit logging for SCIM provisioning events. "
+    }
+  },
+  {
+    "key": "ACCESS-1131",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-21T22:17:30.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nCurrently, there is no way to use Rest APIs to obtain a list of users and their assigned applications.\r\nh3. Suggested Solution\r\n\r\nTo create an API that allows to export a list of users and their associated applications, the same way that it is possible to obtain via the [Export accounts|https://support.atlassian.com/organization-administration/docs/export-managed-accounts/] button, present on Organization > Directory > Managed Accounts.",
+      "summary": "Export users with their associated applications using Rest API"
+    }
+  },
+  {
+    "key": "ACCESS-1129",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-21T05:00:16.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThere is not audit log for changes to an account email.\r\n\r\nSee customer request:\u00a0https://jira.atlassian.com/browse/ID-7730\r\nh3. Steps to Reproduce\r\n\r\nChange the email for an account\r\n\r\n\u00a0",
+      "summary": "Add Audit logs for email changes"
+    }
+  },
+  {
+    "key": "ACCESS-1128",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-15T10:57:23.000+0000",
+      "description": "h3. Issue Summary\r\n * Sometimes, it's necessary for an organization admin to deactivate two-factor authentication on a specific Atlassian account\r\n * Normally, an organization admin can navigate to Directory > Managed accounts > [User's profile] and then click \"Deactivate two-factor verification\"\r\n * When enforced 2FA/MFA is enabled on an [authentication policy|https://support.atlassian.com/security-and-access-policies/docs/understand-authentication-policies], the \"Deactivate two-factor verification\" disappears\r\n\r\nh3. Steps to Reproduce\r\n # Enforce 2FA on the organization's managed accounts - or configure SCIM/provisioning\r\n # Enrol an Atlassian account/device to 2FA\r\n # Try to deactivate 2FA for a specific user within the UI\r\n\r\nh3. Expected Results\r\n * The \"Deactivate two-factor verification\" button should be available.\r\n\r\n||With a provisioned account||Without a provisioned account||\r\n|!Screenshot 2021-09-15 at 11.37.24.png|thumbnail!|!Screenshot 2021-09-15 at 11.48.51.png|thumbnail!|\r\nh3. Actual Results\r\n * The \"Disable two-factor verification\" button is hidden and it is not possible to deactivate 2FA\r\n\r\nh3. Workaround\r\n * Contact Atlassian support for assistance: [https://support.atlassian.com/contact/]",
+      "summary": "When an Atlassian account is synced via provisioning or enforced MFA/2FA is configured, the \"Deactivate two-factor authentication\" button disappears"
+    }
+  },
+  {
+    "key": "ACCESS-1126",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-09T20:41:05.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nCurrently, there is no way of bulk removing 2FA from users. This setting must be removed manually from each user and when there is a large user base, this becomes an issue.\r\nh3. Suggested Solutions\r\n\r\nTo create an API or a way in the user management interface to allow the bulk removal of the 2FA setting",
+      "summary": "Bulk removal of 2FA setting"
+    }
+  },
+  {
+    "key": "ACCESS-1125",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-09T09:55:24.000+0000",
+      "description": "*Problem definition*\r\n\r\nCurrently, there is no option to know who performed changes in the product subscription.\r\n\r\n*Suggested solution*\r\nLog the user who performed the changes",
+      "summary": "Org Audit log should show who changed/modified the product subscription"
+    }
+  },
+  {
+    "key": "ACCESS-1123",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-08T09:46:05.000+0000",
+      "description": "At the moment, only the end users will be able to control their profile visibility settings via [https://id.atlassian.com|https://id.atlassian.com/]\r\n\r\n*Suggestion* : Allow org admins to enforce profile visibility settings according to their organization requirement. ie. Email address should only be visible to the organization and this should be enforced.\u00a0\r\n\r\n\u00a0\r\n\r\n\u00a0",
+      "summary": "Enforce profile visibility settings to managed accounts"
+    }
+  },
+  {
+    "key": "ACCESS-1122",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-07T20:43:50.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUser provisioning with Okta throwing intermittent error *api.atlassian.com:443 failed to respond*\r\n\r\nScreenshot from okta system logs:\r\n\r\n!image-2021-09-07-17-18-15-470.png|width=555,height=160!\r\n\r\nNo apparent pattern for problem occurrence;\r\nRandom groups are affected.\u00a0\r\n\r\n",
+      "summary": "User provisioning with Okta throwing intermittent error api.atlassian.com:443 failed to respond"
+    }
+  },
+  {
+    "key": "ACCESS-1121",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-07T17:32:58.000+0000",
+      "description": "Referring the Admin Portal ...\r\n\r\nCan you implement a auto delete feature for users who no longer have site access (or at least an option to delete)?",
+      "summary": "Implement an option to remove/delete users from Admin insights page"
+    }
+  },
+  {
+    "key": "ACCESS-1120",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-03T14:04:48.000+0000",
+      "description": "h4. Problem Definition\r\n\r\nA user receives \"*This account has been deactivated*\" when logging in via SAML SSO.\r\n\r\nThis is happening in cases where a user had a previous Atlassian account 'X' with emailA@domain.com linked to a SAML ID. Later, the User's Email is updated to emailB@domain.com on the IdP. The emailA account is deactivated by the Org admin, however, the Updated Email Address is already bounded to another Atlassian account 'Y'.\r\n\r\nFrequently, customers need to get in touch with Atlassian Support to get the details of both accounts and to understand which account is SAML linked. Below is a quote:\r\n{quote}To be honest, I'm a bit surprised that there isn't a way for myself or another org admin to remove the SAML ID from a user account through some sort of org admin UI function or at the very least via the user management API call.\r\n{quote}\r\nh4. Suggested Solutions\r\n\r\nCreate a feature that allows the Organization Administrators to:\r\n * *Show the SAML ID of managed active accounts*\r\n * Clear the SAML Id link from their managed accounts.\r\n\r\nThat will reduce the number of raised tickets, improving customer experience as they will be aware of which of their accounts is entitled with SAML ID.\r\n\r\n\u00a0",
+      "summary": "Present SAML ID to Org Admin +  Possible option to unlink"
+    }
+  },
+  {
+    "key": "ACCESS-1119",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-03T04:14:39.000+0000",
+      "description": "h3. Problem Definition\r\nAs an org admin, my organisation doesn't have an Atlassian Access subscription but I have users that are using Atlassian Access to SSO. I cannot see their license consumption because they are managed by a different org admin on another organization that has an Atlassian Access subscription. \r\n\r\nI'd like to track the number of users who are consuming licenses for Atlassian Access even if they are managed on another org (subscribed to Atlassian Access) by a different org admin.\r\n\r\nh3. Suggested Solution\r\nProvide a view/tracking of the Atlassian Access users in my organisation\r\n \r\nh3. Workaround \r\nNo workaround at the moment. Only the org admin managing the organisation subscribed to Atlassian Access can view and track licenses consumption.\r\n",
+      "summary": "As org admin, I want to track license consumption of users my org even if the users are managed in another org"
+    }
+  },
+  {
+    "key": "ACCESS-1118",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-09-02T15:54:54.000+0000",
+      "description": "When a Managed account gets deactivated due to Atlassian's \"Export Control - Compliance Policy\"\r\n\r\nThe user gets the following notification\r\n\r\n{noformat}\r\nDear Atlassian user,\r\nU.S. law prohibits Atlassian, an Australian corporation with offices in the United States, from providing you with access to our products and services. After analyzing the applicable lists of restricted parties maintained by the U.S. Government, we were unable to confirm that your name was not affiliated with a restricted party. If this is a case of misidentification, please reply with two different copies of official documentation to verify your identity.\r\nOfficial documentation includes, but is not limited to, a government-issued drivers license or identification card, passport, utility bill, mortgage or bank statement, etc. Please make sure your full name and address are clearly visible.\r\nWe look forward to your reply.\r\nSincerely,\r\nAtlassian\r\n{noformat}\r\n\r\n\r\nHowever, this data is not recorded in the Org Audit logs so it becomes difficult for the Org Admins to understand why the Account was disabled.\r\n\r\nSuggestion:\r\n\r\nInclude the above \"User Deactivation\" and \"Reactivation\" event in the Org Audit logs so Admins are aware and can take necessary actions on the same.",
+      "summary": "Add details on Account Deactivated due to Export Control on Audit logs"
+    }
+  },
+  {
+    "key": "ACCESS-1117",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-09-13T17:58:33.000+0000",
+      "created": "2021-09-01T22:27:39.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCreating a 2FA exclusion policy is not working in a scenario where Atlassian Access user provisioning is enabled without SSO.\r\nh3. Steps to Reproduce\r\n # Enable 2FA in an unmanaged account\r\n # Make it a managed account and enable User provisioning without SSO.\r\n # Create a new policy to make 2FA optional and add this member account to it.\r\n # The user is still prompted for 2FA. This can cause an issue in a scenario where the user has lost his 2FA device but the Org admin is not able to disable it for him.\r\n\r\nh3. Expected Results\r\n\r\nIf a user is added to 2FA exclusion policy he should not be prompted for 2FA.\r\nh3. Actual Results\r\n\r\nA user who has 2FA enabled on his own before getting upgraded as a managed/provisioned account is prompted for 2FA eventhough 2FA exclusion policy is enabled for him. This is happening in a specific scenario where userprovisioning is available without SSO.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available. You can contact Atlassian Support for further assistance.",
+      "summary": "Creating a 2FA exclusion policy is not working in a scenario where Atlassian Access user provisioning is enabled without SSO."
+    }
+  },
+  {
+    "key": "ACCESS-1115",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-08-31T16:21:28.000+0000",
+      "created": "2021-08-30T03:31:45.000+0000",
+      "description": "h3. Issue Summary\r\n* Cannot save SAML config with if the certificate contains the \"BEGIN CERTIFICATE\" and \"END CERTIFICATE\" values.\r\n* Existing SAML configs continue to work fine as long as they're not edited.\r\n\r\nh3. Steps to Reproduce\r\n# Create a new SAML config, or edit an existing one.\r\n# Paste the certificate values as we normally do.\r\n** {code:java}\r\n-----BEGIN CERTIFICATE-----\r\nMIIDBTCCAe2gAwIBAgIQN33ROaIJ6bJBWDCxtmJEbjANBgkqhkiG9w0BAQsFADAtMSswKQYDVQQD\r\n............................................\r\nMODcnQshVINXwsYshG1pQqOLwMertNaY5WtrubMRku44Dw7R\r\n-----END CERTIFICATE-----{code}\r\n\r\nh3. Expected Results\r\n* The SAML config is applied/saved.\r\n\r\nh3. Actual Results\r\n* The config fails to be saved, and the error below is shown.\r\n** {code:java}Something's not right. Try again{code}\r\n** {code}message: \"Error: The signing certificate is not valid. Please provide a .pem or .cer certificate base64 encoded public key\"{code}\r\n\r\nh3. Workaround\r\n* Remove the \"BEGIN CERTIFICATE\" and \"END CERTIFICATE\" values, and save the config.",
+      "summary": "Creating or updating SAML config fails due to \"BEGIN CERTIFICATE\" and \"END CERTIFICATE\" values."
+    }
+  },
+  {
+    "key": "ACCESS-1114",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-07-22T10:44:51.000+0000",
+      "description": "*Problem definition*\r\n * There are 2 events when user added to the site, that are not yet available in Organization Audit logs (Atlassian Access):\r\n\r\n ## Self sign up: When a user performs self sign up where the email address is one of the allowed domain.\r\n ## Site admin approve access request: Users can request product access for themselves or others when the site access settings don\u2019t allow them to join the site\r\n\r\n*Suggested solution*\r\n * Add above events to the audit log",
+      "summary": "To include logs on who performed changes on Site access-signup options"
+    }
+  },
+  {
+    "key": "ACCESS-1113",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-25T15:07:23.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nTrying to set an Atlassian site URL as punycode returns either a *400 Bad Request* error or *500 Internal Server Error*.\r\nh3. Steps to Reproduce\r\n\r\nThe following outlines the replication steps when using the [new user interface for updating sire URLs|https://confluence.atlassian.com/cloudkb/changing-the-cloud-instance-url-address-or-migrating-to-a-new-cloud-instance-691011835.html]:\r\n # Navigate to *admin.**atlassian.com* and\u00a0select *Products*\r\n # Select *Product URLs* and click to update the URL for the selected product\r\n # Attempt to use punycode site URL as noted in the below example\r\n # Example site name with original unicode character and punycode:\r\n\r\n\u00a0\r\n{code:java}\r\nUnicode: s\u00f3me-project.atlassian.net\r\nPunycode: xn--sme-project-qeb.atlassian.net{code}\r\n\u00a0\r\nh3. Expected Results\r\n\r\nThe site is created with the set punycode name or an appropriate error message is provided to the user. Using the Unicode character *\u00f3* is automatically rejected as an invalid character at the time of creation.\r\nh3. Actual Results\r\n\r\nThe below response is captured within the browser dev tools' Network tab:\r\n{noformat}\r\nmessage: \"Unable to process request: Bad Request\"\r\nreason: \"{\\\"errorDescription\\\":\\\"Invalid cloud name\\\",\\\"errorKey\\\":\\\"InvalidData\\\"}\"\r\nstatus: 400\r\n{noformat}\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Trying to set site URL to punycode returns 400 and 500 errors."
+    }
+  },
+  {
+    "key": "ACCESS-1112",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-10-19T02:04:56.000+0000",
+      "created": "2021-08-17T22:17:09.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAfter triggered a password reset to apply a new password strength, the users were not logged out automatically and the password change was not requiring a stronger one.\r\n\r\nh3. Steps to Reproduce\r\n\r\n- Set the password strength to weak\r\n- Invite a new user to Atlassian and set a weak password\r\n- Change the password strength to Strong on the Authentication policy\r\n- Perform a global password reset\r\n\r\nh3. Expected Results\r\n\r\nThe  password reset should force all users to set a new strong password. \r\n\r\nh3. Actual Results\r\n\r\nUsers are not being automatically logged out and forced to change the password for a stronger one.\r\nOn password change, weak password is still being accepted. \r\n\r\nh3. Workaround\r\n\r\nCurrently there is no workaround.\r\n",
+      "summary": "Password strength not taking effect after a policy change.  "
+    }
+  },
+  {
+    "key": "ACCESS-1110",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-18T21:12:15.000+0000",
+      "description": "h3. Issue Summary\r\nInsights *Active users by product* table fails to load when org admin is not a site admin for all sites when using the default filter of *Active users by product*\r\n\r\nh3. Steps to Reproduce\r\n- See Insights feature documentation for the pre-requisites -[https://support.atlassian.com/organization-administration/docs/gain-insights-into-product-usage-and-security-practices/]\r\n # Go to [https://admin.atlassian.com], drill down to your organization\r\n # Navigate to *Security* and then *Insights*\r\n\r\nh3. Expected Results\r\n- *Active users by product* table loads normally with the products you have access to.\r\n\r\nh3. Actual Results\r\n- *Active users by product* table fails to load if you do not have admin access into any of the products filtered.\r\n\r\nh3. Workaround\r\nSelect only the products in which you have site admin access to.",
+      "summary": "Insights fail to load when org admin is not a site admin"
+    }
+  },
+  {
+    "key": "ACCESS-1109",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-18T18:49:29.000+0000",
+      "description": "h3. Problem Statement\r\n\r\nFor security reasons, Admin API keys can be generated with a maximum expiration date of 1 year from the date of creation.\r\nh3. Suggested Solution\r\n\r\nIt'd be nice to allow users to extend this period or implement a feature to let the org admin know that a key is about to expire so that they make sure a new one is generated. This will avoid teams to keep monitoring and make sure to get a new Key every year so that it doesn't stop their external applications that are using it.",
+      "summary": "Ability to create API keys with over 1 year max lifetime"
+    }
+  },
+  {
+    "key": "ACCESS-1106",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-11T09:32:23.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCurrently, Atlassian Access does not allow for User Provisioning when a customer is using ADFS as IdP. Especially in the DACH region, there are many Enterprise customers that are considering moving to the Cloud, but are using ADFS, which makes it a blocker for them.\r\n\r\nMoving to a different provider that we do support, is not feasible for many customers in the short or medium term. Would it be possible to build a capability for Access to support User Provisioning via ADFS?\r\nh3. Expected Results\r\n\r\nBeing able to use User Provisioning with Atlassian Access and ADFS\r\nh3. Workaround\r\n\r\nThe current recommended workaround is to switch to a supported IdP, which is not feasible/a blocker for many Enterprise customers.\r\n\r\nOne of our customers has manually created a workaround by building a script that enables the user provisioning with Access, they would be happy to cooperate and share their script if desired.",
+      "summary": "Allow for User Provisioning via ADFS"
+    }
+  },
+  {
+    "key": "ACCESS-1105",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-10T19:00:12.000+0000",
+      "description": "At the moment, all site related [audit log|https://support.atlassian.com/security-and-access-policies/docs/track-organization-activities-from-the-audit-log/] entries do not explicitly denote which site was affected by that action.\r\n\r\nExample:\r\n- Remove someone from your site and check your audit logs, the message displayed will be \"Removed someone@somedomain.com from site\".\r\n\r\nThe suggestion is to include the site name as reference to that text: \"Removed someone@somedomain.com from the site mysite.atlassian.net\"",
+      "summary": "Specify site name in the audit log"
+    }
+  },
+  {
+    "key": "ACCESS-1104",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-08-11T20:07:10.000+0000",
+      "created": "2021-08-09T21:08:49.000+0000",
+      "description": "h3. Summary\r\nWith the [discovered products|https://support.atlassian.com/security-and-access-policies/docs/discover-products-your-users-administer/] feature, we are able to see products that our Managed Accounts have subscribed to, which allows us to understand how they are using their Atlassian Accounts.\r\n\r\nh3. Suggestion\r\nThough this is a cool feature, whenever a Managed Account's site is deactivated/deleted, it will keep shown under the discovered products, as well as a product that Managed Account has access to. \r\nThis suggestion address the need of removing deactivated/deleted sites from this view, once they are no longer needed to be shown.",
+      "summary": "Stop showing Managed Users' deactivated/deleted sites"
+    }
+  },
+  {
+    "key": "ACCESS-1103",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-09T09:47:36.000+0000",
+      "description": "Exporting managed accounts CSV does not provide details on Trello plan subscription by users. Trello has 3 subscription types:\r\n1) Free\r\n2) Business plan\r\n3) Enterprise\r\n\r\nIt will be helpful to provide this information in the export of accounts.",
+      "summary": "Trello plan details in managed accounts export"
+    }
+  },
+  {
+    "key": "ACCESS-1102",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T11:33:28.000+0000",
+      "description": "*Problem Statement*\r\n Current API integration with the McAfee MVision CASB does not include 'attachment scanning' for files uploaded into Confluence, in the exposed API actions. This is available for Jira. \r\n \r\n *Result*\r\n All files uploaded into Confluence are not scanned by the CASB for threats or for sensitive data types (DLP). This means that no alerts can be generated or actioned and therefore there is no visibility of this action. \r\n \r\n *Feature Request*\r\n Please can Atlassian collaborate with McAfee as a matter of urgency, to provide 'attachment scanning' capability within Confluence in a similar/consistent way to the current implementation within Jira.",
+      "summary": "Provide 'attachment scanning' capability within Confluence"
+    }
+  },
+  {
+    "key": "ACCESS-1101",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-03T05:53:01.000+0000",
+      "description": "h3. Problem\r\n\r\nCurrently, the\u00a0[Get user in an organization REST API|https://developer.atlassian.com/cloud/admin/organization/rest/api-group-orgs/#api-orgs-orgid-users-get] returns a response with only 50 results with the {{cursor}} query parameter to set the starting point for the page of results to return.\r\nh3. Suggestion\r\n\r\nIntroduce more options for [pagination|https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#pagination] so that the API response can return more results.\r\nh3. Why is this important?\r\n\r\nIn an organization with close to 30,000 users, the admin would have to go through 600 iterations in order to fetch users. Requesting 600 pages of 50 results is more work than requesting 60 pages of 500 results.",
+      "summary": "Increase the number of results returned in the Get users in Organizations REST API"
+    }
+  },
+  {
+    "key": "ACCESS-1100",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-08-02T12:58:09.000+0000",
+      "description": "h3. Issue Summary\r\nExporting your organization managed accounts fails to generate a CSV file to download via email.\r\n\r\nh3. Steps to Reproduce\r\nThis bug is only reproducible under the below circumstance:\r\n # *Have a high amount of managed accounts with NO last active date* (never used any Atlassian Cloud product) - this is reproducible with more than 2800 managed accounts in this circumstance.\r\n # Try [exporting managed accounts|https://support.atlassian.com/organization-administration/docs/export-managed-accounts/]\r\n\r\nh3. Expected Results\r\n# Email arrives in your email inbox with the link to download the CSV file.\r\n\r\nh3. Actual Results\r\n# Email with download link never arrives.\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Exporting managed accounts email never arrives"
+    }
+  },
+  {
+    "key": "ACCESS-1099",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-27T00:30:40.000+0000",
+      "description": "h3. Issue Summary\r\nUnable to search for managed account with multibyte characters like \"\u7530\u4e2d\u592a\u90ce\"\r\n\r\n\r\nh3. Steps to Reproduce\r\n # Create a managed user with the name \"\u7530\u4e2d\u592a\u90ce\".\r\n # Search for the user with \"\u7530\u4e2d\u592a\u90ce\" in the Managed account section.\r\n #* https://admin.atlassian.com/o/<organization ID>/members?filter=%E7%94%B0%E4%B8%AD%E5%A4%AA%E9%83%8E\r\n\r\nh3. Expected Results\r\nThe search will display the user \"\u7530\u4e2d\u592a\u90ce\".\r\n\r\nh3. Actual Results\r\nNo result was displayed\r\n !image-2021-07-27-09-29-52-445.png|thumbnail! \r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Unable to search for managed account with multibyte characters"
+    }
+  },
+  {
+    "key": "ACCESS-1098",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-26T20:59:45.000+0000",
+      "description": "h3. Problem Definition\r\nProvide more details about the current policy being enforced to the managed account at their profile (https://admin.atlassian.com/ > Org > Directory > Managed accounts > user profile). Currently, it displays if 2FA is enabled for the account or not and give the option to see all policies clicking at the *view authentication policies* button:\r\n!current.png|thumbnail!\r\n\r\nWhen clicking at the *view authentication policies* button the admin is taken to the Authentication Policies page, clueless what is the policy that user belongs to:\r\n!button.png|thumbnail!\r\n\r\nIt might be easy to search for accounts with a low user/policy count but might be toilsome for bigger companies.\r\n\r\nh3. Suggested Solutions\r\nImplement a feature to show what is the policy being applied to the account, what is being enforced to that policy (2FA/SAML), and provide the option to update that from the user profile rather than the policy page.\r\n\r\n",
+      "summary": "Enhance Authentication Policy info in the managed account profile."
+    }
+  },
+  {
+    "key": "ACCESS-1097",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-26T14:48:24.000+0000",
+      "description": "Some custom IDPs require a Certificate from Atlassian for https://auth.atlassian.com for SSO settings.\r\n\r\nThis is needed so that the IDP can trust SP (Atlassian Cloud)\r\n\r\nHowever since Atlassian does not encrypt the SAML requests, we do not have a certificate to provide for the IDPs for such scenarios.\r\n\r\nIt would be nice if we can share a certificate (base64 format) to the customers so they can use it on IDP end for SAML integration\r\n\r\n",
+      "summary": "Provide a certificate for customer IDP from Atlassian"
+    }
+  },
+  {
+    "key": "ACCESS-1096",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-20T14:47:34.000+0000",
+      "created": "2021-07-20T13:11:27.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAtlassian Org Admin Audit Log 'Actor' and 'Activity' columns contain links to the user details page, those links are all broken because they point to .../users/... instead of .../members/...\r\nh3. Steps to Reproduce\r\n\r\nBrowse to Org Admin Audit log and follow links to one of the user details pages from either 'Actor' or 'Activity' columns.\r\nh3. Expected Results\r\n\r\nThe user details page is displayed.\r\nh3. Actual Results\r\n\r\nThe page fails to load and Error is displayed with 400 bad request:\r\n{noformat}\r\n{\"key\":\"badRequest\",\"context\":{\"message\":\"Org is not vortex enabled.\"}}\r\n{noformat}\r\nh3. Workaround\r\n\r\nManually replace .../users/... with.../members/... in the URL and refresh.",
+      "summary": "Link to user profile broken in Audit logs"
+    }
+  },
+  {
+    "key": "ACCESS-1094",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-09-08T21:46:05.000+0000",
+      "created": "2021-05-24T01:44:38.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAtlassian Organisation has Authentication policies configured that show 2FA (two-step verification) disabled for all accounts.\r\nIf you go to \"Managed Accounts\" and filter by \"Two-step verification\" -> \"Enabled, you still see the output of many accounts.\r\nIn general, SSO cannot work with a 2FA that is configured via Atlassian Organisation.\r\n\r\n Accounts status\r\n !Screen Shot 2021-05-24 at 11.34.16 am.png|thumbnail! \r\n Authentication policies:\r\n !Screen Shot 2021-05-24 at 11.36.00 am.png|thumbnail!\r\nh3. Steps to Reproduce\r\n # Enable SAML SSO for all accounts\r\n # Make sure Authentication policies show 2FA -> disabled\r\n # Go to managed users and filter by 2FA -> disabled\r\n\r\nh3. Expected Results\r\n\r\nThere shouldn't be any accounts shown in the filtered list\r\nh3. Actual Results\r\n\r\nThere are a lot of accounts shown\r\nh3. Workaround\r\n\r\nThere is no workaround",
+      "summary": "Not correct displaying of a 2FA status for a managed account "
+    }
+  },
+  {
+    "key": "ACCESS-1093",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-19T13:03:08.000+0000",
+      "description": "h3. Problem Definition\r\nThe default sync interval of 4hrs is not configurable and for some customers - it is not frequent enough or is too frequent\r\n\r\nh3. Suggested Solution\r\nAllow customers to define a specific sync interval for G Suite configurations\r\n\r\nh3. Why this is important\r\nAdmins have specific requirements in regards to provisioning/de-provisioning of their users\r\n \r\nh3. Workaround \r\nAfter making a change in Google, immediately navigate to your Atlassian organization G Suite integration configuration page and click \"Sync now\" to trigger a sync on demand.",
+      "summary": "Custom G Suite sync interval"
+    }
+  },
+  {
+    "key": "ACCESS-1089",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-14T12:23:36.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe URL for \"Learn more about account deactivation\" sent by Atlassian Access to users with deactivated accounts gives a 404 error.[https://confluence.atlassian.com/cloud/delete-your-atlassian-account-961259508.html]\r\n\r\nSteps to Reproduce\r\n\r\nN/A\r\nh3. Expected Results\r\n\r\nThe URL should be valid.\r\n\r\nhttps://atlassian.slack.com/archives/CFG88HUQH/p1625133605214400\r\nh3. Actual Results\r\n\r\nThe URL provides a 404 error.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "The URL for \"Learn more about account deactivation\" sent by Atlassian Access to users with deactivated accounts points to a dead URL"
+    }
+  },
+  {
+    "key": "ACCESS-1088",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18910",
+        "id": "18910",
+        "key": "ACCESS",
+        "name": "Atlassian Access",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-13T09:14:40.000+0000",
+      "description": "Authentication policies allows admins to enforce security features to a subset or all of their managed accounts. At the moment when the policy is updated, the enforcement is applied on the next login of the policy members.\r\n\r\n !warning.png|thumbnail! \r\n\r\n*Suggestion* : Allow the policy to be enforced immediately to the members of the authentication policy. \r\n- When enabling SSO, have an option to logout the members of the policy immediately.\r\n- When changing password policy, have an option to ask for a password reset immediately. \r\n",
+      "summary": "Enforce authentication policy changes immediately to members"
+    }
+  }
+]

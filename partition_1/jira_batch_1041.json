@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "JRACLOUD-77058",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-21T05:01:28.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCreating or updating a high number of issues via the {{/rest/api/3/issue/bulk}} endpoint leads to 404 errors.\r\nh3. Steps to Reproduce\r\n # Use the {{/rest/api/3/issue/bulk}} endpoint to create/update a significant amount of issues\r\n\r\nh3. Expected Results\r\n\r\nThe request completes and a {{2XX}} status code is returned.\r\nh3. Actual Results\r\n\r\nThe request fails with a {{404}} status code.\r\nh3. Notes\r\n\r\nWhile it is true that the request returns a {{{}404{}}}, all the issues will be correctly created.\r\n\r\nThis has been reproduced when creating/updating over 200 issues, but depending on the Jira configuration it could occur with a smaller payload.\r\n\r\nThis problem occurs for the following reason:\r\n - the {{/rest/api/3/issue/bulk}} request is being processed in a synchronous way\r\n - when the request payload contains a high number of issues to be created (e.g. 200), this leads to a {{404}} http status code being returned\r\n - even if the app requesting the endpoint receives a {{{}404{}}}, all issues are created by Jira\r\n\r\nWhen using the second version of the api /rest/api/2/issue/bulk the error returns as HTTP 504.\r\nh3. Workaround\r\n\r\nReducing the number of issues updated or created will prevent this issue from occurring.",
+      "summary": "Creating or updating a high number of issues via the /rest/api/3/issue/bulk endpoint leads to 404 errors"
+    }
+  },
+  {
+    "key": "JRACLOUD-77057",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-21T01:36:55.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUnable to set user with special symbols in user identifier in a custom field of type User Picker (multiple users)\r\nh3. Steps to Reproduce\r\n # User has special symbols in user identifier\r\n # Setting the value to this user in a custom field of type User Picker (multiple users) fails with error:\u00a0\r\n _\"Pick another user as the selected user doesn\u00e2\u0080\u0099t exist.\"_\r\n # The operation works in the old issue view but fails in the new view\r\n # Also, the same operation might fail via REST API too\r\n\r\n{\"errorMessages\":[],\"errors\":\\{\"customfield_xxx\":\"Pick another user as the selected user doesn\u00e2\u0080\u0099t exist.\"}}\r\nh3. Expected Results\r\n\r\nOperation to work\r\nh3. Actual Results\r\n\r\nThe operation fails with error: \"Pick another user as the selected user doesn\u00e2\u0080\u0099t exist.\"\r\nh3. Workaround\r\n\r\nUse the old issue view",
+      "summary": "Unable to select some users in a custom field of type user picker"
+    }
+  },
+  {
+    "key": "JRACLOUD-77056",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T23:05:47.000+0000",
+      "description": "As of right now, the only way to pull the Org level audit logs located at *admin.atlassian.com > Security > Audit log* to another location is to use the organization REST API which is required to use the Org level API key for authentication and authorization.\r\n\r\n(i) The problem with it is that the Org level API key also grants full organization-level access where you can update organization settings and manage user accounts.\r\n\r\n(on) So, it would be beneficial to our customer if we can separate the permission to pull the Org level audit logs from any other Org level permissions and add the ability to grant read-only access to the logs using the API key.",
+      "summary": "Ability to pull Org level audit logs using read-only access API key"
+    }
+  },
+  {
+    "key": "JRACLOUD-77055",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T20:41:03.000+0000",
+      "description": "h3. Issue Summary\r\nThe last attachment will not load in Strip View when you have 7 or more attachments that required you to scroll to the right to see the rest of the attachments.\r\n\r\nh3. Steps to Reproduce\r\n# Add 7 or more attachments to the Issue\r\n# Scroll to the right to see the rest of the attachments\r\n# Check out the very last attachment\r\n\r\nh3. Expected Results\r\nAll attachments will load in thumbnail view and be able to view, download or delete.\r\n\r\nh3. Actual Results\r\nThe very last attachment will not load in thumbnail view which makes it unable to view, download or delete.\r\n\r\nh3. Workaround\r\n# Switch to list view \r\n# Shrink the browser window size to about half from right to left vertically.",
+      "summary": "The last attachment will not load in Strip View"
+    }
+  },
+  {
+    "key": "JRACLOUD-77054",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T19:21:46.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nSome organizations put detailed descriptions for work logs and the ability to resize and expand the description box will make it easier to see all the information entered.\r\n\r\nh3. Suggested Solution\r\n\r\nProvide ability to resize description box for work logs",
+      "summary": "Allow work log description box to be resized"
+    }
+  },
+  {
+    "key": "JRACLOUD-77053",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-10T07:19:14.000+0000",
+      "created": "2021-07-20T17:46:48.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIf you set *the time tracking time display format and the default unit to hours*. The work log entry screen returns a 400 error (bad request). When you enter a value in hours that contains a minute fraction, i.e: 0.66h which results in 39,6 minutes.\r\n\r\n\r\nh3. Steps to Reproduce\r\n1 - Configure your time tracking settings as the following\r\n !screenshot-1.png|thumbnail! \r\n2 -  Enter an hour fraction value in *time spent*, that does not result in a full minute when converting such as 0,46h which is 27,6 minutes\r\n !screenshot-2.png|thumbnail! \r\n3 - Press tab for that Jira calculates the time remaining\r\n\r\n\r\nh3. Expected Results \r\nJira is able to save the work log entry.\r\n\r\nh3. Actual Results\r\nA 400 happens in the HTTP call and a generic error is displayed in the UI\r\n !screenshot-3.png|thumbnail! \r\nThe failing call responds with:\r\n{code}\r\n{\"errorMessages\":[\"Worklog must not be null.\"],\"errors\":{\"newEstimate\":\"Invalid new estimate entered.\",\"timeLogged\":\"Invalid time duration entered.\"}}\r\n{code}\r\n\r\nh3. Workaround\r\nChange the time tracking display format to *Pretty*. \r\nOr, always enter a time fraction that ends up in a round minute, like 0,65h (39 minutes).\r\n",
+      "summary": "Work log entry screen returns 400 when using minute fractions"
+    }
+  },
+  {
+    "key": "JRACLOUD-77052",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T16:55:39.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nOpening an issue/ticket from Dashboard opens the issue with the add-ons panels automatically\r\nh3. Steps to Reproduce\r\n # Add some add-ons to your instance\r\n # Open an issue from the Your Work Dashboard\r\nVideo: https://share.getcloudapp.com/YEuOrORo\r\n\r\nh3. Expected Results\r\n\r\nThe issue should open with the add-ons panel to minimize from the issue view\r\nh3. Actual Results\r\n\r\nThe issue opens with all add-ons panels open from the issue view screen:\r\n\r\n !screenshot-1.png|thumbnail! \r\nh3. Workaround\r\n\r\nManually hide them from the issue view:\r\n !screenshot-2.png|thumbnail! ",
+      "summary": "Opening an issue/ticket from Dashboard opens the issue with the add-ons panels"
+    }
+  },
+  {
+    "key": "JRACLOUD-77050",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T14:10:35.000+0000",
+      "description": "h3. Suggestion -\u00a0\r\n\r\nCSV exported format of audit log has a section\u00a0Operation details which is at times confusing for the users when it comes to Project role change information. Since the content at times says\u00a0\u00a0*[users] changed to xyz* and sometimes looks like\u00a0\u00a0*[Users] changed from X TO Y.* Even if the role has some existing members, the first syntax at times shows up - (\u00a0*[users] changed to xyz*) which causes AUDIT UI more credible as compared to the CSV exported data. Since it is not always reproducible, a constant syntax would help a lot.\r\n\r\n\u00a0",
+      "summary": "Audit log - Project role change tracking information"
+    }
+  },
+  {
+    "key": "JRACLOUD-77049",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T13:33:56.000+0000",
+      "description": "h3. Problem Definition\r\nIt is not possible to create, edit, delete, enable or disable automation rules using a REST API.\r\n\r\nIn some cases, for example when creating a new staging instance from production data, it is desired to have some or all automation rules disabled or edited at once, in an automated way.\r\n\r\nh3. Suggested Solution\r\nImplement a public REST API to allow the following operations:\r\n* Create rules\r\n* Edit rules\r\n* Enable/disable rules\r\n* Delete rules\r\n\r\nh3. Other\r\nThere's already an open suggestion in Code Barrel's old Jira instance: https://codebarrel.atlassian.net/browse/AUT-999",
+      "summary": "Official REST API to manage rules"
+    }
+  },
+  {
+    "key": "JRACLOUD-77048",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T12:13:28.000+0000",
+      "description": "h3. Summary\r\nCurrently when we start a sprint, we can populate any start and end dates. We can also edit those dates anytime. We need a way we can add/store those dates somewhere in the board or project or admin panel so that user can only select those dates as start and end dates of the sprint.\r\n\r\nh3. Description\r\nBasically, whenever we start a sprint in a scrum board, we have to enter sprint start and end dates. We would like to have an ability to store those dates and use them while starting a sprint. Currently, a user can select his own sprint start and end dates via calendar. These dates can also be updated anytime. We would like to restrict this feature and allow user to select sprint schedules as planned by the enterprise. This will allow users to select sprint start and end dates from the list of dates defined by the enterprise only and hence remove the random selection of dates.\r\n\r\n",
+      "summary": "Add the ability of restricting the possible Start and End Dates of sprints in a board"
+    }
+  },
+  {
+    "key": "JRACLOUD-77047",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T07:48:56.000+0000",
+      "description": "The documentation refers to having to host your own custom priority icons: [https://confluence.atlassian.com/jirakb/how-to-upload-custom-priority-icons-in-jira-788961156.html]\u00a0while all other icons (issue type) / avatars are stored on the Cloud site.\r\n\r\nAs an administrator I want Jira to host my custom priority icons.\u00a0",
+      "summary": "Allow upload of custom priority icons"
+    }
+  },
+  {
+    "key": "JRACLOUD-77046",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-20T02:13:15.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThere isn't an *account ID*\u00a0for the log work(author) field to be accessed via\u00a0Jira Cloud for Sheets. The only fields available at the moment with accounts ids are:\r\n * Approvers.*accountId*,\r\n * Reporter.*accountId*,\r\n * Assignee.*accountId* and\r\n * Request participants.*accountId*\r\n\r\nIt would be useful to have the Log Work.authorDisplayName.*accountId*\u00a0as part of the fields available.\r\nh3. Steps to Reproduce\r\n # When creating a search from *Jira Cloud for Sheets* and setting the fields we currently don't have a field to return the\u00a0*Log Work.authorDisplayName.accountId*\r\n\r\nh3. Expected Results\r\n\r\nHave the Log Work.authorDisplayName.*accountId*\u00a0as part of the fields available.\r\nh3. Actual Results\r\n\r\nAt the moment,\u00a0the Log Work.authorDisplayName.*accountId*\u00a0is not an available field when searching the field on *Jira Cloud for Sheets*.\r\nh3. Workaround\r\n\r\nAs the field is not available, there isn't a known workaround at the moment.\u00a0",
+      "summary": "Have the field \"Log Work.authorDisplayName.accountId\" available to be searched by Jira Cloud for Sheets"
+    }
+  },
+  {
+    "key": "JRACLOUD-77045",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-19T20:35:06.000+0000",
+      "description": "h3. Problem Definition\r\nMany users have setup automation rules in order to copy an issue from one project to another.  Among these rules are having comments on the source issue copied to the destination issue.  While this works, should someone edit an existing comment on the source issue, automation currently does not have the ability to perform an action to edit the other existing comment on the destination issue.\r\n\r\nh3. Suggested Solution\r\nIt would be helpful if Automation had an action which could edit an existing comment\r\n\r\nh3. Why this is important\r\nThis is an action that would be helpful to leverage within automation.\r\n\r\nh3. Workaround \r\nNone at this time.",
+      "summary": "I want to be able to setup an Automation action that can edit an existing comment"
+    }
+  },
+  {
+    "key": "JRACLOUD-77044",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-19T13:48:54.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nfield != and NOT field = are not providing the same results.\r\n\r\nAs per\u00a0[Advanced search reference - JQL operators|https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-operators/], typing field != value should be the same as typing NOT field = value.\r\nh3. Steps to Reproduce\r\n # Create a test project.\r\n # Create two issues in a project, update one issue with a value for Story Points(3.0).\r\n # Create a filter for the issues in the test project with the below JQL clause.\r\n{noformat}\r\n\"Story Points[Number]\" = 3.0\r\n{noformat}\r\n # Execute the JQL with \"!=\" and record the results\r\n{noformat}\r\nfilter != StoryPoints\r\n{noformat}\r\n # Execute the JQL with \"NOT\" and record the results\r\n{noformat}\r\nNOT filter = StoryPoints\r\n{noformat}\r\n\r\nh3. Expected Results\r\n\r\nBoth the JQL queries should return the same results.\r\nh3. Actual Results\r\n\r\nThe JQL with \"!=\" will return the right results. The JQL with \"NOT\" does not work for fields that are empty, in this case, Story Points.\r\n\r\nh3. Workaround\r\n\r\nUse != in the JQL to filter the issues correctly.",
+      "summary": "!= and NOT EQUALS are not providing the same results"
+    }
+  },
+  {
+    "key": "JRACLOUD-77043",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-19T13:32:36.000+0000",
+      "description": "h3. Issue Summary\r\nJira instances registered with .jira.com render smart links of JQL search in Chinese.\r\nContext: old Jira instances used to be registered with .jira.com instead of .atlassian.net as it is now. \r\n\r\nh3. Steps to Reproduce\r\n # Find an instance with .jira.com\r\n # Paste a URL of a JQL search in a comment field. E.g.: https://<instancename>.jira.com/issues/?jql=labels%20%3D%20%22test%22\r\n\r\nh3. Expected Results\r\nSmart link should either not render as it occurs in .atlassian.net instances or should render correctly.\r\n\r\nh3. Actual Results\r\nSmart link is rendered in Chinese.\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Jira instances registered with .jira.com render smart links of JQL search in Chinese"
+    }
+  },
+  {
+    "key": "JRACLOUD-77042",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-19T08:05:14.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen the Assignee field and any other text field is configured in a transition, if the text field is configured for a validator/condition and this field is clicked on FIRST inside the transition screen, the Assignee field will not populate with the list of assignees.\r\nh3. Steps to Reproduce\r\n # Create a screen with the Assignee field and any other text field\r\n # Set this screen to appear on a transition\r\n # Configure a field required validator for the text field\r\n # Transition an issue into the destination status\r\n # When the transition screen appears, click on the text field FIRST and then click on the Assignee field\r\n # The Assignee field will not list any assignees\r\n\r\nh3. Expected Results\r\n\r\nThe Assignee field should list the assignees anytime\r\nh3. Actual Results\r\n\r\nRefer to the attached .mov file\r\nh3. Workaround\r\n * Click on the Assignee field FIRST\r\n * Start typing in the Assignee field to search for user\r\n * Don't configure a validator/condition",
+      "summary": "Configuring the Assignee field in a transition screen won't list the assignees if a text field with a validator/condition is clicked first"
+    }
+  },
+  {
+    "key": "JRACLOUD-77041",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-19T05:58:16.000+0000",
+      "description": "When viewing an issue that has a long thread of comments or entries of any kind it, and scrolling down, the issue summary and the issue key and hierarchy information also goes away. It would be useful to to be able to set this part of the issue as a kind of \"header\" which is fixed and stays visible even when scrolling down, in this way it would always be accessible and it would be easier to navigate back and forth through the issue hierarchy as well as keeping the context of which issue we are at the moment.",
+      "summary": "Allow setting the summary of issue as a fixed part of the issue view"
+    }
+  },
+  {
+    "key": "JRACLOUD-77040",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-19T05:00:16.000+0000",
+      "description": "Currently single line text fields automatically recognize when a URL is entered (when using the the format <something><dot><something>). The request is to allow turning this behavior off, as it can lead to unintended URLs being detected due to user data intended for other purposes like versioning, which results in a URL that leads nowhere.",
+      "summary": "Allow disabling URLs in text custom fields"
+    }
+  },
+  {
+    "key": "JRACLOUD-77039",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-18T03:47:47.000+0000",
+      "description": "The import buttons on Jira Cloud's Site Restore screen should confirm with the user before proceeding.\r\n\r\nCurrently, when you select an import file the import process just starts.\u00a0 The problem is, it is REALLY REALLY easy to select the wrong import file.\r\n\r\nI ran into this problem today and lost several hours of work, because I didn't realize I selected the wrong file.\u00a0 I imported an older backup and didn't realize until it was done.\u00a0 This was a small site.\u00a0 A mistake like this made on a large site could cost many many more hours. !image-2021-07-17-23-47-42-477.png!",
+      "summary": "The import buttons on Jira Cloud's Site Restore screen should confirm with the user before proceeding"
+    }
+  },
+  {
+    "key": "JRACLOUD-77038",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-16T21:32:03.000+0000",
+      "description": "When the summary contains formatted code and any text in the summary is updated, the columns in the History view will overlap. This persists regardless of window size.\r\n\r\n",
+      "summary": "Columns in ticket History view are overlapping"
+    }
+  },
+  {
+    "key": "JRACLOUD-77037",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-16T21:24:42.000+0000",
+      "description": "The cards are too tiny when boards have many lanes, this has been an issue for the customer when the boards have many issues. ",
+      "summary": "Ability to scroll in the Boards when they have many issues"
+    }
+  },
+  {
+    "key": "JRACLOUD-77035",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-16T04:26:31.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nPrint Issue function should be able to print all the attachments in the issue\r\nh3. Steps to Reproduce\r\n # Add some screenshots or attachments in the Description field.\r\n # Add some attachments in the comments section.\r\n # Drag and drop some attachments directly on to the issue(_Not part of description and comments_)\r\n # Click on the three dots(\u00a0*...*\u00a0) and click on \"Print\".\r\n\r\nh3. Expected Results\r\n\r\nWe expect all the attachments on the tickets to be printed.\r\nh3. Actual Results\r\n\r\nOnly the attachments on the *Description* and *comment* section are printed in the output file but does not show the attachments added to the ticket directly.\r\nh3. Workaround\r\n\r\nCurrently there is no global workaround for it but if the issue has very less attachments, one could try using the browser print option to be able to print the ticket.",
+      "summary": "Print Issue function should be able to print all the attachments in the issue"
+    }
+  },
+  {
+    "key": "JRACLOUD-77034",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-16T01:26:53.000+0000",
+      "description": "h3. Issue Summary\r\nFor some issues, when attempting to download attachments one by one, the downloaded file name is renamed to \"Original:\" rather than retaining the original attachment name. \r\n\r\nh3. Steps to Reproduce\r\n# go to an old issue and click to download an attachment \r\n\r\nh3. Expected Results\r\n* Attachment should retain its actual name\r\n* Attachment name should be visible on the thumbnail\r\n\r\nh3. Actual Results\r\n* Attachment is renamed \"Original\"\r\n* Attachment name is not visible on thumbnail \r\n\r\nh3. Workaround\r\n* Using the option \"Download all\" retains the original name of all attachments under that issue.\r\n* Using the \"Switch to list view\" will show the attachment name \r\n",
+      "summary": "Downloaded attachment name is \"Original\" instead of actual name"
+    }
+  },
+  {
+    "key": "JRACLOUD-77033",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-15T16:51:10.000+0000",
+      "description": "In Automation Rule, when there is a value selected in the project picker field, the field doesn't look obvious anymore that it is a searchable field. It could easily confuse users if they do not know that they can start typing to find the project which is not listed in the drop-down.\r\n\r\nThe attached video would explain more.",
+      "summary": "Automation rule Project Picker field is not obvious as a searchable field"
+    }
+  },
+  {
+    "key": "JRACLOUD-77031",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-15T13:45:46.000+0000",
+      "description": "Taken from [https://confluence.atlassian.com/jirakb/how-jira-mail-handler-deals-with-unknown-users-in-creating-issues-777005521.html]\r\n\r\n\u00a0\r\n\r\nI would like to suggest to change this behaviour to either send email to project owner or to the unknown customer telling this has happened.\r\n\r\n\u00a0",
+      "summary": "Messages sent by unknown customers will be silently ignored"
+    }
+  },
+  {
+    "key": "JRACLOUD-77030",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-14T19:14:32.000+0000",
+      "description": "Our company has thousands of restricted pages. I need to unlock the permissions on a page that parent link broke and unfortunately this is not an easy task. We don't have the title of the page, but know the creator. Would be helpful to sort by date, creator, User/Group in the Permission>Restricted Pages report.\u00a0\u00a0",
+      "summary": " Restricted Pages sort or search feature"
+    }
+  },
+  {
+    "key": "JRACLOUD-77029",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-14T15:52:49.000+0000",
+      "description": "h3. Issue Summary\r\nWhen Epic is moved to Completed status (Example \u201cDone\u201d), the Epic information in the (Team-managed) - Sprint Burndown Chart under the column named \u201cEpic\u201d is disappeared.\r\n\r\nh3. Steps to Reproduce\r\n# Create Epic and child tasks.\r\n# Create Sprint and add child tasks above to it.\r\n# Complete the tasks and complete the Sprint.\r\n# Go to Spring Burndown Chart for that Sprint that was completed.\r\n# Scroll down to \"Completed\" issues, you will see the Epic information listed under the Epic column.\r\n# Now, go ahead and complete the Epic.\r\n# Refresh the report.\r\n# You will see the Epic information is no longer listed under the Epic column.\r\n[^Sprint Burndown Chart Issue.png]\r\n \r\n(i) The same behavior was also observed on the advanced search view where Epic Link is being added to the column. Epic information will be empty if the Epic is completed.\r\n[^Advanced Search Epic Link issue.png]\r\n\r\nh3. Expected Results\r\nEpic information will still be visible on the report even after the Epic is completed.\r\n\r\nh3. Actual Results\r\nEpic infirmation disappeared on the report when the Epic is completed.\r\n\r\nh3. Workaround\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Completed Epic information disappear on (Team-managed) Sprint Burndown Chart"
+    }
+  },
+  {
+    "key": "JRACLOUD-77028",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-14T15:39:20.000+0000",
+      "description": "The client would like to have the option to create a field tab in the issue view and only display the attachments when clicking the attachments field tab and not just have the attachments appear on all the screens. ",
+      "summary": "Allow the attachment system field to be used in a field tab"
+    }
+  },
+  {
+    "key": "JRACLOUD-77027",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-14T13:36:13.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nClicking on Comment option for an issue in \"Filter result\" gadget does nothing however when if we open the link in new tab, it will let you comment on the issue.\r\n\r\n\u00a0\r\nh3. Steps to Reproduce\r\n # Create a Filter result type of gadget in a dashboard\r\n # Hover over any issue and you will see three dots that will show a menu with COMMENT option in it.\r\n # Click on it and nothing will happen. Use Ctrl+click or command+click and a new tab will open which will let you comment on the issue.\r\n\r\nh3. Expected Results\r\n\r\nSimply clicking on comment should let you comment on the issue.\r\nh3. Actual Results\r\n\r\nYou can't comment if you click on comment option.",
+      "summary": "Clicking on Comment option for an issue in \"Filter result\" gadget does nothing"
+    }
+  },
+  {
+    "key": "JRACLOUD-77024",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-13T18:15:39.000+0000",
+      "description": "When a new sprint is created I always go through and collapse all the items on the sprint board and then open just the one I would like to see the tasks for. It would be great to have a collapse all button to do it more easily.",
+      "summary": "Button to collapse all items on sprint board"
+    }
+  },
+  {
+    "key": "JRACLOUD-77023",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-13T14:41:38.000+0000",
+      "description": "h3. Issue Summary\r\nJira is not switching Boards as expected when there are multiple boards in a project.\r\nh3. Steps to Reproduce\r\n# Create multiple boards in a project. For example:\r\n** Board to list all the issues of type Task\r\n** Board to list Story issues\r\n** Board to list sub-tasks\r\n# Open issues from each board in a separate tab.\r\n\r\nh3. Expected Results\r\nWhen a Story issue is opened in a new tab,  we should see the Broad created for Story issue type. Similarly, for the other issues, we should see the respective boards.\r\nh3. Actual Results\r\n\r\nWhen we access issues from any of the Boards and open them in the new tab, we do not see the right Board in the side navigation.\r\n\r\n\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Jira is not switching Boards as expected when there are multiple boards in a project."
+    }
+  },
+  {
+    "key": "JRACLOUD-77022",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-07-21T01:12:37.000+0000",
+      "created": "2021-07-13T13:51:10.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nStory points and Story points estimate not working when the mobile phone language is not English (iOS and Android).\r\nh3. Steps to Reproduce\r\n # Change the language of your phone (tested with Portuguese and German).\r\n # Open the Jira app and on a JSW ticket, try to edit the Story points and Story points estimate.\r\n\r\nh3. Expected Results\r\n\r\nIt\u2019s possible to edit and save the changes.\r\nh3. Actual Results\r\n\r\nOn Android, the button \u201cSave\u201d is greyed out.\r\n\r\nOn iOS, it shows com.atlassian.jira.api 400.\r\nh3. Workaround\r\n\r\nChange the phone language to English.",
+      "summary": "Story points and Story points estimate not working when the mobile phone language is not English"
+    }
+  },
+  {
+    "key": "JRACLOUD-77021",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-13T13:45:42.000+0000",
+      "description": "our customers are really interested in have the permission \"Create classic business projects\" included in instances that have JWM and JSW. \r\n Currently, this feature is only available if the customer has only JWM in their instance:\r\n [Create a business project as a user|https://support.atlassian.com/jira-work-management/docs/create-a-business-project-as-a-user/]",
+      "summary": "Include the JWM global permission \"Create classic business projects\" to Jira Software"
+    }
+  },
+  {
+    "key": "JRACLOUD-77019",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T22:18:06.000+0000",
+      "description": "h3. Issue Summary\r\nUsing the validator 'Field required' to validate that there are comments in an issue acts as the 'Field has been modified' validator and won't allow the transition even if there are comments in the issue unless a transition screen is added and a comment is added during the transition.\r\n\r\nh3. Steps to Reproduce\r\n # Add a validator of the type *Field required* to a workflow transition and use it to validate comments\r\n # Attempt the transition on an issue that already has been commented\r\n\r\nh3. Expected Results\r\nIf there are comments in the issue the transition should be performed.\r\n\r\nh3. Actual Results\r\nThe transition is not performed and the validator error message is displayed.\r\n\r\nh3. Workaround\r\nThere is no known workaround to obtain the expected behavior; however, a transition screen can be added to the issue to allow the user to input a comment during the transition.",
+      "summary": "Using the validator 'Field required' to validate that there are comments in an issue acts as the 'Field has been modified' validator"
+    }
+  },
+  {
+    "key": "JRACLOUD-77018",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T21:23:56.000+0000",
+      "description": "Availability to fully delete Jira Notifications from the \"Bell icon\".\r\n\r\n Notifications used to be a drop-down list that would change to read once clicked, but stay until you Xed them, now there is no option to fully remove them.\r\n\r\n- Provide an optional feature where you can individually remove notifications you do not want or remove all of them.",
+      "summary": "Availability to fully delete Jira Notifications from the \"Bell icon\""
+    }
+  },
+  {
+    "key": "JRACLOUD-77017",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T17:38:28.000+0000",
+      "description": "h3. *Current behavior*\r\n\r\nWhen using Jira Cloud for Mac, on the left sidebar it shows Starred projects and Recent projects.\r\n\r\nAlso, when accessing a board linked to a project, if we close the app and open it again, it will show the last visited board, but this is not true if it's a personal board.\r\nh3. *Suggestion*\r\n\r\nWhen starring a personal board, show it on the left sidebar as well so it will be easier to access or also, show \"Recent boards\" as an option.",
+      "summary": "Easy access for personal boards on Jira Cloud for Mac"
+    }
+  },
+  {
+    "key": "JRACLOUD-77016",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T13:51:17.000+0000",
+      "description": "Jira Portfolio supports the creation of parent / child relationship between issues that is not the same as sub-tasks.\r\n\r\nWe should add the ability to traverse these to the Branch component \"Type of related issues\" field. \r\n\r\nTracked here - https://codebarrel.atlassian.net/browse/AUT-1840",
+      "summary": "Add Branch traversal types for Jira Portfolio's parent / child relationships"
+    }
+  },
+  {
+    "key": "JRACLOUD-77015",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T13:26:07.000+0000",
+      "description": "h3. Summary\r\n\r\nAbility to a user without \"*edit issue permission*\" to see *empty fields*. Even though the user doesn't have permission to edit a field, I think it can be just as important to see the omission of a value.",
+      "summary": "Ability to user without \"edit issue permission\" to see empty fields"
+    }
+  },
+  {
+    "key": "JRACLOUD-77014",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T11:55:34.000+0000",
+      "description": "At present there is no way to filter the issues created via incoming Mail handlers. This is because there are no fields associated with issues that differentiate them as created via mail handler OR through the portal. \r\n\r\nCustomer's request:  It will be helpful to be able to fetch this information using JQL *OR* it would be great if the information that the issue was created via an incoming Mail handler, is seen in the history of the ticket.",
+      "summary": "Ability to filter issues created via incoming Mail handlers using JQL"
+    }
+  },
+  {
+    "key": "JRACLOUD-77013",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T10:53:21.000+0000",
+      "description": "*Suggestion*\r\n\r\nIf an issue key contains subtasks and this issue key (e.g Story/task) is cloned including the subtasks then the new sub-task should have the link to the original issue key (sub-task).\r\n\r\nThe link is automatically created only for the Story/task issue key.",
+      "summary": "Cloned issue key should create link for sub-task issue type"
+    }
+  },
+  {
+    "key": "JRACLOUD-77012",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T10:12:58.000+0000",
+      "description": "h3. Problem Definition\r\nWhen adding an image attachment to a Jira issue, there are some use cases where it would be useful to know where the image was taken. This information can be stored in the image metadata (EXIF) but Jira isn't able to use this metadata.\r\n\r\nh3. Suggested Solution\r\nAllow Jira Cloud to read and extract EXIF metadata to custom fields. This way, the location metadata from the image file could be used to automatically populate a custom field.\r\n\r\nh3. Workaround\r\nManually record the information in custom fields.",
+      "summary": "Allow Jira to read and extract EXIF metadata from image attachment"
+    }
+  },
+  {
+    "key": "JRACLOUD-77011",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T08:12:18.000+0000",
+      "description": "Currently, when moving an issue from one project to another the issue key order is not retained on the destination project.\r\n\r\n*Suggestion:*\r\n\r\nWhen moving issues between projects retain the issue key order from the source project.\u00a0",
+      "summary": "Retain the IssueKey order when moving issues between projects"
+    }
+  },
+  {
+    "key": "JRACLOUD-77010",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-12T03:14:27.000+0000",
+      "description": "Our Jira issue URLs are long compared to competitor links. It would be great to have a way natively to share shorter versions of Jira issue links.\r\n\r\nExample: https://dabase.com/tips/cloud/2021/Addressing-an-issue/\r\n\r\n",
+      "summary": "Shorter, more concise Jira issue URLs for sharing"
+    }
+  },
+  {
+    "key": "JRACLOUD-77007",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-10T16:54:41.000+0000",
+      "description": "This issue is related to JRACLOUD-70555\u00a0- the new issue view.\r\n\r\nWhen creating an issue, the Description field in the popup uses the old Wiki editor. As such, certain features found only in the New Issue View don't work, such as using backticks to `callout text` or typing an issue key and getting a rich link with a description and status.\u00a0\u00a0\r\n\r\nThe only way to get these features is to go back into the issue after creating them, edit the description, and add the backticks and issue keys back in. This is tedious.\r\n\r\nThis same behavior is experienced when using a Comments field on a transition screen, where typically it's handy to be able to hot-link to an Issue Key or `call out` a variable name",
+      "summary": "Popups should use new Rich Text editor for Description and Comments"
+    }
+  },
+  {
+    "key": "JRACLOUD-77006",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-10-05T22:58:25.000+0000",
+      "created": "2021-07-09T18:06:20.000+0000",
+      "description": "h3. Issue Summary\r\nWeb request fails to be sent/received via Automation for Jira if payload contains line break and is generated from another Jira Cloud instance\r\n\r\nh3. Steps to Reproduce\r\n* Create a rule in a Jira Cloud site A that sends a web request with at least the body of the comment using the default A4J Webhook URL; e.g.:\r\n{code}\r\n{\r\n  \"issue\": \"{{issue.key}}\",\r\n  \"author\": \"{{issue.comments.last.author.displayName}}\",\r\n  \"body\": \"{{issue.comments.last.body}}\"\r\n}\r\n{code}\r\n* Create a rule in a Jira Cloud site B that receives the web request above with trigger as *When: Incoming Webhook* pointing to the respective URL \r\n* Add a branch to select which issue to add the comment to\r\n* The action of the rule above should be to add the comment. The important part is to make sure the body is added, but in the customer's case they also added the author as you can see below:\r\n{code}\r\n*{{webhookData.author}}*\r\n{{webhookData.body}}\r\n{code}\r\n* Add a comment to a Jira issue from the site A making sure the rule from site A is triggered and that the comment has at least one line break in it\r\n* Consequently, site B will receive the web request via webhook and try to process it, yet, because of the line break, the event is missed\r\n\r\nh3. Expected Results\r\nRule should be executed as usual and JSON should be adjusted properly in the back-end to preserve the data and have a valid format.\r\n\r\nh3. Actual Results\r\nJSON format becomes invalid in the back-end and rule is not even triggered\r\n\r\nh3. Workaround\r\nFrom the source site, in the rule that sends the web request, make sure to add the following in the body of the comment or field of same type:\r\n{code}\r\n.replace(\"\\n\",\" \\\\n\")}}\"\r\n{code}\r\n\r\nE.g.:\r\n*Before:*\r\n{code}\r\n{\r\n  \"issue\": \"{{issue.key}}\",\r\n  \"author\": \"{{issue.comments.last.author.displayName}}\",\r\n  \"body\": \"{{issue.comments.last.body}}\"\r\n}\r\n{code}\r\n\r\n*After:*\r\n{code}\r\n{\r\n  \"issue\": \"{{issue.key}}\",\r\n  \"author\": \"{{issue.comments.last.author.displayName}}\",\r\n  \"body\": \"{{issue.comments.last.body.replace(\"\\n\",\" \\\\n\")}}\"\r\n}\r\n{code}",
+      "summary": "Web request fails to be sent/received via Automation for Jira if payload contains line break and is generated from another instance"
+    }
+  },
+  {
+    "key": "JRACLOUD-77005",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T17:11:55.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIssue when searching for custom field (type people) if the field is added after Project and Issue Type are already filtered. The custom field is not returning results, The\u00a0*Browse users and groups*\u00a0permission is correctly granted.\r\nh3. Steps to Reproduce\r\n * Go to issue navigator (Basic search)\r\n * Select Project\r\n * Select Issue Type\r\n * Add additional custom field (More) - People type custom field\r\n * Search for a user (only groups are returned)\r\n\r\nh3. Expected Results\r\n\r\nThe custom field should show results to filter by user\r\nh3. Actual Results\r\n\r\nOnly groups returned\r\nh3. Workaround\r\n * Go to issue navigator (Basic search)\r\n * Select Project\r\n * Add additional custom field (More) - People type custom field\r\n * Search for a user\r\n * Select Issue Type\r\n\r\nAdding and filtering the field before filtering by issue type actually works.\r\n\r\nAdvanced search also works.",
+      "summary": "People type custom field filter only returns groups if added after issues are filtered by issue type"
+    }
+  },
+  {
+    "key": "JRACLOUD-77004",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T15:21:42.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIf an issue collector is configured such that it matches the reporter and a user who has access to the instance but doesn't have application access to Jira attempts to create the issue using the issue collector form, it fails.\r\nh3. Steps to Reproduce\r\n # Create an issue collector with *Attempt to match submitter email address* selected.\r\n # Try to create an issue using the issue collector form from an account that has access to the instance but doesn't have application access to Jira.\r\n\r\nh3. Expected Results\r\nAn issue is created using the *Default Reporter* as *Reporter* as per this section [here|https://support.atlassian.com/jira-cloud-administration/docs/use-the-issue-collector/]\r\n\r\n|*Issue reporter*|Specify the username that will be the default reporter of Jira issues created when visitors to your website submit your issue collector's Jira feedback form.|\r\n|*Match*\u00a0*reporter**?*|Select either of the following:\r\n * *Always use Issue Reporter*\u00a0\u2014 select this option to ensure that the default issue reporter you specify above will always be the reporter of issues created by submission of the Jira feedback form on your website.\r\n * *Attempt to match submitter email address*\u00a0\u2014 select this option if you want the reporter of an issue created by submission of the Jira feedback form on your web site, to be a Jira user whose email address matches the email address specified in the email field of the Jira feedback form.\r\n {color:#ff8b00}If the Jira user does not have the Create issues\u00a0[project permission|https://confluence.atlassian.com/adminjiracloud/managing-project-permissions-776636362.html]\u00a0in your Jira project, the default issue reporter you specify above will be used as the issue's reporter.{color}|\r\nh3. Actual Results\r\n\r\nIssue creation attempt fails with this error in the issue collector logs\r\n{noformat}\r\nUnknown error occurred trying to invoke collector 'xxxxx' from 'xxxxx' by xxxxx (xxxxx).\r\n{noformat}\r\nInternal errors suggests that the failure occurs because the user doesn't have application access or create issues permission in the project.\r\nh3. Workaround\r\n",
+      "summary": "Issue collector form sent by a user with site access but no application access fails to create an issue"
+    }
+  },
+  {
+    "key": "JRACLOUD-77003",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T15:14:37.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nLexoRank Balancing may stop working erroneously which can cause issues with certain operations. Known issues at the moment are:\r\n* Issue Move\r\n* Rank issues\r\n* Create an Advanced Roadmap plan\r\n* Export to CSV\r\n\r\nMore will be added as we come across.\r\n\r\nThus we need to find a way to never break lexorank integrity.\r\n\r\n\r\nh3. Steps to Reproduce\r\n\r\nN/A.\r\n\r\nh3. Expected Results\r\n * All operations like issue transition, move, ranking, etc should work fine without throwing any lexorank related errors.\r\n * Show a descriptive error message explaining operation is failed due to Lexorank issue instead of \u201c{{500 - Internal server error}}\" OR\r\n * Provide the ability for users to recover from LexoRank issues.\r\n\r\nh3. Actual Results\r\n\r\nThe below exception is thrown on UI:\r\n{noformat}\r\n Error type: 500 - Internal server error{noformat}\r\n\u00a0\r\nh3. Workaround:\r\n\r\nContact the support team via [support.atlassian.com|http://support.atlassian.com/].\r\n\r\n\u00a0",
+      "summary": "Never allow lexorank integrity to break"
+    }
+  },
+  {
+    "key": "JRACLOUD-77002",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T14:51:07.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen using the *date picker* feature (calendar icon), the date is formatted incorrectly if the language is used in Danish.\r\n\r\nWhen using Danish as the profile language, Jira expects months to be formatted with a *period* character right next to it, but the date picker feature *does not* automatically include this character, forcing users to manually insert it.\r\nh3. Steps to Reproduce\r\n # Update your profile language to be Danish\r\n # Click the *+* button to create a new issue\r\n # Use the date picker feature to set a value for a date field (i.e. Due Date)\r\n # Click Create\r\n\r\nh3. Expected Results\r\n\r\nIssue creation works as expected\r\nh3. Actual Results\r\n\r\nAn error saying that date is formatted incorrectly is returned.\r\n * !Screen Shot 2019-10-03 at 12.41.18 PM.png|thumbnail!\r\n\r\nh3. Workaround\r\n\r\nIn Danish, the expected format references months with a *period* character at the end (e.g. jan. for January)\r\n\r\nManually including a (*.*) character next to the month allows you to proceed with the issue creation.",
+      "summary": "Date Picker feature pulls date in unsupported format if language is set to Danish"
+    }
+  },
+  {
+    "key": "JRACLOUD-77001",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-07-13T23:48:36.000+0000",
+      "created": "2021-07-09T14:48:40.000+0000",
+      "description": "h3. Issue Summary\r\nWhile exporting the JQL output as \"Create dashboard gadget\", the dialog is empty. None of the gadgets are not opening.\r\n\r\nh3. Steps to reproduce:\r\n# Open issues via 'View in Issue Navigator\r\n# Click Export -> select 'Create dashboard gadget'\r\n\r\nh3. Expected Results\r\n\r\nThe gadget dialog should not be empty.\r\n\r\nh3. Actual Results\r\n\r\nThe gadget dialog is empty:\r\n- [^Screen Recording 2021-07-09 at 5.42.46 PM.mov]\r\n\r\n\r\n\r\nThe error under dev tools: \"Unable to find resource 'templates/savetodashboardform\":\r\n\r\n!Screenshot 2021-07-09 at 6.05.23 PM.png|thumbnail! \r\n\r\nh3. Workaround\r\nSave the search results as a filter, add the gadget to the desired dashboard and select the saved filter.\r\n\r\n",
+      "summary": "While exporting the JQL output as \"Create dashboard gadget\", dialog is empty"
+    }
+  },
+  {
+    "key": "JRACLOUD-77000",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T13:00:20.000+0000",
+      "description": "h3. Summary\r\nWhen clicking on comment permalink, the comment is not scrolled into view.\r\n\r\nh3. Steps to Reproduce\r\nThe scroll is interrupted by the Tempo app if it loads during the scroll. \r\n [^Screen Recording 2021-07-09 at 18.07.57.mov] \r\n\r\nh3. Expected Results\r\nThe comment should be highlighted and scrolled into view\r\n\r\nh3. Actual Results\r\nThe comment is not scrolled into view.\r\n \r\nh3.Workaround\r\nUse Firefox Browser",
+      "summary": "Comment permalink not scrolling into view"
+    }
+  },
+  {
+    "key": "JRACLOUD-76998",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-09T05:26:13.000+0000",
+      "created": "2021-07-09T09:45:08.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen clicking on the data point in\u00a0*Average Time in Status*\u00a0graph. The JQL returned is *Updated* instead of *Resolved*. The graph itself takes the data from *Resolved date*\r\nh3. Steps to Reproduce\r\n # Create a dashboard\r\n # Add an\u00a0*Average Time in Status*\u00a0gadget to it\r\n # Find an issue that was created in the current month and stayed in the selected status\u00a0\r\n # Create a JQL filter as: key = <issue key of the issue found> (Or, any JQL will do)\r\n # Use the filter above in the gadget\r\n # Configure the gadget length of periods represented on the graph as\u00a0*Monthly*\r\n\r\nSee example below:\r\n\r\nFilter used is:\r\n{code:java}\r\nissuekey in (GI-1, GI-2)\r\n{code}\r\n\u00a0\r\n\r\nGadget is using status *Pending*\r\n !Screenshot 2021-07-09 at 2.49.01 PM.png|width=405,height=369!\r\n\r\nThe Graph displays time spent in status for that resolved ticket in the 'Pending' status\r\n !Screenshot 2021-07-09 at 3.02.17 PM.png|width=389,height=283!\r\n\r\nWhen we click on the data point to understand issues Number of tickets closed on the respective period, we see that JQL displays that have been updated in a specific period instead of displaying resolved issues at give point.\r\n\r\n\u00a0\r\n{code:java}\r\nissuekey in (GI-1, GI-2) AND updated >= \"2021-07-01 07:00\" AND updated <= \"2021-08-01 06:59\"\r\n{code}\r\nh3. \u00a0Expected Results\r\n\r\nWhen clicking on data point in the Gadget graph it should display\u00a0number of tickets resolved on the respective period.\r\n{noformat}\r\nissuekey in (GI-1, GI-2) AND resolved >= \"2021-07-01 07:00\" AND resolved <= \"2021-08-01 06:59\"\r\n{noformat}\r\nh3. Actual Results\r\n\r\nJQL returned is using \"Updated\" date and this is causing ambiguity for the user to understand the information plotted on the graph and makes it difficult to understand average time in status calculations for the issues.\r\n{noformat}\r\nissuekey in (GI-1, GI-2) AND updated >= \"2021-07-01 07:00\" AND updated <= \"2021-08-01 06:59\"\r\n{noformat}\r\n\r\nh3. Notes\r\n\r\nThe graph is showing the correct data, but the JQL returned (when user clicks it) is not.\r\n\r\nh3. Workaround\r\n\r\nManually change the JQL from \"Updated\" to \"Resolved\"\r\n{noformat}\r\nissuekey in (GI-1, GI-2) AND resolved >= \"2021-07-01 07:00\" AND resolved <= \"2021-08-01 06:59\"\r\n{noformat}",
+      "summary": "Incorrect JQL returned for links on the Average Time in Status\u00a0gadget where it uses Updated instead of Resolved date"
+    }
+  },
+  {
+    "key": "JRACLOUD-76997",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T09:01:44.000+0000",
+      "description": "h3. Summary\r\n\r\nParent/Epic links for Team managed issues cannot be removed by BulkOperationsIssue Summary\r\nh3. Steps to Reproduce\r\n # Create issues in Team managed issues\u00a0\r\n # Link it with Epic/Epic's with issue\r\n # Advanced search for issues under Epic for Team managed\u00a0\r\n # BulkOperation >> Select issues >> Change parent\u00a0\r\n # There is no option to make the Change parent field empty\u00a0\r\n\r\nh3. \u00a0\r\nh3. Expected Results :\r\n\r\nThere should be an option to perform bulk operation to remove Parent/Epic link similar to one that we have in company managed project's to remove Epic link from child issues.\r\nh3. Actual Results\r\n\r\nChange parent field cannot be left empty through BulkOperations\r\n\r\n!image.png|width=595,height=87!\r\nh3. Workaround\r\n\u00a0\r\nTo remove an issue from its parent epic: # Navigate to your board or backlog, or open an issue.\r\n # Hover over the issue and select\u00a0*more*\u00a0(*\u2022\u2022\u2022*).\u00a0\r\n # Select\u00a0*Change parent*.\u00a0\r\n # In the dropdown menu, select\u00a0*Remove*.",
+      "summary": "Parent/Epic links for Team managed issues cannot be removed by BulkOperations"
+    }
+  },
+  {
+    "key": "JRACLOUD-76996",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-09T06:31:04.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWe have a problem in the Detail view when switching between filters that have many issues(with paginated bar) and a filter that doesn't return any issue.\r\nh3. Steps to Reproduce\r\n # Access a filter with many issues that will have\u00a0the\u00a0pagination bar visible(as a 'fixed' footer);\r\n # Switch to a filter that has NO issues.\r\n # Switch back to a filter that has many issues.\r\n # After switching back to the filter with many issues *the pagination bar* is not fixed anymore.\r\n\r\n * [^search_front_end_pagination.mp4]\r\n\r\nh3. Expected Results\r\n # *The\u00a0pagination* bar should be locked on its position when the filter has more than one page of issues, and even switching between filters that have *NO* issues and switching back to a filter that has many issues. The\u00a0pagination bar should be as a 'fixed' footer, so when we scroll, only the issues will be scrolling down, but the\u00a0pagination bar stays in place.\r\n\r\nh3. Actual Results\r\n\r\nThe\u00a0pagination bar should doesn't stay locked in its position('fixed' footer) if we switch between filters that have many issues and NO issues.\r\nh3. Workaround\r\n\r\nThe only known workaround at the moment is refreshing the page. By doing so it will lock *the\u00a0pagination bar* and avoiding to scroll all the way down to see it.",
+      "summary": "Switching between filters on the detail view, the\u00a0pagination bar becomes unlocked from its original position"
+    }
+  },
+  {
+    "key": "JRACLOUD-76995",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T20:15:15.000+0000",
+      "description": "*Highlight:*\r\n\r\nWith the Sandbox feature in place and the need to manually import rules exported from production site, this Feature is now more used.\r\n\r\n*Issue Description*\r\n\r\nCurrently, the Automation rule import wizard contains very limited options, which can make it very tedious/unpractical to import a JSON file containing a big number of rules.\r\n\r\n*Suggestions*\r\n\r\nSome improvements to the wizard that help sys-admins save time especially on large instances:\r\n - An option to select all rules when importing\r\n - An option to select all active rules when importing\r\n - UI should differentiate rules that have the same name (maybe show the project context / rule ID)\r\n - An option to import rules in its exported state (vs DISABLED by default)\r\n - Option to overwrite rules (if the rule id, name and context matches)\r\n - Option to import rule owners (will need to add it to the export)",
+      "summary": "Improvements to the automation rule import wizard"
+    }
+  },
+  {
+    "key": "JRACLOUD-76993",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T19:32:50.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nApplication Role intermittently sends false-negative notifications on Smart Commit actions.\r\n\r\nh3. Steps to Reproduce\r\n# Connect Jira to a Bitbucket server instance.\r\n# Create a user with WORK_ON_ISSUES permission in a project. Grant this permission using the Application role (Any logged-in user). (You can user Permission Helper to make sure that the user is getting the permission by Application role  only.)\r\n# Create commit(s) with smart commit commands such as the time command which lets you log time to a Jira Issue.. (See this for more info.)\r\n# Push the commit(s) to the bitbucket server instance.\r\n# You will see that on very rare occasions commands fail. You will receive an email saying that \u201c<user-name>, you do not have permission to associate worklog to this issue.\u201d\r\n\r\nh3. Expected Results\r\n\r\nThe false-negative notifications won't be sent.\r\n\r\nh3. Actual Results\r\n\r\nYou will receive an email saying that \u201c<user-name>, you do not have permission to associate worklog to this issue.\u201d\r\n\r\nh3. Workaround\r\n\r\nThis issue can be mitigated through group-specific permissions. However, this shall yet affect site-admins as these users will still be considered on using an Application Role.",
+      "summary": "Application Role intermittently sends false-negative notifications on Smart Commit actions"
+    }
+  },
+  {
+    "key": "JRACLOUD-76992",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T18:34:52.000+0000",
+      "description": "For now only Business Project has feature to add background colors .\r\n\r\n\u00a0\r\n\r\nPlease include that to other project categories as well.\u00a0\r\n\r\n\u00a0",
+      "summary": "Background colors for all projects"
+    }
+  },
+  {
+    "key": "JRACLOUD-76991",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T13:31:34.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nHistorical JQL searches that use\u00a0_WAS_\u00a0 with\u00a0_DURING_\u00a0or\u00a0_AFTER._\u00a0Might give inaccurate results. They might return additional issues.\r\nh3. Steps to Reproduce\r\n # run of one following JQLs:\r\n ## _<field> WAS X DURING (A, B)_\r\n ## _<field> WAS X AFTER A_\r\n\r\nh3. Expected Results\r\n\r\nCorrect issues are returned.\r\nh3. Actual Results\r\n\r\nIn some rare cases, JQL will return additional issues. Issues that had value _X_ set to _<field>_ before A but it has been later (before A) changed. \r\n This is caused by corrupted data in history of some issues. Only JQL is affected as that data is only used by JQL engine.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behaviour. A workaround will be added here when available",
+      "summary": "Some historical JQL searches return additional issues"
+    }
+  },
+  {
+    "key": "JRACLOUD-76990",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T13:29:37.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nChanging issue type clears couple of customfields, but the corresponding records are not removed from Jira DB in this customer instance, but only emptied. The records of customfields having no value should not exist, but deleted from Jira DB. But this is not happening if the following steps are done:\r\n1. Issue is created via mailhandler from email, which creates a ticket type A\r\n2. The issuetype is changed by builtin move functionality to type B\r\n3. On the move step, the guide informs about information that will be removed from fields not configured for this issuetype, once issue is moved, history records that it cleared the values\r\n4. The values are cleared and database record is invalid (NULL)\r\n\r\nThe empty records are causing no problem in normal operation, but once there is a back up created, the customfield entries will have no string or any values, so importing that backup on a server instance will fail.\r\n\r\nh3. Steps to Reproduce\r\n1. Issue is created via mailhandler from email, which creates a ticket type A\r\n2. The issuetype is changed by builtin move functionality to type B\r\n3. On the move step, the guide informs about information that will be removed from fields not configured for this issuetype, once issue is moved, history records that it cleared the values\r\n4. The values are cleared and database record is invalid (NULL)\r\n\r\nh3. Expected Results\r\nRecords in customfield table that has no values anymore should be removed from the DB.\r\n\r\nh3. Actual Results\r\nRecords where customfield entries have no values remain in the DB.\r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Record not removed from Jira DB when customfield value cleared during changing issue type"
+    }
+  },
+  {
+    "key": "JRACLOUD-76989",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T13:03:50.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen trying to Bulk Move issues between source and destination project, if destination project has a custom field of type \"Version picker\" , then Update field sections marks these field as mandatory.\r\nh3. Steps to Reproduce\r\n # Create a custom field of type Version picker in your source and destination project. Make sure that these fields are optional.\r\n # Try to Bulk Move few issues from source to destination.\r\n\r\nh3. Expected Results\r\n\r\n\"Update fields\" page should not display these fields as they are not mandatory fields in the destination project.\r\nh3. Actual Results\r\n\r\n\"Update fields\" page displays the version picker custom fields as mandatory to be filled while moving.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Bulk move operation displays custom fields of type \"version picker\" as mandatory even though they are not in destination project"
+    }
+  },
+  {
+    "key": "JRACLOUD-76988",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T10:07:07.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen using the Send Email functionality from *Settings* > *System* > *Send Email*, If the group mentioned in the \"To\" field has too many users inside it, then after clicking the {color:#505F79}*Send*{color} button the page keeps loading for 2 to 3 minutes and times out with the below Error.\r\n !Screenshot 2021-07-08 at 3.11.52 PM.png|thumbnail! \r\n\r\nThe User who reported the same had about 1000+ Users in each group that was added to the \"To\" field. (Namely the default groups -> Jira software Users and Confluence Users).\r\n\r\nh3. Steps to Reproduce\r\n \r\n# Go to *Settings* > *System* > *Send Email*\r\n# Select a Group that has at least 700 - 800 or more users to add them to the \"To\" field\r\n# add some content in the Subject and Body.\r\n# Click {color:#505F79}*Send*{color}\r\n\r\nh3. Expected Results\r\n\r\nEmail sent successfully to all valid users and the session doesn't timeout with the above-attached Error Message.\r\n\r\nh3. Actual Results\r\n\r\nThe page loads for 2 - 3 minutes and then Times-out with the \"*Page Unavailable*\" Error. \r\n\r\nh3. Workaround\r\n\r\n* Currently, this is known to be a client-side issue where the client session on the browser is timing out resulting in the \"*Page Unavailable*\" Error. However, with internal testing, we have found that in the backend the request is processed and the emails are reaching the users in those groups.\r\n* Alternatively, Users can use JIRA automation by using a *Manual Trigger* and a *SEND EMAIL* component in the rule. Automation seems to handle a large number of users in the group better. \r\n\r\n*NOTE:* \r\n# Email sent out using automation will be received as \"Jira automation<no-reply@automation.domain.com>\".\r\n# The email sent through the site's Send Email feature will be received as \"DisplayName <jira@site_name.atlassian.net>",
+      "summary": "Send Email (In Bulk) operation results in session timeout and Page Unavailable Error for the sites."
+    }
+  },
+  {
+    "key": "JRACLOUD-76987",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-08T07:22:15.000+0000",
+      "description": "*Problem*:\r\nThere is a need to use issue key numbers for quick search preview results. when a user tries to use only alphanumeric characters there's no result and a frowny face appears (Please, check the screen attached).\r\n\r\nThe quick search box could be more friendly and bring close results as suggestions in the preview.\r\n\r\nExample: When inputting in the quick search box any issue key number for instance 1234, if project key eg: EN-1234 is not specified, the preview doesn't return any suggestions, and it doesn't return close searches either.\r\n\r\n*Suggestion*:\r\nAdd approximated results to the quick search suggestion preview or have a wildcard function so the user can use issue key numbers to search.",
+      "summary": "Quick search preview using issue key numbers"
+    }
+  },
+  {
+    "key": "JRACLOUD-76986",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-07-12T11:31:29.000+0000",
+      "created": "2021-07-07T19:43:21.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen adding\u00a0Activity Stream Gadget to a dashboard and applying a filter on it, the results are not reflecting the data that should be filtered.\r\nh3. Steps to Reproduce\r\n # Add an\u00a0Activity Stream Gadget to any dashboard\r\n # Click on ... and then on \"Configure\"\r\n # Click on \"Add a filter\"\r\n # Apply one or more filters\r\n\r\nh3. Expected Results\r\n\r\nThe issues that are shown on the gadget should reflect the filters selected.\r\n\r\nh3. Actual Results\r\n\r\nThe issues that are shown on the gadget don't reflect the filters selected. So, for example, if you apply a project filter, issues from another project(s) are also shown.\r\n\r\nh3. Workaround\r\n\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Activity Stream Gadget - filters are not being applied"
+    }
+  },
+  {
+    "key": "JRACLOUD-76984",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-07T14:55:21.000+0000",
+      "description": "My company has been using Quantified Task Management, a relatively new (and Agile-compatible) standard) for a number of years for task management with great results, and I know of other teams that have found it useful.\r\n\r\nQTM solves a number of problems with task management and issue tracking that have, before now, really never been solved. It also provides a number of insights into the project as a whole, and integrates cleanly with Agile and Scrum.\r\n\r\nThis might be worth looking into, and possibly integrating into Jira. The current draft for the upcoming new edition of the standard is published here:\u00a0https://standards.mousepawmedia.com/en/devel/qtm.html",
+      "summary": "Quantified Task Management"
+    }
+  },
+  {
+    "key": "JRACLOUD-76982",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-07T11:55:04.000+0000",
+      "description": "Currently, Jira products require users to not only log in but also perform operations to be counted towards activities.\r\n\r\n*Suggestion:*\r\n\r\nSite admins monitor the last seen data to keep a track of active users and decide if the inactive users need a Product license or not. It would be nice to record the Last Activity data when a user \u201clogs into\u201d a Jira product.",
+      "summary": "The last seen is not\u00a0updated in Jira User management if the users don't perform any operations on Jira"
+    }
+  },
+  {
+    "key": "JRACLOUD-76980",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-07T06:46:04.000+0000",
+      "description": "h3. Issue Summary\r\nOpening Links that lead to deleted issues give an error \"Something's gone wrong\"\r\n\r\nh3. Steps to Reproduce\r\n# Take any issue in Jira, and copy its URL (for example <Jira URL>/browse/SCRUM01-12)\r\n# Delete an issue\r\n# Attempt to access the link of the deleted issue.\r\n\r\nh3. Expected Results\r\nA message indicating that the issue cannot be viewed and that it ay have been deleted appears.\r\n\r\nh3. Actual Results\r\nAn error message is shown and if other functions are selected they do not load: \"Something's gone wrong\" \"ERROR: J5DJR0\"\r\n !screenshot-1.png|thumbnail! \r\n\r\nh3. Workaround\r\n* Since as long as the link in the URL is the missing issue, click into any other feature of the Project and press the refresh button shown in the UI.",
+      "summary": "Opening Links that lead to deleted issues give an error \"Something's gone wrong\""
+    }
+  },
+  {
+    "key": "JRACLOUD-76978",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-07T05:17:41.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe Projects field does not allow users to select multiple projects during a rule's configuration process.\r\nh3. Steps to Reproduce\r\n\r\n1. Create an Automation Rule.\r\n 2. Click on Rule details.\r\n 3. On Scope select *Multiple projects*.\r\n 4. Attempt to select more than a single project on the Projects field.\r\nh3. Expected Results\r\n\r\nYou are able to select multiple projects.\r\nh3. Actual Results\r\n\r\nYou are only able to select a single project.\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "The Projects field does not accept multiple values while configuring multiple_projects scope rules in Automation for Jira"
+    }
+  },
+  {
+    "key": "JRACLOUD-76977",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-07T04:43:29.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAccessing a board which filter pulls issues from multiple projects can fail on Android devices with the error 'Jira encountered an error. If this keeps happening, shake to send feedback.'\r\nh3. Steps to Reproduce\r\n # Access a certain board on the Jira app on Android mobile\r\n # Error is thrown and board is not accessible\r\n\r\nh3. Expected Results\r\n\r\nBoard to load\r\nh3. Actual Results\r\n\r\nBoard failing with error\u00a0\r\n \"Jira encountered an error. If this keeps happening, shake to send feedback.\"\r\nh3. Workaround\r\n\r\nAccess the board on Web.",
+      "summary": "Board throwing error 'Jira encountered an error. If this keeps happening, shake to send feedback' on Android devices"
+    }
+  },
+  {
+    "key": "JRACLOUD-76976",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-07T02:36:11.000+0000",
+      "description": "At the moment in the New Issue View, the comment box is travelling (sticky) with the page scroll. \r\n\r\nWhen you have a large description field as an example, the sticky comment will be shown under the description giving the impression that this is the end of page and users might miss important information.\r\n\r\n*Suggestion*: the comment box should stay it is own location on the page under \"Activity\" and not travel.",
+      "summary": "Comment box should not be sticky to top of page when scrolling"
+    }
+  },
+  {
+    "key": "JRACLOUD-76975",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-06T21:52:15.000+0000",
+      "description": "*Please add the date an item was added to the Atlassian Cloud Documentation Blog Post.*\r\n\r\nThis will help users stay up to date by allowing them to focus on what is new since they last read the blog post. Ideally, the entries would be sorted by date added with the newest items listed first.\u00a0\r\n\r\nPlease ignore the selected component. There was not an applicable choice.\u00a0\r\n\r\n\u00a0",
+      "summary": "Add 'Date Added' to items on Cloud Blog Post"
+    }
+  },
+  {
+    "key": "JRACLOUD-76974",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-06T13:06:04.000+0000",
+      "description": "It would be awesome to display the field's label when calling /rest/api/2/search? as we have on the /rest/api/3/field.\r\n\r\n",
+      "summary": "Include field's label when calling the search endpoint"
+    }
+  },
+  {
+    "key": "JRACLOUD-76973",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-06T13:00:20.000+0000",
+      "description": "as a user, I would like to have the ability to edit the default filters in the Jira cloud, like change columns, modify the query behind the filter\r\n\r\n !image-2021-07-06-09-56-26-723.png|thumbnail! ",
+      "summary": "ability to edit the default filters in Jira cloud"
+    }
+  },
+  {
+    "key": "JRACLOUD-76972",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-06T09:50:34.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen using the option of CODE on top of the smart-link, it should disable smart-link and have the url text in place.\r\n\r\n!image-2021-07-06-15-23-43-285.png|width=313,height=193!\r\n\r\n\u00a0\r\nh3. Steps to Reproduce\r\n # Copy a filepath containing a domain e.g. \"M:\\foo\\www.example.com\\bar\\foobar\"\r\n # Paste into issue comment or issue description\r\n # Mark the pasted filepath as \"code\"\r\n\r\nh3. Expected Results\r\n\r\nThe text should not be smart link now and in the CODE format.\r\n\r\n!image-2021-07-06-15-24-10-216.png!\r\nh3. Actual Results\r\n\r\n\u00a0 !image-2021-07-06-15-24-18-919.png!\r\nh3. Workaround\r\n\r\nAfter pasting the link/url Press Ctrl + Z (Windows) or Cmd + Z (MacOS) which will revert the link to a normal blue link.",
+      "summary": "Automatically remove all auto-smart links when marking as inline-code"
+    }
+  },
+  {
+    "key": "JRACLOUD-76971",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-06T09:43:48.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen customers migrate from server to cloud, one of the steps is to review groups in the product access page and set the default access group ([Use Jira site import from server to cloud|https://support.atlassian.com/migration/docs/use-jira-site-import-to-migrate-from-server-to-cloud] - Step 8)\r\n\r\nHowever, in cases where default access group is not set, the add-on installation in jira cloud will fail with the following error:\r\n{quote}We ran into a little trouble. it might just be a hiccup. Try again in a bit.\r\n{quote}\r\nh3. Steps to Reproduce\r\n * Scenario:\u00a0 Customer has migrated from Server to cloud and default access group is not set in the product access\r\n * Try to install a marketplace add-on in the instance\r\n\r\nh3. Expected Results\r\n\r\nThe add-on installation fails with UI error message stating:\r\n{quote}There is no default group in Jira cloud product access. Please review groups imported from server and set a default access group for each product\r\n{quote}\r\nh3. Actual Results\r\n\r\nThe add-on installation fails with the following error message which is not helpful:\r\n{quote}We ran into a little trouble. it might just be a hiccup. Try again in a bit.\r\n{quote}\r\nh3. Workaround\r\n\r\nSee the KB:\u00a0[Unable to Install any Cloud Add-ons|https://confluence.atlassian.com/jirakb/unable-to-install-any-cloud-add-ons-971608404.html]",
+      "summary": "Add-on installation fails when there is no default access group set in the product access"
+    }
+  },
+  {
+    "key": "JRACLOUD-76970",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T23:05:46.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen in the issues section from the left menu and creating an issues using the create button, the newly created issue will not appear unless you refresh the page.\r\n\r\nh3. Steps to Reproduce\r\n # Go to the Issues page on left side bar of the project.\r\n # Create an issue using the \"Create\" top button.\r\n\r\nh3. Expected Results\r\nIssue should appear on the list after creation.\r\n\r\nh3. Actual Results\r\nYou need to manually refresh the page for the issue to appear\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "New issues don't appear until refresh"
+    }
+  },
+  {
+    "key": "JRACLOUD-76969",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-06T06:15:25.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nConfiguring a screen where the field tab name has more than 255 characters results in error:\r\n The Jira server was contacted but has returned an error response. We are unsure of the result of this operation.\r\nh3. Steps to Reproduce\r\n # Configure a screen's field tab name with more than 255 characters\r\n\r\nh3. Expected Results\r\n\r\nBad request response. HTTP 400 response code\r\nh3. Actual Results\r\n\r\nThe Jira server was contacted but has returned an error response. We are unsure of the result of this operation.\r\n\r\nConsole shows error:\r\n POST [https://instance.atlassian.net/rest/api/2/screens/10008/tabs/] 500\r\nh3. Workaround\r\n\r\nUse tab name of less than 255 characters",
+      "summary": "Adding a tab with more than 255 characters results in server error"
+    }
+  },
+  {
+    "key": "JRACLOUD-76968",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-05T19:24:32.000+0000",
+      "description": "Adding the ability to move, copy and paste transitions configurations (validators/conditions/post functions) could drastically reduce the setup time from a complex workflow.",
+      "summary": "Add the ability to copy/paste/move transition configurations on workflows."
+    }
+  },
+  {
+    "key": "JRACLOUD-76967",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-05T15:40:42.000+0000",
+      "description": "h3. Problem\r\n\r\nSite/Org administration don't have control on what users have set under their personal settings on the matter of notifications. Specifically to the section named: _\"Get email updates for issue activity when\"_\r\nh3. Suggested Solution\r\n\r\nAllow administration to manage notification settings under user's personal settings. E.g. enable and disable the section\u00a0_\"Get email updates for issue activity when\"_\r\nh3. Why This Is Important\r\n\r\nThis feature is important for administrators to have more control over the settings their users are using on the site.\r\nh3. Workaround\r\n\r\n_N/a_",
+      "summary": "Allow administration to manage notification settings under user's personal settings"
+    }
+  },
+  {
+    "key": "JRACLOUD-76966",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-05T15:09:08.000+0000",
+      "description": "At the moment, when accessing an issue in Jira on the New Issue View, Jira adds some white spaces between fields. \r\n\r\nThis causes the user to have to scroll down to see all fields that could be displayed on the screen without the white spaces. \r\n\r\nh3. Suggestion\r\nReduce the white spaces between fields or add the ability to choose the size of these white spaces.",
+      "summary": "Reduce the white spaces between fields on the New Issue View"
+    }
+  },
+  {
+    "key": "JRACLOUD-76965",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-05T14:37:25.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nWhen creating an automation rule, we have the action to only \"Log work\" on issues. Actions such as Delete or Update are not available.\r\n\r\n!image-2021-07-05-11-40-11-213.png!\r\nh3. Suggested Solution\r\n\r\nImplementing the Delete Work log from an issue would be very helpful. For example, when deleting a work log from a child issue, it would be possible to also delete it from its parent issue.\r\nh3. Workaround\r\n\r\nN/A\r\n\r\n\u00a0\r\n\r\n\u00a0",
+      "summary": "Add action to delete worklogs on Jira Automation"
+    }
+  },
+  {
+    "key": "JRACLOUD-76964",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-05T10:35:41.000+0000",
+      "description": "Add a configuration option, likely needs to be added to the email action(s), to fail a rule if email delivery fails or if it is unknown. Unknown means SES fails to respond to our send request or reports an unknown delivery status itself after a timeout.",
+      "summary": "Add a configuration option to fail a rule if email delivery fails or is unknown"
+    }
+  },
+  {
+    "key": "JRACLOUD-76962",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-05T09:38:31.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nDifferent work ratio values for the original estimate time of zero\r\nh3. Steps to Reproduce\r\n # Having the original estimate already set to zero (by default), the work ratio shows blank.\r\n # When we have original estimate value and then change it to zero, the value for work ratio shows 9223372036854775807%\r\n\r\nh3. Expected Results\r\n\r\nIt should either be one of the above.\r\nh3. Actual Results\r\n\r\nFor an untouched original estimate(which by default is zero), the work ratio is blank irrespective of the time spent value.\r\n\r\nWhen changing an existing original estimate value (non-zero) to zero, the work ratio shows 9223372036854775807%\r\nh3. Workaround\r\n\r\nPut a value of 1 always for the original estimate.\r\n\r\nThis scenario is being used for issues that do not have an estimate, like escalations etc, which are not planned.\r\n\r\nBug on similar lines:\r\n\r\nhttps://jira.atlassian.com/browse/JRACLOUD-65484",
+      "summary": "Zero time estimate gives different work ratio values."
+    }
+  },
+  {
+    "key": "JRACLOUD-76961",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-05T08:57:13.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nJQL suggested in [public documentation doesn't for NOT IN|https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-operators/#Advancedsearchingoperatorsreference-NOT_IN] and _!=_\u00a0operator work with\u00a0_issueLinkType_ clause.\r\nh3. Steps to Reproduce\r\n # Run following JQL\r\n{code:java}\r\nissueLinkType IS EMPTY OR issueLinkType != blocks{code}\r\n\r\nh3. Expected Results\r\n\r\nReturns issue with that have a issueLinkType other than _blocks_.\r\nh3. Actual Results\r\n\r\nJQL ignores first clause. It returns results only for\u00a0_issueLinkType != blocks_ clause. This means: all issues that have value in field, but that value is not\u00a0_blocks_.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "issueLinkType JQL clause given incorrect results when using != or NOT IN"
+    }
+  },
+  {
+    "key": "JRACLOUD-76959",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-04T11:38:13.000+0000",
+      "description": "h3. Issue Summary\r\n\r\n'Unsaved changes' warning persists consistently if there is a trailing white space in the Description box.\u00a0\r\nh3. Steps to Reproduce\r\n # Edit the Description or a similar field. After the text, enter blank space before saving.\u00a0\r\n\r\n # The comment thus saved results in the 'Unsaved Changes' warning to appear. The warning persists even when this space is removed.\u00a0\r\n\r\n # Completely removing the comment and re-adding it OR appending extra text to the already existing text removes this warning.\u00a0\r\n\r\n[^Screen Recording 2021-07-04 at 4.50.23 PM.mov]\r\nh3. Expected Results\r\n\r\nRemoving the trailing white space should remove the 'Unsaved changes' warning.\u00a0\r\nh3. Actual Results\r\n\r\nThe warning exists even after the white space is removed.\r\nh3. Workaround\r\n\r\nCompletely removing the comment and re-adding it OR appending extra text to the already existing text before saving it, removes this warning.\u00a0",
+      "summary": "Unsaved changes warning persists consistently if there is a trailing white space in the Description box"
+    }
+  },
+  {
+    "key": "JRACLOUD-76958",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-02T19:52:26.000+0000",
+      "description": "As a user is difficult to search for large names in the search box while sharing dashboards or filters with the team.\r\n\r\nIf you have groups with similar names (like support group 1, support group 2), the only way to select the right group is by typing all the name\r\n\r\nExample:\r\n !image-2021-07-02-16-50-54-128.png!",
+      "summary": "The select for groups when sharing filters or dashboards is too narrow"
+    }
+  },
+  {
+    "key": "JRACLOUD-76957",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-07-09T00:51:52.000+0000",
+      "created": "2021-07-02T12:40:34.000+0000",
+      "description": "h3. Issue Summary\r\nJQL doesn't provide consistent results when using *custom fields* with restricted context to only a few projects/issue types.\r\n\r\nh3. Steps to Reproduce\r\n#  Create a custom field and associated its context to some specifics issue types, like issue type A\r\n# Set a value for this custom field on issues that have a different issue type, like issue type B\r\n# Search for *<CustomField> is not EMPTY*\r\n# Those issues from issue type B will nor return on the JQL, although they do have a value on it.\r\n\r\n\r\nh3. Expected Results\r\nUser will see some message informing the JQL won't work as there is issue types not associated to its context or even will see a warning message saying some issues are not being returned because of its missing context.\r\n\r\nh3. Actual Results\r\nJQL returns no consistent results. If user is not aware some issues should return on their search, they will get wrong results or even a {{No issues were found to match your search}}\r\n\r\nh3. Workaround\r\nSince the issue happens because the custom field have context restrict to some projects/issue types, set the context of the cf to \"Any Issue Type\" to avoid missing any issues on your JQL.",
+      "summary": "No consistent results from JQL with a restricted custom field"
+    }
+  },
+  {
+    "key": "JRACLOUD-76956",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-02T09:35:46.000+0000",
+      "description": "Request:\r\n * When opening help from the software, automatically pre-fill product and version - it is much easier to clear the filter or navigate to documentation start than to fill these fields correctly\r\n * Improve \"About Jira\" so users can easily tell apart what software they are using, i.e. product name, licensed/active components, and versions of product & components (new/old issue view)\r\n * Here, in [https://jira.atlassian.com/]\u00a0add a category users can obviously relate to meta information like documentation, manual, support, about etc. I chose \"Onboarding\" but that term does not at all match for questions of people using a software for years, but maybe in lower intensity. That this is not yet done shows how much Atlassian relies on \"our products are reliable and simple to understand\" and how little it emphasizes with the needs of users actually facing issues (also very visible when looking at issue comments).\r\n\r\n\u00a0\r\n\r\nBackground:\r\n\r\nAs a user, when I click question mark icon and then \"read help articles\", I expect the documentation on the software I use. Instead, _I need to choose_ out of several things with \"Jira\" in their name - but as average user,\u00a0 I\u00a0\"simply use\" something everyone just calls \"Jira\", so I face difficulties to choose the correct product. Several users may not even know whether product category \"Cloud\" or \"Data Center and Server\" applies, while others may be able to exclude some products by category and name, but several remain:\u00a0 !image-2021-07-02-11-00-10-876.png!\r\n\r\n\u00a0\r\n\r\nIf I do not select a product here but simply use the prominent search, I get a huge amount of results and many do not apply to the software I use. So, I need to filter, and hit again the products selection:\r\n\r\n\u00a0\r\n\r\n!image-2021-07-02-11-08-49-401.png!\r\n\r\nA very similar situation when I try to find, report, vote for issues I face, or hope to find workarounds:\r\n\r\n!image-2021-07-02-11-13-50-091.png!\r\n\r\n\u00a0\r\n\r\nTo make things even more difficult, there are several variations of the same component, so I need to know whether I have that \"new issue view\" Atlassian talks about in e.g.\u00a0https://jira.atlassian.com/browse/JRACLOUD-70555\u00a0or the \"old issue view\". BTW, these names will produce fun in 10 years when \"new\" is old and about to be transitioned to something else - probably called next generation or new technology.\r\n\r\n\u00a0\r\n\r\nTo solve the quest to choose the correct product, as a slightly experienced user, I will click question mark icon and then\u00a0\"About Jira\" - which only shows the \"brand name\" Jira but nothing matching the product names in the documentation, no information on used components, no information whether \"old\" or \"new\" view is used.\r\n\r\n!image-2021-07-01-09-49-42-517.png!\r\n\r\n\u00a0\r\n\r\n\u00a0\r\n\r\n\u00a0\r\n\r\n\u00a0",
+      "summary": "Improve \"read help articles\" and \"About Jira\" so users can easily get information on what they are using"
+    }
+  },
+  {
+    "key": "JRACLOUD-76955",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-07-19T05:52:33.000+0000",
+      "created": "2021-07-02T08:21:04.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCreating an Automation Rule in the JIRA cloud and adding the \"Send Email\" Component to it, where \"To\" is set to USER1 email and \"CC\" Is set to USER2. The email received by USER1 shows up just fine, but the USER2 in CC will have an incorrect context of the email where \"To\" and \"CC\" will be changed to USER2.\r\nh3. Steps to Reproduce\r\n # Create a Basic Automation Rule.\r\n # Add the \"SEND EMAIL\" component.\r\n # Use 2 email addresses USER1 and USER2. Add USER1 in the \"To\" Field and USER2 in the \"CC\" field.\r\n # Add some Body to the email.\r\n # Trigger the Automation.\r\n\r\nh3. Expected Results\r\n\r\n\r\n*USER1* should receive the email as:\r\n\r\nFROM: Automation for JIRA\r\n To: USER1\r\n CC: USER2\r\n Subject: Testing, Testing...\r\n\r\nBODY: .....\r\n\r\n*USER2* should also receive the email as:\r\n\r\nFROM: Automation for JIRA\r\n To: USER1\r\n CC: USER2\r\n Subject: Testing, Testing...\r\n\r\nBODY: .....\r\nh3. Actual Results\r\n\r\n\r\n*USER1* receives the email Correctly:\r\n\r\nFROM: Automation for JIRA\r\n To: USER1\r\n CC: USER2\r\n Subject: Testing, Testing...\r\n\r\nBODY: .....\r\n\r\n{color:#FF0000}\r\n*USER2* receives the email as:\r\n \r\n FROM: Automation for JIRA\r\n *To: USER2*\r\n CC: USER2\r\n Subject: Testing, Testing...\r\n \r\n BODY: .....{color}\r\nh3. Workaround\r\n * A fix for this issue is \"In Progress\". Will update the BUG Ticket as soon as the fix is deployed.",
+      "summary": "When running a Automation Rule in Jira Cloud containing \"Send Email\" Component -> TO & CC e-mail addresses don't show up correctly at destination"
+    }
+  },
+  {
+    "key": "JRACLOUD-76954",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-02T07:54:06.000+0000",
+      "description": "When we are asking our customers for a timeframe we need to use two date fields. \r\nHowever they are very separate in the customer form and it looks odd.\r\n\r\nWe would like to have the option to have a double date field to get timeframes from customers on the customer request form.",
+      "summary": "Add double date field"
+    }
+  },
+  {
+    "key": "JRACLOUD-76953",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-02T05:09:47.000+0000",
+      "description": "Jira currently uses URL encode automatically when sending a web request through webhooks. since the URLs themselves can have parameters like tokens and unique identifiers, having special characters automatically encoded can cause issues as the resulting URL would be different than the one indicated and not all applications will allow applying URL decoding when receiving a request. An example of this is when including tokens or IDs that include special characters, like when working with Azure, and if the token is not exactly what it expects (due to URL encoding), the request will return a 404 response.\r\n\r\nThe suggestions are to: \r\n* Disable the automatic URL encoding of web requests through webhooks.\r\n* Allow indicating if this is desired or not in the webhook configuration.\r\n* Allow indicating additional parameters in a different field from the main URL, so the main URL can still be encoded but not the parameters.",
+      "summary": "Allow disabling URL encoding for Webhooks"
+    }
+  },
+  {
+    "key": "JRACLOUD-76951",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T19:14:27.000+0000",
+      "description": "Feature needed -\r\n\r\nSay for example , there are 200+ users and by default the options under personal settings\u00a0are not checked. Following up with these many users for this change is a difficult thing and if the users have not taken correct steps ; they will miss the email notifications too. I would suggest if there is anything from the admin side or from Atlassian side to make this setting checked by default. If the user count increases ; it will be a tedious task for the admin to get this done .\u00a0",
+      "summary": "A feature apart from personal settings that can allow force set notifications for all users on a site "
+    }
+  },
+  {
+    "key": "JRACLOUD-76950",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-07-19T01:30:02.000+0000",
+      "created": "2021-07-01T17:14:38.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAutomation e-mails are not being sent when all addresses are placed in the BCC field\r\nh3. Steps to Reproduce\r\n # Add a Send Email action to an automation rule\r\n # Add addressees only to the BCC: field, leave the TO: field blank\r\n # Execute the automation\r\n\r\nh3. Expected Results\r\n\r\nAll addresses in the BCC field receive the e-mail sent by Automation\r\nh3. Actual Results\r\n\r\nNo e-mail is received\r\n\r\n\u00a0\r\n\r\nThis is what appears in the Audit log:\r\n\r\n!image-2021-07-01-14-25-51-648.png|width=870,height=146!\r\nh3. Workaround\r\n\r\nAdd at least one e-mail to the TO: field, then the BCC e-mails will receive the message as well",
+      "summary": "Automation e-mails not sent when using only the BCC field"
+    }
+  },
+  {
+    "key": "JRACLOUD-76949",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-07-09T03:24:24.000+0000",
+      "created": "2021-07-01T12:07:26.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nConfiguring the Average time in the status gadget on a dashboard with a three-column layout does not work fit correctly to the size of the screen.\u00a0\r\nh3. Steps to Reproduce\r\n # Configure the Dashboard\r\n # Add the Average time in the status gadget to the dashboard with a three-column layout.\r\n # Resize the browser window to a smaller size.\r\n\r\nh3. Expected Results\r\n\r\nThe gadget should fit as per the screen size of the browser.\r\n\r\n!Screenshot 2021-07-01 at 5.24.30 PM.png|thumbnail!\r\nh3. Actual Results\r\n\r\nOnly half of the\u00a0gadget screen is visible to configure.\r\n\r\n!Screenshot 2021-07-01 at 5.20.17 PM.png|thumbnail!\r\nh3. Workaround\r\n\r\n1.To configure the Average time in the status gadget use option Zoom\u00a0in or\u00a0out on\u00a0your current browser page.\r\n\r\n2.Expand the gadget screen or changing the layout",
+      "summary": "Average time in status gadget on a dashboard with a three column layout does not correctly fit to the browser screen"
+    }
+  },
+  {
+    "key": "JRACLOUD-76948",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T11:37:29.000+0000",
+      "description": "# There is an inconsistency in display of error message. E.g. if \u2018Testing Type\u2019 is missing then validation message shows below the \u2018Testing Type\u2019 field and if the field \u2018Assignee\u2019 is missing then validation message shows on top of the popup. Because of this issue, sometimes user will not be able to understand the exact issue/error until he scroll up and see the error message at the top. User may close the create issue screen and try to recreate it again.",
+      "summary": "'Field Assignee is required.' validation message display issue"
+    }
+  },
+  {
+    "key": "JRACLOUD-76947",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T09:23:00.000+0000",
+      "description": "Currently, the automation is sending the notifications using the following header \"*0100017a1613c17a-9edccb72-a258-44de-b690-68d84a5s1fee-000000@bounce.automationforjira.com*\" which looks complex and inconsistent.\r\n\r\nMigrating to Atlassian mail service will provide customers with a consistent email experience. ",
+      "summary": "Migrate to the Atlassian mail service"
+    }
+  },
+  {
+    "key": "JRACLOUD-76946",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T05:49:45.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe scrollbar on the new Jira issue view varies with different OS platforms.  While in mac it appears when we start scrolling the page and disappear when no activity on the page. In Windows, there are 4 scrollbars that are always visible and this gives an unpleasant look in the UI.\r\n\r\nAlso, multiple scrollbars appear when we are using any external mouse.\r\n\r\nh3. Steps to Reproduce\r\n # Open any issue key on the Windows Platform\r\n # Or, add an external mouse in mac the number of scrolls will always be 4\r\n\r\nh3. Expected Results\r\n\r\nScrollbars should be consistent across any platform.\r\n\r\nh3. Actual Results\r\n\r\nHere are the actual scrollbars that appear on the windows UI.\r\n* !Four Scroll.png|thumbnail! \r\n* !Three Scroll.png|thumbnail! \r\n\r\n\r\nh3. Workaround\r\n\r\nDisable [automatic scrollbars|https://www.tenforums.com/tutorials/103061-turn-off-automatically-hide-scroll-bars-windows-10-uwp-apps.html]  for Windows",
+      "summary": "The scrollbar appearance on different is not consisted across differ OS"
+    }
+  },
+  {
+    "key": "JRACLOUD-76945",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T04:57:19.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIn *Issues*\u00a0Filters when select \" *All standard issue types* \" it does not return any data\r\nh3. Steps to Reproduce\r\n # Go to project Filters\u00a0\r\n # Select All issues\r\n # Select Type -> All standard issue types\r\n\r\nh3. Expected Results\r\n\r\nTo return all the issues with different issue types\r\nh3. Actual Results\r\n\r\nError:\u00a0No issues were found matching your search\r\nh3. Workaround\r\n\r\nUse Advance search with the following JQL:\r\n{code}\r\n project=XYZ and issuetype in standardIssueTypes()\r\n{code}",
+      "summary": "In Issues Filters when select \" All standard issue types \" it does not return any data"
+    }
+  },
+  {
+    "key": "JRACLOUD-76944",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T04:43:16.000+0000",
+      "description": "I would like to be able to view multiple Activity in the issue instead of All.\r\n\r\nFor example to be able to select comments and work logs and view only those information.",
+      "summary": "Ability to multi select couple of Activity issue for viewing not just All or the individual ones "
+    }
+  },
+  {
+    "key": "JRACLOUD-76943",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T04:34:07.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen another user or app updates an issue that is being viewed, the new issue view will update in real-time. However, when an ecosystem item (from an installed add-on) is present on the issue view, this real-time update will not happen.\r\nh3. Steps to Reproduce\r\n # Step 1\r\n\r\nInstall an add-on which displays an item on the new issue view, e.g. a glance or panel.\r\n # Step 2\r\n\r\nWhile the new issue view is open, trigger an update to the same issue view as a different user either manually or via an app/automation. (e.g. change a field value)\r\nh3. Expected Results\r\n\r\nThe issue view updates to reflect the change.\r\nh3. Actual Results\r\n\r\nThe issue view does not update.\r\nh3. Workaround\r\n\r\nManually refresh the page (although as a user you would not know when you need to refresh the page) or to stop this behaviour, uninstall the app(s).",
+      "summary": "New issue view does not update in real-time when an ecosystem glance or panel is present"
+    }
+  },
+  {
+    "key": "JRACLOUD-76942",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18514",
+        "id": "18514",
+        "key": "JRACLOUD",
+        "name": "Jira Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18514&avatarId=106292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18514&avatarId=106292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18514&avatarId=106292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18514&avatarId=106292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-07-01T02:14:48.000+0000",
+      "description": "On Jira Cloud, the menu uses two different Korean words interchangeably for \"Fix Version\" in different places - \"\uc218\uc815 \ubc84\uc804\" and \"\ud574\uacb0 \ubc84\uc804\".\r\n\r\nThey should all be changed to \"\uc218\uc815 \ubc84\uc804\".\r\n!image-2021-07-01-11-14-42-724.png!\r\n\r\n\r\nSide note:\r\nSemantically they're not wrong since \"fix\" can be translated into the two Korean words you've used: either \"\uc218\uc815\" or \"\ud574\uacb0\" (the latter could also mean 'resolved').\r\n\r\nBut since Fix Version is a set field, members of my team\u00a0 have reported that they find this very confusing. I hope this gets changed.\r\n\r\n\u00a0",
+      "summary": "Korean translation for \"Fix Version\" uses two different Korean words in different places."
+    }
+  }
+]

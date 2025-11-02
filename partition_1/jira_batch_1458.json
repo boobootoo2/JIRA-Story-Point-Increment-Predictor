@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "CRUC-8479",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-14T10:20:53.000+0000",
+      "description": "Currently (up to and include Crucible 4.8.x) an admin can delete all classifications but one.\r\n (*Administration* > *Crucible* > *Edit defect classifications* >*Remove this classification)\r\n\r\nThere is a minimum occurrence of 1 in the schema, so even if they delete it upon saving the settings it will reappear. (*Administration* > *Crucible* > *Edit defect classifications* > *Remove this classification*)\r\n{noformat}\r\n<xsd:complexType name=\"fieldGroup\">\r\n        <xsd:sequence>\r\n            <xsd:element name=\"field\" type=\"cru:field\" minOccurs=\"1\" maxOccurs=\"unbounded\"/>\r\n        </xsd:sequence>\r\n    </xsd:complexType>\r\n{noformat}",
+      "summary": "Allow an administrator to delete all defect classifications"
+    }
+  },
+  {
+    "key": "CRUC-8478",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-13T21:37:31.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently there is no REST API endpoint to mark defect comments on reviews as resolved.\r\n\r\nh3. Suggested Solution\r\nProvide REST API endpoint to mark defect comments on reviews as resolved.\r\n\r\nh3. Workaround\r\nMark defect comment as resolved via web interface.",
+      "summary": "Provide REST API endpoint to mark defect comment on review as resolved"
+    }
+  },
+  {
+    "key": "CRUC-8477",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-11T15:13:15.000+0000",
+      "description": "Crucible currently (4.8) cannot anchor a patch for a file with revision \"nonexistent\" which is a new file which has not been committed yet. It can, however anchor patches when the revision number is revision 0. \r\n\r\nSince there seems to have been a change in the way SVN (or Tortoise SVN) handles patches in newer SVN versions 1.9+ which are supported in modern versions of Crucible, we should be able to handle this case. ([tortoisesvn \\- Unable to parse diff revision header &#39;non existent&#39; in tortoise svn? \\- Stack Overflow|https://stackoverflow.com/questions/32434108/unable-to-parse-diff-revision-header-non-existent-in-tortoise-svn]\r\n\r\nh4. More details\r\n In SVN 1.7 (and reportedly 1.8) such new files were delineated in the patch as below, being a diff with respect to revision 0, essentially:\r\n\r\nIndex: path/to/file.ts\r\n===================================================================\r\n--- path/to/file.ts (revision 0)\r\n+++ path/to/file.ts (working copy)\r\n\r\nWhile on newer SVN versions the generated patch instead marks the file as nonexistent in the working copy, and Crucible is unable to draw an equivalence between this new notation and the previous revision 0 reference\r\n\r\nIndex: path/to/file.ts\r\n===================================================================\r\n--- path/to/file.ts (nonexistent)\r\n+++ path/to/file.ts (working copy)\r\n\r\nh4. Clarifications\r\nNote, that it should only be able to anchor new files when the patch *also* contains diffs from existing files. A patch containing only new files will not be anchored.\r\n\r\nWhen trying to anchor a file, Crucible will search for matches in the files in its database. Crucible will analyze all the paths in the patch, find the branches containing all those paths, then anchor the patch to the trunk or the branch with the most recent commit activity - so the path needs to have already been committed.\r\n\r\nh4. Workaround\r\nManually replace _nonexistent_ with _revision 0_ before uploading the patch, for example\r\n{noformat}\r\n sed s/nonexistent/revision 0/\r\n{noformat}",
+      "summary": "Crucible should be able to anchor patches for files with revision \"nonexistent\", when there are already diffs for existing files in the patch"
+    }
+  },
+  {
+    "key": "CRUC-8476",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-11T12:18:45.000+0000",
+      "description": "Please have a message displayed whenever you upload a file for review which is greater than the default 10MB max size.",
+      "summary": "Display message when review upload file is > 10MB"
+    }
+  },
+  {
+    "key": "CRUC-8475",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-05-08T06:30:26.000+0000",
+      "created": "2020-05-08T06:29:56.000+0000",
+      "description": "According to http://www.oracle.com/us/support/library/lifetime-support-technology-069183.pdf:\r\n\r\n* Premier support ended 31 Jul 2018\r\n* Extended support ends 31 Jul 2021\r\n\r\nEnd support for Oracle 12c R1 in Fisheye and Crucible.",
+      "summary": "End support for Oracle 12c R1"
+    }
+  },
+  {
+    "key": "CRUC-8474",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-21T18:18:38.000+0000",
+      "description": "h3. Issue Summary\r\nAfter editing a comment, the comment box may disappear and will only reappear when the browser tab is refreshed.\r\n\r\nh3. Steps to Reproduce\r\nWatch this video: [^Recording.mov]\r\n\r\nAs can be seen:\r\n # Go to a Crucible review\r\n # Go into a file and add a comment to a single line of code\r\n # Edit the comment\r\n # Click on another line of code that is *lower* than the one currently selected to add the comment to that line as well. It doesn't need to be an adjacent line of code, it can be any *lower* line number.\r\n # Click the Comment button and notice that the comment box will disappear.\r\n # Refresh the browser window to make the comment show up again.\r\n # Edit the comment once again\r\n # Unselect the *lower* line number and select a *greater* line number.\r\n # Click the comment button and notice that the comment box will continue being displayed.\r\n # Edit the comment again\r\n # Unselect the\u00a0*greater*\u00a0line number and select the\u00a0*lower* line number you originally intended, and see that the comment box will remain displayed.\r\n\r\nh3. Expected Results\r\nThe comment box should remain being displayed no matter which line number is selected.\r\n\r\nh3. Actual Results\r\nThe comment box disappears if a lower line number (when compared to the original line number) is selected when the comment is edited.\r\n\r\nh3. Workaround\r\n*Workaround 1:*\r\nReload the review page.\r\n\r\n*Workaround 2:* \r\nWhen editing the comment, first select a line number that is greater than the one currently selected, save the comment, edit the comment once again, unselect the greater line of code, and then select the lower line of code you originally wanted to select.",
+      "summary": "Comments on reviews do not always show up after being edited"
+    }
+  },
+  {
+    "key": "CRUC-8473",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-20T21:06:46.000+0000",
+      "description": "According to this page https://www.mysql.com/support/supportedplatforms/database.html MySQL 8 is supported on all major operating systems and MySQL 5.6 and 5.7 is not longer supported on some versions (e.g. RedHat Enterprise Linux 8, Windows 2019 Server).\r\n\r\nAdd support for MySQL 8 in Fisheye and Crucible.",
+      "summary": "Support MySQL 8"
+    }
+  },
+  {
+    "key": "CRUC-8472",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-20T15:52:13.000+0000",
+      "created": "2020-04-20T15:28:32.000+0000",
+      "description": "According to [this page|https://www.mysql.com/support/supportedplatforms/database.html], MySQL 5.6 is no longer supported on many platforms.\r\n\r\nEnd support for this version of the database in Crucible 4.9 (it will be no longer supported). Older versions of Crucible will support this database version till [their end of life|https://confluence.atlassian.com/support/atlassian-support-end-of-life-policy-201851003.html].",
+      "summary": "End support for MySQL 5.6"
+    }
+  },
+  {
+    "key": "CRUC-8471",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-17T02:34:12.000+0000",
+      "created": "2020-04-16T19:57:33.000+0000",
+      "description": "The setup resources in Atlassian Fisheye and Crucible before version 4.8.1 allows remote attackers to complete the setup process via a cross-site request forgery (CSRF) vulnerability.",
+      "summary": "CSRF in the setup resources - CVE-2020-4018"
+    }
+  },
+  {
+    "key": "CRUC-8470",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-17T02:41:43.000+0000",
+      "created": "2020-04-16T19:46:24.000+0000",
+      "description": "The /rest/jira-ril/1.0/jira-rest/applinks resource in the crucible-jira-ril plugin in Atlassian Fisheye and Crucible before version 4.8.1 allows remote attackers to get information about any configured Jira application links via an information disclosure vulnerability.",
+      "summary": "Information disclosure in the /rest/jira-ril/1.0/jira-rest/applinks resource in the crucible-jira-ril plugin - CVE-2020-4017"
+    }
+  },
+  {
+    "key": "CRUC-8469",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-17T02:41:31.000+0000",
+      "created": "2020-04-16T19:38:16.000+0000",
+      "description": "The /plugins/servlet/jira-blockers/ resource in the crucible-jira-ril plugin in Atlassian Fisheye and Crucible before version 4.8.1 allows remote attackers to get the ID of configured Jira application links via an information disclosure vulnerability.",
+      "summary": "Information disclosure in the /plugins/servlet/jira-blockers/ resource in the crucible-jira-ril plugin - CVE-2020-4016"
+    }
+  },
+  {
+    "key": "CRUC-8468",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-17T02:40:45.000+0000",
+      "created": "2020-04-16T19:26:26.000+0000",
+      "description": "The /json/fe/activeUserFinder.do resource in Altassian Fisheye and Crucible before version 4.8.1 allows remote attackers to view user user email addresses via a security misconfiguration.",
+      "summary": "Security misconfiguration in the /json/fe/activeUserFinder.do resource - CVE-2020-4015"
+    }
+  },
+  {
+    "key": "CRUC-8467",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-17T02:31:28.000+0000",
+      "created": "2020-04-16T18:58:49.000+0000",
+      "description": "The /profile/deleteWatch.do resource in Atlassian Fisheye and Crucible before version 4.8.1 allows remote attackers to remove another user's watching settings for a repository via an improper authorization vulnerability.",
+      "summary": "Improper authorization vulnerablity in the /profile/deleteWatch.do resource- CVE-2020-4014"
+    }
+  },
+  {
+    "key": "CRUC-8466",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-17T02:29:00.000+0000",
+      "created": "2020-04-16T18:41:40.000+0000",
+      "description": "The review resource in Atlassian Fisheye and Crucible before version 4.8.1 allows remote attackers to inject arbitrary HTML or Javascript via a cross site scripting (XSS) vulnerability through the review objectives.",
+      "summary": "XSS in the review resource through objectives - CVE-2020-4013"
+    }
+  },
+  {
+    "key": "CRUC-8465",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-21T12:30:47.000+0000",
+      "created": "2020-04-16T14:02:35.000+0000",
+      "description": "Support Microsoft SQL Server 2019",
+      "summary": "Support MSSQL 2019"
+    }
+  },
+  {
+    "key": "CRUC-8464",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-24T06:10:17.000+0000",
+      "created": "2020-04-16T13:58:01.000+0000",
+      "description": "Provide support for Oracle Database 19c in Fisheye / Crucible.",
+      "summary": "Support for Oracle 19c"
+    }
+  },
+  {
+    "key": "CRUC-8462",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-21T10:49:13.000+0000",
+      "created": "2020-04-16T12:06:24.000+0000",
+      "description": "Support PostgreSQL 12",
+      "summary": "Support PostgreSQL 12"
+    }
+  },
+  {
+    "key": "CRUC-8461",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-16T10:51:17.000+0000",
+      "created": "2020-04-16T10:50:53.000+0000",
+      "description": "Support Git versions up to 2.26.x",
+      "summary": "Support Git 2.24 - 2.26"
+    }
+  },
+  {
+    "key": "CRUC-8460",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-16T10:42:53.000+0000",
+      "created": "2020-04-16T10:42:23.000+0000",
+      "description": "Don't support integration with Crowd versions which are already end of life:\r\n\r\n3.2 (EOL Date: Apr 24 2020)\r\n...\r\n2.4 (EOL Date; May 17, 2014)\r\n",
+      "summary": "Drop support for Crowd 2.4-3.2"
+    }
+  },
+  {
+    "key": "CRUC-8459",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-16T10:31:29.000+0000",
+      "created": "2020-04-16T10:30:57.000+0000",
+      "description": "Don't support Jira-Crucible integration for Jira versions which are already end of life (or will become end of life soon after Crucible 4.9 is released):\r\n\r\nJira has the following end-of-life dates:\r\n\r\n7.12 (EOL Date: Aug 27, 2020)\r\n7.11 (EOL Date: Jul 11, 2020)\r\n7.10 (EOL Date: May 29, 2020)\r\n7.9 (EOL Date: Apr 9, 2020)\r\n7.8 (EOL Date: Feb 20, 2020)\r\n7.7 (EOL Date: Jan 11, 2020)\r\n7.6 (EOL Date: Nov 16, 2019)\r\n...\r\n6.4 (EOL Date: March 17, 2017)\r\n\r\nWe will still support integrations with Jira 7.13 (the enterprise release) and newer.",
+      "summary": "Drop support for Jira 6.4-7.12"
+    }
+  },
+  {
+    "key": "CRUC-8457",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-31T22:33:34.000+0000",
+      "description": "h3. Summary\r\nThis issue is similar to the CRUC-6955, however it is more severe, as it may happen also for branches which tip do differ from other branches. A Git branch is not showed in the {{Browse Changesets}} option in Crucible when adding content to a review. \r\n\r\nh3. Environment\r\nGit repository added to a Crucible instance.\r\n\r\nh3. Steps to Reproduce\r\n# Download the attached [^git-micro.zip] test repository.\r\n# Add the repository to Crucible.\r\n# Create a review in Crucible, click {{Add content}}. Next click on {{Browse Changesets}}.\r\n\r\nh3. Expected Results\r\nCrucible showing all the branches present in the Git repository.\r\n\r\nh3. Actual Results\r\nCrucible shows only the 'dev' and 'new-branch-3' branches in the 'Browse changesets' dialog:\r\n\r\n !git-micro-add-changesets.png|thumbnail! \r\n\r\nThe 'Add branches' dialog shows all six branches:\r\n\r\n !git-micro-add-branches.png|thumbnail! \r\n\r\nAll of the 'feature', 'dev' and 'master' branches point to different commits (unlike in CRUC-6955). Both 'dev' and 'master' branches contain own (merge) commits:\r\n !git-micro-commit-graph.png|thumbnail! \r\n\r\nh3. Notes\r\n\r\n\r\nh3. Workaround #1\r\n\r\nUse the 'Add branches' dialog. You may also remove changesets or files one-by-one after adding a branch (using the edit mode).\r\n\r\nh3. Workaround #2\r\n\r\nInstall the attached [^baserevisioncache-findbranches-use-lucene.btm] Byteman script ([how to install the script|https://confluence.atlassian.com/fishkb/enable-byteman-for-additional-logging-in-fisheye-and-crucible-943956769.html] ). It will use Lucene search index as an alternative data source to fetch all open branches. Note that it returns up to 1000 branches, you may want to change the limit in the script.\r\n",
+      "summary": "Git branches are missing in Crucible the 'Browse changesets' dialog but are present in the 'Add branches' dialog"
+    }
+  },
+  {
+    "key": "CRUC-8456",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-10T02:46:06.000+0000",
+      "description": "Python2 support within our organisation has been deprecated (i.e. we may not install python2) and we desperately need a python3 version of the script.",
+      "summary": "Python3 support for crucible.py"
+    }
+  },
+  {
+    "key": "CRUC-8455",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-09T13:27:38.000+0000",
+      "description": "h3. Issue Summary\r\nClicking 'Close' option in the review dashboard does nothing. Sometimes a dark screen with a 'loading' icon is shown for a split second.\r\nWatch this small screen recording: [^Replicating.mp4]\r\n\r\nh3. Steps to Reproduce\r\n# In the review dashboard, hover the mouse over a review key in order to open the modal / pop-up window showing a few of its details. \r\n# In this window, click the 'cog' icon and select the 'Close' option\r\n# Note that the review is not closed, and sometimes a dark screen with a 'loading' icon is shown for a split second.\r\n\r\nh3. Expected Results\r\nThe review should be transitioned to Closed state\r\n\r\nh3. Actual Results\r\nWatch this small screen recording: [^Replicating.mp4]\r\nAs can be seen in the screen recording:\r\n* The review is not transitioned to Closed state\r\n* Sometimes a dark screen shows with a 'loading' icon for a split second\r\n\r\nDebug logging does not write anything pertinent in the logs\r\n\r\nh3. Workaround\r\nFrom the Review dashboard, click the review key (and not just hover the mouse over it), then click the 'Close' button at the top right corner of the screen. After that:\r\n* If all reviewers have finished their work on that review it will be transitioned to closed state immediately.\r\n* If there are reviewers that haven't finished their work on that review you will be shown a warning saying that, but you will be able to proceed anyway.",
+      "summary": "Clicking 'Close' option in the review dashboard does nothing"
+    }
+  },
+  {
+    "key": "CRUC-8454",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-09-10T13:08:17.000+0000",
+      "created": "2020-02-24T09:45:10.000+0000",
+      "description": "h3. Issue Summary\r\nAfter GDPR changes in Jira Cloud, the following does not work anymore:\r\n* link Crucible Review with JIRA Issues\r\n* update the time spent reviewing into the Jira issue\r\n* usage of [Smart Commits|https://confluence.atlassian.com/fisheye/using-smart-commits-960155400.html] related to Jira (to add comment to a Jira ticket, log work, and perform workflow transitions)\r\n\r\nh3. Actual Results\r\nThe below exception is thrown in the atlassian-crucible.log file:\r\n{noformat}\r\n2020-02-19 03:22:31,607 WARN  [qtp258112787-168115 ] fisheye JiraRestResource-renderException - \r\ncom.atlassian.fisheye.jira.RemoteJiraException: \r\n\tat com.atlassian.fecru.plugins.jirarest.restinvoker.JiraRestInvokerImpl.invoke(JiraRestInvokerImpl.java:67) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.restinvoker.JiraRestInvokerImpl.invokeAuthenticated(JiraRestInvokerImpl.java:29) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.JiraIssueImpl.load(JiraIssueImpl.java:102) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.JiraServerImpl.getIssue(JiraServerImpl.java:180) [?:?]\r\n\tat com.atlassian.fisheye.jira.issue.JiraIssueServiceImpl.retrieveJiraIssue(JiraIssueServiceImpl.java:183) [fisheye.jar:?]\r\n\tat com.atlassian.fisheye.jira.issue.JiraIssueServiceImpl.getJiraIssue(JiraIssueServiceImpl.java:105) [fisheye.jar:?]\r\n\tat com.atlassian.fisheye.jira.issue.JiraIssueServiceImpl.getJiraIssue(JiraIssueServiceImpl.java:74) [fisheye.jar:?]\r\n\tat sun.reflect.GeneratedMethodAccessor1450.invoke(Unknown Source) [?:?]\r\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) [?:1.8.0_45-internal]\r\n\tat java.lang.reflect.Method.invoke(Method.java:497) [?:1.8.0_45-internal]\r\n...\r\nCaused by: RestClientException{statusCode=Optional.absent(), errorCollections=[]}\r\n\tat com.atlassian.jira.rest.client.internal.async.DelegatingPromise.claim(DelegatingPromise.java:47) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.JiraIssueImpl.loadIssue(JiraIssueImpl.java:126) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.JiraIssueImpl.access$000(JiraIssueImpl.java:63) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.JiraIssueImpl$2.run(JiraIssueImpl.java:106) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.JiraIssueImpl$2.run(JiraIssueImpl.java:102) [?:?]\r\n\tat com.atlassian.fecru.plugins.jirarest.restinvoker.JiraRestInvokerImpl.invoke(JiraRestInvokerImpl.java:46) [?:?]\r\n\t... 200 more\r\nCaused by: RestClientException{statusCode=Optional.absent(), errorCollections=[]}\r\n\tat com.atlassian.jira.rest.client.internal.async.AbstractAsynchronousRestClient$3.apply(AbstractAsynchronousRestClient.java:181) [?:?]\r\n\tat com.atlassian.jira.rest.client.internal.async.AbstractAsynchronousRestClient$3.apply(AbstractAsynchronousRestClient.java:175) [?:?]\r\n\tat com.atlassian.httpclient.api.ResponsePromiseMapFunction.apply(ResponsePromiseMapFunction.java:62) [?:?]\r\n\tat com.atlassian.httpclient.api.ResponsePromiseMapFunction.apply(ResponsePromiseMapFunction.java:12) [?:?]\r\n...\r\nCaused by: org.codehaus.jettison.json.JSONException: JSONObject[\"name\"] not found.\r\n\tat org.codehaus.jettison.json.JSONObject.get(JSONObject.java:360) [atlassian-rest-module-3.4.10_1532599076000.jar:?]\r\n\tat org.codehaus.jettison.json.JSONObject.getString(JSONObject.java:487) [atlassian-rest-module-3.4.10_1532599076000.jar:?]\r\n\tat com.atlassian.jira.rest.client.internal.json.JsonParseUtil.parseBasicUser(JsonParseUtil.java:192) [?:?]\r\n\tat com.atlassian.jira.rest.client.internal.json.CommentJsonParser.parse(CommentJsonParser.java:37) [?:?]\r\n\tat com.atlassian.jira.rest.client.internal.json.CommentJsonParser.parse(CommentJsonParser.java:27) [?:?]\r\n\r\n{noformat}\r\n\r\nh3. Notes\r\n* Jira Rest Java Client plugin have been updated so that this error will not happen https://bitbucket.org/atlassian/jira-rest-java-client/commits/98ec2f064ec31227c9074832d5cd4ff274bc3688?at=master\r\n* Fisheye/Crucible still using old plugin version that is not updated yet\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Application Link issue with Jira Cloud"
+    }
+  },
+  {
+    "key": "CRUC-8453",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-18T21:45:24.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen editing a review, the Linked Issue field initially shows the text \"Please enter 2 more characters\" which suggests that Crucible will search for Jira issue keys as soon as at least 2 characters are typed. However, that is not happening, and issue keys are only found when the entire issue key is typed.\r\nh3. Steps to Reproduce\r\n # Create an Application Link between FeCru 4.8.0 and Jira Software 8.7.1\r\n # Make sure that the OAuth consumer token has been created in both sides\r\n # Create a review, add some content, and try typing the two initial characters of a Jira issue key\r\n # Notice that no issue keys will be found and that the message \"No matches found\" will be displayed immediately (i.e., no delays in the search):\r\n !image-2020-02-18-18-41-49-783.png|width=503,height=65!\r\n # Type the entire issue key and notice that it will immediately be found:\r\n !image-2020-02-18-18-42-42-585.png|width=503,height=65!\r\n\r\nh3. Expected Results\r\n\r\nIssue keys should be listed as soon as at least 2 characters are typed.\r\nh3. Actual Results\r\n\r\nNo issue keys are found.\r\nh3. Workaround\r\n\r\nType the entire issue key in the Linked Issue field.",
+      "summary": "Linked Issue is only found when the entire issue key is typed"
+    }
+  },
+  {
+    "key": "CRUC-8452",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-13T09:27:49.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen a user tries to list git branches on view changesets screen while creating review, some branches are missing.\r\n\r\nThe issue occurs when at least two branches point to same commit. Only one branch gets listed, the rest are missing.\r\n\r\nThe issue disappears when a new commit is pushed to one of the branches.\r\n\r\nNew branch is created from another (i.e. master) and pushed to remote without any new commits. This leads to the situation when two branches have exactly same commit as top commit. When trying to create review being in that state, one of the branches is missing.\r\n\r\nh3. Steps to Reproduce\r\n\r\n # Prepare a repository (on github or bitbucket)\r\n{code:java}\r\ngit clone https://github.com/[author]/[repo].git\r\ncd [repo]/\r\necho \"foo1\" > foo1.txt\r\ngit add foo1.txt\r\ngit commit -m \"foo1\"\r\ngit branch new-branch\r\ngit push --all{code}\r\n\r\n # Add the repository to FishEye and wait for it to be indexed\r\n # Start creating review, go to Browse changesets and open the branches dropdown\r\n\r\nh3. Expected Results\r\n\r\nAll existing branches should be visible, i.e. _master_ and _new-branch_\u00a0from the prepared repo (see. Steps to reproduce, point 1.).\r\nh3. Actual Results\r\n\r\nOnly one branch is listed. Rest is missing (i.e. _new-branch_).\r\n\r\nh3. Workaround\r\n\r\nA temporary workaround of the issue is to push a (empty) commit to one of the branches.",
+      "summary": "Listing branches when viewing changesets on creating review screen leads to missing branches "
+    }
+  },
+  {
+    "key": "CRUC-8451",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-07T11:45:23.000+0000",
+      "description": "*Feature requested:*\r\nTo be able to add reactions (emojis) next to a line of code.\r\n\r\n*Context:*\r\nOften the feedback given in code reviews is related to \"change requests\", \"questions\" or \"things to be re-worked\".\r\n\r\nSomehow I feel that the code review process is always sitting on a negative space.\r\n\r\nI'd like to be able to add\u00a0(y)(*)(/):)\u00a0quick positive feedback to a nice change on the code.\r\n\r\nI do believe that positive reinforcement provides a better way to create a good mood in the office and in code reviews.\r\n\r\n*Current behaviour:*\r\n**\r\n{code:java}\r\n- 40 var i = 0;\r\n  41\r\n- 42 for(; i<l; i++) {\r\n+ 42 for(let i; i < arr.length; i++) {\r\n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\r\n\u2502\u2591\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591User name\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2502\r\n\u20d2\u2502\u2591\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2502\r\n\u2502\u2591\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\ud83d\ude0d\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2502\r\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\r\n- 43   var j = a[i];\r\n+ 43   const j = a[i];\r\n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\r\n\u2502\u2591\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591User name\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2502\r\n\u2502\u2591\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2502\r\n\u2502\u2591\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\ud83d\udc4d\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2502\r\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f{code}\r\n*Desired behaviour:*\r\n{code:java}\r\n  - 40 var i = 0;\r\n    41\r\n  - 42 for(; i<l; i++) {\r\n\ud83d\ude0d+ 42 for(let i; i < l; i++) {\r\n  - 43   var j = a[i];\r\n\ud83d\udc4d+ 43   const j = a[i];{code}\r\n\u00a0\r\n\r\n\u00a0",
+      "summary": "Add reactions to a line of code"
+    }
+  },
+  {
+    "key": "CRUC-8449",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-04-16T10:45:57.000+0000",
+      "created": "2020-01-15T20:26:18.000+0000",
+      "description": "Crucible 4.8 version supports GIT version up to 2.23.0.\r\n\r\nGIT has released a few minor versions (such as 2.23.1 and 2.24.1) recently to addresses some security vulnerabilities in old versions. These releases fix various security flaws, which allowed an attacker to overwrite arbitrary paths, remotely execute code, and/or overwrite files in the .git/ directory etc. See the release notes attached for the list for their descriptions and CVE identifiers.\r\n\r\nMore information on the\u00a0\u00a0[https://lore.kernel.org/git/xmqqr21cqcn9.fsf@gitster-ct.c.googlers.com/T/&#35;u|https://lore.kernel.org/git/xmqqr21cqcn9.fsf@gitster-ct.c.googlers.com/T/#u]\r\n\r\n\u00a0",
+      "summary": "Support Git 2.23.1"
+    }
+  },
+  {
+    "key": "CRUC-8448",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-14T15:02:15.000+0000",
+      "description": "The docs don't explain the difference between adding new iteration as a new patch and adding to an existing patch. \r\n The difference is important, for reference see [CRC-13324|https://getsupport.atlassian.com/browse/CRC-13324]",
+      "summary": "Improve documentation of Iterative pre-commit reviews"
+    }
+  },
+  {
+    "key": "CRUC-8447",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-17T04:17:47.000+0000",
+      "created": "2019-12-17T04:10:29.000+0000",
+      "description": "The version of the Application Links plugin used in Crucible before version 4.7.1 allows remote attackers to obtain information about configured application links via a missing permissions check. See https://ecosystem.atlassian.net/browse/APL-1386 for more details.",
+      "summary": "Information disclosure in the listEntityLinks servlet resource of the Application links plugin - CVE-2019-15011"
+    }
+  },
+  {
+    "key": "CRUC-8445",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-12T12:55:24.000+0000",
+      "description": "As a user, I want to generate a report on a LOC covered by a specific review.\r\n\r\nCurrently,\u00a0[the Review Coverage report|https://confluence.atlassian.com/crucible/review-coverage-report-298977474.html]\u00a0provides information on a Total number of lines under review.\r\n\r\nAlso, a REST API endpoint to get the review statistics and info would be very useful.",
+      "summary": "As a user, I want to generate a report on a LOC covered by a specific review."
+    }
+  },
+  {
+    "key": "CRUC-8443",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-10T02:36:37.000+0000",
+      "created": "2019-12-10T02:35:34.000+0000",
+      "description": "The /json/profile/removeStarAjax.do resource in Atlassian Crucible before version 4.8.0 allows remote attackers to remove another user's favourite setting for a project via an improper authorization vulnerability.",
+      "summary": "Improper authorization vulnerability in the /json/profile/removeStarAjax.do resource - CVE-2019-15009"
+    }
+  },
+  {
+    "key": "CRUC-8441",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-10T02:18:15.000+0000",
+      "created": "2019-12-10T02:16:35.000+0000",
+      "description": "The /plugins/servlet/branchreview resource in Atlassian Crucible before version 4.7.3 allows remote attackers to inject arbitrary HTML or JavaScript via a cross site scripting (XSS) vulnerability in the reviewedBranch parameter.",
+      "summary": "XSS in the /plugins/servlet/branchreview resource through the reviewedBranch parameter - CVE-2019-15008"
+    }
+  },
+  {
+    "key": "CRUC-8439",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-10T01:53:10.000+0000",
+      "created": "2019-12-10T01:43:14.000+0000",
+      "description": "The review resource in Atlassian Crucible before version 4.7.3 allows remote attackers to inject arbitrary HTML or JavaScript via a cross site scripting (XSS) vulnerability through the name of a missing branch.",
+      "summary": "XSS in the the review resource through the name of a missing branch - CVE-2019-15007"
+    }
+  },
+  {
+    "key": "CRUC-8438",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-25T13:54:12.000+0000",
+      "description": "When adding content to a review (changesets), a default repository is selected (based on the project the review is opened under).\r\n\r\nIt would be nice to have the option for the administrator to be able to also select a default branch (i.e. master) that will be pre-filled when creating  the review.\r\n\r\nAt the moment there is no pre-filled option, and the branches that can be selected are arranged in alphabetical order in the branch selector.\r\n",
+      "summary": "Allow the administrator to set a default branch as pre-filled option in the branch selector for a review "
+    }
+  },
+  {
+    "key": "CRUC-8437",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-20T14:51:30.000+0000",
+      "description": "We use git for version control. Sometimes with many small changes close together, the Crucible diff shows many more changes than git diff does, occasionally showing the entire file as being different. This makes it difficult to review.\r\n\r\nI am asking for a way to change the default Crucible diff parameters, for example, number of context lines considered before highlighting a change, the diff algorithm, end-of-line characters, etc. so smaller diffs are produced.",
+      "summary": "Allow changing default diff parameters"
+    }
+  },
+  {
+    "key": "CRUC-8436",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-14T07:55:03.000+0000",
+      "description": "A per-file revision slider is nice for smaller changes, but reviews consisting of several revisions, adding up to a substantial review (like 200 files) are not manageable in this way.\r\n\r\nWould there exist (additionally) a global revision range slider that would limit the current view globally (i.e. also including the changed files list, etc.) those mega-reviews could be dealt with easily (as long as the inidividual commits are smaller and didactic).\r\n\r\nI would expect such a change to be not a lot of work, but the effect for bigger reviews would be a tremendous improvement in terms of usability.",
+      "summary": "Add global revision slider"
+    }
+  },
+  {
+    "key": "CRUC-8435",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-05T21:50:02.000+0000",
+      "description": "It would be good if moderators or authors had the ability to modify defect comments, in the situation where the author of the comment is out of the office and they want all the comments resolved before closing the review.\u00a0 Although it's true that it's possible to close a review with open comments, that cannot always be done. It would be best to have someone other than the author or moderator update a reviewer's defect category and/or comment in such cases.",
+      "summary": "Crucible reviews comment permissions"
+    }
+  },
+  {
+    "key": "CRUC-8434",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-10-30T11:15:19.000+0000",
+      "created": "2019-10-30T10:26:59.000+0000",
+      "description": "Request for inclusion of [Microsoft Edge Browser|https://www.microsoft.com/en-us/windows/browser-for-doing].",
+      "summary": "Support Microsoft Edge browser for Crucible"
+    }
+  },
+  {
+    "key": "CRUC-8433",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-10-31T09:00:35.000+0000",
+      "created": "2018-07-18T11:04:05.000+0000",
+      "description": "This happens in Internet Explorer and Edge.\u00a0Partially also in Safari.",
+      "summary": "A broken icon causes text to appear outside the issue transition button"
+    }
+  },
+  {
+    "key": "CRUC-8432",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-29T15:36:43.000+0000",
+      "description": "On some screens there are checkboxes which when toggled unlock edit of the second-level checkboxes and other fields. The top-level checkbox has brighter text than the second one, suggesting that it is read-only:\r\n\r\n !edge-checkboxes.png|thumbnail! ",
+      "summary": "Make checkboxes darker to avoid suggestion that they're read-only"
+    }
+  },
+  {
+    "key": "CRUC-8431",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-29T15:29:04.000+0000",
+      "description": "When uploading a new file to a code review, the file picker field is too wide when viewed in the Edge browser:\r\n\r\n !edge-add-content-upload.png|thumbnail! \r\n\r\nOther dialogs could be improved as well, e.g. 'Private key' on the repository settings tab:\r\n\r\n !edge-drop-down-and-file-upload.png|thumbnail! ",
+      "summary": "Improve look of the file upload picker in Edge "
+    }
+  },
+  {
+    "key": "CRUC-8430",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-25T10:37:43.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nPatch anchoring process can be a long process given a large repository and patch. This action contains timer to limit maximal execution time. However this timer is not always respected.\r\nh3. Steps to Reproduce\r\n # Large SVN repository\r\n # Create patch with many changed files (~300)\r\n # Apply patch in Crucible\r\n\r\nThese steps are high level and require additional details.\r\nh3. Expected Results\r\n\r\nAction ends when timeout exceeded.\r\nh3. Actual Results\r\n\r\nAction ends after timeout settings.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available.",
+      "summary": "Anchoring patch action doesn't respect timer settings"
+    }
+  },
+  {
+    "key": "CRUC-8428",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-10-04T11:26:33.000+0000",
+      "created": "2019-09-24T12:57:46.000+0000",
+      "description": "{panel:title=Atlassian status as of September 2019|borderStyle=solid|borderColor=#B2D4FF | titleBGColor=#B2D4FF | bgColor=#EAF1FC}\r\nMicrosoft has not released any major updates for IE11 since 2015, and has [recently discouraged the use of IE11 as a default browser|https://techcommunity.microsoft.com/t5/Windows-IT-Pro-Blog/The-perils-of-using-Internet-Explorer-as-your-default-browser/ba-p/331732].\r\n\r\nTo allow us to continue to take advantage of modern web standards to deliver improved functionality and the best possible user experience across all of our products, we have decided to end support for IE11. *Crucible 4.8 will be the last IE11-supported version.*\r\n\r\nEnd of support means we will not fix bugs that are specific to IE11, and will begin to introduce features that aren't compatible with this browser.\r\n\r\nFind out more about this change from our [announcement|https://community.atlassian.com/t5/Feedback-Forum-articles/Retiring-IE11-support-for-Atlassian-cloud-server-and-data-center/ba-p/1185312].\r\n\r\nIf you have questions or concerns about this change, please comment on this issue.\r\n\r\n{panel}",
+      "summary": "Deprecate support for IE11"
+    }
+  },
+  {
+    "key": "CRUC-8427",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-21T20:08:10.000+0000",
+      "description": ".",
+      "summary": "File status > Tree view: folders partially selected should be ticked with a grey tick"
+    }
+  },
+  {
+    "key": "CRUC-8426",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-17T09:42:10.000+0000",
+      "description": "*Wrong escaping of single quote in python syntax*\r\n\r\n\u00a0\r\n\r\n*Steps to Reproduce*\r\n # Create review comment with python syntax containing single quote :// code placeholder\u00a0\r\n\r\n{noformat}\r\n{code:python} \r\ndef function(parameter):\r\n   dict_ = {1: 'test', 2: 'another'}\r\n   print(dict_[2])\r\n{code}\r\n{noformat}\r\n\r\nh3. Expected result\r\n\r\nA correctly rendered single quote.\r\n{code:java}\r\ndef function(parameter):\r\n   dict_ = {1: 'test', 2: 'another'}\r\n   print(dict_[2])\r\n{code}\r\n\r\nh3. Actual Result\r\n\r\nA single quote is replaced by escape sequence.\r\n\r\n{noformat}\r\n def function(parameter):\r\n   dict_ = {1: &#39;test', 2: 'another'}\r\n   print(dict_[2])   \r\n{noformat}\r\n\u00a0\r\n\r\n*Workaround*\r\n\r\nUse \\{code:java} instead of \\{code:python} in review comments",
+      "summary": "Wrong escaping of review comments containing single quote with python syntax"
+    }
+  },
+  {
+    "key": "CRUC-8423",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-09T13:30:26.000+0000",
+      "description": "Currently, Crucible allows users to resolve comments authored by other users. I consider this a bit inconvenient: in contrast to JIRA, the resolved comment stops blocking the review immediately and you can easily forget to pay attention on the fact of the resolution. The email notification is not enough too, it can be missed easily in tons of other emails from Crucible. As a result, code with defects can mistakenly be approved on review.\r\n\r\nIn our workflow users shouldn't resolve comments not authored by them, but they do it sometimes by mistake, since this rule is not required by the Crucible permission scheme.\r\n\r\nSuggestion: add \"Only author of a comment can resolve it\" checkbox to the permission scheme page.",
+      "summary": "Permission to resolve unresolved comments not authored by a user"
+    }
+  },
+  {
+    "key": "CRUC-8420",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-09T09:22:51.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nFrom  logs,  review related actions (update review, diffs) produce ArrayIndexOutofBoundsExceptions\r\n\r\n\r\nh3. Steps to Reproduce\r\n\r\nh3. Actual Results\r\n\r\nThe below exception is thrown in the atlassian-fisheye-xxx.log file:\r\n{noformat}\r\nERROR [qtp2133655103-1459455 ] fisheye TotalityFilter-logExceptionDetails - Exception \"java.lang.ArrayIndexOutOfBoundsException\" (javax.servlet.ServletException) while processing \"/WEB-INF/jsp/crucible/review/monolithic/redisplayFrxDiv.jsp\" (Referer:xxxxxxx\")\r\njavax.servlet.ServletException: java.lang.ArrayIndexOutOfBoundsException\r\n\tat org.apache.jasper.runtime.PageContextImpl.doHandlePageException(PageContextImpl.java:944) [org.apache.jasper.glassfish-2.2.2.v201112011158.jar:?]\r\n\tat org.apache.jasper.runtime.PageContextImpl.handlePageException(PageContextImpl.java:879) [org.apache.jasper.glassfish-2.2.2.v201112011158.jar:?]\r\n\tat org.apache.jsp.WEB_002dINF.jsp.crucible.review.monolithic.redisplayFrxDiv_jsp._jspService(redisplayFrxDiv_jsp.java:177) [classes/:?]\r\n\tat org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:111) [org.apache.jasper.glassfish-2.2.2.v201112011158.jar:?]\r\n\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:770) [javax.servlet-api-3.0.1.jar:3.0.1]\r\n\tat org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669) [jetty-servlet-8.1.10.v20130312.jar:8.1.10.v20130312]\r\n\tat org.eclipse.jetty.servlet.ServletHandler$Chain.doFilter(ServletHandler.java:1526) [jetty-servlet-8.1.10.v20130312.jar:8.1.10.v20130312]\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:39) [atlassian-plugins-servlet-4.4.3.jar:?]\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter$1.doFilter(DelegatingPluginFilter.java:58) [atlassian-plugins-servlet-4.4.3.jar:?]\r\n\tat com.atlassian.applinks.core.rest.context.ContextFilter.doFilter(ContextFilter.java:24) [?:?]\r\n{noformat}\r\nand\r\n{noformat}\r\n ERROR [qtp2133655103-1459455 ] fisheye TotalityFilter-logExceptionDetails - Exception \"javax.servlet.ServletException: java.lang.ArrayIndexOutOfBoundsException\" (javax.servlet.ServletException) while processing \"/cru/updateFrxViewAjax.do\" (Referer:\"xxxxxxxxx\")\r\njavax.servlet.ServletException: javax.servlet.ServletException: java.lang.ArrayIndexOutOfBoundsException\r\n\tat com.opensymphony.webwork.dispatcher.DispatcherUtils.serviceAction(DispatcherUtils.java:285) [webwork-2.2.7-atlassian-37.jar:?]\r\n\tat com.opensymphony.webwork.dispatcher.ServletDispatcher.service(ServletDispatcher.java:111) [webwork-2.2.7-atlassian-37.jar:?]\r\n\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:770) [javax.servlet-api-3.0.1.jar:3.0.1]\r\n\tat org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669) [jetty-servlet-8.1.10.v20130312.jar:8.1.10.v20130312]\r\n\tat org.eclipse.jetty.servlet.ServletHandler$Chain.doFilter(ServletHandler.java:1526) [jetty-servlet-8.1.10.v20130312.jar:8.1.10.v20130312]\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:39) [atlassian-plugins-servlet-4.4.3.jar:?]\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter$1.doFilter(DelegatingPluginFilter.java:58) [atlassian-plugins-servlet-4.4.3.jar:?]\r\n\tat com.atlassian.applinks.core.rest.context.ContextFilter.doFilter(ContextFilter.java:24) [?:?]\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter.doFilter(DelegatingPluginFilter.java:64) [atlassian-plugins-servlet-4.4.3.jar:?]\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:37) [atlassian-plugins-servlet-4.4.3.jar:?]\r\n{noformat}\r\nh3. Notes\r\n\r\n(Optional - If Necessary)\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behaviour. A workaround will be added here when available",
+      "summary": "Review related actions result in  java.lang.ArrayIndexOutOfBoundsException"
+    }
+  },
+  {
+    "key": "CRUC-8419",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-08-27T16:30:09.000+0000",
+      "description": "This would provide value in marking progress so a reviewer wouldn't repeat time spent if\u00a0 interrupted during a review, which happens on most reviews. It also indicates to the author which files do not need work.\u00a0",
+      "summary": "Allow individual files to be marked as approved"
+    }
+  },
+  {
+    "key": "CRUC-8417",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-03-16T14:25:24.000+0000",
+      "created": "2019-08-21T12:04:11.000+0000",
+      "description": "Such plugin point should allow to install a render to display file on the code review page.\r\n\r\nPotential extensions: rendering documents (DOC/XLS/PDF), images (other than PNG/JPG), technical designs (e.g. CAD), markdown files.",
+      "summary": "Create a plugin point to allow rendering of custom file formats in the code review"
+    }
+  },
+  {
+    "key": "CRUC-8416",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-08-09T12:26:01.000+0000",
+      "description": "h3. Issue Summary\r\n !review_zero_percent.png! \r\n\r\nh3. Environment\r\n\r\n * Subversion repository\r\n\r\nh3. Steps to Reproduce\r\n\r\n # Repository indexing must be in progress\r\n # Create a code review with few recently committed files\r\n # Open files in a code review to mark them as read\r\n\r\nh3. Expected Results\r\n\r\nReview progress should increase up to 100%\r\n\r\nh3. Actual Results\r\n\r\nReview progress stays at 0% (or at some arbitrary percentage) and does not increase. \r\n\r\nPage reload does not help.\r\n\r\nh3. Notes\r\n\r\nWhenever user adds a file to a code review, Crucible fetches necessary data from Fisheye's repository index and stores it in the SQL database. Whenever Crucible needs the data, it is being read from the SQL database. It happens that also a number of lines added and removed in given file revision is persisted in the DB. You can find this data in the cru_fr_detail table - the cru_name column contains linesAdded or linesRemoved properties and cru_value column stores the value of a property.\r\n\r\nUnfortunately, when Subversion repository is being indexed, LOC calculation is calculated in a later phase. It can happen that when user adds a file to a code review, its added/removed lines are 0 and this is persisted in the DB. As a result, even if indexing is finished, old value remains in the code review. As a result, review progress can get stuck at 0% (or another percentage, if some of the files in a code review had LOC available).\r\n\r\n\r\nh3. Workaround\r\n\r\nPlease follow steps below to reindex the data on repository start. It happens only if an undocumented 'rescan.crucible.revisions' repository property is set to 'true'. \r\n\r\n\r\n1. Download the [^byteman_resccan_crucible_revisions.btm] file to your Fisheye server. Edit the fie and replace REPOSITORY_NAME with name of repository you want to refresh.\r\n\r\n[Install the Byteman rule|https://confluence.atlassian.com/fishkb/enable-byteman-for-additional-logging-in-fisheye-and-crucible-943956769.html]. Example commands:\r\n\r\n{noformat}\r\n$ export FISHEYE_LOAD_BYTEMAN=1\r\n\r\n$ ./bin/start.sh\r\n(wait until Crucible starts)\r\n\r\n$ ./tools/byteman/list-rules.sh\r\nno rules installed\r\n\r\n$ ./tools/byteman/load-rules.sh byteman_resccan_crucible_revisions.btm\r\ninstall rule RepositoryPropertyManager_rescan_crucible_revisions\r\n\r\n$ ./tools/byteman/list-rules.sh \r\n# File byteman_resccan_crucible_revisions.btm line 5\r\nRULE RepositoryPropertyManager_rescan_crucible_revisions\r\nCLASS com.atlassian.fecru.properties.RepositoryPropertyManagerImpl\r\nMETHOD loadProperty\r\nAT EXIT\r\nIF \"REPOSITORY_NAME\".equals($1) && \"rescan.crucible.revisions\".equals($2)\r\nDO\r\norg.slf4j.LoggerFactory.getLogger(\"Byteman\").info(\"RepositoryPropertyManagerImpl#loadProperty({}, {}) returning true\", new Object[] \\{$0, $1});\r\nreturn \"true\"\r\nENDRULE\r\nTransformed in:\r\nloader: com.cenqua.fisheye.FishEyeClassLoader@1be6f5c3\r\ntrigger method: com.atlassian.fecru.properties.RepositoryPropertyManagerImpl.loadProperty(java.lang.String,java.lang.String) java.lang.String\r\n{noformat}\r\n\r\n3. Go to Administration > Server. Turn debugging on.\r\n\r\n4. Go to Administration > Repositories > REPOSITORY_NAME > Summary tab. Click 'Stop' and next 'Start'.\r\n\r\n5. Check logs that Crucible reindex has started and completed for this repository. Look for lines similar to the following:\r\n\r\n{noformat}\r\n2019-08-09 13:13:35,141 INFO [qtp400103862-182 ] Byteman NativeMethodAccessorImpl-invoke0 - RepositoryPropertyManagerImpl#loadProperty(REPOSITORY_NAME, rescan.crucible.revision) returning true\r\n{noformat}\r\nmeans Byteman rule triggered properly and set a hidden 'rescan.crucible.revision' repository property\r\n\r\n{noformat}\r\n2019-08-09 13:51:23,412 INFO [qtp1925785585-182 ] fisheye CrucibleRevisionDetailsRescanListener-onRepositoryStartedEvent - Repository REPOSITORY_NAME (REPOSITORY_NAME) has started and requires property details rescan for Crucible revisions. Scheduling it right now\r\n{noformat}\r\nmeans that rescan has been queued\r\n\r\n{noformat}\r\n2019-08-09 13:52:08,880 DEBUG [AtlassianEvent::pool-3-thread-7 ] fisheye Timer-output - -> Crucible Revisions and FileRevision details sync mem_usage = 363810432 heapsize = 722468864 freemem = 358658432\r\n2019-08-09 13:52:08,894 DEBUG [AtlassianEvent::pool-3-thread-7 ] fisheye Timer-output - -- Crucible Revisions and FileRevision details sync at Updated 2 CrucibleRevisions time 13 millis mem_usage = 365703136 heapsize = 722468864 freemem = 356765728\r\n2019-08-09 13:52:08,894 DEBUG [AtlassianEvent::pool-3-thread-7 ] fisheye Timer-output - <- Crucible Revisions and FileRevision details sync time 13 millis mem_usage = 365703136 heapsize = 722468864 freemem = 356765728\r\n{noformat}\r\n\r\nmeans that queued request started and finished - note the \"Updated 2 CrucibleRevisions\" message.\r\n\r\n6. Log in as a reviewer and go to the problematic code review. Review progress should be correct now.\r\n\r\n",
+      "summary": "Viewing files in a code review does not update the review progress"
+    }
+  },
+  {
+    "key": "CRUC-8415",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-07-31T14:05:49.000+0000",
+      "description": "After updating the root review path, historical reviews don't update to reflect the new root path. We would like it if there were the ability to do so.",
+      "summary": "Update historical reviews with new path when root path is updated"
+    }
+  },
+  {
+    "key": "CRUC-8414",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-07-22T12:30:26.000+0000",
+      "description": "h3. Issue Summary\r\nh3. Steps to Reproduce\r\n # Create a new user\u00a0 (username lowercase only, like *usera*).\r\n # Create a new user (start with uppercase, like *Userb*).\r\n # Add a comment to a review with *usera* and *Userb*.\r\n # Go to _Review Dashboard -> Search comments._\r\n # All comments are displayed.\r\n # Select comment author: *usera* and click\u00a0_Search._\r\n # Select comment author: *Userb* and click _Search._\r\n\r\nh3. Expected Results\r\n\r\nAd 5. All comments (*usera* and *Userb*) are displayed.\u00a0\r\n\r\nAd 6. Comments by *usera* are displayed.\r\n\r\nAd 7. Comments by *Userb* are displayed.\r\nh3. Actual Results\r\n\r\nAd 5. As expected\u00a0All comments (*usera* and *Userb*) are displayed.\u00a0\r\n\r\nAd 6. As expected (Comments by *usera* are displayed)\r\n\r\nAd 7. Comments by *Userb* are *not* displayed.\r\nh3. Notes\r\n\r\nIt seems like the *username* input for the filter is not changed to lowercase, whereas the search comment function indexes all comments authors in *lower case*.\r\n\r\nBecause of that, it tries to compare:\r\n\r\ninput_username == lower(comment_username)\r\n\r\ninstead of:\r\n\r\nlower(input_username) == lower(comment_username).\r\n\r\n_(variables names made up just for illustration)._\r\n\r\nPlease note it's a username that gets compared, not a display name. Changing the display name doesn't help.\r\nh3. Workaround\r\n\r\nChange the username in URL itself after you click 'Search' to lower case only.",
+      "summary": "Searching comments in Comment Search doesn't return results if username contains upper case characters"
+    }
+  },
+  {
+    "key": "CRUC-8413",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-22T10:29:21.000+0000",
+      "created": "2019-07-22T10:28:55.000+0000",
+      "description": "Support MS SQL Server 2016 SP1 in Fisheye and Crucible\r\n\r\nEOL dates are as follows:\r\n\r\n| MS SQL version | Microsoft EOL date | Supported by Fisheye/Crucible |\r\n| SQL 2012 SP4 | 11 July 2017 (x) | (/) |\r\n| SQL 2014 SP2 | 9 July 2019 (/) | (/)  |\r\n| SQL 2016 SP1 | 13 July 2021 (/) | (x) |",
+      "summary": "Support Microsoft SQL Server 2016"
+    }
+  },
+  {
+    "key": "CRUC-8412",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-09T02:48:38.000+0000",
+      "created": "2019-07-09T02:47:04.000+0000",
+      "description": "The version of the Atlassian Application links plugin used in Crucible before version 4.7.1 contained a version of jackson-databind that was vulnerable to CVE-2018-14721.\r\n",
+      "summary": "Update Application links to ensure that a version of jackson-databind containing a fix for CVE-2018-14721 is used"
+    }
+  },
+  {
+    "key": "CRUC-8411",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-08T23:38:24.000+0000",
+      "created": "2019-07-08T23:36:22.000+0000",
+      "description": "The bundled version of XStream in Crucible before version 4.7.1 was vulnerable to CVE-2016-3674 (https://nvd.nist.gov/vuln/detail/CVE-2016-3674).",
+      "summary": "Upgrade Xstream to address CVE-2016-3674"
+    }
+  },
+  {
+    "key": "CRUC-8410",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-09T02:34:03.000+0000",
+      "created": "2019-07-09T02:33:28.000+0000",
+      "description": "The bundled version of OWASP AntiSamy in Crucible before version 4.7.1 was vulnerable to CVE-2017-14735  (https://nvd.nist.gov/vuln/detail/CVE-2017-14735) and CVE-2016-10006 (https://nvd.nist.gov/vuln/detail/CVE-2016-10006).",
+      "summary": "Update the bundled version of OWASP AntiSamy to address issues"
+    }
+  },
+  {
+    "key": "CRUC-8409",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-08T23:18:19.000+0000",
+      "created": "2019-07-08T23:17:27.000+0000",
+      "description": "The bundled version of atlassian-renderer in Crucible before version 4.7.1 allows remote attackers to inject arbitrary HTML or JavaScript via a cross site scripting (XSS) vulnerability in nested wiki markup. For more information see https://jira.atlassian.com/browse/RNDR-153 (currently restricted to Atlassian staff).",
+      "summary": "XSS in various types of nested wiki markup - CVE-2017-18102"
+    }
+  },
+  {
+    "key": "CRUC-8408",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-08T22:59:03.000+0000",
+      "created": "2019-07-08T22:57:45.000+0000",
+      "description": "The bundled version of jQuery in Crucible before version 4.7.1 was vulnerable to CVE-2019-11358  (https://nvd.nist.gov/vuln/detail/CVE-2019-11358). This was fixed by patching the version of jQuery bundled with Crucible.",
+      "summary": "Address CVE-2019-11358 in the bundled version of jQuery"
+    }
+  },
+  {
+    "key": "CRUC-8407",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-10T08:43:15.000+0000",
+      "created": "2019-07-08T11:45:06.000+0000",
+      "description": "Support MS SQL 2017 in Fisheye and Crucible.\r\n\r\nEOL dates are as follows:\r\n\r\n| MS SQL version | Microsoft EOL date | Supported by Fisheye/Crucible |\r\n| SQL 2012 SP4 | 7/11/2017 (x) | (/) |\r\n| SQL 2014 SP2 | 7/9/2019 (/) | (/)  |\r\n| SQL 2016 SP1 | 7/13/2021 (/) | (x) |\r\n| SQL 2017 | 10/11/2022 (/) | (x) |",
+      "summary": "Support Microsoft SQL Server 2017"
+    }
+  },
+  {
+    "key": "CRUC-8406",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-08-09T12:41:45.000+0000",
+      "created": "2019-06-25T13:06:15.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIf during repository SVN repository indexing user create review, reviewer percentage completion is not counted correctly due to no data about lines changed in files.\r\n\r\nLines changes data are calculated in last phase of indexing SVN repository.\r\nh3. Steps to Reproduce\r\n # Add SVN repository to Fisheye\r\n # Create review while repository is indexing\u00a0\r\n # Visit some review files\u00a0\r\n # Go back to details page\u00a0\r\n # Refresh page\u00a0\r\n\r\nh3. Expected Results\r\n\r\nReview completion percentage should be growing with each review files visited.\r\nh3. Actual Results\r\n\r\nCompletion percentage is always 0 if repo is still being indexed.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Review percentage completion is not counted correctly during indexing SVN repository"
+    }
+  },
+  {
+    "key": "CRUC-8405",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-06-13T10:08:32.000+0000",
+      "created": "2019-06-11T13:12:09.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nA warning about unresolved comments pops up when closing a review that had deleted unresolved comments.\r\nh3. Steps to Reproduce\r\n # Create a new code review (e.g. from a patch).\r\n # Create a review comment.\r\n # Mark the new comment as 'Needs resolution'.\r\n # Delete the new comment.\r\n # Close the review.\r\n # A pop up \"Problem with transitioning the review\" is displayed\r\n # Click 'Proceed'.\r\n # The review is closed.\r\n\r\nh3. Expected Results\r\n\r\nIf there are no comments, the review should close without warning about unresolved comments.\r\nh3. Actual Results\r\n\r\nA pop up \"Problem with transitioning the review\" is displayed\r\nh3. Notes\r\n\r\nThe warning *does not prevent* the review from closing, so the \"problem with transitioning\" is misleading.\r\n Furthermore, this produces no errors or warnings in the logs (with DEBUG on).\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available !image-2019-06-11-15-11-09-892.png!",
+      "summary": "Closing a review with a deleted unresolved comment results in 'Problem with transitioning the review' message"
+    }
+  },
+  {
+    "key": "CRUC-8404",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-06-06T21:27:04.000+0000",
+      "description": "The Chapel programming language has a lot of highlighters:\r\n\r\n[https://github.com/chapel-lang/chapel/tree/master/highlight]\r\n\r\nUnfortunately, there isn't one for Crucible. Would it be possible to convert one of the existing highlighters for Crucible.",
+      "summary": "Syntax highlighting for the Chapel programming language"
+    }
+  },
+  {
+    "key": "CRUC-8403",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-06-11T08:56:36.000+0000",
+      "created": "2019-06-05T15:28:35.000+0000",
+      "description": "h3. Problem Definition\r\nNowadays, if the patch fails to anchor to the repository a very generic and inconclusive message is written in the web interface and in the logs.\r\n\r\nh3. Suggested Solution\r\nIt would be most helpful if better feedback was provided when anchoring fails. \r\nFor example, if anchoring fails because of mismatched input between the source and the patch, don't simply say there is a problem with revision 12345, but that there is a mismatch between the source and the patch at line 678.\r\n\r\nh3. Workaround\r\nThere are no known workarounds for this issue.",
+      "summary": "Patch Anchoring - Provide better feedback when patch fails to anchor"
+    }
+  },
+  {
+    "key": "CRUC-8402",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-06-26T10:26:45.000+0000",
+      "created": "2019-06-04T10:17:56.000+0000",
+      "description": "h4. Problem\r\n\r\nUsers cannot connect to an Oracle database using ldap credentials due to CRUC-6533.\r\nh4. Proposed solution\r\n\r\nAdd a warning box in the [Migrating to Oracle|https://confluence.atlassian.com/fisheye/migrating-to-oracle-960155593.html]:\r\n\r\n\"Using ldap credentials to connect to the Oracle database is currently not supported, due to CRUC-6533\"",
+      "summary": "Add a warning in migrating to Oracle documentation about connecting with ldap"
+    }
+  },
+  {
+    "key": "CRUC-8401",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-20T13:17:05.000+0000",
+      "description": "It would be great if there is a function to export the data in Review Coverage Report into Excel",
+      "summary": "Ability to export Review Coverage Report data into Excel"
+    }
+  },
+  {
+    "key": "CRUC-8400",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-07T04:58:51.000+0000",
+      "description": "With Perforce source control system, it is sometimes common for users to have multiple changelists open at one time.  \r\n\r\nCurrently when you use the crucible.py pre-commit script, it will upload all files that are open in all pending changelists.  \r\n\r\nThis feature request is to add the ability to choose a particular changelist to send to Crucible.  When choosing a particular change list, only the files in that change list will be uploaded.  ",
+      "summary": "crucible.py pre-commit: Allow posting of specific changelist from Perforce"
+    }
+  },
+  {
+    "key": "CRUC-8399",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-05-30T19:53:32.000+0000",
+      "created": "2019-05-30T16:51:06.000+0000",
+      "description": "h3. Problem Definition\r\nIn some scenarios where customers have Crucible and Jira integrated through Application Links, customers might need to disable the \"Log Work\" feature that gets displayed when closing or completing reviews:\r\n\r\n!image-2019-05-30-13-50-14-100.png|thumbnail! \r\n\r\nIt is not currently possible to disable this feature.\r\n\r\nh3. Suggested Solution\r\nAllow disabling this feature.\r\n\r\nh3. Workaround\r\nCurrently there are no known workarounds.",
+      "summary": "Allow disabling the Log Work feature in Crucible reviews"
+    }
+  },
+  {
+    "key": "CRUC-8398",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-05-30T09:41:53.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nPatch format looks like this:\r\n\r\n{noformat}\r\n--- path/to/file (revision <id>)\r\n+++ path/to/file (revision <id> or 'working copy')\r\n@@ <numbers of added/removed lines> @@\r\n<three lines of context> \r\n- <removed line(s)>\r\n+ <added line(s)>\r\n<three lines of context>\r\n{noformat}\r\n\r\nIf file content contains a line which starts with two hyphens followed by a space character, e.g.:\r\n\r\n{noformat}-- some line{noformat}\r\n\r\nand then user removes this line, then the diff generated for such change looks like this:\r\n\r\n{noformat}--- some line{noformat}\r\n\r\nCrucible recognises such line as a header of a new file (treating \"some line\" as file path). As a consequence, diff sections are not recognised properly and patch anchoring fails.\r\n\r\nh3. Environment\r\n\r\nh3. Steps to Reproduce\r\n # Repository indexed in Fisheye\r\n # File containing \"-- \"\r\n # Checkout repository\r\n # Remove the line starting with \"-- \"\r\n # Create a patch (svn/git/hg diff or crucible.py)\r\n # Create review and upload the patch\r\n\r\nh3. Expected Results\r\n\r\nPatch is correctly anchored to a revision in the repository, it's possible to see \"View context -> All lines\".\r\n\r\nh3. Actual Results\r\n\r\nPatch is not anchored, only 3 lines of context are visible in the code review.\r\n\r\nThe below exception is thrown in the atlassian-fisheye-YYYY-MM-DD.log file:\r\n\r\n{noformat}\r\n[Message] Anchor validation failed\r\ncom.cenqua.crucible.revision.diff.PatchException: Patch did not apply cleanly to <repository name> repository at line <line number>\r\n\tat com.cenqua.crucible.revision.source.PatchSource.applyPatchDiff(PatchSource.java:230) [fisheye.jar:?]\r\n\tat com.cenqua.crucible.revision.source.PatchSource.validateAnchorContent(PatchSource.java:336) [fisheye.jar:?]\r\n\tat com.cenqua.crucible.util.PatchAnchorHelper.anchorPatchRevisions(PatchAnchorHelper.java:298) [fisheye.jar:?]\r\n\tat com.cenqua.crucible.util.PatchAnchorHelper.findSourceAndAnchorPatch(PatchAnchorHelper.java:145) [fisheye.jar:?]\r\n\tat com.atlassian.crucible.actions.create.AnchorPatchAjaxAction.findSourceAndAnchor(AnchorPatchAjaxAction.java:284) [fisheye.jar:?]\r\n\tat com.atlassian.crucible.actions.create.AnchorPatchAjaxAction.tryToAnchorPatch(AnchorPatchAjaxAction.java:263) [fisheye.jar:?]\r\n\tat com.atlassian.crucible.actions.create.AnchorPatchAjaxAction.lambda$execute$0(AnchorPatchAjaxAction.java:181) [fisheye.jar:?]\r\n\tat com.atlassian.fisheye.spi.impl.DefaultTxTemplate.execute(DefaultTxTemplate.java:78) [fisheye.jar:?]\r\n\tat com.atlassian.crucible.actions.create.AnchorPatchAjaxAction.execute(AnchorPatchAjaxAction.java:174) [fisheye.jar:?]\r\n...\r\n{noformat}\r\n\r\nh3. Workaround\r\n\r\nUpload diff file as an attachment and review it as a single file.\r\n",
+      "summary": "Anchoring a patch in a review fails when diff line starts with double hyphen"
+    }
+  },
+  {
+    "key": "CRUC-8397",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-10-23T11:46:01.000+0000",
+      "created": "2019-05-23T07:39:59.000+0000",
+      "description": "When creating an issue inside a crucible review, it is not possible to have custom fields.",
+      "summary": "Create problem reports inline from crucible reviews"
+    }
+  },
+  {
+    "key": "CRUC-8396",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-04-23T15:59:40.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIn Crucible, when attempting to \"add revisions\" to a review, only revisions which exist in the same physical path can be added as a single file (showing a diff), making revisions from previous branches (different physical paths for SVN & P4) appear as different files when added.\r\nh3. Steps to Reproduce\r\n\r\nSetup:\r\n # Create trunk branch\r\n # Commit revs 1, 2, 3 to trunk on file \"test.txt\"\r\n # Create branch-A as a copy of trunk to a new location\r\n # Branch-A - commit revs 4, 5, 6 on file \"test.txt\"\r\n\r\nResults based on starting a review with only rev 5 added:\r\n * Adding rev 1, 2, or 3 will cause \"test.txt\" to appear as a separate file from rev 5.\r\n * Adding rev 4 will allow revs 1,2,3 from trunk to be added and displayed as a proper diff of rev 5.\r\n\r\nh3. Expected Results\r\n\r\nCrucible should calculate the ancestry of a revision/file despite the change in physical path changes. All historical revisions of a specific file should be available.\r\nh3. Actual Results\r\n\r\nOnly revisions from the current branch (physical path) can be added ad a proper diff. To add other branches, an intermediate revision is required.\r\nh3. Workaround\r\n\r\nAdding the intermediate revision, specifically the first revision from the newly created branch, allows the previous branch's revisions to become available.",
+      "summary": "Crucible provides \"add revisions\" based on physical path rather than logical path"
+    }
+  },
+  {
+    "key": "CRUC-8395",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-04-04T10:16:57.000+0000",
+      "description": "If you change the letter casing of a Java class file or its package, the filename or folder name on the disk also changes. Crucible sees this change as if a file was deleted and a new file was added, it doesn't see that those are the same files. This makes it impossible to compare file contents.\r\n\r\nIt should be able to detect that those are the same files. (Bitbucket can do that)",
+      "summary": "Crucible does not match files after letter casing changes in package names or file names"
+    }
+  },
+  {
+    "key": "CRUC-8394",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-21T19:11:23.000+0000",
+      "description": "Pre-commit reviews are not included in the review coverage report.\r\n\r\nhttps://confluence.atlassian.com/crucible/review-coverage-report-298977474.html\r\n\r\nFor team that rely on pre-commit reviews the coverage report won't show accurate data about it. \r\n\r\nPlease, consider including pre-commit reviews in the reports.",
+      "summary": "Include pre-commit reviews in the review coverage report"
+    }
+  },
+  {
+    "key": "CRUC-8393",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-03-20T22:29:48.000+0000",
+      "created": "2019-03-18T13:06:25.000+0000",
+      "description": "h3. Problem Definition\r\nThe [Completing your review|https://confluence.atlassian.com/crucible/completing-your-review-298977450.html] document is outdated because the \"Reviews requiring your attention\" table was [removed in 4.6|https://confluence.atlassian.com/crucible/crucible-4-6-release-notes-954257440.html] as part of the redesign related to multiple linked issues & issue transitioning & logging work, however a screenshot showing that table is still being shown in the documentation.\r\n\r\nh3. Suggested Solution\r\nRemove that screenshot from the documentation.\r\n\r\nh3. Workaround\r\nThere are no known workarounds.",
+      "summary": "Update \"Completing your review\" documentation"
+    }
+  },
+  {
+    "key": "CRUC-8392",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-18T06:30:05.000+0000",
+      "description": "h3. Summary\r\n\r\nReview count in Crucible Review Dashboard doesn't exclude the reviews which are not visible. Review count include all the review for which user is\u00a0Moderator, Author, Creator, Reviewer even the review is not visible.\r\nh3. Steps to Reproduce\r\n * Create a review\r\n * Create a permission scheme which doesn't give view access to a user\r\n !image-2019-03-18-17-29-20-803.png!\r\n * Attach with the Crucible project\r\n * Now in the review dashboard the count include even the reviews those won't be listed\r\n !image-2019-03-18-17-28-20-923.png!\r\n\r\nh3. Expected Results\r\n\r\nCount shouldn't include the reviews which can't be displayed.\r\nh3. Workaround\r\n\r\nThere is no workaround available.",
+      "summary": "Review count in Crucible Review Dashboard doesn't exclude the non-visible reviews"
+    }
+  },
+  {
+    "key": "CRUC-8391",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-14T14:03:35.000+0000",
+      "description": "Currently, in order to view all comments on a review, the user must click either \"Resolved\" or \"Unresolved\" on the left side of the screen, then un-select the selected filter on the panel that is displayed on the right side of the screen. It would be more intuitive if, along with the \"Resolved\" and \"Unresolved\" links on the left side of the page, we also had an \"All comments\" link.",
+      "summary": "Add \"All comments\" link in review sidebar"
+    }
+  },
+  {
+    "key": "CRUC-8390",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-14T13:58:01.000+0000",
+      "description": "Currently, in order to see the unique identifier for a comment on a review, you must click on the date listed on the comment, then look at the ID that is added to the end of the URL in the address bar.\r\n\r\nFor programs whose process require strict monitoring of comments using these identifiers, it would be helpful if we were able to display this identifier right on the comment so that it is visible without clicking anything.",
+      "summary": "Show Unique ID of Comment in UI"
+    }
+  },
+  {
+    "key": "CRUC-8389",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-01-31T11:13:49.000+0000",
+      "created": "2014-07-11T14:09:23.000+0000",
+      "description": "*Given*\r\nUser $A created a draft comment #1 and a draft comment #2 as #1's reply, and now editing this comment.\r\n\r\n*When*\r\n$A changes the content of #2, after a while, the auto-saving will take place.\r\n\r\n*EXPECTED*\r\nAfter the auto-saving, the \"comment\" button should still be disabled\r\n\r\n*ACTUAL*\r\nThe \"comment\" button is now enabled. However, if it is pressed, an error message will come up to tell $A that a draft comment cannot be replied to another draft comment.",
+      "summary": "Possible to post draft comment after auto-save"
+    }
+  },
+  {
+    "key": "CRUC-8388",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-01T13:18:42.000+0000",
+      "description": "h3. Steps to Reproduce\r\n # Create git repo\r\n # Add file with name containing whitespace (e.g. \"fi le.txt\")\r\n # Make some changes in \"fi le.txt\"\r\n # Generate diff\r\n # Add patch to review\u00a0[^patch.diff]\r\n\r\nh3. Expected Results\r\n\r\nThe output patch generated by Git has two spaces added at the end of lines 3 and 4. Crucible should be able to parse diff generated by Git.\r\n\r\nh3. Actual Results\r\n\r\nThese spaces can't be parsed correctly by Crucible.\r\n\r\nh3. Workaround\r\n\r\nDelete whitespaces from end of lines 3 and 4.",
+      "summary": "Patch is not parsed correctly when blank characters are present at end of file paths"
+    }
+  },
+  {
+    "key": "CRUC-8387",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-12-06T12:50:13.000+0000",
+      "created": "2019-03-01T07:23:36.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nKeyboard shortcut key 'j'/'n' in review context should navigate to next comment but instead navigating to the first comment and further navigate to the next comments.\r\nh3. Steps to Reproduce\r\n # Add few comments in the review\r\n # after editing or adding another comment press \"j\"/\"n\", instead navigating to the next comment, you will be navigated to first comment. See  [^shortcut-keys.mp4] \r\n\r\n\r\nh3. Expected Results\r\n\r\nAs per documentation [Using keyboard shortcuts in Crucible|https://confluence.atlassian.com/crucible/using-keyboard-shortcuts-in-crucible-298977480.html]\r\n|n|Go to next review comment|\r\n|j|Go to the next element (file, comment, defect or diff hunk depending on your current context)|\r\n\r\nh3. Actual Results\r\n\r\nKeyboard shortcuts j/n does not navigate to the next diff but instead of next diff it's going back to the first comment on the page and after that, If j/n pressed it will navigate to the next diff and so on.\r\nh3. Notes\r\n\r\nThis is working as expected in 4.4.1\r\nh3. Workaround\r\n\r\nNo workaround available.",
+      "summary": "Keyboard shortcut key 'j'/'n' should navigate to next comment but instead navigating to the first comment"
+    }
+  },
+  {
+    "key": "CRUC-8386",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-02-28T12:52:12.000+0000",
+      "description": "h3. Problem Definition\r\nNowadays the unresolved defect comments panel only sorts by date and time:\r\n!image-2019-02-28-13-49-59-279.png|thumbnail! \r\n\r\nh3. Suggested Solution\r\nIt should be possible to sort by file name, ascending and descending.\r\n\r\nh3. Workaround\r\nThere are no known workarounds.",
+      "summary": "Allow sorting unresolved defects by file name"
+    }
+  },
+  {
+    "key": "CRUC-8385",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-06-19T12:41:06.000+0000",
+      "description": "h3. Reproduce the problem\r\n\r\n* Create 12 users and one group. All the users should be a member of the group\r\n* Create a review and add the group in\r\n\r\nh3. Expected behaviour\r\n\r\nAll users in the group should be added as part of the review\r\n\r\nh3. Actual behaviour\r\n\r\nOnly a maximum of 10 users in that group will be added into the review. ",
+      "summary": "Adding a group with more than 10 user in a review will add 10 users."
+    }
+  },
+  {
+    "key": "CRUC-8384",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-02-25T11:11:57.000+0000",
+      "description": "h3. Problem Definition\r\nOn the wide-screen configurations Crucible UI having big whitespaces in the headers. So the reviewer has to scroll the multiple times before reaching the review content.\r\n !Screen Shot 2019-02-20 at 14.09.09.png|thumbnail! \r\n\r\nh3. Suggested Solution\r\nProvide foldable interface for the headers so it will fold without consuming the space during the review.\r\n",
+      "summary": "Make UI foldable to the header"
+    }
+  },
+  {
+    "key": "CRUC-8383",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-02-20T10:53:45.000+0000",
+      "created": "2019-02-20T10:52:51.000+0000",
+      "description": "h3. Steps to reproduce\r\n\r\nUse FeCru 4.7 with MySQL utf8mb4 encoding. Enter 4-byte characters in a review title.\r\n\r\nh3. Workaround\r\n\r\nn/a\r\n",
+      "summary": "Review title with 4-byte UTF characters is not rendered correctly."
+    }
+  },
+  {
+    "key": "CRUC-8382",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-02-14T21:59:35.000+0000",
+      "created": "2019-02-14T21:59:23.000+0000",
+      "description": "The DiskFileItem class from the Apache Commons FileUpload library before version 1.3.3 was vulnerable to CVE-2016-1000031.\u00a0\u00a0Atlassian Crucible was using a vulnerable version of this library, although not the DiskFileItem class.\u00a0\u00a0Crucible  has been updated to use the safe version of the Apache Commons FileUpload library.",
+      "summary": "Crucible had a vulnerable version of Apache Commons FileUpload - CVE-2016-1000031"
+    }
+  },
+  {
+    "key": "CRUC-8381",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-02-14T21:20:01.000+0000",
+      "created": "2019-02-14T21:19:50.000+0000",
+      "description": "The administrative linker functionality in Atlassian Crucible before version 4.7.0 allows remote attackers to inject arbitrary HTML or JavaScript via a cross site scripting (XSS) vulnerability in the href parameter.",
+      "summary": "Stored XSS in administrative linker functionality through the href parameter - CVE-2018-20240"
+    }
+  },
+  {
+    "key": "CRUC-8380",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-02-14T20:39:57.000+0000",
+      "created": "2019-02-14T20:39:34.000+0000",
+      "description": "The Edit upload resource for a review in Atlassian Crucible before version 4.7.0 allows remote attackers to inject arbitrary HTML or JavaScript via a cross site scripting (XSS) vulnerability in the wbuser parameter.",
+      "summary": "XSS in edit upload for a review through the wbuser parameter - CVE-2018-20241"
+    }
+  },
+  {
+    "key": "CRUC-8379",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-02-14T19:35:07.000+0000",
+      "created": "2019-02-14T19:04:28.000+0000",
+      "description": "The version of the Application Links plugin used in Crucible before version 4.7.0 allows remote attackers to inject arbitrary HTML or JavaScript via a cross site scripting (XSS) vulnerability in the applinkStartingUrl parameter. See https://ecosystem.atlassian.net/browse/APL-1373 for more details.",
+      "summary": "XSS in the listApplicationLinks resource of the Application links plugin - CVE-2018-20239"
+    }
+  },
+  {
+    "key": "CRUC-8377",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-02-14T10:13:06.000+0000",
+      "created": "2019-02-14T10:12:14.000+0000",
+      "description": "JRE version was updated from 1.8.0_102 to\u00a0*1.8.0_192*",
+      "summary": "Update JRE version bundled in Windows installer"
+    }
+  },
+  {
+    "key": "CRUC-8376",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-02-14T10:07:46.000+0000",
+      "created": "2019-02-14T10:07:17.000+0000",
+      "description": null,
+      "summary": "Deprecate 32-bit windows installer"
+    }
+  },
+  {
+    "key": "CRUC-8375",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-02-06T19:45:25.000+0000",
+      "description": "It is very tedious to add members to a Group with the current scroll list selection in:\r\n\u2022\u00a0Administration -> Security Settings -> Groups -> select a group\r\n\u00a0 !image-2019-02-06-14-44-24-151.png!\r\n\r\nFinding non-group members when there is a large amount of users (e.g. ~20 000 employees in a LDAP directory) is impossible (or very time consuming) with the current method. Instead of an extremely long scroll list, a filter, search box or alphabetic grouping would ease the research of a specific member.\r\n\r\nExisting Work-Around\r\nWe are award that a work-around exists for this problem. We can take an alternating path where one can find the user, then add the group to the user. However it is not the direct and normal way. Even if we document this work-around in our Wiki, precious time will still be lost when a new Crucible admin will have to add users.\r\n\r\n\u2022\u00a0Administration -> Users -> Filter by name, select user ->\r\nUser\u2019s group details:\r\n\u00a0 !image-2019-02-06-14-44-41-966.png!\r\n\r\n\u00a0",
+      "summary": "Improve mechanism to add Members to Groups e.g. add a filter or search capability"
+    }
+  },
+  {
+    "key": "CRUC-8374",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-02-04T21:47:48.000+0000",
+      "description": "h3. Summary\r\nWhenever a Jira issue description is longer than 1000 characters and a review is created from Jira side for that issue, the review Objectives field truncates the text so that it does not contain more than 1000 characters\r\n\r\nh3. Steps to Reproduce\r\n# Integrate Fisheye/Crucible with Jira through Application Links\r\n# Commit code containing an existing Jira issue key in the commit message\r\n# Make sure that commit was indexed by Fisheye\r\n# The related Jira issue should show that commit in the Development Panel\r\n# Make sure that the Jira issue description is longer than 1000 characters\r\n# Create a review starting from that Jira issue - click \"Create review for all commits\" link\r\n# The review will be created and the Objectives field will have truncated text.\r\n\r\nh3. Expected Results\r\nThe Objectives field should contain the whole Jira issue description.\r\n\r\nh3. Actual Results\r\nThe Objectives field truncates text up to 1000 characters.\r\n \r\nh3. Workaround\r\nWhenever a review is created from Jira side the review will contain a link to the Jira issue in the \"Linked Issue\" field. Clicking the issue key will show the a few details from the Jira issue, including its whole description.",
+      "summary": "Review Objectives truncating up to 1000 characters"
+    }
+  },
+  {
+    "key": "CRUC-8373",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-31T15:46:12.000+0000",
+      "description": "Under the \"Reviews\" menu, the most recent five reviews are listed.\u00a0 Often, the last five is not enough.\u00a0 It would be useful to have this functionality enhanced and expanded within the Review Dashboard.\r\n\r\nMy Reviews currently has these headers:\r\nInbox\r\nOutbox\r\nArchive\r\n\r\nHow about adding a \"Recent\" section, which would list the last x (20?) reviews, determined by whatever traceable activities are available, ie Commented, Reviewed, Created, Completed etc\r\n\r\nThanks,\r\nDave\r\n",
+      "summary": "Expand \"Recent Reviews\" functionality"
+    }
+  },
+  {
+    "key": "CRUC-8369",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-14T10:45:20.000+0000",
+      "description": "Function keys have well-established meanings in browsers:\r\n\r\n* F1: Help\r\n* F3: Find Next (Shift+F3 Find Previous)\r\n* F4 (some browsers and platforms): Address bar\r\n* F5: Refresh (Ctrl+F5 Refresh invalidating cache)\r\n* F6: Cycle through the address bar, then each frame in the page (Shift+F6 cycle backward)\r\n* F7 (Firefox): Turn on caret so that text can be highlighted for copying using keyboard\r\n* F10: Open browser menu\r\n* F11: Full screen\r\n* F12: Developer tools\r\n\r\nCrucible assigns its own functions to some of these keys:\r\n\r\n* F1: Previous comment?\r\n* F3: Reply to parent comment?\r\n* F6: Go to next unreviewed file?\r\n* F10: Go to next unreviewed file?\r\n\r\nThis is highly unexpected, confusing (I lose my position in the review) and disrupting (I inadvertently mark a file as reviewed when I have not actually reviewed it). Please remove these shortcuts and never hijack browser-assigned shortcuts again.",
+      "summary": "Remove F1, F3, F6, F10 keyboard shortcuts"
+    }
+  },
+  {
+    "key": "CRUC-8368",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-14T10:33:15.000+0000",
+      "description": "There is a CSS rule that sets outline width on an extensive set of elements to 0:\r\n\r\n{code}\r\nhtml, body, div, span, applet, object, iframe, h1, h5, h6, blockquote, pre, a, abbr, acronym, address,\r\nbig, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i,\r\ncenter, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    vertical-align: baseline;\r\n    background: transparent;\r\n}\r\n{code}\r\n\r\nAmong other effects, this causes focused hyperlink elements to lose their dotted outline. As a result, the user cannot see where the focus is and is effectively unable to navigate the page using keyboard only.\r\n\r\nThis is an accessibility issue. Not everyone can use a mouse or other pointing device.",
+      "summary": "Do not suppress focus outline"
+    }
+  },
+  {
+    "key": "CRUC-8367",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-11T10:40:36.000+0000",
+      "description": "Crucible is able to detect file type by file name extension and apply the correct highlighting rules.\r\n\r\nOften it is convenient to keep an executable script under source control, and do reviews against it. An executable script typically has no file name extension; its file type is identified by the \r\n\r\nSee also: https://community.atlassian.com/t5/Fisheye-Crucible-questions/Detect-language-for-syntax-highlighting-based-on-shebang-in/qaq-p/430065",
+      "summary": "Highlight syntax by shebang or file magic"
+    }
+  },
+  {
+    "key": "CRUC-8366",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-08T16:36:30.000+0000",
+      "description": "h3. Problem\r\n \r\nIf you would like to find the all of the reviews that are closed but still have defects which are unresolved.  This search is currently not available.\r\n\r\nIt is common to have to make hard decisions on releasing software with known defects.  It is important to be able to review these decisions and defects at a later date after the software has been released to see if these hard decisions are still valid or if the defects need to be addressed soon.  This filter will help in this decision.\r\n\r\nh3. Expected results.\r\n\r\nExpected this search to be in [Filtering reviews|https://confluence.atlassian.com/crucible/searching-crucible-298977477.html#SearchingCrucible-Filteringreviews] section.\r\n \r\nh3. Workaround\r\n\r\nThis data can be found in the database. \r\n\r\n{code:sql}\r\nselect \r\n    c.cru_proj_key, c.cru_number, a.cru_last_resolution_status, b.cru_state, a.cru_last_resolution_status, a.cru_defect_raised, a.cru_message \r\nfrom \r\n    cru_comment a, cru_review b, cru_revpermaid c \r\nwhere \r\n        a.cru_review_id=b.cru_review_id \r\n    and b.cru_review_id=c.cru_review_id \r\n    and b.cru_state='Closed' \r\n    and a.cru_last_resolution_status='UNRESOLVED' \r\n    and a.cru_defect_raised=true;\r\n{code} ",
+      "summary": "Search for reviews that are closed with unresolved defects"
+    }
+  },
+  {
+    "key": "CRUC-8365",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-01T09:09:26.000+0000",
+      "description": "h3. Issue Summary\r\nIf Jira is configured with HTTPS redirection from port 80 to 443, Crucible does not transition Jira issue when review state change\r\n\r\nh3. Environment\r\n * Jira 7.5.1\r\n * Crucible 4.6.0\r\n\r\nh3. Steps to Reproduce\r\n# Configure Jira to have two connectors HTTP (port 80) and HTTPS (port 443), eg {{server.xml}}:\r\n{noformat}\r\n        <Connector port=\"80\" protocol=\"HTTP/1.1\"\r\n                   connectionTimeout=\"20000\"\r\n                   useBodyEncodingForURI=\"true\"\r\n                   redirectPort=\"443\"\r\n                   compression=\"on\"\r\n                   compressableMimeType=\"text/html,text/xml,text/plain,text/css,application/json,application/javascript,application/x-javascript\" />\r\n\r\n        <Connector port=\"443\" protocol=\"org.apache.coyote.http11.Http11NioProtocol\"\r\n                   maxThreads=\"150\" SSLEnabled=\"true\" scheme=\"https\" secure=\"true\"\r\n                   clientAuth=\"false\" sslProtocol=\"TLS\" \r\n                   keystoreFile=\"/path/tokeystore.jks\"\r\n        \t\t   keystorePass=\"changeit\"\r\n        \t\t   keyAlias=\"test\"\r\n        \t\t   keystoreType=\"JKS\"/>\r\n{noformat}\r\n# Restart Jira\r\n# Configure the Base URL for Jira to be HTTPS\r\n# Create the Application Link between Jira (HTTPS) and Crucible\r\n# Add Review Started Trigger into the Jira Workflow\r\n# Start a Crucible Review to make sure that it is working\r\n# Set Jira to redirect HTTP connection to HTTPS, eg {{web.xml}}:\r\n{noformat}\r\n\t<security-constraint>\r\n\t\t <web-resource-collection>\r\n\t\t\t <web-resource-name>HTTPSOnly</web-resource-name>\r\n\t\t\t <url-pattern>/*</url-pattern>\r\n\t\t </web-resource-collection>\r\n\t\t <user-data-constraint>\r\n\t\t\t <transport-guarantee>CONFIDENTIAL</transport-guarantee>\r\n\t\t </user-data-constraint>\r\n\t</security-constraint>\r\n{noformat}\r\n# Restart Jira and Crucible\r\n# Start another Crucible Review \r\n\r\nh3. Expected Results\r\nJira issue is transitioned\r\n\r\nh3. Actual Results\r\nJira issue is not transitioned\r\n\r\nh3. Notes\r\n* The problem only happens to port 80 redirect to port 443\r\n* Do not use Jira Config tool for this setup cause it will have different security constraint setting\r\n* This problem normally happens when proxy server have HTTP->HTTPS redirection\r\n* Similar to https://jira.atlassian.com/browse/BSERV-8809\r\n* Crucible sent out IssueChangedEvent but not JiraReviewEvent to Jira server\r\n* Enabling HTTP Network Traffic debug logging in Crucible shows that it is able to get JiraReviewEvent from jira-url/rest/remote-event-consumer/1/capabilities\r\n\r\nh3. Workaround\r\nRemove HTTP->HTTPS redirection in Jira",
+      "summary": "Crucible does not transition Jira issue when review state change"
+    }
+  },
+  {
+    "key": "CRUC-8364",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2018-12-20T14:41:16.000+0000",
+      "description": "Crucible defects have two states: \"Resolved\" or \"Unresolved\". It would be nice to have some more specific states, such as \"Rejected\" or \"Implemented\".",
+      "summary": "Adding different states besides unresolved and resolved to \"defect\" comments"
+    }
+  },
+  {
+    "key": "CRUC-8363",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2018-12-11T11:00:54.000+0000",
+      "description": "h4. Problem\r\nIn pre-commit reviews, automatic patch anchoring can take a long time for repositories with many branches, trying to find the relevant context/latest branch.\r\n\r\nAs a user, I would like the option to be able to select the branch where patch should be anchored.\r\n\r\nh4. Suggested functionality\r\n1) Open \"Add content to Review\" screen\r\n2) Click on \"Pre-commit\" option\r\n3) After clicking on pre-commit option there should be new or additional popup screen with the (non required) option of choosing a specific branch for patch.\r\n\r\nIf a branch is not selected, it can default to automatic anchoring. ",
+      "summary": "Option to select specific branch for patch anchoring in reviews"
+    }
+  }
+]

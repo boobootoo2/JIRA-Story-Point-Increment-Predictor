@@ -1,0 +1,2202 @@
+[
+  {
+    "key": "API-268",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-27T21:54:17.000+0000",
+      "description": "h3. Issue Summary\r\nJira Notification triggers for every action when you are mentioned on the Description field\r\nh3. Steps to Reproduce\r\n # Configure direct messages from the Slack personal notifications screen:\r\n !screenshot-1.png|thumbnail! \r\nh3. Expected Results\r\nYou should only receive a notification to your slack channel when you are mentioned in the Description field\r\nh3. Actual Results\r\nYou will receive notifications for any action performed in the issue you are mentioned in the Description field\r\nh3. Workaround\r\n\r\nMention the user on a Comment field, will only trigger a notification when you are mentioned.",
+      "summary": "Jira Notification triggers for every action when you are mentioned on the Description field"
+    }
+  },
+  {
+    "key": "API-267",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-14T12:58:44.000+0000",
+      "created": "2020-05-28T15:14:53.000+0000",
+      "description": "h3. Issue Summary\r\nWhen using the Advanced configuration for Confluence, the administrator must create a Classic App in Slack -- see [our standard KB|https://confluence.atlassian.com/slack/use-slack-and-confluence-together-966662503.html#UseSlackandConfluencetogether-IusemultipleConfluenceServerinstancesormyinstancesarebehindafirewall.HowdoIconnectthemtoSlack?].\r\n\r\nTo create a Classic App in Slack, the administrator must access the following URL: [https://api.slack.com/apps?new_classic_app=1]\r\n\r\nThe *Go to Slack* button in Confluence doesn't send the administrator to that URL, which may create a standard Slack App, which won't work with Confluence.\r\n\r\n\r\n\r\nh3. Steps to Reproduce\r\n # Install a vanilla instance of Confluence -- this was validated on Confluence 7.2.1.\r\n # Install the official [Confluence Server for Slack|https://marketplace.atlassian.com/apps/1220186/confluence-server-for-slack-official?hosting=server&tab=overview] App from the Marketplace -- validated with App version 2.1.0.\r\n # In Confluence, go to *Cog icon* > *General configuration* > *Slack integration*.\r\n # Click on *Set up integration*.\r\n # In _Choose a connection type_, choose *Advanced*.\r\n # Under _Create a Slack app_, click on *Go to Slack*.\r\n\r\nh3. Expected Results\r\nClicking on the button sends you to the *Create a Slack App (Classic)* form.\r\n !screenshot-001.png|thumbnail! \r\n\r\nh3. Actual Results\r\nClicking on the button sends you to the *Create a Slack App* form.\r\n !screenshot-002.png|thumbnail! \r\n\r\nContinuing on this workflow results in the wrong type of Slack App expected by the Confluence integration.\r\n\r\nIf the administrator tries the integration with the standard Slack App, the following error will occur on Confluence when trying the integration:\r\n{code}\r\n2020-05-20 17:25:09,796 WARN [http-nio-6734-exec-6] [plugins.slack.util.ResponseMapper] toEither Slack returned an unsuccessful response to oauth.access/<app ID>: oauth_authorization_url_mismatch\r\n -- url: /c734/rest/slack/latest/oauth | traceId: 3920ce1309d8d89b | userName: admin\r\n{code}\r\n\r\n\r\nThe Confluence App JavaScript has the following URL:\r\n{code}\r\n/* module-key = 'com.atlassian.confluence.plugins.confluence-slack-server-integration-plugin:slack-connect-workspace-resources', location = 'admin/connect/connect-workspace.js' */\r\ngoToSlackButton.on('click', function() {\r\n    if (isBasic()) {\r\n        window.open(\"https://slack.com/apps/\" + \"AG28M10D8\");\r\n    } else {\r\n        var appId = goToSlackButton.data('app-id') || \"\";\r\n        window.open(\"https://api.slack.com/apps\" + (appId ? \"/\" + appId : \"?new_app=1\"));\r\n    }\r\n});\r\n{code}\r\n\r\n\r\n\r\nh3. Workaround\r\n_Currently there is no known workaround for this behavior. A workaround will be added here when available._\r\n\r\nCreate the Slack App following the documentation and not the information in the UI:\r\n[Use Slack and Confluence together|https://confluence.atlassian.com/slack/use-slack-and-confluence-together-966662503.html#UseSlackandConfluencetogether-IusemultipleConfluenceServerinstancesormyinstancesarebehindafirewall.HowdoIconnectthemtoSlack?]\r\n\r\nIf the administrator already created the Slack App, it should be deleted and recreated using the documentation mentioned above.",
+      "summary": "Go to Slack button on Confluence Server advanced configuration doesn't send you to the Classic App creation form"
+    }
+  },
+  {
+    "key": "API-266",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-27T07:47:47.000+0000",
+      "description": "*Suggestion*\r\nWe have the following documentation:\r\n* [Using Jira applications with Slack|https://confluence.atlassian.com/slack/using-jira-applications-with-slack-966662163.html]\r\n\r\nReferring to the section in \"How can I create a dedicated channel for an issue?\", it is not stated whether the room created is a private or public channel.\r\n(i) Note that the actual behavior is that it creates public channels only.\r\n\r\nRecommendation is to include this information on the documentation, that it creates public channels only.",
+      "summary": "Specify the type of room created (private or public) on documentation"
+    }
+  },
+  {
+    "key": "API-265",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-26T12:14:26.000+0000",
+      "description": "At the moment, only public channels can be created from the plugins.\r\n\r\nIt would be great to have the option of creating private channels from the KB below:\r\n* https://confluence.atlassian.com/slack/using-jira-applications-with-slack-966662163.html (refer to *How can I create a dedicated channel for an issue?*).",
+      "summary": "Create private channel from Jira Server from Slack (Official)"
+    }
+  },
+  {
+    "key": "API-264",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-12T21:46:34.000+0000",
+      "description": "For the Slack integration, I see the assignee, status and task type but it would be ideal to see the assigned sprint as well or be able to customize the fields that appear",
+      "summary": "Add sprint to Slack integration"
+    }
+  },
+  {
+    "key": "API-263",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-12T08:49:48.000+0000",
+      "description": "We're really enjoying the Slack/Jira-Server integration!\r\n\r\nOne thing we've liked is being able to create dedicated channels for some issues.\u00a0\r\n\r\nHowever, it can be a bit spammy as _every_ update creates a message in the Slack channel.\u00a0\r\n\r\nCould you add a feature that groups these notifications better, like you do for email notification grouping in Jira 8 for example?",
+      "summary": "Group notifications for Dedicated Channels"
+    }
+  },
+  {
+    "key": "API-262",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-06-11T09:46:06.000+0000",
+      "created": "2020-04-02T19:45:19.000+0000",
+      "description": "h3. Issue Summary\r\nAfter running any JQL, it is possible to open it in an Excel file using the *Open in Microsoft Excel* at the right top corner on JIRA. Though, either open the file in Excel web or on the desktop will generate a file with no results in where the results were supposed to be.\r\n\r\nh3. Steps to Reproduce\r\n# Run any JQL (for example: {{project = PROJECT_KEY}})\r\n# After getting the results, click over the *Open in Microsoft Excel*;\r\n# Choose which Excel option is better for you (web or desktop one).\r\n\r\nh3. Expected Results\r\nAfter opening the file, you can see the results of your JQL.\r\n\r\nh3. Actual Results\r\nThe file is empty.\r\n\r\nh3. Workaround\r\nMeanwhile, it is possible to click over *Export > Export Excel CSV* and generate a CSV file.",
+      "summary": "Open in Microsoft Excel option generates an empty file"
+    }
+  },
+  {
+    "key": "API-261",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-05-26T15:40:44.000+0000",
+      "created": "2020-05-06T16:27:02.000+0000",
+      "description": "h3. Issue Summary\r\nTimezone offset on emails (eg UTC-5) appears as a Jira issue on Jira Cloud for Outlook integration\r\n\r\nh3. Steps to Reproduce\r\n # receive an email from an timezone in the Americas\r\n\r\nh3. Expected Results\r\nTimezone offset is ignored\r\n\r\nh3. Actual Results\r\nTimezone offset is being treated as a Jira issue\r\n\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Timezone offset appears as a Jira issue on Jira Cloud for Outlook"
+    }
+  },
+  {
+    "key": "API-260",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-05T18:56:51.000+0000",
+      "description": "It'd be nice to be able to configure the announcement feature in Slack to choose what announcements to receive for new features or to opt out of them.\u00a0",
+      "summary": "Opt of out Slack announcements for new Jira features"
+    }
+  },
+  {
+    "key": "API-259",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-03T14:07:23.000+0000",
+      "description": "It seems to be already possible to receive worklog notifications in Slack if using Jira Cloud (see API-5).\u00a0I'd like to suggest the same for Jira Server.\r\n\r\n\u00a0\r\n\r\nThanks for considering!",
+      "summary": "Ability to receive worklog notifications via Slack"
+    }
+  },
+  {
+    "key": "API-258",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-05-01T02:34:49.000+0000",
+      "description": "Steps to reproduce:\r\n- Select an email in your inbox from an external customer\r\n- Use the Jira Outlook plugin to create a new issue.\r\n- Select the external user as the user who reported the issue\r\n- Complete creating the issue\r\n- Open the issue in service desk\r\n\r\nExpected result:\r\n- The 'Organization' field is set based on the organization of the user (same as occurs if the user creates the item directly in their portal)\r\n\r\nActual result:\r\n- The 'Organization' field is blank. This has impact on queue management, automation, reporting etc.",
+      "summary": "Jira Outlook plugin does not set the JSM 'Organization' field"
+    }
+  },
+  {
+    "key": "API-257",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-29T07:39:16.000+0000",
+      "description": "By default Jira Issue Preview in Slack only shows the following fields\r\n* Status\r\n* Assignee\r\n* Priority\r\n !Slack-issue-preview.png|thumbnail! \r\n\r\nAt the moment it is only possible to customize the notifications that are posted in Slack as per [Using Jira applications with Slack \\- How do I set up Slack post function notifications?|https://confluence.atlassian.com/slack/using-jira-applications-with-slack-966662163.html#UsingJiraapplicationswithSlack-HowdoIsetupSlackpostfunctionnotifications?]. However, we cannot modify or change the Issue Preview when the notification is posted, OR when Issue Preview is triggered by mentioning the issue key.\r\n\r\nh3. Suggestions\r\n\r\nIt would be useful if users can modify the Issue Preview such as adding the fields.",
+      "summary": "Ability to customize Jira Issue preview in Slack"
+    }
+  },
+  {
+    "key": "API-255",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-24T07:22:20.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nThe *Edit Notification* setting provides options to receive *Slack* notification for many events. However, there isn't any option to restrict the Slack notification for selected branches only.\r\nh3. Use-Case Scenario\r\n\r\nWe have some repositories with very heavy branch workflows. Thus, notifying activities on all branches is impractical.\u00a0 but the notification on the major branches is necessary.\r\nh3. Suggested Solution\r\n\r\nProvide an option where notifications can be restricted to certain branches.\u00a0This feature is available on your BitBucket Cloud Slack integration. So I'm hoping this feature is present on the Server version, or at least it can be made available in a short timeframe.",
+      "summary": "Slack plugin for Bitbucket Server: Add the ability to configure Slack notifications to certain branches only"
+    }
+  },
+  {
+    "key": "API-254",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-23T16:11:45.000+0000",
+      "description": "Implement an app home ([https://api.slack.com/start/overview#app_home]) for the Jira <> Slack app, where I can find issues that are relevant to me and additional settings and actions for the app.",
+      "summary": "App Home for Jira Slack"
+    }
+  },
+  {
+    "key": "API-253",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-23T15:31:32.000+0000",
+      "description": "Add the ability to move an issue from one project to another.",
+      "summary": "Add ability to move a ticket from one project to another"
+    }
+  },
+  {
+    "key": "API-252",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-04-22T15:25:43.000+0000",
+      "created": "2020-04-21T15:15:09.000+0000",
+      "description": "h3. Issue Summary\r\nWhen we get data from CRM, if the Dynamics CRM container line for exampel a drop down list, we get a value in digits \\(value in CRM\\) and not the actuall Text \\(Ettiquette\\).\r\n\r\nThis issue relates to all linked values in CRM.\r\n\r\nh3. Steps to Reproduce\r\nNA\r\n\r\nh3. Expected Results\r\n\r\nIt doesn\u2019t gives values in Ettiquette\r\n\r\n\r\nh3. Actual Results\r\nIt gives values in digits. \r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Dropdown fields display value id instead of text value for Microsoft Dynamics 365"
+    }
+  },
+  {
+    "key": "API-250",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-21T08:05:37.000+0000",
+      "description": "(Note: This should be a bug, not a suggestion, but I was unable to create this issue as \"Bug\" due to missing permissions.)\r\nh3. Issue Summary\r\n\r\nWhen updating a page a user is watching, but no longer allowed to view due to space permissions, a personal notification is sent to that user via Slack (assuming enabled\u00a0personal notifications for updates on watched pages and blog posts).\r\n\r\nWe are using \"Confluence Server for Slack (Official)\" v2.0.2 in Confluence v7.3.3.\r\nh3. Steps to Reproduce\r\n # Configure Slack personal notifications for updates on pages and blog posts you are watching, i.e., only enable \"When pages and posts I'm watching are updated\".\r\n # Watch a page (w/o page restrictions) in a space you have view permissions for.\r\n # Now, use a different account with space administrator permissions and remove all space permissions for the respective user, i.e.,\u00a0the user is no longer able to view the watched page due to space permissions.\r\n # Now, the account remains listed as watcher for the page (cf.\u00a0https://jira.atlassian.com/browse/CONFSERVER-59224). In general, I suppose this to be expected behavior (to not loose watches when first removing and later granting permissions for a space again).\r\n # Now, use a different account that is still allowed to view the page and update it.\r\n\r\nA Slack notification is sent to the user watching the page although the user is no longer allowed to view it. In contrast to the Slack app,\u00a0Confluence itself will NOT send an email notification in this case.\r\n\r\nWhen taking a look at the Confluence source code, a check for space level permissions and content level view permissions (page restrictions) is done before sending email notifications. As this has nothing to do with content level view permissions, I suppose a wrong or missing check for space level permissions in the Slack app?\r\nh3. Expected Results\r\n\r\nThere is NO personal notification sent via Slack.\r\nh3. Actual Results\r\n\r\nA personal notification is sent via Slack.\r\nh3. Workaround\r\n\r\nNone.",
+      "summary": "Personal notifications are sent for pages a user is no longer allowed to view"
+    }
+  },
+  {
+    "key": "API-249",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-16T04:06:00.000+0000",
+      "description": "Using the @user option for a Slack subscription, users can get direct messages from the Confluence app in Slack when spaces/pages have actions that trigger a notification. In the standard notification sense, this would be similar to a user selecting \"Watch\" on a page or space.\r\n\r\nConfluence has a per-user setting for email notifications (toggled off by default) titled \"Notify on my actions\". This prevents a user's own changes from triggering an email notification to them.\r\n\r\nGiven that some users may try to use Slack subscriptions to replace email notifications, it would be helpful if the app had a similar setting. An example may be a user subscribing themselves to Slack notifications for their own personal space. The user would desire to receive notifications (via Slack) of changes from users other than themselves. Currently, they receive notifications of all changes, including their own.",
+      "summary": "Add \"Notify on my actions\" option for Slack notifications to individual users"
+    }
+  },
+  {
+    "key": "API-248",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-14T13:27:30.000+0000",
+      "created": "2020-04-10T11:45:52.000+0000",
+      "description": "h3. Issue Summary\r\n\r\n\"*Show entire text for summary, description, comment and worklog*\" option doesn't work for slack notifications. If we select it, we still get a truncated version and only summary is visible.\r\nh3. Steps to Reproduce\r\n\r\n!Screenshot 2020-04-10 at 5.11.52 PM.png|thumbnail!\r\nh3. Workaround\r\n\r\nRequired, if there is no workaround please state:\r\n Currently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Slack message style setting is not respected in slack notification"
+    }
+  },
+  {
+    "key": "API-247",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-10T07:36:00.000+0000",
+      "description": "Hey there,\r\n\r\nIs there a way we could refresh one of the 'Jira Sheets' via code ?\r\n\r\neg : lets say I have a sheet name xyz connected to Jira via the add-on, where I can manually refresh the data via the add-on. Can I invoke the 'refresh' via google-sheet script as well ?\r\n\r\n\u00a0\r\n\r\nThanks",
+      "summary": "Refreshing Jira via Script"
+    }
+  },
+  {
+    "key": "API-246",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-04-09T09:45:07.000+0000",
+      "description": "Request -\u00a0Ability to choose if email\u2019s attachments should go to Jira attachments, attached email\u2019s attachments or both.\r\n\r\nCurrent behavior - There is no option to avoid attachments from being added to attachment panel.",
+      "summary": "Behaviour of attachments in Jira Cloud Add-In for Outlook"
+    }
+  },
+  {
+    "key": "API-245",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-14T12:57:41.000+0000",
+      "created": "2020-04-06T17:41:55.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nNotification is not sent to Slack when the user had disabled Bulk notification and another user had started a bulk operation.\r\nh3. Steps to Reproduce\r\n # Configure Slack notifications to send a notification on a slack channel when new issues are created;\r\n # User A runs a Bulk edit and disabled the bulk notifications;\r\n # User B starts a long Bulk operation;\r\n # User A does create a new issue.\r\n\r\nh3. Expected Results\r\n # Slack channel receives a notification that User A did create a new issue;\r\n\r\nh3. Actual Results\r\n\r\nNotification is not created.\r\n\r\nThe below exception is thrown in the xxxxxxx.log file:\r\n{noformat}\r\n2020-04-02 00:45:12,696 ajp-nio-8600-exec-262 url:/secure/QuickCreateIssue.jspa username:userA INFO userA /secure/QuickCreateIssue.jspa [...]\r\n\r\n2020-04-02 00:45:12,728 ajp-nio-8600-exec-262 url:/secure/QuickCreateIssue.jspa username:userA TRACE userA /secure/QuickCreateIssue.jspa [c.a.j.p.s.s.listener.impl.DefaultJiraSlackEventListener] Live tasks contexts: [NonExclusiveTaskContext{progressURL='/issue/CloneIssueProgress.jspa', taskContextName='CloneIssue'}, BulkEditTaskContext{username=x, operationName=BulkWorkflowTransition}]\r\n\r\n2020-04-02 00:45:12,729 ajp-nio-8600-exec-262 url:/secure/QuickCreateIssue.jspa username:userA TRACE userA /secure/QuickCreateIssue.jspa [c.a.j.p.s.s.listener.impl.DefaultJiraSlackEventListener] Bulk operation detected\r\n\r\n2020-04-02 00:45:12,729 ajp-nio-8600-exec-262 url:/secure/QuickCreateIssue.jspa username:userA DEBUG userA /secure/QuickCreateIssue.jspa [c.a.j.p.s.s.listener.impl.DefaultJiraSlackEventListener] Skipping handling of the event 1 for user erilov01 because he chose to suppress notifications from bulk operations\r\n\r\n2020-04-02 00:45:48,686 ajp-nio-8600-exec-173 url:/slack/issuepanel/data/NEWISSUE-1 username:userA url:/rest/slack/1.0...l/data/NEWISSUE-1 username:userA DEBUG userA /slack/issuepanel/data/NEWISSUE-1 [c.a.j.p.s.storage.json.JsonPropertyStoreStorageStrategy] Getting entity of type 'interface com.atlassian.jira.plugins.slack.model.DedicatedChannel' for issueId=1795155 with key=slack.issue.dedicated.channel: None\r\n{noformat}\r\nh3. Workaround\r\n\r\nUserA needs to reach the bulk operations page and enable the bulk notifications again.\r\n\r\nNote: Jira version 7.13.6",
+      "summary": "Bulk operation initiated by one user suppresses notifications of another user"
+    }
+  },
+  {
+    "key": "API-244",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-04-01T13:54:51.000+0000",
+      "created": "2020-04-01T13:53:05.000+0000",
+      "description": "h3. Issue Summary\r\nTransition notification isn't sent sometimes. [Fixed in 2.0.7|https://marketplace.atlassian.com/apps/1220099/jira-server-for-slack-official/version-history]\r\n\r\nh3. Steps to Reproduce\r\n# Create a JSD project.\r\n# Connect it to some Slack channel. Specify \"Customer Request Type\" = <someType> in JQL filter.\r\n# Create a request of mapped type as regular user - not admin, not SD agent.\r\n\r\nh3. Expected Results\r\nNotification is sent.\r\n\r\nh3. Actual Results\r\n\r\nIt isn't sent. Doing the same as admin user causes notification to be sent.\r\n\r\nh3. Workaround\r\n\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Transition notification isn't sent sometimes"
+    }
+  },
+  {
+    "key": "API-243",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-04-15T10:58:53.000+0000",
+      "created": "2020-03-31T13:41:15.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIn some cases, the Jira Cloud for Outlook window will go blank after clicking \"Paste email contents\" when creating a new issue from an email.\r\nh3. Steps to Reproduce\r\n # Select any email in Outlook.\r\n # Using the Jira Cloud for Outlook plugin, click Create issue.\r\n # Select the request type in the Jira Cloud window.\r\n # Click the button \"Paste email contents\".\r\n\r\nh3. Expected Results\r\n\r\nThe email content should be pasted into the description field.\r\nh3. Actual Results\r\n\r\nThe Jira Cloud window becomes blank and has to be re-opened.\r\nh3. Workaround\r\n\r\nManually copy/paste the email contents into the description field.",
+      "summary": "Blank screen after clicking \"Paste email contents\" in Jira Cloud for Outlook"
+    }
+  },
+  {
+    "key": "API-242",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-06-09T04:26:15.000+0000",
+      "created": "2020-03-27T12:51:06.000+0000",
+      "description": "At the moment personal notifications are limited for \r\n * _When issues that are assigned to me are updated_\r\n * _When issues I\u2019m watching are updated_\r\n\r\nIt would be great if mentions send out notifications by default to users in Jira Server for Slack, which will improve collaboration should a user is not aware of the issue that they are being mentioned on.",
+      "summary": "@mentions notifications in Jira Server for Slack"
+    }
+  },
+  {
+    "key": "API-241",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-24T02:40:27.000+0000",
+      "description": "As a developer, I want to be able to filter which PR notifications are sent to a Slack channel based on who is participating in the PR. We have channels for dedicated teams that share a Bitbucket Server repo, and we don't want to watch PRs for all the other teams working on their components. I want to be able to filter which notifications are sent to a Slack channel based on:\r\n* who the PR authors are and/or\r\n* who the PR reviewers are",
+      "summary": "Filter PR notifications by participants"
+    }
+  },
+  {
+    "key": "API-240",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-05-01T02:45:30.000+0000",
+      "created": "2020-03-24T00:22:46.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen anonymous users comment on pages or make edits, notifications are not sent to Slack.\r\nh3. Steps to Reproduce\r\n # Enable Anonymous Access globally in Confluence\r\n # Create/modify a space to allow anonymous users to comment and/or edit pages\r\n # Configure a space subscription from Confluence to Slack\r\n # Create a new page in the space (a notification is sent to the Slack channel)\r\n # As an anonymous user (in an incognito window for example) edit or comment on the page\r\n\r\nh3. Expected Results\r\n\r\nA notification is sent to Slack, describing the modification to the page in Confluence.\r\nh3. Actual Results\r\n\r\nNo notification is sent to Slack.\r\nh3. Workaround\r\n\r\nNone",
+      "summary": "Anonymous comments or edits on pages do not trigger Slack notifications"
+    }
+  },
+  {
+    "key": "API-239",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-04-22T13:47:07.000+0000",
+      "created": "2020-03-19T18:27:50.000+0000",
+      "description": "Not sure if this is the correct Project/Components. Please reassign as needed.\r\n\r\nOur Problem Management team would like to request additions to the ServiceNow integration. Specifically, the ability to update existing Alerts vs. spawning new ones \u2013 Description, Severity, Priority, etc. Whether this leverages new Business Rules on the ServiceNow side, or additional options within OpsGenie where there is currently \r\noptions for Create Alert, Add Worknote/Comment.",
+      "summary": "ServiceNow Integration -- Updates for Existing Alerts"
+    }
+  },
+  {
+    "key": "API-238",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-19T10:45:32.000+0000",
+      "description": "h3. Issue Summary\r\nUsing the [Jira Cloud for Excel app|https://marketplace.atlassian.com/apps/1221301/jira-cloud-for-excel-official?hosting=cloud&tab=overview], if in the list of available fields I selected *Linked Issues* it gives me the Issue Key but not the type of dependencies like Blocked By, Implemented By, etc...\r\n\r\nh3. Steps to Reproduce\r\n # Use the app to Export a search result to Excel, including the *Linked Issues* field\r\n\r\n\r\nh3. Expected Results\r\nLike when exporting to CSV, there are different columns for each type of link:\r\n{quote}\r\nOutward issue link (Blocks),Outward issue link (Cloners),Outward issue link (Problem/Incident),Outward issue link (Problem/Incident),Outward issue link (Problem/Incident),Outward issue link (Relates),Outward issue link (Relates)\r\n{quote}\r\n\r\nh3. Actual Results\r\nOnly the issue keys of the linked issues are returned, the same as you have in the UI if for a search result you choose to show the *Linked Issues* field\r\n\r\n\r\nh3. Workaround\r\nAs a temporary workaround you can use the export to CSV functionality and open the csv file with Excel. ",
+      "summary": "Exporting the Linked Issues field to Excel only returns a list of issues keys without any info on the kind of link"
+    }
+  },
+  {
+    "key": "API-237",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-12-01T19:21:15.000+0000",
+      "created": "2020-03-17T12:15:59.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nThe new Jira Service Desk for Slack provides agents the ability to raise tickets through Slack. However, it only allows summary and description as the fields and users cannot raise tickets if any other field is marked as required. This limits the functionality of the app.\r\nh3. Suggested Solution\r\n\r\nProvide the ability to raise tickets with more required fields and show a form accordingly within Slack.\r\nh3. Workaround\r\n\u00a0\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available.",
+      "summary": "Provide ability to raise tickets with more required fields using JSD for Slack app"
+    }
+  },
+  {
+    "key": "API-236",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-11T15:42:17.000+0000",
+      "description": "The [Jira Server for Slack (Official)|https://marketplace.atlassian.com/apps/1220099/jira-server-for-slack-official?hosting=datacenter&tab=overview] app provides integration between Jira Server and Slack. One of the features available is allowing people to receive notifications on Slack for issue creation, transition and etc.\r\n\r\n*Suggestion*\r\nSometimes, these notification message templates may not suit our business needs or can be improved and we would like to customize the text.\r\nEg: When someone comments on a ticket, Slack users would receive the following notification\r\n{quote}\r\n_User_ has commented to a _IssueType_\r\n{quote}\r\n\r\nWe would like to change to\r\n_User_ has commented *on* a _IssueType_",
+      "summary": "Customization of Jira - Slack integration."
+    }
+  },
+  {
+    "key": "API-235",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-10T15:23:00.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently, Slack trigger notifications for Issue Created, Assignee Updated, Comments and Issue transitions. There is no option to trigger a notification when an SLA is breached/paused/completed on a project.\r\n\r\nh3. Suggested Solution\r\nImplement an additional option to trigger notifications for SLA events on issues.\r\n\r\nh3. Why this is important\r\nSome customers want to keep track of issues that have the SLAs breached/completed/paused from a project by just looking to the notification on Slack instead of checking issue.",
+      "summary": "Enable \"SLA\" events notification on Slack integration"
+    }
+  },
+  {
+    "key": "API-234",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-12-01T19:21:26.000+0000",
+      "created": "2020-03-10T15:10:27.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIn the  Jira Service Desk Cloud for Slack (EAP) application, when you fill the \"On behalf of\" field in the ticket of a reporter, the actual ticket created inputs the reporter value with the person who raised the ticket via Slack instead. \r\n\r\n\r\nh3. Steps to Reproduce\r\n # Create a Jira Service Desk Issue via Slack\r\n # Fill up the fields and the \"On Behalf Of\" with a reporter value. \r\n# Complete the action by clicking on \"Create\"\r\n\r\nh3. Expected Results\r\nWhen User A creates a ticket on behalf of Reporter B, in the Service Desk project, the value of the reporter field is \"Reporter B\". \r\n\r\nh3. Actual Results\r\nWhen User A creates a ticket on behalf of Reporter B, in the Service Desk project, the value of the reporter field is \"User A\". \r\n\r\nh3. Workaround\r\nNone",
+      "summary": "Can't create on behalf of Service Desk Customer (JSD EAP)"
+    }
+  },
+  {
+    "key": "API-233",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-03-09T14:27:39.000+0000",
+      "created": "2020-03-09T09:45:02.000+0000",
+      "description": "h3.Summary\r\n\r\nThere have been concerns from customer on the 'Create and manage issues' permission as this permission allows users to directly modify and create issues in the Cloud instance. Since this permission is not used at all , it will be great to have this removed for security.",
+      "summary": "Remove 'Create and manage issues' permission in JIRA Cloud for Google Sheets if it is not used"
+    }
+  },
+  {
+    "key": "API-232",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-06T13:48:38.000+0000",
+      "description": "*Hi.*\u00a0\r\n\r\nI\u00b4ve set up a connection between Confluence (atlassian.net) and Slack, it works seemingless but one thing bothers me.\r\n\r\nWhen a user updates the page in Confluence, without wanting to create a notification for other users, Slack will still receive a notification about this update and i can\u00b4t find a way around it. Is this a bug or something that might be fixed in a later update?\u00a0\r\n\r\nThanks in advance\r\n\r\nNicholai Adler",
+      "summary": "Notifications that go from Confluence to Slack. "
+    }
+  },
+  {
+    "key": "API-231",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-03-03T21:18:23.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen using the JQL filter for a Slack notification subscription, the autocomplete matcher is not properly filtering usernames. Regardless of the name typed, the same set of users is shown in the dropdown list.\r\nh3. Steps to Reproduce\r\n # Create a new subscription or modify an existing subscription\r\n # Switch to JQL filtering\r\n # Add a username field to the filter - examples:\r\n{code:java}\r\nreporter ={code}\r\nor\r\n{code:java}\r\nassignee ={code}\r\n # Observe that the dropdown returns alphabetical results (A -> Z) of all users\r\n # Start typing a username\r\n\r\nh3. Expected Results\r\n\r\nDropdown starts filtering to show only matches from the partially-typed user name\r\nh3. Actual Results\r\n\r\nDropdown results are not filtered\r\nh3. Workaround\r\n # Create a regular\u00a0*issue search* in Jira\r\n # Use the autocomplete filter to select the user you wish to add to the Slack JQL filter\r\n # Copy the user's ID from the regular issue search - example:\u00a0\r\n{code:java}assignee = 7b026df108a7a0020d7dcab9{code}\r\n # Paste the user's ID into the Slack JQL filter",
+      "summary": "JQL filter does not autocomplete usernames correctly"
+    }
+  },
+  {
+    "key": "API-230",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-02-24T22:01:09.000+0000",
+      "created": "2020-02-19T07:25:32.000+0000",
+      "description": "h3. Issue Summary\r\nA private multi-workspace doesn't list in Slack integration channel list.\r\n\r\nabout multi-workspace channel:\r\nhttps://slack.com/help/articles/115001399587-Create-multi-workspace-channels-on-Enterprise-Grid\r\n\r\nh3. Steps to Reproduce\r\n # Set up a priate multi-workspace channel in Slack\r\n # Open Slack integration screen on Jira\r\n # Open Channel list\r\n ## Not list a private multi-workspace channels\r\n\r\nh3. Expected Results\r\nA multi-workspace channel is listed in a channel list.\r\n\r\nh3. Actual Results\r\nA multi-workspace channel is not listed in a channel list.\r\n\r\nh3. Workaround\r\n# Change a private multi-workspace channel to normal private channel\r\n# Configure Slack Integration in Jira with above private channel\r\n# Change the private channel to a multi-workspace channel again\r\n",
+      "summary": "Slack plugin for Jira: A private multi-workspace doesn't list in Slack integration channel list."
+    }
+  },
+  {
+    "key": "API-229",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-17T14:26:24.000+0000",
+      "description": "When [integrating Jira Cloud and Slack|https://confluence.atlassian.com/jirasoftwarecloud/jira-cloud-for-slack-950819054.html], the following command helps in order to create an issue and have the issue type automatically populated in the process:\r\n\r\n/jira create issueType Summary description\r\n\r\nThe command works well when the issue type has a single word (automatically putting it in the dropdown for the type), but, if it has more than one word (e.g. Service Request), it will not populate properly. Instead, it will show a different type in the dropdown, as demonstrated in the video below (from a test instance), comparing the creation between different issue types:\r\n\r\n [^slack.mp4] \r\n\r\nh4.Suggestion\r\n\r\nThis is a suggestion to allow the integration with Slack to allow issue types with more than one word to be inserted from the command. As a workaround, the user can select the type from the dropdown displayed in the issue's creation.",
+      "summary": "Allow issue types with more than one word to be created from Slack"
+    }
+  },
+  {
+    "key": "API-228",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-17T12:39:44.000+0000",
+      "description": "h3. Problem\r\nSlack plugin for Bitbucket Server provides the possibility to configure the notification types for each repository with around 25 options. The problem is that all 25 notifications types are enabled by default and the admins have to configure each repository individually.\r\n\r\nh3. Solution\r\nPlease provide system wide setting to set up the default notifications set for new repositories and bulk edit for current.",
+      "summary": "Slack plugin for Bitbucket Server: provide the ability to set the notifications defaults for the whole instance"
+    }
+  },
+  {
+    "key": "API-227",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-17T11:01:57.000+0000",
+      "description": "h3. Problem\r\nWhen the repository admin is setting up the channel for the repository the plugin is showing only the list of channels the admin has joined. \r\nBut if admin types the new name it offers to create a new channel without verifying that the channel with this name exists. The check is happening on click of Add button and error is getting logged into the application log \"Slack returned an unsuccessful response to conversations.create: name_taken\" but nothing is shown to the user.\r\n\r\nh3. Solution\r\nProvide the online check for the channel existence during the typing the name of a new channel or provide a clear pop-up with the error message in case of the name conflict.",
+      "summary": "Slack plugin for Bitbucket Server: provide the verification that the channel this name already exists "
+    }
+  },
+  {
+    "key": "API-226",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-14T23:07:57.000+0000",
+      "description": "Currently, with the Confluence for Slack integration, you can connect a Space to push updates to a room or individual. There are no finer controls for this at the moment, so we want to configure the notifications to be more granular where they only get notifications from a page tree instead of the whole space.",
+      "summary": "Add more granular controls for notifications (by page-tree level instead of space level)"
+    }
+  },
+  {
+    "key": "API-225",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-05T12:49:39.000+0000",
+      "description": "It may be implemented as a slash command.\r\n\r\nFor example:\r\n * /bitbucket nudge off \u2013 Turns off notifications for nudges\r\n * /bitbucket nudge on \u2013 Turns on notifications for nudges",
+      "summary": "Allow to mute \"nudge reviewers\""
+    }
+  },
+  {
+    "key": "API-224",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-03-02T22:21:35.000+0000",
+      "created": "2020-02-03T14:06:21.000+0000",
+      "description": "I'd like the ability to create a new Slack channel from within a Jira Service Desk (or Software) issue.\u00a0 Specifically I'm hoping to automate this action based on the setting of a custom field.\u00a0 For example, when a JSD issue's custom field, Severity, is set to Sev1 or Sev2, then create a new Slack channel whose name is that of the issue's key (e.g., SERVICE-13).\u00a0 From that point forward, the Slack channel and the JSD issue should be linked with updates going bi-directionally.",
+      "summary": "Create Slack Channel from Jira Issue"
+    }
+  },
+  {
+    "key": "API-223",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-04-03T10:08:19.000+0000",
+      "created": "2020-02-03T09:31:45.000+0000",
+      "description": "Suggestion - Currently Jira Cloud for Outlook is not supported on Windows 10 for Outlook 2016. Kindly extend the support for the same.\r\n\r\n",
+      "summary": "Extend support for Jira Cloud for Outlook on Windows 10"
+    }
+  },
+  {
+    "key": "API-222",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-02-03T09:12:53.000+0000",
+      "description": "*+Summary+*\r\nWe would like for the ability to invite users or add default users when creating a Slack channel for a specific issue in a project. This will be easier instead of having to add them in Slack.\r\n",
+      "summary": "Ability to invite users or add default users when creating a Slack channel for a specific issue when using Jira Server for Slack."
+    }
+  },
+  {
+    "key": "API-221",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-30T18:54:53.000+0000",
+      "description": "Currently, it is only possible to add attachments associated with the currently selected e-mail message. It would be useful to have the ability to attach any external file via the Create Issue tab in the side bar.",
+      "summary": "Allow adding external attachments via Jira for Outlook"
+    }
+  },
+  {
+    "key": "API-220",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-23T13:43:52.000+0000",
+      "description": "# Add options to track \"task created/edited/removed/completed\" events in subscription configuration.\r\n # Show number of completed tasks in PR preview,\u00a0aka \"1/3 Tasks\".",
+      "summary": "Track PR tasks"
+    }
+  },
+  {
+    "key": "API-219",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-23T13:08:41.000+0000",
+      "description": "# Command to show open Pull Requests in this channel. E.g. /bitbucket prs\r\n # Command to show open Pull Requests that are assigned to you E.g. /bitbucket my-prs",
+      "summary": "Add \"open PRs\" slash command"
+    }
+  },
+  {
+    "key": "API-218",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-23T13:01:34.000+0000",
+      "description": "Add possibility to filter which pipelines are displayed (eg. by pipeline name).",
+      "summary": "Filter notifications by pipeline name"
+    }
+  },
+  {
+    "key": "API-217",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-23T12:58:55.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIt's possible to run different pipelines on the same branch. Current Slack notification contains just the branch on which pipeline was run, but misses its name. So it's not clear which pipelines causes Slack notification.\r\nh3. Steps to Reproduce\r\n # Run 2 pipelines with different names on the same branch.\r\n\r\nh3. Expected Results\r\n\r\nPipelines complete or fail and send clear Slack notifications for each pipeline.\r\nh3. Actual Results\r\n\r\n2 Slack notifications are sent with no way to determine which pipeline caused each notification.\r\nh3. Workaround\r\n\r\nOpen a pipeline link in browser and check pipeline name.",
+      "summary": "Add pipeline name to slack notification"
+    }
+  },
+  {
+    "key": "API-216",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-04-28T15:47:00.000+0000",
+      "created": "2020-01-17T10:44:13.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nFailed to save configuration when saving a long JQL\r\nh3. Steps to Reproduce\r\n # Under For Issues That Matches This Filter, enter a very long JQL (Which works perfectly in Issue Navigator)\r\n\r\nh3. Expected Results\r\n\r\nJQL saves fine\r\nh3. Actual Results\r\n\r\nThe below exception is thrown in the atlassian-jira.log file:\r\n\r\nFor MySQL\r\n{noformat}\r\n2020-01-17 18:20:26,933 http-nio-18083-exec-16 ERROR admin 1100x1227x1 1sg1n3v 210.19.86.66,127.0.0.1 /slack/mapping/CORE [c.a.p.r.c.error.jersey.ThrowableExceptionMapper] Uncaught exception thrown by REST service: null\r\njava.lang.reflect.UndeclaredThrowableException\r\n\tat com.sun.proxy.$Proxy4690.save(Unknown Source)\r\n\tat com.atlassian.jira.plugins.slack.dao.impl.DefaultConfigurationDao.updateProjectConfiguration(DefaultConfigurationDao.java:154)\r\n\tat com.atlassian.jira.plugins.slack.dao.impl.DefaultConfigurationDao.lambda$updateProjectConfiguration$1(DefaultConfigurationDao.java:142)\r\n\tat java.util.Optional.ifPresent(Optional.java:159)\r\n\tat com.atlassian.jira.plugins.slack.dao.impl.DefaultConfigurationDao.updateProjectConfiguration(DefaultConfigurationDao.java:142)\r\n\tat com.atlassian.jira.plugins.slack.dao.impl.DefaultConfigurationDao.insertProjectConfiguration(DefaultConfigurationDao.java:125)\r\n\tat com.atlassian.jira.plugins.slack.manager.impl.DefaultProjectConfigurationManager.insertProjectConfiguration(DefaultProjectConfigurationManager.java:278)\r\n\tat com.atlassian.jira.plugins.slack.web.rest.ProjectConfigurationResource.lambda$enableNotification$4(ProjectConfigurationResource.java:99)\r\n\tat io.atlassian.fugue.Either$Right.fold(Either.java:641)\r\n\tat com.atlassian.jira.plugins.slack.web.rest.ProjectConfigurationResource.enableNotification(ProjectConfigurationResource.java:96)\r\n\t... 3 filtered\r\n\tat java.lang.reflect.Method.invoke(Method.java:498)\r\n\t... 18 filtered\r\n\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter$JerseyOsgiServletContainer.doFilt...\r\n...\r\n...\r\nCaused by: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'VALUE' at row 1\r\n\tat com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3876)\r\n\tat com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3814)\r\n\tat com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2478)\r\n\tat com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2625)\r\n\tat com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2551)\r\n\tat com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073)\r\n\tat com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009)\r\n\tat com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5094)\r\n\tat com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994)\r\n\tat ...\r\n...\r\n...\r\n{noformat}\r\nFor SQL Server\r\n{code:none}\r\nCaused by: com.microsoft.sqlserver.jdbc.SQLServerException: String or binary data would be truncated.\r\n\tat com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:258)\r\n\tat com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1535)\r\n\tat com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:467)\r\n\tat com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:409)\r\n\tat com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7151)\r\n\tat com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:219)\r\n\tat com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:199)\r\n\tat com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeUpdate(SQLServerPreparedStatement.java:356)\r\n\tat org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:98)\r\n\tat org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:98)\r\n\tat net.java.ao.EntityProxy.save(EntityProxy.java:579)\r\n\tat net.java.ao.EntityProxy.invoke(EntityProxy.java:115)\r\n\t... 308 more\r\n{code}\r\nDepending on the database, the error might be slightly different but pointing to the same root cause which is data is too big for the VALUE column. We see from the DB that it can store up to only 255 bytes.\r\n{code:java}\r\nmysql> describe AO_B7D8D8_PROJECT_CONFIG;\r\n+------------------------+--------------+------+-----+---------+----------------+\r\n| Field                  | Type         | Null | Key | Default | Extra          |\r\n+------------------------+--------------+------+-----+---------+----------------+\r\n| CHANNEL_ID             | varchar(255) | NO   | MUL | NULL    |                |\r\n| CONFIGURATION_GROUP_ID | varchar(255) | NO   | MUL | NULL    |                |\r\n| ID                     | int(11)      | NO   | PRI | NULL    | auto_increment |\r\n| NAME                   | varchar(255) | YES  | MUL | NULL    |                |\r\n| NAME_UNIQUE_CONSTRAINT | varchar(255) | NO   | UNI | NULL    |                |\r\n| PROJECT_ID             | bigint(20)   | NO   | MUL | 0       |                |\r\n| TEAM_ID                | varchar(255) | NO   | MUL | NULL    |                |\r\n| VALUE                  | varchar(255) | YES  |     | NULL    |                |\r\n+------------------------+--------------+------+-----+---------+----------------+\r\n{code}\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Failed to save configuration when saving a long JQL "
+    }
+  },
+  {
+    "key": "API-215",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-07-05T03:14:32.000+0000",
+      "description": "h3. Issue Summary\r\nNotifications in Slack is not rendered as per Jira's text formatting \r\n\r\nh3. Environment\r\n* Jira Server\r\n* Slack\r\n* [Jira Server for Slack (Official)|https://marketplace.atlassian.com/apps/1220099/jira-server-for-slack-official?hosting=server&tab=overview] app\r\n\r\nh3. Steps to Reproduce\r\n # Configure Jira to Slack as per [this guide|https://confluence.atlassian.com/slack/using-jira-applications-with-slack-966662163.html]\r\n# Check the option to send a message to the channel when 'Someone leaves a comment' \r\n# Add a new comment and observe the message in Slack\r\n# Add another comment that uses multiple text formatting in Jira\r\n# Observe the message in Slack\r\n\r\nh3. Expected Results\r\nText formatting is preserved in the Slack message\r\n\r\nh3. Actual Results\r\nNot all text formatting is preserved in the Slack message. As a result, message may be difficult to read in Slack.\r\n\r\n !jira-slack.png|thumbnail! \r\n\r\nh3. Notes\r\nText formatting for Slack can be found in [this link|https://get.slack.help/hc/en-us/articles/202288908-Format-your-messages]\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Inconsistent text formatting of Slack notifications for Jira"
+    }
+  },
+  {
+    "key": "API-214",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-14T12:53:06.000+0000",
+      "created": "2020-01-06T19:51:48.000+0000",
+      "description": "h3. Issue Summary\r\nAtlassian Cloud app in Gmail does not render custom imported project images\r\n\r\nh3. Steps to Reproduce\r\n# Integrate Jira with Gmail using the Atlassian Cloud app\r\n# Update a project with a custom image that is not one of the suggestions from Jira but use your own image\r\n# The app does not render the project image\r\n\r\nh3. Expected Results\r\nThe app should display the image of the project as expected\r\n\r\nh3. Actual Results\r\nIt displays the broken icon for the project image.\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Atlassian Cloud app in Gmail does not render custom imported project images"
+    }
+  },
+  {
+    "key": "API-213",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-14T13:07:21.000+0000",
+      "created": "2020-01-10T14:54:54.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen a user adds a comment in a Confluence page, the resulting notification in Slack refer as though the creator of the page has made a comment instead of the actual user who made the comment.\r\nh5. Version\r\n\r\nThe issue was tested in version 2.0.2\r\nh3. Steps to Reproduce\r\n # Login to Confluence, lets say this user has the username user1.\r\n # Create or take not of an existing Space.\r\n # Create a page in the above space.\r\n # Connect Confluence with Slack.\r\n # Setup Confluence to receive notification from a the above space.\r\n # Click on the *User Avatar* > *Settings* > *Slack Notification*\r\n # Ensure to set *When pages and posts I created get new comments* to true.\r\n # Ensure that you have connected your user with a Slack account via *Slack Accounts* option.\r\n # With the above set, you should get notifications when another user comments on a page you have created.\r\n # Log out.\r\n # Login using a different user (lets call them user2), and add a comment to the page that was created by user1.\r\n\r\nh3. Expected Results\r\n\r\nIn Slack the notificat should read.\r\n{code:java}\r\n user2 commented on page_name in SpaceName\r\n > Lorem Ipsum{code}\r\nh3. Actual Results\r\n\r\nIn Slack the notification reads:\r\n{code:java}\r\n user1 commented on page_name in SpaceName\r\n > Lorem Ipsum{code}\r\nh3. Note\r\n\r\nThe issue occurs in Pages as well as in blogs.\r\nh3. Workaround\r\n\r\nNo known workaround",
+      "summary": "When a user adds a comment in a page, the resulting Slack notification does not correctly refer to the comment creator. "
+    }
+  },
+  {
+    "key": "API-212",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2020-01-02T12:09:35.000+0000",
+      "description": "h3. Problem Definition\r\nThe Jira Cloud for Slack app does not allow for approvers to approve a Jira Service Desk request directly from Slack. The option to have approval workflows that go directly into Slack with quick actions will help these workflows move faster.\r\n\r\nh3. Suggested Solution\r\nAdd the option to approve or decline a Jira Service Desk request that needs approval directly from Slack via an integration.\r\n\r\nh3. Workaround\r\nSet up a notification in Jira Cloud for Slack when the request is transitioned to the approval status. The approvers can be notified in Slack but they will have to click the request to open Jira Service Desk where the request can be approved or declined.",
+      "summary": "Add approval workflow to Slack integration"
+    }
+  },
+  {
+    "key": "API-211",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-20T20:34:37.000+0000",
+      "description": "As a Jira admin, it would be nice to have the ability to disable the *\"Dedicated Channel\"* feature.\r\n\r\nh4. Actual Behavior\r\nWhen you link a Jira ticket to a Slack channel, it automatically sets the topic of the channel and you have to manually clear it to remove it\r\nSince there's no limitation to the number of issues linked to a channel and the change to the topic happens at the moment one creates the link, it became an annoying behavior.\r\n\r\nh4. Suggestion\r\nIt would be nice to have the ability to disable the *\"Dedicated Channel\"* feature.",
+      "summary": "Jira for Slack integration: Ability to disable \"dedicated channel\" feature"
+    }
+  },
+  {
+    "key": "API-210",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-01-07T16:52:57.000+0000",
+      "created": "2019-12-09T20:27:26.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nEnabling enhanced message verbosity in the Slack configuration causes duplicate messages to be sent.\r\n\r\nThis includes using 'dedicated channel' and 'project' configurations, as dedicated channel appears to default to enhanced.\r\nh3. Steps to Reproduce\r\n # Configure dedicated channel or project link with enhanced verbosity.\r\n # Observe duplicate messages sent to channel(s).\r\n\r\nh3. Expected Results\r\n\r\nSingle message is sent to Slack channel.\r\nh3. Actual Results\r\n\r\nMultiple message are sent to Slack Channel.\r\nh3. Workaround\r\n\r\nUsing Basic verbosity and/or do not use dedicated channel links.",
+      "summary": "Enabling enhanced message verbosity in the Slack configuration causes duplicate messages to be sent."
+    }
+  },
+  {
+    "key": "API-209",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-17T21:06:33.000+0000",
+      "description": "At this time Slack has a hard-coded limit of 2500 characters even though we select the extended version of the notification. It would be nice if we had the option to select the number of characters which should be displayed.",
+      "summary": "Add the ability to configure the number of characters in Slack"
+    }
+  },
+  {
+    "key": "API-208",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-03-24T02:31:45.000+0000",
+      "created": "2019-12-09T12:48:28.000+0000",
+      "description": "As a user, I would like to be notified in Slack when tickets that are associated with *me*\u00a0(watching, assigned, reporter, etc. as options) have been modified.\r\n\r\n\u00a0\r\n\r\nExamples from other tickets:\r\n * _However we would like to ask whether it is possible to list the Jira issues that are currently assigned to you (for example all issues that are assigned to you and are in status In Progress) from SLACK?_\r\n\r\n\u00a0\r\n\r\n\u00a0",
+      "summary": "Personal Jira Notifications in Slack"
+    }
+  },
+  {
+    "key": "API-207",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-09T10:45:32.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nThe Atlassian Gmail add-on supports both Jira and bitbucket, however it is not possible to use it without logging in to Jira for users using Bitbucket only - which shouldn't be necessary\r\nh3. Steps to Reproduce\r\n\r\nN/A\r\nh3. Expected Results\r\n\r\nN/A\r\nh3. Actual Results\r\n{noformat}\r\nN/A\r\n{noformat}\r\nh3. Workaround\r\n\r\nRequired, if there is no workaround please state:\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Using the Atlassian Gmail add-on without a Jira account"
+    }
+  },
+  {
+    "key": "API-206",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-03T19:24:32.000+0000",
+      "description": "The add-in currently only supports the ability to refresh on a manual basis. Users want their imported Jira issues\u00a0updated on a periodic basis, rather than only on demand.\u00a0",
+      "summary": "Schedule refresh of Jira issues on Jira Cloud for Excel Integration"
+    }
+  },
+  {
+    "key": "API-205",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-12-03T12:21:12.000+0000",
+      "description": "h3.Summary\r\n\r\nAs per the summary, the issue details returned by JIRA Cloud for Sheets should be enclosed in within a data table. This will make it easier for users to work with the returned data. \r\n\r\nWith this feature, it will also be preferable to be able to directly update the data table contents by right clicking it and selecting 'update'.",
+      "summary": "JIRA Cloud for Sheets issue details should be enclosedby a data table in Excel"
+    }
+  },
+  {
+    "key": "API-203",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-14T12:49:42.000+0000",
+      "created": "2019-11-27T14:27:15.000+0000",
+      "description": "h3. Summary\r\n\r\nThere are issue cards on the first screen where the user can see the assignee, status, and priority. The user can click on that card to see more details and edit some fields (assignee, priority, status, etc). After editing those fields user returns to the issue cards view and will see that those fields are not updated.\r\nh3. Environment\r\n\r\nJira Cloud for Outlook\r\nh3. Steps to reproduce\r\n # Install the integration and check the assignee in the issue card.\r\n # Click on the card, edit the assignee.\r\n # Close the card and see that the assignee field wasn't updated.\r\n\r\nh3. Expected results\r\n\r\nIt shows the current assignee.\r\nh3. Actual result\r\n\r\nThe card is not updated with the current assignee.\r\nh3. Workaround\r\n\r\nThis doesn\u2019t affect assigning functionality though, it still works.\u00a0Reloading issue cards view resolves the issue.\r\n \u00a0",
+      "summary": "Issue cards are not updated after editing assignee, priority or status fields"
+    }
+  },
+  {
+    "key": "API-202",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-25T23:11:44.000+0000",
+      "description": "In many cases it's useful to have all repositories in a single project integrate to a Slack channel. Rather than having to configure all the repositories individually, it would be beneficial to be able to configure the Project to send notifications.",
+      "summary": "Allow integration to Slack at the project level"
+    }
+  },
+  {
+    "key": "API-201",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-21T17:00:08.000+0000",
+      "description": "The message style for issue mentions or _/jira ABC-123_\u00a0uses the Default message style.\r\n\r\nChannel notifications can be configured between _default_ and _extended_, which includes the issue description.\r\n\r\n!image-2019-11-21-10-59-28-893.png|width=508,height=222!\r\n\r\n\u00a0\r\n\r\nIt would be helpful if the */jira unfurl* command had an option to toggle unfurl messages between the default and extended styles.",
+      "summary": "Configure issue mention unfurl style"
+    }
+  },
+  {
+    "key": "API-200",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-15T13:25:21.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCurrently, Deep Linking with Slack requires the usage of the protocol that goes by slack://. As of today, Confluence does not support the use of custom protocols. See: https://jira.atlassian.com/browse/CONFCLOUD-24665\r\n\r\nWith this situation in mind, we believe that creating a direct integration between Confluence and Slack, for linking, should helps customers to overcome this.\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Integrate Slack Deep Linking (slack://) with Confluence"
+    }
+  },
+  {
+    "key": "API-199",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-13T17:25:10.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nQuestion from:\u00a0[https://community.atlassian.com/t5/Jira-articles/The-add-in-you-ve-been-waiting-for-Jira-Cloud-for-Excel/ba-p/1210420]\r\n\r\nUsing the JIRA() function to re-import does not clear out old data, causing incorrect reports. Ex) If a data pull retrieves 50 rows, and the next data pull retrieves 40 rows, the report shows 50 rows: The most recent 40, plus the last 10 of the previous pull. Perhaps it could clear rows based on the row bound parameter provided.\r\nh3. Steps to Reproduce\r\n\r\n...\r\nh3. Expected Results\r\n\r\n...\r\nh3. Actual Results\r\n\r\n...\u00a0\r\nh3. Workaround\r\n\r\nDelete the data manually...",
+      "summary": "Excel: Using the JIRA() function to re-import does not clear out old data"
+    }
+  },
+  {
+    "key": "API-198",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2021-07-14T12:56:28.000+0000",
+      "created": "2019-11-13T00:56:35.000+0000",
+      "description": "h3. Issue Summary\r\nWhen a customer deletes a branch using the command line, a notification is sent to Slack even when the \"Repository -> Branch deleted\" setting is not enabled.\r\n\r\nThis only occurs when the \"Commits -> Pushed\" setting is enabled.\r\n\r\nh3. Steps to Reproduce\r\n # Enable the \"Commits -> Pushed\" setting and make sure that the \"Repository -> Branch deleted\" one is disabled\r\n # Perform the following steps to create and delete a branch:\r\n{noformat}\r\ngit checkout -b slack_notification_branch\r\ngit push origin slack_notification_branch\r\ngit branch -d slack_notification_branch\r\ngit push origin :slack_notification_branch\r\n{noformat}\r\n\r\nh3. Expected Results\r\nNo notification is sent to Slack on the branch deletion.\r\n\r\nh3. Actual Results\r\nThe following notification is received in Slack:\r\n{noformat}\r\nCaterina Curti deleted branch slack_notification_branch in <project>/<repository>\r\n{noformat}\r\n\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available\r\n\r\n*Notes*\r\nNo notification is sent if the \"Commits -> Pushed\" setting is not enabled.",
+      "summary": "With the \"Branch deleted\" setting not enabled, deleting a branch via the command line send a notification to Slack"
+    }
+  },
+  {
+    "key": "API-197",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-04-29T10:23:49.000+0000",
+      "created": "2019-11-12T04:44:19.000+0000",
+      "description": "h3. Issue Summary\r\nJira Server Slack integration allows user to create dedicated channels for an issue - see [How can I create a dedicated channel for an issue?|https://confluence.atlassian.com/slack/using-jira-applications-with-slack-966662163.html#UsingJiraapplicationswithSlack-HowcanIcreateadedicatedchannelforanissue?]. This channel will now post all notifications, included restricted comments which are not meant for all users in the channel. \r\n\r\nh3. Steps to Reproduce\r\n# Create a dedicated channel in Slack\r\n# Add a restricted comment in the issue\r\n\r\nh3. Expected Results\r\nRestricted / internal comments are not posted to Slack\r\n\r\nh3. Actual Results\r\nAll comments are posted to Slack\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Slack dedicated channel posts notifications for restricted comments"
+    }
+  },
+  {
+    "key": "API-196",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-11-08T18:09:41.000+0000",
+      "description": "h3. Problem\r\n\r\nWhen connecting Jira and any CRM software using the Jira Cloud for CRM add-on, the customer information will start showing in the integration panel, but it's not possible to use that information in JQL filters/SLA goals.\r\n\r\nh3. Suggested resolution\r\n\r\nHave the ability to use the CRM fields in JQL filters.",
+      "summary": "Ability to use Jira Cloud for CRM fields in JQL filters/SLA goals"
+    }
+  },
+  {
+    "key": "API-195",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-11-14T14:21:42.000+0000",
+      "created": "2019-11-05T14:11:36.000+0000",
+      "description": "h3. Problem\r\n\r\nWhen commenting from Slack to Jira, it appends to the comment the following \"This comment was left via Slack\". It sounds unprofessional per the customer point of view, and also gives information about the tools used internally.\r\n\r\nh3. Suggested resolution\r\n\r\nAbility to remove the \"This comment was left via Slack\" from comments made via Slack.",
+      "summary": "Ability to remove the \"This comment was left via Slack\" from the comments"
+    }
+  },
+  {
+    "key": "API-194",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-11-22T11:15:15.000+0000",
+      "created": "2019-10-31T14:04:00.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAs per title, multi-line string values extracted by Jira Cloud for CRM is ignoring line breaks. This caused the text to appear clumped together in one line.\r\n\r\nh3. Steps to Reproduce\r\n\r\nJust attempt extracting values from a multi line text field like the description field.\r\n\r\nh3. Expected Results\r\n\r\nText retain the multi line formatting.\r\n\r\nh3. Actual Results\r\n\r\nText appears in one line; ignoring line breaks.\r\n\r\nh3. Workaround\r\n\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available\r\n",
+      "summary": "Multi-line string values extracted by Jira Cloud for CRM is ignoring line breaks"
+    }
+  },
+  {
+    "key": "API-193",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-25T09:00:23.000+0000",
+      "description": "Could this Currently when there is an event triggered in a Jira application that is linked to Slack using the Atlassian Jira for Slack connector, the event will appear on Slack like this: \"Agent commented to a Story\"\r\n !image-2019-10-25-16-54-15-617.png|thumbnail! \r\n\r\nWhile on the Bitbucket case, you get \"Agent commented *on* a pull request\":\r\n !image-2019-10-25-16-59-27-495.png|thumbnail! \r\n\r\nThe request is to have them both using the same working.",
+      "summary": "In Slack: change the wording of the events to be homologated across Atlassian applications"
+    }
+  },
+  {
+    "key": "API-192",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-24T11:21:03.000+0000",
+      "description": "There is already an \"Add Slack message to Pull request\" action.\r\n\r\nI want to have the similar action for issues - \"Add Slack message to issue\".",
+      "summary": "Add Slack message to issue"
+    }
+  },
+  {
+    "key": "API-191",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-24T10:59:29.000+0000",
+      "description": "Add personal notifications (new comment, new commit, any update). For instance:\r\n * Events in my PR\r\n * Events in PR I am watching\r\n * Events in PR I am reviewing\r\n * Comment on my commit\r\n * Notifications on my Pipelines build",
+      "summary": "Personal notifications"
+    }
+  },
+  {
+    "key": "API-190",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-10-29T18:21:08.000+0000",
+      "created": "2019-10-23T21:36:52.000+0000",
+      "description": "If a Bitbucket Server instance is not publicly exposed, but it is able to connect to the internet and hit Slack, the connection shows as \"Limited\" and the configuration process is unable to proceed as Slack cannot reach back out to Bitbucket.\r\n\r\nInstead of being stuck in an incomplete state, it would be great if the plugin allowed you to use the plugin in its limited state - and allow for only operations that need Bitbucket to talk to Slack, such as pulling channel data into Bitbucket and sending notification payloads back to Slack like a webhook. \r\n\r\nThis may require a different authentication method other than OAuth as a result, but this would help reduce the inconvenience of needing to install an entirely separate Slack integration plugin if an organization cannot publicly expose their instance to Slack.",
+      "summary": "Allow configuration of only one-way communication from Bitbucket Server to Slack"
+    }
+  },
+  {
+    "key": "API-189",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-23T18:23:11.000+0000",
+      "description": "*Add-on Atlassian Cloud for Gmail does not allow to change the status.*\r\n\r\n- Would be nice to be able to change the status using the app.\r\n\r\n\u00a0",
+      "summary": "Allow to change status via Add-on Atlassian Cloud for Gmail"
+    }
+  },
+  {
+    "key": "API-188",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-21T12:31:45.000+0000",
+      "description": "h4. Summary\r\nNot currently possible to add comments on Confluence via Slack conversations\r\n\r\nh4. Suggested Solution\r\nAdd an integration so that when a user adds a new reply to a Slack conversation, a comment is added to the specified page in Confluence",
+      "summary": "Ability to add comment to a page in Confluence via Slack conversation"
+    }
+  },
+  {
+    "key": "API-187",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-01-31T21:57:32.000+0000",
+      "created": "2019-10-18T15:12:29.000+0000",
+      "description": "I really like the feature of hyperlinking automatically when an issue key is mentioned in the body of an email. However\u00a0I think it would be more useful if the pop up box included the description and comments on the issue similar to the Show Issues tab in Outlook. Having all that information in one click when an issue is mentioned in an email would be very convenient. A stretch goal would be having the ability to comment and @mention in the pop up box as well.\r\n\r\nSteps to reproduce:\r\n # Include issue key in the body of an email\r\n # Click on the issue key and a pop up box should appear",
+      "summary": "Show more information in pop up box when issue key is mentioned in email body"
+    }
+  },
+  {
+    "key": "API-186",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-18T13:30:19.000+0000",
+      "description": "Currently, Jira Cloud for Outlook doesn't fully support shared mailboxes. In some cases, attachments are not uploaded or the add-in is not available at all.\r\n\r\nIf the add-in is available, it's confusing that the \"Include X attachments\" is visible because it won't work.",
+      "summary": "Support shared mailboxes"
+    }
+  },
+  {
+    "key": "API-185",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-17T23:31:53.000+0000",
+      "description": "People are always asking questions in Slack that either should have been tickets in the first place, or turn into requests that should be managed in Jira. It's a priority for some of our teams to be able to create issues from Slack, they don't care about getting Jira notifications in their channels.\r\n\r\n\u00a0\r\n\r\nAware of the (fairly pricey) add-on options, but given this is available for Cloud for free it makes them feel even more pricey.\r\n\r\nQuestion - is this just not possible at all or could we possibly hack a slack command if we follow the instructions to create a custom app instead of installing the packaged one from the marketplace?",
+      "summary": "Create issue from Slack in Jira Server/DC"
+    }
+  },
+  {
+    "key": "API-184",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-09T17:56:48.000+0000",
+      "description": "h3. Problem\r\n\r\nSometimes agents only want to have customer comments being posted on the Slack channels and not their own comments being posted as well. It causes duplicate information under their channels.\r\n\r\nh3. Suggested resolution\r\n\r\nProvide a way to differentiate customer comments from agent comments and only post customer comments on Slack.\r\n",
+      "summary": "Differentiate agent comments from customer comments and add a filter to only post customer comments"
+    }
+  },
+  {
+    "key": "API-182",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-04T19:00:47.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently, Slack trigger notifications for Issue Created, Assignee Updated, Comments and Issue transitions. There is no option to trigger a notification when an issue is moved from a project to another.\r\n\r\nh3. Suggested Solution\r\nImplement an additional option to trigger notifications for moved issues.\r\n\r\nh3. Why this is important\r\nSome customers want to keep track of issues that are being moved from one project to another by just looking to the notification on Slack instead of checking issue history.\r\n\r\nh3. Workaround \r\nNA",
+      "summary": "Enable \"issue moved\" notification on slack"
+    }
+  },
+  {
+    "key": "API-181",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-03T13:58:16.000+0000",
+      "description": "h3. Definition\r\n\r\nIt would be very convenient if the users can approve/reject or transition issues through Slack channel. This feature is already available in Slack for Jira Cloud.\r\n\r\nh3. Suggestion\r\nAdd the same feature in Slack for Jira server. ",
+      "summary": "Add support for transitioning issues through Slack"
+    }
+  },
+  {
+    "key": "API-180",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-10-02T16:16:26.000+0000",
+      "description": "With our recent updates to unfurling, we require that users authenticate themselves with Atlassian, so that we know who they are and can guarantee they have access to the issue they are trying to unfurl.\u00a0\r\n\r\nUnfortunately, Slack Guest Users are unable to authenticate themselves because we require that the user authenticates with Slack, something guest users in Slack are incapable of doing.\u00a0\r\n\r\nIt is possible for us to just authenticate the Guest User on the Atlassian side, although they won't be able to take any actions (via the \"...\" menu) or use slash commands to create Jira issues, as we won't be able to authenticate them on the Slack side.\r\n\r\nThis feature request is to support guest users to be able to unfurl via a secondary authentication method that does not exist and needs to be built\r\n\r\n\u00a0",
+      "summary": "Slack Guest User support for Unfurling"
+    }
+  },
+  {
+    "key": "API-179",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-10-09T13:37:56.000+0000",
+      "created": "2019-09-26T10:00:29.000+0000",
+      "description": "[For the reference|https://community.atlassian.com/t5/Jira-articles/Try-Jira-Cloud-for-Outlook-Organize-your-work-without-leaving/bc-p/1188151#M1574].",
+      "summary": "List issue in a task pane if issue key is mentioned in an email subject"
+    }
+  },
+  {
+    "key": "API-178",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-01-31T21:55:33.000+0000",
+      "created": "2019-09-24T23:20:56.000+0000",
+      "description": "With the Jira for Outlook app when adding a comment in Show Issues in Outlook, it does not have the ability to @mention a user. This is possible in the plugin as it works for assigning users to issues. Can the user picker functionality be extended to comments as well? Most comments in my team involve tagging users.\r\n\r\nSteps to reproduce:\r\n # Open an email in Outlook containing an excerpt of a Jira Issue\r\n # Select Show Issues in the Jira Cloud ribbon in Outlook\r\n # Select the issue in the View Issues tab in the pane\r\n # Try adding a comment and @mentioning a user\r\n # Check the comment in Jira and the @mention will be in plain text without the user tagged.",
+      "summary": "Jira for Outlook mention users in comments"
+    }
+  },
+  {
+    "key": "API-177",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-23T07:36:58.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nIn the current [Bitbucket Server for Slack|https://marketplace.atlassian.com/apps/1220729/bitbucket-server-for-slack-official?hosting=server&tab=overview] integration, each repository can be configured to send notifications to only one Slack channel.\r\n\r\nIt would be great if there was a way to direct notifications for a repository to different channels based on some rules (e.g. regex pattern).\r\n The sample use case for this would be to have notifications for different branches in the repo to be sent to different channels.\r\nh3. Possible Solution\r\n\r\nThe third-party plugin [Slack notifications plugin|https://marketplace.atlassian.com/apps/1213042/slack-notifications-plugin?hosting=server&tab=overviewa] provides a way to direct notifications to different channels using regex patterns.\r\n e.g.\r\n !regex_pattern_sample.png!\r\n\r\n\u00a0\r\n-\r\n\u00a0",
+      "summary": "Bitbucket Server for Slack Suggestion: Send notifications to different channels based on pattern"
+    }
+  },
+  {
+    "key": "API-176",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-10-23T14:53:30.000+0000",
+      "created": "2019-09-19T09:05:22.000+0000",
+      "description": "Currently, only public comments are available.",
+      "summary": "Allow commenting internally/externally (JSD)"
+    }
+  },
+  {
+    "key": "API-175",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-12-03T21:18:39.000+0000",
+      "created": "2019-09-18T18:53:40.000+0000",
+      "description": "h3. Problem Definition\r\nAt this moment, any user on Slack (with admin access or not) can create a subscription to a project trough Slack on Jira. \r\n\r\n\r\nh3. Suggested Solution\r\nIt would be useful if only users with administrative privileges in the project (project lead, Jira-administrator, administrator, site-admin) could create this subscription for notifications on Slack trough Slack.\r\n\r\nh3. Why this is important\r\nSome projects might have sensitive data or privileged information that only certain users can see. If any user can create a Subscription for project updates in Slack, this information will be visible for users that shouldn't have access to it.",
+      "summary": "Administrator permission on the project to create the subscription through Slack"
+    }
+  },
+  {
+    "key": "API-174",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-18T13:46:41.000+0000",
+      "description": "h4. Summary\r\nThere's currently no ability to update tasks (action items) in Confluence via a Slack conversation.\r\n\r\nh4. Suggested Solution\r\nLink a task to a Slack thread, allowing users to update action items with notes/messages, and share information with the assignee regarding that task (without having to update the task or page directly)",
+      "summary": "Ability to update tasks through Slack "
+    }
+  },
+  {
+    "key": "API-173",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-12-20T21:31:47.000+0000",
+      "created": "2019-09-17T15:57:25.000+0000",
+      "description": "It would be super useful to be able to create a task and specify which project and assignee it is, all within one message command.\r\n\r\nThat way, we can use macros/hotkeys to add tasks within the desired project and the appropriate assignee within two key presses, leaving just the task summary to be typed",
+      "summary": "Add [assignee] and [project] fields to the /jira create command"
+    }
+  },
+  {
+    "key": "API-171",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-12T16:02:53.000+0000",
+      "description": "Currently the {{JIRA()}} function within Google Sheets does not support the Super-Epic issue type within Jira.\r\n\r\nI would like to be able to import a Story or an Epic using the {{JIRA()}} function and show the Super-Epic to which it belongs (similar to using the 'epic link' column within the function).\r\n\r\ne.g.\r\n\r\n{{=JIRA(\"project = <PROJECT>' order by issuekey\", \"issuekey,issuetype,summary,status,super-epic link,epic link\")}}",
+      "summary": "Add support for Super-Epics"
+    }
+  },
+  {
+    "key": "API-170",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2019-12-06T22:48:45.000+0000",
+      "created": "2019-09-10T21:11:38.000+0000",
+      "description": "h3. Problem Definition\r\nGet the Jira Cloud bot via the Jira-Slack integration to mention and list the Jira key issue as a threaded comment in Slack instead of its own post in the channel.\r\n\r\nh3. Suggested Solution\r\nAdd this as a threaded comment in Slack room\r\n\r\n\r\nh3. Why this is important\r\nTo reduce the number of messages in the channel directly by focussing it on a thread\r\n\r\n\r\n",
+      "summary": "Get the Jira Cloud bot via the Jira-Slack integration to mention and list the Jira key issue as a threaded comment"
+    }
+  },
+  {
+    "key": "API-169",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-09T08:06:38.000+0000",
+      "description": "The message that comes in Slack contains only the event for the action and the link for what is happening, but it would be good to be able to set a custom message for each event.",
+      "summary": "Allow customizing the message in Slack"
+    }
+  },
+  {
+    "key": "API-168",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": "2020-02-25T16:46:38.000+0000",
+      "created": "2019-09-06T13:50:17.000+0000",
+      "description": "Currently the add-on will add a hyperlink only to issue keys during the import from sidebar JQL/Filter. Which means if my query has fields like, \"Epic Link\", \"Linked Issues\", they will not get a hyperlink. As a user I would prefer to have ALL fields which point to an issue to have hyperlink support.",
+      "summary": "Hyperlink support for all issue type fields"
+    }
+  },
+  {
+    "key": "API-167",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-06T13:46:49.000+0000",
+      "description": "Currently the issue keys get a hyperlink only if the data is imported in Google sheets using the sidebar JQL/Filter import. As a user I would prefer if the issue keys get a hyperlink for imports done through =JIRA() formula/custom function as well.",
+      "summary": "Linkify issue keys from =JIRA() custom function "
+    }
+  },
+  {
+    "key": "API-166",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-09-05T11:51:39.000+0000",
+      "description": "The Slack integration in Jira does not display the user who set up a particular notification subscription. Also, as the Slack integration has recently made a change where the subscription to private channel is shown as #unknown if the user is not part of the channel. This could be important to figure the owner of the subscription and the relevant channel.",
+      "summary": "Display the user who has set-up the Slack notification subscription in Jira Cloud"
+    }
+  },
+  {
+    "key": "API-165",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-03-06T15:07:06.000+0000",
+      "description": "h3. Current behavior\r\nAt the moment, it isn't possible to be able to edit pages within Slack without having to navigate to the page in Confluence. \r\n\r\nh3. Expected behavior\r\nIt would be great to be able to edit Confluence pages without leaving the Slack application. ",
+      "summary": "Add the ability to edit pages through Slack "
+    }
+  },
+  {
+    "key": "API-164",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20010",
+        "id": "20010",
+        "key": "API",
+        "name": "Atlassian Product Integrations",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?avatarId=98193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&avatarId=98193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&avatarId=98193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&avatarId=98193"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2019-01-17T20:26:16.000+0000",
+      "description": "When integrating Confluence and Slack, if a user does not enable/link the Confluence Cloud app when someone shares a Confluence link, the user without the integration/link enabled will see the following message:\r\n\r\n{quote}Looks like you've just shared a Confluence Cloud link. To display previews of pages and blog posts from https://instancename.atlassian.net, link your Confluence Cloud site to your Slack account.{quote}\r\n\r\nAs those users will still need to manually integrate to either see it or stop noticing the message, this is a suggestion to have an option that would allow the app to be integrated for anyone that will be using the Slack application connected to Confluence, instead of needing to manually create the integration, one by one.",
+      "summary": "Option to integrate all Slack accounts with Confluence"
+    }
+  }
+]

@@ -1,0 +1,2202 @@
+[
+  {
+    "key": "JSWCLOUD-13266",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-04-12T05:47:00.000+0000",
+      "created": "2016-02-24T04:54:03.000+0000",
+      "description": "It is possible to create a board based on a filter with no shares. The creator can see the board but the relevant info in the board config \"No shares\" is not called out/obvious.\n\nAdditionally for viewers of the board the generic message \"The requested board cannot be viewed because it either does not exist or you do not have permission to view it.\" offers no assistance.",
+      "summary": "Improved messaging that a board is based on a filter with no shares"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13265",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-02-23T21:40:35.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nSprints can now be affected by complex filters on the origin board if the filter is too complex. The manage sprints permission introduces the \"origin board concept for sprint\". If the filter query for a sprint is complex (several clauses) it requires the filter either be simplified or the user must have the manage sprints permission for all projects in the instance not just associated projects with the filter. This can cause problems managing a sprint if it exist in several boards as there isn't an easy way via the UI to identify origin board the sprint was created on to resolve the issue. \r\n\r\nSee blog post [Updates on the planned second release of sprint management permission|https://confluence.atlassian.com/jirasoftwarecloud/blog/2016/02/updates-on-the-planned-second-release-of-sprint-management-permission] and  [Sprints shared between multiple boards|https://confluence.atlassian.com/display/JIRAKB/Sprints+shared+between+multiple+boards] for reference. \r\n\r\nh3. Suggested Solution\r\n \r\nProvide a UI method that will show the origin board of sprint to resolve the complex query issue. \r\n\r\nh3. Workaround \r\n\r\n- *Cloud users:*\r\nYou can use the REST endpoint [GET sprint|https://developer.atlassian.com/cloud/jira/software/rest/api-group-sprint/#api-agile-1-0-sprint-sprintid-get].\r\n\r\nThat will return a key called *originBoardId*, with the id of the board as its value.\r\n\r\nYou can get the id of a sprint by hovering over it in the backlog, and then checking the URL at the bottom of the page, or performing an advanced search:\r\n !Screen Shot 2020-11-09 at 09.36.14.png|thumbnail!  !Screen Shot 2020-11-09 at 09.50.24.png|thumbnail!  !Screen Shot 2020-11-12 at 14.52.30.png|thumbnail! \r\n\r\nOnce you get the id of that board via the endpoint, you can go to that board by using the URL:\r\n{code}https://<YOUR SITE>.atlassian.net/secure/RapidBoard.jspa?rapidView=<BOARD ID> {code}\r\n\r\n\r\n- *Server users:*\r\nPlease contact your Database administrator for  your JIRA DB to execute the following query to find the origin board for a sprint:\r\n{code}\r\nselect b.\"ID\", b.\"NAME\" as board_name, s.\"NAME\" as sprint_Name from \"AO_60DB71_SPRINT\" s, \"AO_60DB71_RAPIDVIEW\" b where s.\"NAME\" = '<SprintName>' and s.\"RAPID_VIEW_ID\" = b.\"ID\";\r\n{code}\r\n*The above SQL was written for Postgres. Syntax for the query may need to be adjusted for your DB engine.*\r\n ",
+      "summary": "Provide UI method to identify origin board for a sprint. "
+    }
+  },
+  {
+    "key": "JSWCLOUD-13264",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T04:54:18.000+0000",
+      "created": "2016-02-23T15:05:40.000+0000",
+      "description": "h3. Problem Description \n\nIf column A in a board contains multiple statues, clicking and moving issue to another column, will show all the available statuses on column A. However, if column B only contains one status, it will *not* be shown.\n\nh3. Suggested Resolution\n\nIt would be great if the status in column B is shown even if it only contains 1 issue.",
+      "summary": "Show the status on each column even if it only contains one status"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13263",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T04:26:32.000+0000",
+      "created": "2016-02-23T14:10:54.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13263].\n  {panel}\n\n*Steps to Reproduce*\n\n# View an Agile Board. Notice how the epic and version \"tags\" on each item are right-aligned, and on the same line as the issue title.\n# Click the \"current sprints\" button on the left\n# Click the \"backlog\" button on the left\n\n\n*Expected Outcome*\nLayout of the issues in the backlog view is as described above\n\n\n*Actual Outcome*\nThe epic and version \"tags\" are left-aligned, and show up immediately under the issue key.\n\n\n*Notes*\nRefreshing the page (cmd-R on OS X) fixes the layout issue, but when you repeat the steps above, it happens consistently.\n\nThis only started happening recently, so I suspect it was a recent on-demand version which introduced this bug.",
+      "summary": "Layout of items on Backlog View changes after viewing current sprints"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13258",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2017-05-01T04:55:37.000+0000",
+      "created": "2016-02-23T05:54:02.000+0000",
+      "description": "The button to view work (Ref: Jira Scrum Board bug 1.jpg) doesn't work following the first successful execution. To make this button work, Page has to be refreshed. \nSteps to reproduce:\n# Open Scrum board \n# Click on Active Sprint\n# Click view workload by Assignee \n# Close the tab opened\n# Click view workload by Assignee again (Doesn't work)\n",
+      "summary": "View Workload by Assignee Button doesnt work on Second Execution "
+    }
+  },
+  {
+    "key": "JSWCLOUD-13253",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T04:57:51.000+0000",
+      "created": "2016-02-22T19:16:50.000+0000",
+      "description": "Current, only 3 fields can be added on card layout for both backlog and sprint views\n",
+      "summary": "Allow more than 3 fields on card layout"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13252",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T05:59:46.000+0000",
+      "created": "2016-02-22T18:32:31.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13252].\n  {panel}\n\nA user reported to me that the instance I am an administrator of no longer shows the \"Bulk Edit\" menu item when multi-selecting Issues from the Backlog.\n\nI've never personally used the feature, but I do see in this blog post: http://blogs.atlassian.com/2013/08/jira-agile-tip-of-the-month-bulk-changes/ what they described as their expectation of it.\n\nThey (and I obviously) do have the global \"Bulk Edit\" permission and can still do so from the *search screen*, but the option does not show up as described in that blog post. This was all of a sudden, probably related to the February 15th update.",
+      "summary": "Bulk Edit menu item missing from Backlog"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13249",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T05:31:02.000+0000",
+      "created": "2016-02-19T16:05:42.000+0000",
+      "description": "I have attached a screen shot which illustrates the problem.\nIf an issue is Done or Closed within an Epic you would expect it to have the Green Circle & White Tick symbol against it (as highlighted within the green box on the screen shot attached)\nYou would not expect to have the same symbol for an issue that is currently reported as \"In-Progress\" status. Highlighted as the red box on the attached screen shot)\nI have no idea what is causing this issue. I have checked the workflow and it seems to be correct.",
+      "summary": "Epic Shows Incorrect Status For \"In-Progress\" Issues"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13248",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-07T21:29:26.000+0000",
+      "created": "2016-02-16T17:31:17.000+0000",
+      "description": "In JIRA, during process to end a sprint.  After clicking the 'Complete Sprint' button from the teams 'Work' board.  A message indicating that In-progress tickets will be copied to the next open sprint would improve usability. \n\nThe documentation 'Ending a Sprint - Atlassian Documentation' indicates this.  By adding it to the dialogue displayed after clicking the 'Complete Sprint' button would be very helpful.\n\nWe have run into this several times.\n\n",
+      "summary": "Ending a sprint - unclear message regarding what happens with in-progress tickets"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13247",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-02-20T10:18:03.000+0000",
+      "description": "h3. Problem Definition\n* With quite a number of boards and custom issue type, it is nontrivial to change card colors for this issue types on every board defined.\n\nh3. Suggested Solution\n* Introduce capability to change this configuration globally.\n",
+      "summary": "As an administrator I would like to configure card colors globally to avoid having to update every board individually"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13238",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T05:08:06.000+0000",
+      "created": "2016-02-19T08:53:52.000+0000",
+      "description": "Color the Fix Version/s field green if the version is released. Just like the Status field can have different colors depending on the state.\n\nIt would improve the visiblity.",
+      "summary": "Color Fix Version/s field green if the version is released."
+    }
+  },
+  {
+    "key": "JSWCLOUD-13233",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-29T05:17:22.000+0000",
+      "created": "2016-02-16T04:30:05.000+0000",
+      "description": "Calls using greenhopper are throwing an IllegalStateException.\n\n*Steps to reproduce*\n# Do any greenhopper call using curl. For example:\n{code}\ncurl -D- -X GET -H \"Authorization: Basic [username:password in base64]\" -H \"Content-Type: application/json\" '[jira url]/rest/greenhopper/1.0/rapid/charts/sprintreport?rapidViewId=148&sprintId=449'\n{code}\n\n*Expected results*\n* A json is returned with the requested data\n\n*Actual results*\n* An error 500 HTML page is returned with the following stack trace:\n{code}\njava.lang.IllegalStateException: Cannot create a session after the response has been committed</pre><blockquote id=\"stacktrace\" style=\"overflow-x: auto;\"><pre>java.lang.IllegalStateException: Cannot create a session after the response has been committed\n\tat org.apache.catalina.connector.Request.doGetSession(Request.java:2934)\n\tat org.apache.catalina.connector.Request.getSession(Request.java:2310)\n\tat org.apache.catalina.connector.RequestFacade.getSession(RequestFacade.java:897)\n\tat com.atlassian.plugin.servlet.PluginHttpRequestWrapper.getSession(PluginHttpRequestWrapper.java:146)\n\tat com.atlassian.plugin.servlet.PluginHttpRequestWrapper.getSession(PluginHttpRequestWrapper.java:146)\n\tat com.atlassian.plugin.servlet.PluginHttpRequestWrapper.getSession(PluginHttpRequestWrapper.java:146)\n\tat com.atlassian.plugin.servlet.PluginHttpRequestWrapper.getSession(PluginHttpRequestWrapper.java:146)\n\tat com.atlassian.plugin.servlet.PluginHttpRequestWrapper.getSession(PluginHttpRequestWrapper.java:146)\n\tat com.atlassian.plugin.servlet.PluginHttpRequestWrapper.getSession(PluginHttpRequestWrapper.java:140)\n\tat javax.servlet.http.HttpServletRequestWrapper.getSession(HttpServletRequestWrapper.java:238)\n\t...\n{code}\n\n*Notes*\n* Using the same url in the browser (while logged in) works fine.\n* Using /rest/api/2/ calls work fine always (without greenhopper).",
+      "summary": "Greenhopper calls result in IllegalStateException: Cannot create a session after the response has been committed"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13232",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T05:11:21.000+0000",
+      "created": "2016-02-18T23:22:47.000+0000",
+      "description": "Often when I click on an issue it is because I am about to move it to different swim-lane and not because I want more details about the issue. It would be great to be able to disable displaying the side-panel issue information on a per-user basis.",
+      "summary": "Add an option to disable the side panel \"view issue view\""
+    }
+  },
+  {
+    "key": "JSWCLOUD-13231",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T05:44:30.000+0000",
+      "created": "2016-02-18T22:56:34.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13231].\n  {panel}\n\nWhen you view the product backlog first time, css class for the body is \"ghx-plan-band-2\"\nbut when you go to another screen (i.e. current sprint) and come back, the body class is set to \"ghx-plan-band-1\". \n\nBut this time, backlog rows become higher because \".ghx-row.ghx-end\" class is not styled correctly.\n\nIf you have too many issues on the backlog, this becomes harder to track from a UX viewpoint",
+      "summary": "Board plan screen backlog item row height is larger when user comes back from another planning screen"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13230",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2019-05-09T00:16:33.000+0000",
+      "created": "2016-02-18T22:05:19.000+0000",
+      "description": "We have JIRA hooked up to Gitlab, which can close issues. For example, in the transition list for this issue:\n\n !image-2016-02-18-14-01-36-778.png|thumbnail! \n\nWhen this occurs, the sprint report lists the issue as closed, with 51 points remaining:\n\n !image-2016-02-18-14-02-55-349.png|thumbnail! \n\nHowever, our burndown report does not, and the number of remaining story points (53) is inconsistent with the sprint report:\n\n !image-2016-02-18-14-04-35-737.png|thumbnail! ",
+      "summary": "Burndown not updated with closed issue"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13228",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2017-08-21T23:45:35.000+0000",
+      "created": "2016-02-18T16:51:02.000+0000",
+      "description": "h3. Problem Definition\nJIRA software (JIRA 7) no longer allows public access. See the feature request for [GHS-13060|https://jira.atlassian.com/browse/GHS-13060]. \nh3. Suggested Solution\n Please update JIRA 7 documentation that any JIRA software/Agile data must be accessed by an authenticated user. \n\n",
+      "summary": "Update documentation to reflect public/anonymous access to board associated data has been removed. "
+    }
+  },
+  {
+    "key": "JSWCLOUD-13226",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T05:57:27.000+0000",
+      "created": "2016-02-18T14:01:09.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13226].\n  {panel}\n\nI enabled the new Labs Feature \"Kanban Backlog\". As soon as I enabled it and mapped the status \"Backlog\" to the boards pseudo-column \"Backlog\" issues for some users are displayed spanning all columns (Attachment \"Span-Without-Filter\").\n\nI found a workaround that involved creating a custom quick filter (Attachment \"Quick-Filter\") explicitly hiding issues with status \"Backlog\". Applying the quick filter to the board, the issues now display correctly (Attachment \"No-Span-With-Filter\") but it would be nice to know why it happened in the first place.",
+      "summary": "Issues in Kanban span multiple columns when Backlog (Labs) is enabled"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13225",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-18T23:15:21.000+0000",
+      "created": "2016-02-18T13:00:17.000+0000",
+      "description": "Hi all! \nPlease help me with Adding Gadget problem.\nWhen I\u2019m try to add gadget to my dashboard.\nSome data error happening with uploaded gadgets. \nNames and Descriptions are missing. And configurations are not visible.\n (see screenshots in attachments)\n\nBUT: some gadget woking, like:\ntwo Dimensions, Issue Statistics\n\nwe used Server version with SSL\n",
+      "summary": "gadgets dont work "
+    }
+  },
+  {
+    "key": "JSWCLOUD-13214",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-07T21:30:47.000+0000",
+      "created": "2016-02-16T10:45:37.000+0000",
+      "description": "It would be great if we could configure a warning popup, if the user tries to add a Story/Issue to a planned/ongoing Sprint, when the Story is not in a certain status. \n\nAgile/Scrum Teams often use a \"Definition of Ready\" gateway to take stories for the next sprint. We have a configured a dedicated workflow step, a status called \"Ready for Implementation\" for this. When reaching this status, the workflow ensures that all relevant fields were filled before. We would like to prevent users, from adding Issues to a sprint container, which are not in this Status.\n\nCurrently, they can also add Issues in status \"Open\" to a sprint. Of course we could change the board filter, to display only Issues in Status \"Ready for Implementation\" on the Backlog. But we really like the Idea of a groomed and ranked Backlog, with the READY items on top and the rough ideas at the bottom.",
+      "summary": "Backlog: Prevent Stories from being added to a sprint which are not READY"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13213",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-22T04:21:34.000+0000",
+      "created": "2016-02-16T09:00:18.000+0000",
+      "description": "h3. Problem Definition\nIf you create a new project on JIRA, you get an option to pick the project type. However, if you create a new board from a new project, there is no option for the user to pick a project type. The user only gets to choose the workflow for the project.\n!Screen Shot 2016-02-16 at 09.37.05.png|thumbnail!\n\nh3. Suggested Solution\nThe same screen to pick a project type should be shown even while creating a project and a new board.\n!Screen Shot 2016-02-16 at 09.58.47.png|thumbnail!\n \n\nh3. Workaround\nFor now, I would suggest to first create a project using the project type of your choice. After that, you may create a board from that project  as a workaround.",
+      "summary": "Create new board and new project option does not give option to pick project type"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13212",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-07T21:55:06.000+0000",
+      "created": "2016-02-16T08:27:30.000+0000",
+      "description": "h3. Problem Definition\nAnonymous users can no longer view JIRA Agile gadgets in Confluence pages post-JIRA7.0, due to Agile functionality now require the JIRA Software application access. \nThe error on the gadget:\n{code}\n{\"errorMessages\":[\"You currently don't have access to perform this operation.\"],\"errors\":{}}\n{code}\nScreenshot:\n!AgileGadget.png|thumbnail!\n\nh3. Suggested Solution\nNot sure whats the best step here as anonymous users can at best view the project, but none of its JIRA Agile functionality would be available.  This is intended behaviour because of the introduction of [application access|https://confluence.atlassian.com/cloud/manage-application-access-744721629.html] to replace the functionality of the *JIRA Users* global permission in JIRA 7. \nWe could allow just the REST calls for these gadgets to be available to anonymous users, but not sure what the security implications are. \n\nh3. Workaround \nNone. ",
+      "summary": "JIRA Agile gadgets in Confluence pages no longer work for anonymous users"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13211",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2019-12-11T22:48:37.000+0000",
+      "created": "2016-02-16T00:49:40.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13211].\n  {panel}\n\nh3. Summary\nJira 6.4 instance is  responding slowly in many screens, with some screens showing timeouts.\n\nh3. Environment\nLarge instance with many swimlanes or card colours configured for the Agile Kanban board\n\nh3. Expected Results\nIt works with acceptable performance (20-30 sec). \n\nh3. Actual Results\nIt works slow (> 30 sec). \n\nh3. Notes\n\nh4. Cause\nCause is boards with many swimlanes and card colours.\n\nFor every card colour or swimlane that is defined using JQL, the entire board query is run again, with the additional JQL appended. So if no swimlanes or card colours are defined and the board opens in N seconds, each swimlane or card colour defined is guaranteed to increase the load time by at least another N seconds. Given 5 swimlanes + 2 card colours + the actual board query, this board will take at least 8*N seconds to open.\n\n2 Problems:\n# For the customer's instance: \"N\" is large (lucene is not performant)\n# We're running a lot of queries each time we display the board.\n\nh3.Workaround\nRemove swimlanes or card colours from the configuration.\nPlease check KB article: [Kanban board loading is slow - performance problems|https://confluence.atlassian.com/display/JIRAKB/Kanban+board+loading+is+slow+-+performance+problems]\n\n",
+      "summary": "Slow Kanban response and performance after upgrade to Jira 6.4"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13208",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-06-01T07:14:09.000+0000",
+      "created": "2016-02-15T11:09:58.000+0000",
+      "description": "Hello\n\nh3. Feature suggestion\nIt would be great to have the ability to switch between different swimlanes on the fly, rather than having it being a board setting.\n\nh3. Use case\nAs a scrummaster, I need to have a board where I can see the sprint with swimlanes based on stories, so I can quickly spot what subtasks remain for each story.\n\nHowever for the daily scrum I need another board where swimlanes are based upon assignee. I had to create two boards, and each time I introduce a configuration change in one board, I have to copy it over to the other one.\n\nh3. Conclusion\nOther people or situation might also shed light on the need for other swimlanes, based upon the same board. Basically, to me, the swimlane should not be a hard coded setting in the board, but a quick filter that you can change any time depending on your current and ever changing need.",
+      "summary": "Ability to switch between multiple swimlanes configurations from the quickfilter area"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13204",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-04-20T03:54:05.000+0000",
+      "created": "2016-02-14T20:33:56.000+0000",
+      "description": "In JIRA the default homepage for every user is the Dashboard. However, for a JIRA Software user that does not make any sense: it should be \"Boards\" by default:\n\n !Screen Shot 2016-02-14 at 3.54.22 pm.png|thumbnail! \n\nThis could either happen as a side effect of the Welcome to JIRA Software screen or the user management creation process. I thinkt that this is a much, much more sensible default for JIRA Software users.",
+      "summary": "As a new JIRA Software user my default homepage should be \"Boards\""
+    }
+  },
+  {
+    "key": "JSWCLOUD-13203",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-14T23:13:44.000+0000",
+      "created": "2016-02-13T20:59:53.000+0000",
+      "description": "USER ENTERS THE SSN AND GETS THE USER NAME BUT NOT THE PASSWORD ",
+      "summary": "FOR DOMESTIC STUDENT NO PASSWORD ."
+    }
+  },
+  {
+    "key": "JSWCLOUD-13202",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-01T05:27:03.000+0000",
+      "created": "2016-02-13T11:15:38.000+0000",
+      "description": "h3. Problem Definition\nCurrently we might have issues that have been part of different sprints. However, it is not possible to differentiate the work logged separately per sprint. \n\nh3. Suggested Solution\nJIRA should be able to differentiate work logged in different sprints",
+      "summary": "As a user, I want JIRA to be able to differentiate worked logged in different sprints"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13201",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-15T08:10:42.000+0000",
+      "created": "2016-02-12T20:52:40.000+0000",
+      "description": "On Issue View change the label \"Estimate\" so it can reflect the estimation field (story points, original estimate...) of the board.\n !Screen Shot 2016-02-12 at 6.50.46 PM.png|thumbnail! ",
+      "summary": "On Issue View change the label \"Estimate\" so it can reflect the estimation field of the board"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13199",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-05-03T06:17:54.000+0000",
+      "created": "2016-02-12T20:33:40.000+0000",
+      "description": "I know you ask that I search before adding an issue. However, search is very liberal and not easily filtered and so my issues are rarely addressed by search returns. I am giving written feedback as a last ditch effort to get some help, and even finding this took upwards of 5 minutes (way too long for a feedback box).\n\nMy main issue is that documentation explains features from a development perspective, which doesn't serve me as I am a business user and would like features discussed more broadly so that I may relate them to my work.\n\nDocumentation is either very sparse or not tagged well because, like I said, searching hardly every addresses my needs. I am rarely able to use documentation to solve my problems, and the learning curve on this product is steep so I've spent several months just fumbling around trying to \"figure it out.\" This product is so full of features and functional that it (and those who created it) deserve better documentation to help customers actually use and work with it. As things are, I use it sparingly because I never really know where to find things on a board designed for developers when I am in a very different business field. The features are also named and labeled using industry terms like \"scrum,\" which means nothing to me and requires research before I can know to look for something else, which is often also not labeled in a straight-forward manner.\n\nAt the moment, I am trying to learn the differences between various project types (for about the 5th time; thought I understood, but somehow I am constantly finding new info that wasn't available before...) as well as how to delete or back up data, none of which simple searches have been able to explain.\n\nI may not be developer-style computer savvy but I am no Luddite either, and this should be way easier. One good start would be to include a text box in the page-specific feedback area (instead of the multiple choice of three vague options). You'll get better page-specific feedback that may allow your teams to address needs better than via a separate task or suggestion that is now removed from its context... Another good place to start would be to consider that development language does not always translate across industries, and when you claim to address regular business needs, your help language should reflect that.\n\nI'm sorry if this sounds harsh. I like the product overall; I'm just very frustrated that help is so hard to come by. I can't even call anyone...",
+      "summary": "Documentation Suggestions"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13196",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-02-12T11:49:47.000+0000",
+      "description": "h3. Problem Definition\nIn certain use cases like designing projects, it is crucial that the card can also display images. However, currently this is not possible. \n\nh3. Suggested Solution\n Give users the ability to add images to cards in Agile boards",
+      "summary": "As a user, I want cards on JIRA Agile boards to display image"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13191",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2019-12-11T22:48:38.000+0000",
+      "created": "2016-02-11T12:59:52.000+0000",
+      "description": "*Steps to Reproduce:*\n # Create a custom field and add it into an agile ticket (e.g.: Single line text: Text field = lol)\n # Create an agile board (no matter which one)\n # Go to: Board > Configure > Card Color\n # Select option Query > Select a color and type:\n {{\"Text field\" = lol}}\n P.s.: You can also try {{\"Text field\" = \"lol\"}}\n\n*Expected Results:*\n On the board, the cards that have this custom field would be with the color that you have previously chosen.\n\n*Actual Results:*\n Nothing happens with the card. No colors changed.\n\n*Workaround:*\n \u2014\n\n*Add-on Version:*\n JIRA Agile v7.1.17-D20160127T234517\n\nJIRA Agile v1000.386.0\n\n*Notes:*\n This does not happen if you choose any JIRA default field, like: assignee, issue type, component, etc. This seems to be only happening to custom fields.",
+      "summary": "Unable to customize card color when using custom field on JQL"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13187",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-12T08:57:22.000+0000",
+      "created": "2016-02-10T22:05:57.000+0000",
+      "description": "Either create a new report to show how much people were assigned, and how much they completed, or add this information to one of the existing reports.",
+      "summary": "Report on how many story points users completed in a sprint"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13185",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-11T04:30:36.000+0000",
+      "created": "2016-02-10T14:50:30.000+0000",
+      "description": "Hi,\n\ncan i add more the the existing 3 Agile Cards?\n\nRight now there is only  \"To Do\", \"In Progress\" and \"Done\".\n\nCan i add more, because i like to make a detailed workflow with that and also change the names from the Agile Cards.\n\nSomething like this:\n\nStep 1 , Step 2, Step 3, Step 4, Done\n\nAny chance to get this?\n\nthank you\n\noliver\n",
+      "summary": "More Agile Cards"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13183",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-11T00:14:11.000+0000",
+      "created": "2016-02-02T15:12:49.000+0000",
+      "description": "Hi there,\n\nI cannot seem to resize the quick issue view on the board view. See attached screenshots (I've blacked out some sensitive sections, please ignore the boxes)\nThe quick issue view on the backlog view is resizable however.",
+      "summary": "Cannot resize issue quick view column on board view"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13182",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-12T08:55:51.000+0000",
+      "created": "2016-02-10T00:40:48.000+0000",
+      "description": "AS A\nKanban board viewer\n\nI WANT\nMeans to open in a new tab every ticket in the column (eg a link/button \"Open all in new tab\" next to the column name)\n\nSO THAT\nI dont have to manually open in a new tab every ticket in the column (time consuming and error prone when column contains many tickets)\n\nMISC\nI realize not all users need this, consider adding it as an opt-in?",
+      "summary": "Open in new tab every ticket in column"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13181",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-04-18T06:52:19.000+0000",
+      "created": "2016-02-09T18:44:54.000+0000",
+      "description": "h3. Summary\n\nAfter the JIRA Cloud update on 07-Feb-2016 to version 7.1.0-OD-06-005, Agile version 7.1.17-D20160127T234517, several reports of issues previous linked to Epics are no longer linked to them.\n\nWe can also see in these cases that the removal of child issues from Epics is not in the Epics history, as it would be if the child issues were actually removed by users.\n\nh3. Environment\nJIRA Cloud\n\nh3. Steps to Reproduce\n# In an affected issue, go to an Epic that had child issues\n\nh3. Expected Results\nThis shouldn't have been changed in the update.\n\nh3. Actual Results\nThe issues are no longer connected\n \nh3.Workaround\nContact [Cloud Support|https://support.atlassian.com/] for a fix.",
+      "summary": "Epics child issues lost link to parents after JIRA Cloud update"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13180",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-02-09T17:47:21.000+0000",
+      "description": "Would like the option for JIRA Administrators to be able to specify the default global kanban sub-filter used to seed new kanban boards.\n\nThe issue we're seeing is, people create a few boards for a Project and when one of them creates a Release to clear things from their board, it disappears from everyone else's board.  Additionally, if people create boards that span Projects which they may not be Admins in, they cannot create Releases in those Projects and thus get an error when they try to create a Release on their board.\n\nSo the current default sub-filter is sub-optimal for us and we'd like to change it to something like:\n\n{code}resolution is EMPTY OR (resolution is not EMPTY AND resolved > -7d){code}\n\nso as to have things drop off our Kanban board automatically after 7 days which is a more logical way to manage a Kanban board rather than having to constantly create Releases to clear it.  And we'd like the ability to make that the default so we don't have to constantly have users 'fix' their kanban boards.",
+      "summary": "Customize the global default kanban sub-filter"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13177",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-10T00:41:56.000+0000",
+      "created": "2016-02-09T14:15:26.000+0000",
+      "description": "v7.1.0-rc3#71003-sha1:5e738c3:node1\n\nJIRA IS SO SLOW TODAY OUR ENTIRE DEV TEAM IS SLOWING DOWN TO A SCREECHING HAULT.",
+      "summary": "TOO DAMNED SLOW"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13175",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-02-09T13:57:27.000+0000",
+      "description": "It would really makes sense if the watchers that I added on the Epic would also be automatically added to the issues in that Epic. This will notify the watchers of the Epic if any changes is made on the issues in that Epic",
+      "summary": "Adding Watchers to an Epic should automatically add those watchers to the issues in that Epic"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13174",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-02T11:28:35.000+0000",
+      "created": "2016-02-09T09:04:20.000+0000",
+      "description": "h3. Problem Definition\nSince the latest release of JIRA Software, in order to have a complex board filter (e.g: label query), users need to have Manage Sprints permission throughout all projects in order to Start/Close sprints in a board. It is an expected behavior but at the moment there is no documentation pertaining this behavior. It is also not mentioned in the Reintroducing sprint management in JIRA Software Cloud blog post:\n\nhttps://confluence.atlassian.com/jirasoftwarecloud/blog/2016/01/reintroducing-sprint-management-in-jira-software-cloud\n\nh3. Suggested Solution\nUpdate the current documentation to reflect this behavior.",
+      "summary": "Update documentation on Managing Sprints"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13173",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-06-01T07:14:09.000+0000",
+      "created": "2016-02-09T07:40:18.000+0000",
+      "description": "h3. Summary\nIt might be confusing that how many issues there are actually on a Active Sprint page with Epic swimlane.\n\nh3. Steps to Reproduce\n# Create a Kanban board on a project\n# Create an Epic and a Task (any issuetype is ok)\n# Set Epic swimlane on the board\n\nh3. Actual Results\nThe Kanban board shows there are two Backlogs but there is only one issue card.\n(It must be an intended feature but it might be confusing.)\n !kanban.png|thumbnail! \n \nh3. Expected Results\nThe board should show the information more understandable.\n\nh3. Notes\nEspecially, if the following filter is set on the board and 'Epic' issuetype is excluded from the board, it could be more confusing.\n{code}\nPROJECT = <project name> AND ISSUETYPE in (Task) ORDER BY Rank ASC\n{code}\n\nThen, even though it shows that there are one backlog, there is no card on the board as follows.\n !kanban2.png|thumbnail! ",
+      "summary": "It might be confusing that how many issues there are actually on a Kanban board with Epic swimlane"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13169",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-07T23:14:21.000+0000",
+      "created": "2016-02-07T12:11:06.000+0000",
+      "description": "Whenever we try to upload any document or image to the project, it show an error saying that \"\nFile \"logo_iupstar.pdf\" was not uploaded\nAn internal error has occurred. Please contact your administrator.\"\n\n",
+      "summary": "we can't upload any file to the project"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13166",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-08T09:48:55.000+0000",
+      "created": "2016-02-05T15:13:21.000+0000",
+      "description": null,
+      "summary": "corregir el buscador"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13164",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-14T08:28:21.000+0000",
+      "created": "2016-02-04T14:45:26.000+0000",
+      "description": "It would be very helpful to have a quick filter option by user so that we can quickly see a project's tasks on the same Kanban by a single user.\n\nCurrently a board administrator would need to configure the board's quick filters, add a single user which works for only a few users -- not exactly elegant or scalable.\n\nIdeally, it would be an auto-complete dropdown beside the quick filters allowing any user viewing a Kanban board to select a user and view tasks assigned to that user.\n\nThanks!",
+      "summary": "Kanban quick filter dropdown by assignee"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13161",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-16T01:26:25.000+0000",
+      "created": "2016-02-03T23:54:07.000+0000",
+      "description": "For larger stories it's not possible to report how much work is completed. Yet, splitting it into smaller stories is not always practical. I suggest to add visual indicator of how much of a story is completed. Developers can update the progress by just clicking the circles. I believe updating in quarters is enough to indicate how much is completed without getting too subjective.\n\n !New Mockup 1 (Alternate 485{).png! ",
+      "summary": "Report progress for point-estimated tasks"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13160",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-04T00:03:39.000+0000",
+      "created": "2016-02-03T23:25:42.000+0000",
+      "description": "please resolve the issue asap",
+      "summary": "not able to login kkokkojohi oy iy i y y iyiggjg  chvgh "
+    }
+  },
+  {
+    "key": "JSWCLOUD-13157",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-08T22:59:10.000+0000",
+      "created": "2016-02-03T05:43:10.000+0000",
+      "description": "https://joshua-bbci.atlassian.net/secure/WelcomeToJIRASoftware.jspa\n\nSee screenshot. ",
+      "summary": "Blank JIRA screen after signing up through WAC and logging in"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13154",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-04T01:03:24.000+0000",
+      "created": "2016-02-02T17:35:15.000+0000",
+      "description": "h3. Problem Definition\nWhen you complete an active sprint you can choose to move them to the future sprint or backlog. \nThe option defaults to backlog. \n\nPlease see [Completing the active sprint |https://confluence.atlassian.com/jirasoftwarecloud/completing-a-sprint-764478128.html#Completingasprint-Completingtheactivesprint] for reference. \n\nh3. Suggested Solution\n\nProvide an option to default to move to next planned sprint by default. \n\n!complete a sprint.png|thumbnail!\n\n",
+      "summary": "Ability to set default action when completing a sprint. "
+    }
+  },
+  {
+    "key": "JSWCLOUD-13152",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-02-02T15:28:39.000+0000",
+      "description": "h3. Summary\nWhen refining report, users are able to select multiple Column/Swimlane/Filter. However, when a button is selected, the only difference is the colorr is slightly darker. This is not obvious at all and users might have trouble seeing the difference between the selected/non-selected buttons\n\nh3. Suggestion\nMake the selected buttons more obvious",
+      "summary": "Refine Report of Cumulative Flow Diagram is not clear"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13150",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-06-01T07:14:10.000+0000",
+      "created": "2016-02-02T12:46:19.000+0000",
+      "description": "h3. Problem Definition\nThere isn't any consistency to Version report, Sprint report and Release Burndown chart to whether Epic column should be rendered across the reports.\n\nIn Version report, the Epic column only included for *Completed Issues* subtopic while *Incomplete Issues* are not. Other reports do not include Epic column on both completed and incomplete issues.\n\n!versionreport.png|thumbnail! !sprintreport.png|thumbnail! !releaseburndown.png|thumbnail!\n\nh3. Suggested Solution\nAdd Epic column to all reports for consistency and better user experienced.\n \n\nh3. Workaround \nClick on \"View in Issue Navigator\" and add the *Epic Link* column to it.",
+      "summary": "Create Consistency between Reports on Epic column"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13147",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2017-09-20T05:06:26.000+0000",
+      "created": "2016-02-01T22:33:01.000+0000",
+      "description": "A common set of questions that come up from our many Atlassian customers are related to what happens in the life of a sprint and what else is affected. I suggest creating a page in the documentation to answer these questions in one place together. The list of questions below are what people ask me.\n\nh2. Create Sprint\n\nHow are issues with no estimate shown in the Backlog panel?\n\nWhy are estimates on sub-tasks not included in the Backlog panel?\n\nh2. Start Sprint\n\nWhat happens to issues that are added to the sprint after the sprint is started?\n\nThey are shown as a Scope Change in the Reports. Their estimates are not included in the reports.\n\nWhat happens to issues whose estimate is changed after the sprint is started?\n\nA snapshot of the issues in the sprint is taken to be used for the Sprint Report and Velocity Report. So changes to estimates do not appear in the reports.\n\nWhich reports show scope creep and how are those numbers calculated exactly?\n\nh2. Close Sprint\n\nCan I add an issue to a Closed sprint? \n\nCan I remove an issue from a Closed sprint?\n\nCan I modify an issue's estimate after a sprint has been closed? Which reports are affected and which are not affected?",
+      "summary": "Document the key moments in a sprint and what they affect"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13141",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-04-12T05:46:59.000+0000",
+      "created": "2016-02-01T04:58:08.000+0000",
+      "description": "The visibility of an Agile Board is based on the Board's Filter Permissions. To modify it, a user has to follow: [How to restrict the access to JIRA Agile Scrum board|https://confluence.atlassian.com/agile/jira-agile-resources/jira-agile-faq/how-to-restrict-the-access-to-jira-agile-scrum-board]\n\n*Problems:*\n# There is no indication of the Filter governing the Visibility or Permissions of the Board on JIRA.\n# If the Filter was created by another user, a copy of the filter has to be created and configured back on the Agile Board.\n\nThe Boards view shows the visibility:\n!boards.jpeg|thumbnail! but no indication that the \"Saved Filter\" is the setting the permissions.\n\nClicking ... Configure takes you to the Boards General Configuration screen that reads:\n{quote}\n*General and filter*\nThe Board filter determines which issues appear on the board. It can be based on one or more projects, or custom JQL depending on your needs.\n{quote} \nIt doesn't mention Filter Permissions.\nThere are Project Permissions on that same screen that misleads. If a Board is assigned to 1 project, it would make sense that Board Visibility Permission would be on that section.\n\n\n*Suggestion:* Simplify the Board Visibility configuration to make it more intuitive.\n\n*Ideas:*\n* Show a tooltip when Hoovering over the Visibility Restriction to show the Filter's Permissions.\n* Add a note on the Board General Configuration\n* Have a Edit Visibility option that would create a copy of the filter an allow Permission changes.\n",
+      "summary": "Simplify Board Visibility management"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13138",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2020-04-15T15:53:29.000+0000",
+      "created": "2016-01-30T07:04:52.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JSWSERVER-13138].\n  {panel}\n\nAs a Greenhopper Scrum product owner, I want story estimates to automatically total to the sum of the estimates for all sub-tasks IF and ONLY IF subtasks are entered (else I want story estimates to be manual entry) so that I can view on the scrum board the original estimate against the remaining time.\n\nDefinition of Done:\n1)  When no sub-tasks exist for a story, the estimate field for the story allows entry of a value manually\n2)  When one or more sub-tasks exist for a story, the estimate field for the story is calculated as the sum of the estimates for all sub-tasks for that story\n\nContext:\n\nI'm finding a feature in Greenhopper to NOT operate as I would have expected. The feature is in estimating where the estimation on the scrum board is configured for original time estimates. What I would like is: \n1) when no sub-tasks are created for a story, the estimation and remaining fields are editable within the story \n2) when sub-tasks have been created, the story estimate and remaining fields are calculated as the sum of the estimate and remaining fields for the sub-tasks \n\nWhat's currently happening is that the story estimate field is not calculated from the sum of the sub-tasks but the story remaining field is. Worse, if you enter a value in the story estimate field when sub-tasks have been added and estimated, the value entered into the story estimate field is added to the story remaining field, which already has the sum of the sub-tasks. Thus, if, as a work around, you try to manually enter a story estimate that equals the sum of the sub-task estimates, the story remaining field value doubles. There's no work around for this. This feature seems poorly defined. I understand what the product team was trying to accomplish... the ability to estimate and view remaining values for stories that have no sub-tasks or prior to sub-tasks being added. What they missed is that the field could serve both functions - manual entry when no sub-tasks exist and calculated value when sub-tasks do exist. I strongly urge the product team to consider this feature at their earliest opportunity as the inability to see from the scrum board the original estimate against the remaining value in plan and work mode is a problem. \n\nh5. Steps to reproduce\n# Configure Scrum board to use \"Original Time Estimate\" for Estimation Statistic\n# Configure Scrum board to use \"Remaining Estimate and Time Spent\" for Time Tracking\n# Create an issue with issue type Story, without specifying any Original Estimate and Remaining Estimate\n# Create 2 sub-tasks for this issue.\n#* Sub-task 1 has Remaining Estimate of 4 hours\n#* Sub-task 2 has Remaining Estimate of 2 hours\n# Checking parent of sub-tasks in Issue View, Original Estimate and Remaining Estimate is now shown as 6 hours\n# Navigate back to Scrum board, open Issue Detail View, and Original Estimate for parent issue is _Unestimated_",
+      "summary": "Sum estimates from sub-tasks in user stories"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13137",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2019-02-28T14:15:45.000+0000",
+      "created": "2016-01-29T13:49:39.000+0000",
+      "description": "h4. +Scenario+\nWhen the following conditions are met:\n# project A and project B use the same workflow WF\n# project A is managed in board A and project B is managed in board B\n# the column mappings in board A and board B are the same\n# project A and B are managed by the same admin\n\nAnd the admin performs the following actions:\n# edit workflow WF and add a new status S to it (and publish it)\n# configure board A's columns and map status S to column C (any of the available columns)\n\nh4. +Suggestion+\nThe following feature should be available:\n# JIRA/Agile asks the admin if the same mapping should be done in board B (or any other boards detected to be using the same set of workflow and columns)\n# the admin should be able to accept or reject this bulk update\n\n(i) This is helpful in case there're multiple projects managed in separate boards that use the same workflow/columns and a new status is added to the workflow. Currently the admin has to manually map the new status to the same column in every board.",
+      "summary": "Ability to bulk update column mappings in multiple boards that use the same workflow"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13136",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-12T03:09:53.000+0000",
+      "created": "2016-01-29T13:08:23.000+0000",
+      "description": "h3. Summary\nUsers still need \"Administer Project\" permission to create sprint even if they have \"Manage Sprints\" permission\n\nh3. Steps to Reproduce \n# Grant \"Manage Sprints\" permission to an user \n# Log in as the user and then try creating an sprint\n\nh3. Expected Results\n\"Manage Sprints\"  should allow users creating/completing sprints\n \nh3. Actual Results\n \"Administer Project\" permission is required\n",
+      "summary": "Users still need \"Administer Project\" permission to create sprint even if they have \"Manage Sprints\" permission"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13135",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-31T23:33:56.000+0000",
+      "created": "2016-01-29T10:51:57.000+0000",
+      "description": "It's a report for one of our epics and just in one big task with many tasks inside we have more than 100 hours logged. How is it possible to show 2d 6h done?",
+      "summary": "Epic Report doesn't show an accurate information"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13134",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-31T23:30:35.000+0000",
+      "created": "2016-01-22T07:51:47.000+0000",
+      "description": "The \"Assign To Me\" shortcut doesn't work with the Kanban Board.\n\nSteps to reproduce:\n1. Open Kanban Board\n2. Select Issue\n3. Try to assign to your user with \"i\"\n\nThe \"Assign Issue\" shortcut works. Would it be possible that you enable the \"Assign To Me\" shortcut for Kanban Boards too? Thank you!",
+      "summary": "Kanban Board \"Assign To Me\" Shortcut"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13129",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-15T04:49:13.000+0000",
+      "created": "2016-01-28T14:54:34.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JSWSERVER-13129].\n  {panel}\n\nCurrently, estimate on issue is shown in hours basis.\n\nHowever, the sum of the estimate on the backlog, still indicating on days and weeks. See below:\n\n!Screen Shot 2016-01-28 at 10.51.35 PM.png!\n\nIt would be great if the board can have the option to show the information only in hours for the Scrum master to have better view on total commitment.",
+      "summary": "To have the ability to show Summation of Time Estimate in Sprint in hours"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13127",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-31T23:53:25.000+0000",
+      "created": "2016-01-28T10:38:45.000+0000",
+      "description": "Nice to have : possibility to expend or collapse all swimlanes at once.\n\nCurrently, we have to expend/collapse swimlanes one by one manually...",
+      "summary": "Agile boards - Expend/collapse all swimlanes"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13126",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-31T23:54:22.000+0000",
+      "created": "2016-01-28T07:42:50.000+0000",
+      "description": "Sometimes, we could want to just display a swimlane per Project on agile boards.\nCurrently, the only alternative is making custom swimlanes which is not handy for such a basic-looking feature.",
+      "summary": "Agile borads - Add \"Projects\" as one of the possible Swimlanes mode"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13125",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-31T23:55:18.000+0000",
+      "created": "2016-01-28T07:40:54.000+0000",
+      "description": "We could allow the user choose and change which Swimlane mode he wants to display (stories, queries, etc).\nConfiguration of custom swimlanes would remain a board config.",
+      "summary": "Agile boards - Let user choose the Swimlanes mode"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13124",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-12T09:00:07.000+0000",
+      "created": "2016-01-28T07:37:25.000+0000",
+      "description": "On agile boards, it would be great for user to have an option to just \"mute\" a column, choosing to hide or show issues in each column.\nShould be a user display setting, not a board configuration.\nShould have the same effect as a quick filter hiding the statuses displayed in that column.\n\nCurrently, the only alternative is making Quick Filters, which is not so handy for such a basic-looking feature.\n",
+      "summary": "Agile boards - Hide issues in column"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13123",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-12T09:04:24.000+0000",
+      "created": "2016-01-28T07:33:23.000+0000",
+      "description": "Currently, the \"view on board\" link is available only for project type \"Software\", which does not make sense as any type of project can get on boards.\n\nPlease, make the \"view on board\" link available for all project types.",
+      "summary": "Make \"view on board\" link available for all types of projects"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13122",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-04-12T05:46:59.000+0000",
+      "created": "2016-01-27T22:03:02.000+0000",
+      "description": "I want to be able to move the active sprints into a desired order in the same way that can be done with sprints that have not been started (via the Move Sprint Up or Move Sprint Down options). \n\nOne use case for this would be when we a new sprint is created and it needs to be scheduled between active sprints.  It would be helpful to have that sprint moved between the active sprints in the backlog view.\n",
+      "summary": "As a board admin, I would like Active Sprints in the Backlog to be ordered by date"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13117",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-28T08:27:31.000+0000",
+      "created": "2016-01-27T11:30:54.000+0000",
+      "description": "h3. Summary\nJIRA Agile _Version_ report is not showing _Epic_ field for _Incomplete issues_ any more. We need to update documentation page to reflect that: https://confluence.atlassian.com/agile/jira-agile-user-s-guide/using-a-board/using-reports/viewing-the-version-report\n\nh3. Expected Results\nPage [viewing-the-version-report|https://confluence.atlassian.com/agile/jira-agile-user-s-guide/using-a-board/using-reports/viewing-the-version-report] shows screenshot of the latest version of JIRA Agile \n !PS_no_epic.png|thumbnail! \n\nh3. Actual Results\nPage has a screenshot with _Epic_ field for _Incomplete_ issues. \n \nh3. Notes\nNone\n\nh3.Workaround\nNone",
+      "summary": "Documentation request: Agile version report is not showing Epic field for Incomplete issues"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13115",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2019-05-09T00:16:31.000+0000",
+      "created": "2016-01-22T14:20:24.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13115].\n  {panel}\n\nAccording to recent changes, it's no longer possible to attach screenshots to issues from the Agile board view, however, it still can be done after opening the edit issue screen.\n\nh3. Environment\n\nJIRA Agile v7.1.13-D2\n\nh3. Steps to Reproduce\n# On the Agile board, click on any issue and press CTRL+V. The screenshot will not be pasted on the issue.\n# Press {{e}}, and close the Edit Issue screen.\n# Press CTRL+V and now you will be able to attach screenshots directly from the clipboard.\n\nh3. Notes\n\nIt stops working once you refresh the page.\n",
+      "summary": "Pasting screenshot from clipboard on Agile board only works after opening \"Edit Issue Screen\""
+    }
+  },
+  {
+    "key": "JSWCLOUD-13114",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-26T23:36:55.000+0000",
+      "created": "2016-01-26T19:28:41.000+0000",
+      "description": "Currently, if I want to delete an attachment from a ticket, I have to open the ticket and move out from the Board view. It would nice to be able to delete attachments within the Board view directly.",
+      "summary": "Delete attachments from tickets from Board view"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13112",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2017-05-08T05:10:21.000+0000",
+      "created": "2016-01-26T11:54:17.000+0000",
+      "description": "1. Open issue\n2. Open same issue in other tab/screen\n3. assign task to person X  in tab 1.\n4. assign task to the same person in tab 2.\n\nOutcome: an error message is given. \n\nDesired: this is tolerated. An error message is redundant.",
+      "summary": "Unnecesary error message when assigning to same person in other screen"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13111",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-26T23:42:43.000+0000",
+      "created": "2016-01-26T08:59:19.000+0000",
+      "description": "Cannot release selected issues from Kanban board if I work on multiple projects, which have different release dates",
+      "summary": "Cannot release selected issues from Kanban board"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13106",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-25T13:11:24.000+0000",
+      "created": "2016-01-25T11:12:25.000+0000",
+      "description": null,
+      "summary": "My board just show time tracking in days and weeks even Jira configured to show hours and minutes. I've already re-indexed many times, activating and deactivating time tracking. Nothing had changed. I don't know what else to do."
+    }
+  },
+  {
+    "key": "JSWCLOUD-13101",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-26T23:37:26.000+0000",
+      "created": "2016-01-22T15:02:29.000+0000",
+      "description": "As a Agile Team (Scrum, Kanban) I'd like to specify swimlanes for \"Projects\" to group my issues by projects on multiple project boards.",
+      "summary": "Swimlanes by Project"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13100",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-26T23:49:11.000+0000",
+      "created": "2016-01-22T14:24:15.000+0000",
+      "description": "h5. Problem Definition\nAt the moment, Epic issue view page will show the list of stories under it together with the issue type, status, and assignee\n\nh5. Suggested Solution\nIt would be great to have the option to add estimation (such as story point) of those stories so the users can easily refer to it. ",
+      "summary": "Show stories' estimation in Epic view page"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13099",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-26T23:52:53.000+0000",
+      "created": "2016-01-22T12:50:41.000+0000",
+      "description": "h5. Problem Definition\nAt the moment, Epic and Fix Version are, by default, shown in the board's card layout. Users do not have the option to remove it. \n\nh5. Suggested Solution\nIt would be great to make these fields (Epic and Fix Version) to be optional, and the users have the option to remove it. ",
+      "summary": "Make the Epic and Fix Version to be optional in the board Card Layout"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13094",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-06-01T07:14:10.000+0000",
+      "created": "2016-01-21T13:31:36.000+0000",
+      "description": "h3. Problem Definition\nWhen I create a Scrum project, I expect to have the Story point field on the screen by default when I create a new issue of type Story or Epic. \n\nh3. Steps to reproduce\n# Set up a new instance of JIRA 7\n# Create a new project of type \"Scrum Software development\"\n# Create a new issue of type Story or Epic \n# Notice that the Story Point field is not on the screen.\n# Running \"Where is my field\" returns : \"The 'Story Points' field is not present on the form you are viewing\"\n\nh3. Suggested Solution\nThe Story point field should be available on the Create issue screen by default since this is Scrum type project.\n \nh3. Workaround \nAdd the Story point field to the right screens and the field will show up on the issue",
+      "summary": "As a user I would want the Story Point field to be on the screen when I create a Story or Epic type of issue."
+    }
+  },
+  {
+    "key": "JSWCLOUD-13093",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2017-06-06T05:36:42.000+0000",
+      "created": "2016-01-21T07:35:10.000+0000",
+      "description": "h3. Problem Definition\nCurrently the information in [Board tab in JIRA missing JIRA Software Application|https://confluence.atlassian.com/display/JIRAKB/Board+tab+in+JIRA+missing+JIRA+Software+Application] is not documented in Migration Hub.\n\nh3. Suggested Solution\nCan we include this information on Migration Hub, so that customer will be aware of this? Or place it in JIRA Software licensing FAQ page?",
+      "summary": "Expired JIRA Software license will block JIRA Agile feature usability."
+    }
+  },
+  {
+    "key": "JSWCLOUD-13091",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-04-20T03:54:05.000+0000",
+      "created": "2016-01-20T21:29:36.000+0000",
+      "description": "If you are using the Kanban screen in a board and open the issue details panel, there is a link to the issue page, but the project name is not a link. When you work with multiple projects in a board, a link for the project would help giving you a quick access to it.\n\n",
+      "summary": "Add link to the project in the issue detail view"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13086",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-27T00:03:28.000+0000",
+      "created": "2016-01-20T10:45:02.000+0000",
+      "description": "h5. Problem Definition\nAt the moment, The card layout (on Agile  board) will display the text in plain text. Thus, anything written using wiki markup will not be rendered. Some users use this markup style text to emphasize certain value in the issue field.\n\nh5. Suggested Solution\nIt would be great to have  the option for Board's card layout to be wiki markup rendered",
+      "summary": "Having the option for Board's card layout to be wiki markup rendered"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13085",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-20T06:37:37.000+0000",
+      "created": "2016-01-18T01:03:48.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13085].\n  {panel}\n\n*Summary*: Totals for \"Remaining\" and \"Estimate\" times are not displaying in the following places in an agile board (scrum):\n- Beneath the sprint, to the right of \"28 of 51 issues visible\".\n- \"Summary of assigned work\"/\"Workload by assignee\" pop-up dialog, in the \"Original time estimate\" column.\n\n*Steps to reproduce*:\n- Set up board with following config under \"Estimation\" tab:\n-- Estimation statistic: Orignal Time Estimate\n-- Time Tracking: Remaining Estimate and Time Spent\n- Add issues with time estimates to this board\n- Create a sprint with one or more of these issues\n\n*Expected Outcome*: Totals for time remaining (beneath sprint) and original estimate (workload by assignee pop-up) should be displayed.\n\n*Actual Outcome*: Totals do not display (as per screenshots).\n\n*Additional Info*:\nJIRA Cloud\nChrome 47 + Firefox\nWorked fine several days ago\u2014no settings/config have changed since that I am aware of.\n\nPlease let me know if you require any further info.\nThanks.",
+      "summary": "Remaining and Estimate values blank/not calculated in agile Scrum board"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13083",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-04-12T05:46:59.000+0000",
+      "created": "2015-11-25T22:38:05.000+0000",
+      "description": "\nh3. Problem Definition\nEnd user is looking for a more streamline way of associating a ticket while moving it in JIRA Cloud. \nh3. Suggested Solution\nAbility to configure the \"move issue\" page to allow the association of an epic to a ticket while moving it instead of having to edit the ticket twice. \nh3. Workaround \nThe current process looks like this.\n\n# Clone ticket\n# Move ticket to the correct project\n# Edit issue's association to epic\n\nThere might be a way to customize this process by using [Bob's Swift Clone Plus|https://bobswift.atlassian.net/wiki/display/JCPP] tool, unfortunately this is not available on JIRA Cloud.\n",
+      "summary": "Ability to edit move screen to allow epic association of a ticket"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13082",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-01-19T07:47:27.000+0000",
+      "description": "h3. Problem Definition\nCurrently, when you move an Epic, then you would have to manually move all the Epic's Stories. \n\nh3. Suggested Solution\nJIRA should automatically handle moving Stories while what current happens when move parent task, where JIRA also moves the sub-tasks of that parent. \n\n",
+      "summary": "As a User, when move an Epic to another project, I want JIRA to also move the Epic's Stories with it"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13078",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-04-22T07:33:55.000+0000",
+      "created": "2016-01-18T05:35:44.000+0000",
+      "description": "h3. Problem Definition\nAfter upgrading JIRA 6.x to JIRA Core 7.x, Road Map gadget will not work with the following error:\n{quote}\nThis gadget cannot be displayed on your dashboard. This could be due to a licensing problem or an application error. If you need this gadget, contact your administrator for assistance. Otherwise, you can remove it from your dashboard.\n{quote}\nThis is because Road Map gadget is being shipped with JIRA Software 7.x.\n\nh3. Suggested Solution\nShip Road Map gadget with JIRA Core.",
+      "summary": "Road Map Gadget is being shipped with JIRA Software instead of JIRA Core"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13075",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-19T01:12:58.000+0000",
+      "created": "2015-11-16T19:37:50.000+0000",
+      "description": "Video of issue: http://cl.ly/3e2b1H1B2Q20\n\nMore info:\nThis happens sporadically for some epics. They just don't show up when searching epic links?!?!\n\nRepro steps:\n1. Find epic and copy the text from the epic name\n2. plug in text in the epic link search\nResult: No result\nExpected result: Epic displays in search\n\nThe only way to make this work is to do the advanced search  for \"Epic Link\" = EPS-2841, but this is the difficult way and it should work the other way as it does usually.",
+      "summary": "I can't find some Epics in \"Epic Link\" search in Issue Search, they don't populate!"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13072",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-04T00:32:18.000+0000",
+      "created": "2016-01-15T20:01:29.000+0000",
+      "description": "We would like to be able to have the velocity report accessible via a dashboard gadget. This was available in the classic board/gadget but is not in the new board version. ",
+      "summary": "Velocity Dashboard Gadget"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13069",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-01T00:01:43.000+0000",
+      "created": "2016-01-15T07:19:13.000+0000",
+      "description": "When using swimlanes by stories, I would like to see the epic label (in color) in the swimlane header. Such labels are present only in stories without subtasks.",
+      "summary": "Epic name label in a Story swimlane"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13064",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-01-14T13:01:37.000+0000",
+      "description": "h3. Summary\n[JRA-28748|https://jira.atlassian.com/browse/JRA-28748] have been implemented and certain AO objects are able to be imported. However, not all of them. Boards are too complex and have not been added in [JRA-28748|https://jira.atlassian.com/browse/JRA-28748].\n\nh3. Suggestion\nHave Agile Boards able to be exported/imported using project import",
+      "summary": "Project Import to include Agile Boards"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13062",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-27T06:19:48.000+0000",
+      "created": "2016-01-14T11:59:04.000+0000",
+      "description": "It would be useful customize issue row on the scrum board (plan mode). For example to show assignee or (and) reporter.",
+      "summary": "Customize view for issue row on the scrum board (plan mode)"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13060",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-03-29T05:23:41.000+0000",
+      "created": "2016-01-14T10:40:16.000+0000",
+      "description": "h4. Summary\nMaking JIRA Agile board public no longer works in JIRA 7. This was possible in JIRA 6.\n\nh4. Steps to reproduce the problem\n# Grant *Browse Project* permission to Group: anyone in the permission scheme associate to the project\n# Access the board using URL\n\nh4. Expected Result\nUser should be able to view the board without having to login\n\nh4. Actual Result\nUser is directed to login page, and there is no option to access the board",
+      "summary": "Having an option to Make JIRA Agile board public in JIRA 7"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13059",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-27T11:12:57.000+0000",
+      "created": "2016-01-14T10:10:23.000+0000",
+      "description": "When configuring a board, I can Choose \"Base Swimlanes\" based on Story's. My Team would like to keep this view and add an additional Swimlane on Top called \"FastLane\" for urgent tickets. \nLike :\nSwimlane 1: Fastlane\nSwimlane 2: Story 1 with Status and all Sub-Tasks\n                    Story 2 with Status and all Sub-Tasks\n\netc.",
+      "summary": "Fastlane on the Scrum Sprint Board"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13055",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-19T00:46:20.000+0000",
+      "created": "2016-01-07T00:11:31.000+0000",
+      "description": "I want to be able to add descriptions and pictures to my sprints.\n\nCant seem to do that now",
+      "summary": "Sprint pictures"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13054",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-13T23:38:27.000+0000",
+      "created": "2016-01-13T21:01:51.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13054].\n  {panel}\n\nWhen you open a board, click on backlog on the left hand menu and try to see the sum of estimate, the result it's not available, even if the tasks estimate are available we are not able to see the sum of the estimate time.\n\nThis happened on JIRA version JIRA v7.1.0-OD-04-012\nI tested on version JIRA v7.1.0-OD-01-053 and it was working perfectly\n\nThere's a screenshot to exemplify the issue.\n\nThe only workaround is to sum the estimate manually, which makes the process slower.",
+      "summary": "Not able to estimate total on backlog of a board on sprints"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13053",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-13T20:42:23.000+0000",
+      "created": "2016-01-13T19:49:43.000+0000",
+      "description": "*Version:* JIRA Agile v7.1.11-D20\n\nh3. Problem Definition\n\nFor a user to have the ability to create and manage sprints they need the administer projects permission. However conceptually they really only need permission to create a sprint without having everything that the administer project permission entails. \n\nh3. Suggested Solution\n \nAllow a create sprint permission to Permissions used in Agile boards: https://confluence.atlassian.com/agile/jira-agile-resources/jira-agile-faq/what-are-the-permissions-used-in-agile-boards\n\nh3. Workaround \n\nCurrently the only workaround is to give the user full blown access to administer projects. ",
+      "summary": "Granular Project Permissions for creating/ordering sprints"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13047",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-27T00:11:09.000+0000",
+      "created": "2016-01-13T09:11:26.000+0000",
+      "description": "h3. Problem Definition\nFew number of gadgets in the Dashboard. Then click Tools>View as Wallboard in the Dashboard.  Currently . only the Issue Statistic gadgets header name from the dashboard is shown in the Wallboard.\n\nh3. Suggested Solution\nAll the gadgets header name from the dashboard need to be displayed in the Wallboard.",
+      "summary": "All the gadget header name should be displayed in the Wallboard"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13046",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-27T00:14:03.000+0000",
+      "created": "2016-01-11T23:24:49.000+0000",
+      "description": "Steps:\n- Create a sprint\n- Start a sprint\n- Create a new Jira ticket\n- Pull the new ticket to the running sprint\n\nExpected:\n- Can edit estimation for that new ticket\n\nActual:\n- Cannot edit estimation for that new ticket",
+      "summary": "Cannot edit estimation for new task pulled in a running sprint"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13044",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-04T00:26:57.000+0000",
+      "created": "2016-01-12T17:51:01.000+0000",
+      "description": "I would like the ability to associate particular version numbers with specific components. Right now I see a whole list of versions and they may or may not apply to a particular component.",
+      "summary": "Associate Versions with Components"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13043",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-13T03:20:00.000+0000",
+      "created": "2016-01-12T23:36:29.000+0000",
+      "description": "h3.Steps to reproduce\n# Have an attachment that cannot be read\n# Navigate to the 'Health Checks' tab of the Atlassian Support Tools section of the admin menu\n# Expand the the 'Problems Detected' section\n\nh3.Expected Behaviour\n\nDocumentation link should point to [https://confluence.atlassian.com/display/JIRAKB/HealthCheck%3A+Attachments]\n\nh3.Actual Behaviour\n\nDocumentation link point to [https://docs.atlassian.com/jira/docs-064/JIRA+Documentation] (generic JIRA documentation landing page)",
+      "summary": "JIRA Health Check pointing to unhelpful documentation"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13041",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-13T23:38:51.000+0000",
+      "created": "2016-01-12T19:36:02.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Cloud*. Using *JIRA Software Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWSERVER-13041].\n  {panel}\n\nIn Jira Cloud, Agile Board, planning view, the labels for Remaining and Estimate appear at the bottom of an unstarted sprint, along with a forward slash divider, but the numbers are not displayed.  At the same time, if I click on the ... next to user icons at the top of the current sprint no Original Time Estimate is displayed in the column, although there are such estimates.",
+      "summary": "Remaining and Estimate values are not being displayed at bottom of sprints in backlog view"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13040",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2021-04-12T05:46:59.000+0000",
+      "created": "2016-01-12T18:27:49.000+0000",
+      "description": "In an Agile board's burndown chart report, there is an option to switch the estimation statistic using a dropdown menu. This is extremely useful for teams who use story points for product backlog items but hours for sprint backlog items (sub-tasks mostly).\n\nIf the same option was available in the Agile burndown gadget (by the way of a configuration setting), one could display more than one burndown side by side on a dashboard with different estimation statistics.",
+      "summary": "Ability to choose estimation statistic for sprint burndown gadget"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13039",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-13T09:57:00.000+0000",
+      "created": "2016-01-12T16:23:29.000+0000",
+      "description": null,
+      "summary": "Release 4A"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13038",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-01-13T10:00:02.000+0000",
+      "created": "2016-01-12T15:26:37.000+0000",
+      "description": "The user has permission to resolve an issue\n !20160112161323-bla.png|thumbnail! \n\nBut the Fix Version/s field is not editable even though the documentation states that this should be the case\n !20160112160834-bla.png|thumbnail! ",
+      "summary": "Cannot change fix versions although user has Resolve Issues permission"
+    }
+  },
+  {
+    "key": "JSWCLOUD-13037",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2017-09-12T09:49:25.000+0000",
+      "created": "2016-01-12T14:58:34.000+0000",
+      "description": "h3. Problem Definition\nAs an Administrator I want to make 'Days in column' set to false by default for new Kanban boards \nIf you don't use '_Days in column_' functionality, disabling it will speed-up board load. For large instance is not possible to educate all users to disable it. \n\nh3. Suggested Solution\nMake a setting in a Agile configuration to make 'Days in column' set to false by default for new Kanban boards. \n\nh3. Workaround \nCreate a script which polls newly created boards and disable 'Days in column'.\nThis is *private* API for this, there is no guaranty that it will not change in the future.\n* Get list of All boards: {{/rest/greenhopper/1.0/rapidview}}\n{code}\ncurl -v 'http://127.0.0.1:8080/rest/greenhopper/1.0/rapidview' -X GET -H 'Content-Type: application/json; charset=UTF-8' -u admin:pass'\n{code}\n\n* Get config of the board: {{/rest/greenhopper/1.0/rapidview/ID}}\n{code:borderStyle=solid}\ncurl -v -X GET -H 'Content-Type: application/json; charset=UTF-8' -u admin:pass  http://127.0.0.1:8080/rest/greenhopper/1.0/rapidview/242\n\n{\"id\":242,\"name\":\"Some cool name\",\"canEdit\":true,\"sprintSupportEnabled\":false,\"showDaysInColumn\":false}\n{code}\n\n* Modify showDaysInColumn: {{/rest/greenhopper/1.0/rapidviewconfig/showDaysInColumn}}\n{code:borderStyle=solid}\ncurl 'http://127.0.0.1:8080/rest/greenhopper/1.0/rapidviewconfig/showDaysInColumn' -X PUT -H 'Content-Type: application/json; charset=UTF-8' -u admin:pass --data '{\"rapidViewId\":242,\"showDaysInColumn\":false}'\n{code}",
+      "summary": "As an Administrator I want to make 'Days in column' set to false by default for new Kanban boards "
+    }
+  },
+  {
+    "key": "JSWCLOUD-13034",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18511",
+        "id": "18511",
+        "key": "JSWCLOUD",
+        "name": "Jira Software Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18511&avatarId=105990",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18511&avatarId=105990",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18511&avatarId=105990"
+        }
+      },
+      "resolutiondate": "2016-02-04T00:22:41.000+0000",
+      "created": "2016-01-11T15:48:34.000+0000",
+      "description": "h3. Problem Definition\nCurrently there is no option to remove Description and Summary Field from Issue Detail View. \n\nh3. Suggested Solution\nInclude this Issue Detailed View configuration. ",
+      "summary": "As a admin, I want to have the ability to exclude the Description and Summary field on the Issue Detail View"
+    }
+  }
+]

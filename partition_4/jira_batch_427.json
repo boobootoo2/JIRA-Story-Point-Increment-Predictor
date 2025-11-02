@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "JSDSERVER-8426",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-23T21:09:28.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen using the Insight Macro for confluence v.1.5.0 or higher, the New Attribute Picker now shows \"Label\" as the header of the Label Attribute, while before, it would show the Attribute's Name - e.g. \"Name\".\r\n\r\nThis change now breaks other Macros, using the Insight Macro as a source Table (e.g. Chart from Table Macro).\r\nh3. Steps to Reproduce\r\n # Install IMFC v. 1.4 and configure the macro to show the Name Attribute's Column (Name is the object's Label)\r\n # Upgrade IMFC to v.1.6.5 and refresh the page\r\n\r\nh3. Expected Results\r\n\r\nThe Column 'Name' is still showing as the Header of the Column\r\nh3. Actual Results\r\n\r\n'Label' is now the Header of the same column.\r\n\r\n\u00a0\r\n{noformat}\r\n...\r\n{noformat}\r\nh3. Workaround\r\n\r\nFrom IMFC's point of view - Edit the Macro Configuration, Un-select \"Label\" from the top of the Attribute Picker, and select the \"Name\" Attribute for the Object Type involved.\r\n\r\nThis, however, will have to take place in any page where the IMFC is present...",
+      "summary": "IMFC - With the New Attribute Picker (1.5 or higher) 'Label' is replacing the Label Attribute Column Name"
+    }
+  },
+  {
+    "key": "JSDSERVER-8425",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-23T15:51:45.000+0000",
+      "description": "As admin, we would like to be able to depend on Permissions Helper to include relevant information from Crowd Groups and license consumption.\r\nh4. Current Behavior\r\n\r\nJSM will show that a user can perform administrative functions because the user has the proper role or permissions, but the user will not even be able to view the project if not added to a Crowd group that has the proper license.\r\nh4. Desired Behavior\r\n\r\nThe Permissions Helper should show any relevant blockers, such as Crowd group membership & license status.",
+      "summary": "Permissions Helper should check Crowd Group & Licensing"
+    }
+  },
+  {
+    "key": "JSDSERVER-8423",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-23T10:01:32.000+0000",
+      "description": "h3. Issue Summary\r\nDifferent order of IQL subclauses in Import object type mapping affects synced results.\r\n\r\nIf we have 2 IQL subclauses linked by \"OR\" and one of these is looking objects having inbound / outbound references (inR / outR), the actual result will depend on how we order the subclauses.\r\n \r\nh3. Steps to Reproduce\r\n # Make an LDAP import definition\r\n# Create an object type mapping \r\n# For one object attribute, use IQL object type mapping that is connected with \"OR\" keyword, and in the subclause coming after \"OR\", use inbound / outbound reference check. Example:\r\n{code}\r\n DN IN (${member${0}}) OR object having inR(DN IN (${member${0}}))\r\n{code}\r\n# Synchronize the import\r\n\r\nh3. Expected Results\r\nThe object type mapping will be fully considered and both subclauses will be affecting the synced results.\r\n\r\nh3. Actual Results\r\nOnly the first subclause before \"OR\" will be considered, the second one where inbound / outbound reference is being used, will be ignored. This will result in a partially imported data.\r\n\r\nh3. Workaround\r\nPut the second subclause (inbound / outbound reference IQL) on the first place (i.e. switch the order of subclauses):\r\n{code}\r\nobject having inR(DN IN (${member${0}})) OR DN IN (${member${0}})\r\n{code}\r\n",
+      "summary": "Different order of IQL subclauses in Import object mapping affects sync results"
+    }
+  },
+  {
+    "key": "JSDSERVER-8422",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-23T06:57:01.000+0000",
+      "description": "Customers can deactivate notifications (Don't notify me button)\r\nIt would be very helpful if the agent get that information displayed and know who ist notified by pressing the button \"share with customers\".\r\n\r\nIdea:\r\nGrey the names of Request Participants and Reports if the do not get the notification",
+      "summary": "Make Customer Notification Status Visible"
+    }
+  },
+  {
+    "key": "JSDSERVER-8420",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-22T08:12:13.000+0000",
+      "description": "At the moment the only way to merge 2 different Insight schema is to use Insight Object Schema Import Type, which will clone Objects from one Schema to another.\r\n\r\nHowever by doing the above, references between objects will be lost and there is no way at the moment to overcome this.\r\n\r\nPlease implement a better method to handle the merging of 2 schemas.",
+      "summary": "implement a better solution for merging 2 schema in Insight"
+    }
+  },
+  {
+    "key": "JSDSERVER-8419",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-21T22:38:25.000+0000",
+      "description": "Currently, there is inconsistence reseutls when searching for the Portal for the request types. \r\n\r\nFor example, when trying to find the request type \"Mailbox Access\"  which has been provided the description as \"Requests for Mailbox Access\": \r\n\r\nSearching on 'Microsoft access' (3 results) or 'Microsoft AND access' (2 results), neither will show the Request Type 'Mailbox Access'.\r\n\r\nOnly when typing \"Mailbox\", the Request type Mailbox Access\" will be listed.",
+      "summary": "Service Management portal: Enhance the search for finding request types"
+    }
+  },
+  {
+    "key": "JSDSERVER-8418",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-21T17:39:35.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen exporting objects to CSV (Data Consistent) the CSV will stop the export on any object containing a value in a Project Type Attribute.\r\n\r\n(Reproduced with a Super Admin User - so no permission issue here)\r\nh3. Steps to Reproduce\r\n # Create an Object Type with a Project Type Attribute\r\n # Create a few objects, for the first 3 objects, do not populate the Project Attribute\r\n # Create the 4th object with the Project Attribute Populated\r\n # Create a 5th object with the Project Attribute empty\r\n # Navigate to the Bulk Actions>Export Objects; select Data consistent in the export dialog, and execute\r\n # review the CSV\r\n\r\nh3. Expected Results\r\n\r\n5 Objects were exported, each is represented by a row in the CSV\r\nh3. Actual Results\r\n\r\nonly the first 3 objects are showing in the CSV.\r\n\r\nThe below NPE is thrown in the atlassian-jira.log file:\r\n{noformat}\r\n2021-06-21 13:16:24,853-0400 plugin-transaction-0 INFO      [c.a.jira.plugin.PluginTransactionListener] [plugin-transaction] numberStartEvents:867, numberEndEvents:867, numberSendEvents:537, numberEventsInTransactions:19977, numberOfPluginEnableEvents:3392021-06-21 13:16:36,169-0400 http-nio-8080-exec-22 ERROR      [o.a.c.c.C.[.[localhost].[/].[default]] Servlet.service() for servlet [default] in context with path [] threw exceptionjava.lang.NullPointerException\tat com.riadalabs.jira.plugins.insight.services.imports.ObjectExportServiceImpl.convertProject(ObjectExportServiceImpl.java:294)\tat com.riadalabs.jira.plugins.insight.services.imports.ObjectExportServiceImpl.convert(ObjectExportServiceImpl.java:232)\tat com.riadalabs.jira.plugins.insight.services.imports.ObjectExportServiceImpl.lambda$writeObjects$2(ObjectExportServiceImpl.java:176)\tat java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)\tat java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1382)\tat java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481)\tat java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471)\tat java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:545)\tat java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:260)\tat java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:438)\tat com.riadalabs.jira.plugins.insight.services.imports.ObjectExportServiceImpl.writeObjects(ObjectExportServiceImpl.java:176)\tat com.riadalabs.jira.plugins.insight.services.imports.ObjectExportServiceImpl.exportObjects(ObjectExportServiceImpl.java:131)\tat com.riadalabs.jira.plugins.insight.channel.web.api.rest.services.objecttype.ObjectTypeExportResource.lambda$exportObjectTypeFilteredObjects$0(ObjectTypeExportResource.java:90)\tat com.sun.jersey.core.impl.provider.entity.StreamingOutputProvider.writeTo(StreamingOutputProvider.java:71)\tat com.sun.jersey.core.impl.provider.entity.StreamingOutputProvider.writeTo(StreamingOutputProvider.java:57)\tat com.sun.jersey.spi.container.ContainerResponse.write(ContainerResponse.java:302)\t... 5 filtered\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter$JerseyOsgiServletContainer.doFilter(RestDelegatingServletFilter.java:160)\t... 1 filtered\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter.doFilter(RestDelegatingServletFilter.java:70)\t... 32 filtered\tat com.atlassian.servicedesk.internal.web.ExternalCustomerLockoutFilter.doFilter(ExternalCustomerLockoutFilter.java:55)\t... 8 filtered\tat com.atlassian.jira.plugin.mobile.web.filter.MobileAppRequestFilter.doFilter(MobileAppRequestFilter.java:59)\t... 4 filtered\tat com.atlassian.jira.plugin.mobile.login.MobileLoginSuccessFilter.doFilter(MobileLoginSuccessFilter.java:54)\t... 3 filtered\tat com.atlassian.diagnostics.internal.platform.monitor.http.HttpRequestMonitoringFilter.doFilter(HttpRequestMonitoringFilter.java:55)\t... 8 filtered\tat com.atlassian.web.servlet.plugin.request.RedirectInterceptingFilter.doFilter(RedirectInterceptingFilter.java:21)\t... 43 filtered\tat com.atlassian.ratelimiting.internal.filter.RateLimitFilter.doFilter(RateLimitFilter.java:73)\t... 17 filtered\tat com.atlassian.jira.security.JiraSecurityFilter.lambda$doFilter$0(JiraSecurityFilter.java:66)\t... 1 filtered\tat com.atlassian.jira.security.JiraSecurityFilter.doFilter(JiraSecurityFilter.java:64)\t... 16 filtered\tat com.atlassian.plugins.rest.module.servlet.RestSeraphFilter.doFilter(RestSeraphFilter.java:38)\t... 19 filtered\tat com.atlassian.jira.servermetrics.CorrelationIdPopulatorFilter.doFilter(CorrelationIdPopulatorFilter.java:30)\t... 5 filtered\tat com.atlassian.servicedesk.internal.web.CustomerContextSettingFilter.lambda$invokeFilterChain$0(CustomerContextSettingFilter.java:215)\tat com.atlassian.servicedesk.internal.api.util.context.ReentrantThreadLocalBasedCodeContext.rteInvoke(ReentrantThreadLocalBasedCodeContext.java:136)\tat com.atlassian.servicedesk.internal.api.util.context.ReentrantThreadLocalBasedCodeContext.runOutOfContext(ReentrantThreadLocalBasedCodeContext.java:89)\tat com.atlassian.servicedesk.internal.utils.context.CustomerContextServiceImpl.runOutOfCustomerContext(CustomerContextServiceImpl.java:47)\tat com.atlassian.servicedesk.internal.web.CustomerContextSettingFilter.outOfCustomerContext(CustomerContextSettingFilter.java:206)\tat com.atlassian.servicedesk.internal.web.CustomerContextSettingFilter.doFilterImpl(CustomerContextSettingFilter.java:134)\tat com.atlassian.servicedesk.internal.web.CustomerContextSettingFilter.doFilter(CustomerContextSettingFilter.java:123)\t... 4 filtered\tat com.atlassian.jwt.internal.servlet.JwtAuthFilter.doFilter(JwtAuthFilter.java:37)\t... 8 filtered\tat com.atlassian.ratelimiting.internal.filter.RateLimitPreAuthFilter.doFilter(RateLimitPreAuthFilter.java:71)\t... 3 filtered\tat com.atlassian.web.servlet.plugin.request.RedirectInterceptingFilter.doFilter(RedirectInterceptingFilter.java:21)\t... 4 filtered\tat com.atlassian.web.servlet.plugin.LocationCleanerFilter.doFilter(LocationCleanerFilter.java:36)\t... 26 filtered\tat com.atlassian.jira.servermetrics.MetricsCollectorFilter.doFilter(MetricsCollectorFilter.java:25)\t... 25 filtered\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)\tat java.lang.Thread.run(Thread.java:748)\r\n{noformat}\r\nh3. Workaround\r\n\r\nYou may still export the objects in a User Friendly format.",
+      "summary": "Exporting an Object Type to Data Consistant CSV does not include all objects"
+    }
+  },
+  {
+    "key": "JSDSERVER-8417",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-09-28T06:55:42.000+0000",
+      "created": "2021-05-28T14:11:15.000+0000",
+      "description": "{panel:title=Atlassian Update \u2013 28 Sep 2021|borderStyle=solid|borderColor=#deebff | titleBGColor=#deebff | bgColor=#deebff}\r\n\r\nHi everyone,\r\n\r\nThank you for your interest in this issue. \r\n\r\nThis has now been resolved with the latest available version of [Statuspage for Jira Service Management|https://marketplace.atlassian.com/apps/1216079/statuspage-for-jira-service-management?tab=overview&hosting=datacenter] (0.3.9).\r\n\r\nKind regards,\r\n\r\nJira Service Management, Server & Data Center\r\n\r\n{panel}\r\n\r\nh3. Issue Summary\r\n\r\nThe latest available version for [Statuspage for Jira Service Management|https://marketplace.atlassian.com/apps/1216079/statuspage-for-jira-service-management] (0.3.8) is not compatible with Jira Core 8.14.2+ and JSM 4.12+ versions, and can cause customer portal pages to break (see [this|https://confluence.atlassian.com/display/JIRAKB/Statuspage+can+break+customer+portal+pages+when+incompatible+with+Jira+Core] KB article for more information\r\n\r\nh3. Steps to Reproduce\r\n # Install Jira Core 8.15.1 + Jira Service Management 4.15.1\r\n # Install Statuspage for Jira Service Management 0.3.8 and configure alerts for existing portals\r\n# Try creating an issue at a customer portal\r\n\r\nh3. Expected Results\r\nThe issue form is populated without errors\r\n\r\nh3. Actual Results\r\nA *Failed to load resources required to render the feature. Please try refreshing the page* message is displayed.\r\n\r\nh3. Workaround\r\n* Refreshing the page addresses this behavior temporarily, though the behavior happens again when accessing a customer portal again\r\n* Disable Statuspage for Jira Service Management 0.3.8 through {{Administration > Manage Apps}}",
+      "summary": "Statuspage for Jira Service Management is not compatible with Jira 8.14.2+, breaking customer portal pages"
+    }
+  },
+  {
+    "key": "JSDSERVER-8416",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-11-15T23:15:33.000+0000",
+      "created": "2021-06-21T12:31:26.000+0000",
+      "description": "h3. Issue Summary\r\nSelecting the objects while using the search icon deselects the previous selection in Jira and the customer portal. \r\n\r\n\r\n\r\nh3. Steps to Reproduce\r\n# Configure an Insight Field with multiple options marked\r\n# Create a new request on the customer portal and open the object picker window using the search Icon \r\n# Select 2-3 objects. \r\n# Search for an object using the search bar\r\n# Select found object\r\n# Now remove the letters typed in the text area and press Enter\r\n# Notice all the selected objects are gone. \r\n\r\nPlease find the screen recording explaining the issue  [^Screen Recording 2021-06-21 at 5.47.39 PM.mov] \r\n\r\nh3. Expected Results\r\nAll the selection should be persistent \r\n\r\nh3. Actual Results\r\nThe selected objects disappear and none of the objects would be selected\r\n\r\nh3. Workaround\r\nDo not use the search Icon option. Try to populate the values by typing in the issue creation page. ",
+      "summary": "Selecting the objects while using the search icon deselects the previous selection "
+    }
+  },
+  {
+    "key": "JSDSERVER-8415",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-21T11:31:29.000+0000",
+      "description": "At the moment the Insight label template allow to change font with only a few choices.\r\n\r\nProvide a way to upload a custom font to use for the Insight label template.",
+      "summary": "provide a way to upload and use a custom font for the Insight label template"
+    }
+  },
+  {
+    "key": "JSDSERVER-8414",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-21T11:27:08.000+0000",
+      "description": "At the moment Insight does not offer a way to upload a custom QR code logo image.\r\n\r\nPlease provide a way to upload a custom QR code logo.\r\n\r\n",
+      "summary": "provide a way to add a custom QR code image for the Insight label template"
+    }
+  },
+  {
+    "key": "JSDSERVER-8413",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-21T00:10:54.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nWhen the JSM customer portal is access by a user who does not belong to the \"jira-users\" or \"jira-servicedesk-users\" group (a customer) they cannot search an Insight Object custom field.\r\n\r\nExample of \"customer\" access to right and a Jira user to the left.\r\n\r\n!screenshot-1.png|thumbnail!\r\nh3. Suggested Solution\r\n\r\nAllow \"customers\" to search/select any defined Insight Object custom field present on the customer portal\r\nh3. Workaround\r\n\r\nNo valid workaround as it requires either the user to be added as a Jira user (consume license and no longer a customer) or to utilize a non-Insight custom field and scripting to modify the Insight field.\r\n\r\n\u00a0",
+      "summary": "As an Admin I want to allow JSM customers to view and select options in an Insight Object custom field in the Customer Portal"
+    }
+  },
+  {
+    "key": "JSDSERVER-8412",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-18T17:56:46.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCurrently, Insight is using two different Rich Text Editors for Text Area fields.\r\n\r\n*When access via Object Schema Main Page, with fewer options:*\r\n|!image-2021-06-18-14-49-11-656.png|width=467,height=389!|!image-2021-06-18-14-49-53-142.png|width=574,height=396!|\r\n\r\n\u00a0\r\n\r\n*And another one, with more options, when accessed via [Object View|https://documentation.mindville.com/display/ICV86/Object+view]*:\r\n|!image-2021-06-18-14-51-33-686.png|width=467,height=389! !|!image-2021-06-18-14-52-17-079.png|width=389,height=382!|\r\nh3. Steps to Reproduce\r\n # Access Insight Asset Management;\r\n # On the main page, navigate through the objects and try to add a comment in an asset, or during the creation of an asset, use a text area field to include any information.\u00a0\r\n\r\nh3. Expected Results\r\n\r\nSee the same complete Rich Text Editor when accessing any Text Area field while using Insight.\r\nh3. Actual Results\r\n\r\nText Area fields when accessed via Object Schema main page has fewer options in the Rich Text Editor.\r\nh3. Workaround\r\n\r\nGo to the *[Object View|https://documentation.mindville.com/display/ICV86/Object+view]* page to add a comment or edit any Text Area Attribute.",
+      "summary": "Insight - Enhance the Rich Editor Text in Text Area attributes and comment fields"
+    }
+  },
+  {
+    "key": "JSDSERVER-8411",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-06-18T16:48:52.000+0000",
+      "created": "2021-06-18T15:53:25.000+0000",
+      "description": "User needs new conditions and validators to prevent issues to be transitioned to a closed status when Assignee field is Unassigned, however, the conditions and validators to match this request are not available in Jira Service Management 4.5.0\r\n\r\nJira Service Management (formerly Service Desk) (Server)\r\nAffected version: 4.5.0\r\n\r\n\u00a0\r\n\r\n\u00a0",
+      "summary": "Add new conditions and validators to workflow transition"
+    }
+  },
+  {
+    "key": "JSDSERVER-8410",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-18T15:24:12.000+0000",
+      "description": "h3. Issue Summary\r\nIn the new object view page user cannot manually type in a date attribute value. The field only  allows you to enter a date value from the virtual calendar.\r\nh3. Steps to Reproduce\r\n # Add a \"Date\" attribute to any object type\r\n # Try to create/edit an object from the new object view page and you won't be able enter any keyboard inputs in the Date attribute field\r\n\r\nh3. Expected Results\r\nDate attribute allows you to type in date value\r\n\r\nh3. Actual Results\r\nYou cannot type in anything. You can only select the date from the virtual calendar\r\n!2021-06-18_20-48-17.png|thumbnail!\r\n\r\nh3. Workaround\r\n\r\nYou can still type in the date value from the the object schema view:\r\n!2021-06-18_20-39-43.png|thumbnail!",
+      "summary": "Unable to manually type in Date attribute in New Object View"
+    }
+  },
+  {
+    "key": "JSDSERVER-8409",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-18T15:07:21.000+0000",
+      "description": "h3. Issue Summary\r\nIn the old object schema view page, upon clicking/hovering over the object attribute it showed an attachment pin button which helps you quickly identify the object attachment:\r\n!2021-06-18_20-29-44.png|thumbnail!\r\n\r\nh3. Steps to Reproduce\r\n # Create an object attribute (Object A) reference to another Object (Object B) \r\n # Add an image attachment on Object B\r\n # In the object schema view have the Object A in focus and click on attribute pointing to Object B \r\n \r\n\r\nh3. Expected Results\r\nAdd the ability to see the attachments in new object view page like we can in object schema view\r\n\r\nh3. Actual Results\r\nIn the new object view page this doesn't exist any more:\r\n!2021-06-18_20-31-57.png|thumbnail!\r\n\r\nh3. Workaround\r\nUse the old object schema view until the feature is introduced in new object view page as well",
+      "summary": "Add the attachment pin icon in new object view "
+    }
+  },
+  {
+    "key": "JSDSERVER-8407",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-18T14:13:04.000+0000",
+      "description": "I would like to be able to add the same Comment to a number of issues at one time.\u00a0 Could the Comments field be part of Bulk Edit.\r\n\r\nI would also like to be able to add a Comment from the Insight Search results list.\u00a0 The context menu offers Edit and Delete, but not Add a Comment.",
+      "summary": "Insight CDMB: Enhance Comments functionality"
+    }
+  },
+  {
+    "key": "JSDSERVER-8406",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-11-10T12:17:15.000+0000",
+      "created": "2021-06-18T12:46:45.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nUTF-8 encoding does not work as expected for Spanish words while exporting the objects.\r\n\r\n*Affected Version* : 8.7.10\r\n\r\nh3. Steps to Reproduce\r\n # Create an object schema with few objects.\r\n # Create an attribute with text type.\r\n # Put a value for the text type attribute with some\u00a0Spanish words like\u00a0informaci\u00f3n.\r\n # View the object. It will display the correct value as below\u00a0\r\n !Insight_-_Jira.jpg|thumbnail! \r\n # Export the objects with the following settings in a CSV:\r\n !Insight_-_Jira-1.jpg|thumbnail! \r\n\r\n\r\nh3. Expected Results\r\n\r\nAll the \"Spanish\" words should be displayed correctly. \r\n\r\nh3. Actual Results\r\nThe CSV results show the weird characters as below: \r\n !export.jpg|thumbnail! \r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "UTF-8 encoding does not work as expected for special characters while exporting the objects."
+    }
+  },
+  {
+    "key": "JSDSERVER-8405",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-11-01T22:25:36.000+0000",
+      "created": "2021-06-18T11:41:02.000+0000",
+      "description": "h3. Issue Summary\r\nFiltering objects with Basic Search is not working as expected in Insight\r\n\r\n\r\n*Affected versions*\r\nAll the versions starting from 8.6.13\r\n\r\nh3. Steps to Reproduce\r\n # Create an object schema.\r\n # Set the object view as List view as below: \r\n !Insight_-_Jira.jpg|thumbnail! \r\n# Filter the objects based on a single attribute value using filter search and observe the result.(here I have used Oracle)\r\n !Insight_-_Jira-1.jpg|thumbnail! \r\n# The searching is not filtering the objects with servers having oracle. Instead, it is showing all the objects. \r\n# When clicking on Advanced search, It should be displaying the query, instead it is blank. \r\n\r\n\r\nh3. Expected Results\r\nThe search should filter based on the keyword and advanced search should be displaying the query as below: \r\n\r\n !Insight_-_Jira-2.jpg|thumbnail! \r\n !Insight_-_Jira-3.jpg|thumbnail! \r\n\r\nh3. Actual Results\r\n\r\nThe search is not filtered with the basic search\r\n(i) This is only affecting Object type attributes and not any other types\r\n\r\nh3. Workaround\r\n\r\nManually type the query in advanced search brings up the correct results. ",
+      "summary": "Basic filter search does not work as expected in Insight"
+    }
+  },
+  {
+    "key": "JSDSERVER-8404",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-17T20:35:27.000+0000",
+      "description": "iniciando\u00a0",
+      "summary": "prueba iniciando en jira"
+    }
+  },
+  {
+    "key": "JSDSERVER-8403",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-17T14:58:03.000+0000",
+      "description": "h3. Issue Summary\r\nChoosing Object Type in the *Filter search* fails to be set as the selected option for the parent object type. The advance search works absolutely fine and once we switch back to basic after searching in advanced, it works. This seems to be a UI glitch. It doesn't throw any error in the front end but it doesn't get selected either\r\n\r\nh3. Steps to Reproduce\r\n # Create an object Type\r\n# Create a child Object Type and keep the inheritance CheckBox enabled. \r\n # Now create one sample child object\r\n# Now go back to the parent object Type and Try to use the Filter Search option in the \r\nYou will not be able to select the Object Type option. (see screenshot_1\r\n# Now click on Advanced and Type an iql like : objectType = \"abcdefc\" and then switch back to the basic, then it works fine. (See screenshot_2)\r\n\r\nh3. Expected Results\r\n\r\nWe should be able to select the Object Type option in the Filter Search\r\n\r\nh3. Actual Results\r\n It doesn't throw any error in the front end but it doesn't get selected either\r\n\r\nh3. Workaround\r\n\r\nClick on Advanced and Type an iql like objectType = \"abcdefc\" and then switch back to the basic, then it works fine. (See screenshot_2)",
+      "summary": "Object Type in the Filter search doesn't work for Parent Objects when we have inherited Child object types"
+    }
+  },
+  {
+    "key": "JSDSERVER-8401",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-16T10:25:47.000+0000",
+      "description": "In \"SQL Search\" you can filter for each and every Column.\u00a0(y)\u00a0In the \"Free Text Search\" you cannot. :(\r\n\r\nHowever, this would be super helpful !",
+      "summary": "Insight Search | Make Free Text Search filterable by desired Column"
+    }
+  },
+  {
+    "key": "JSDSERVER-8399",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-16T10:15:18.000+0000",
+      "description": "h5. Use cases\r\n - related knowledge is scattered among multiple Spaces;\r\n - a subset of knowledge needs to be shared among more Jira projects, but other topics are covered in specific Spaces.",
+      "summary": "Link Multiple Confluence Spaces to one Company Managed Project"
+    }
+  },
+  {
+    "key": "JSDSERVER-8398",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-16T08:39:35.000+0000",
+      "description": "At the moment it is not possible to add Insight custom fields to the Jira issue collector.\r\n\r\nProvide the functionality to add Insight custom fields to the Jira issue collector.",
+      "summary": "provide a way to add Insight custom fields to the Jira Issue collector"
+    }
+  },
+  {
+    "key": "JSDSERVER-8397",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-07-07T10:28:54.000+0000",
+      "created": "2021-06-16T04:30:14.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen performing searches in the Jira Service Management Help Center, the search events are logged as per this documentation: [https://confluence.atlassian.com/jirakb/locating-jira-service-management-s-knowledge-base-search-statistics-through-the-database-957977997.html.\u00a0|https://confluence.atlassian.com/jirakb/locating-jira-service-management-s-knowledge-base-search-statistics-through-the-database-957977997.html]\r\n\r\nSearching in the search box \"[What do you need help with|https://confluence.atlassian.com/jirakb/files/957977997/957977940/2/1537205635237/custmerportal.png]?\" logs all fields as expected.\u00a0\r\n\r\nThe search results that come from [Issue creation screens|https://confluence.atlassian.com/jirakb/files/957977997/957977939/2/1537205635352/createissue.png] are not logged with the following values in the database:\u00a0\r\n * searchTime\r\n * searchTerm\r\n * source\r\n\r\nh3. Steps to Reproduce\r\n # Go to the create issue page from the Jira Service Management Portal and enter some terms to trigger\u00a0a JSM knowledgebase search\r\n # Look up the search statistics as per the steps here [https://confluence.atlassian.com/jirakb/locating-jira-service-management-s-knowledge-base-search-statistics-through-the-database-957977997.html]\u00a0\r\n # The values for searchTerm, searchTime and source values are not populated for searches done in the issue creation screen.\u00a0\r\n\r\nh3. Expected Results\r\n\r\nThe values for searchTerm, searchTime and source values are populated for all searches\r\nh3. Actual Results\r\n\r\nThe values for searchTerm, searchTime and source values are not populated for knowledge base searches coming from the issue creation pages.\u00a0\u00a0\r\nh3. Workaround\r\n\r\nNo current workaround",
+      "summary": "Performing a search on Jira Service Management create issue field does not log searchTime, source, searchTerm"
+    }
+  },
+  {
+    "key": "JSDSERVER-8396",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-15T14:24:12.000+0000",
+      "description": "h3. Problem definition\r\nCurrently, \"Insight User Information\" panel is shown to:\r\n* Viewers who don't have any access to Insight shouldn't be shown the panel, or\r\n* Users who are not related to any Insight objects.\r\n !image-2021-06-15-16-24-09-901.png|thumbnail! \r\n\r\nThis causes confusion among Insight objects and takes valuable screen space.\r\n\r\nh3. Suggested resolution\r\n* Either completely hide the panel for users who do not have Insight access / are not associated with Insight objects, or\r\n* Give administrators control to hide / show the panel for those users",
+      "summary": "Hide 'Insight User Information' Panel for non-Insight users or users not associated with Insight objects"
+    }
+  },
+  {
+    "key": "JSDSERVER-8395",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-15T13:17:15.000+0000",
+      "description": "HI,\r\n\r\nWhen creating canned responses in Jira Service Desk we are only allowed to use a few selected variables. I there a way we can use more variables than is listed there? Can this be implemented?\r\n\r\n!image-2021-06-15-15-16-52-449.png!",
+      "summary": "MORE VARIABLES for canned responses!!! \u26a0"
+    }
+  },
+  {
+    "key": "JSDSERVER-8394",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-15T09:33:55.000+0000",
+      "description": "At the moment the trigger for Insight automation rule allow to select object updated.\r\n\r\nHowever if multiple updates are executed for an object type (example bulk updates), the rule will be executed for each single update.\r\n\r\nPleas provide the feature to insert bulk updates in the trigger so that the action can be executed only once for a multiple update.",
+      "summary": "provide the feature of triggering multiple updates for an object type in Insight automation rule"
+    }
+  },
+  {
+    "key": "JSDSERVER-8393",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-15T08:20:42.000+0000",
+      "description": "At the moment, when granting users the Object schema users role, they will be able to select the *export object* feature.\r\n\r\nThis is concerning from a security point of view and it should be possible to restrict the export object feature to a sub group of users.\r\n\r\nPlease implement a way to restrict the export object feature in future Insight versions.",
+      "summary": "provide a way to restrict the export objects option for Insight users"
+    }
+  },
+  {
+    "key": "JSDSERVER-8392",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-15T06:49:16.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nENCODING WIN-1250 is not correct while exporting the objects.\r\n\r\nAffected Version: All 8.x version\r\nNon Affected version: 6.4.13,7.1.4 \r\n\r\nh3. Steps to Reproduce\r\n # Create an object schema with few objects.\r\n # Create an attribute with text type.\r\n # Put a value for the text type attribute with some\u00a0CZECH words like\u00a0Angli\u010dtina.\r\n # View the object. It will display the correct value as below\u00a0\r\n !image-2021-06-15-12-08-15-298.png|thumbnail! \r\n # Export the objects with the following settings in a CSV: \r\n !Insight_-_Jira.jpg|thumbnail! \r\n\r\nh3. Expected Results\r\nThe results should be displayed correctly as below: \r\n!export__5_.jpg|thumbnail! \r\n\r\nh3. Actual Results\r\nThe CSV results show the weird characters as below: \r\n !export__3_.jpg|thumbnail! \r\n\r\n\r\nNote: This behavior is repeatable in a browser, but not in command-line tools like curl.\r\n\r\nh3. Workaround\r\n Currently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "ENCODING WIN-1250 is not correct while exporting the objects. "
+    }
+  },
+  {
+    "key": "JSDSERVER-8391",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-15T04:32:09.000+0000",
+      "description": "h3. Problem Definition\r\nInsight Asset Management has the option to export objects using a format of \"User friendly\". This allows linked Jira users to be exported as \"display name\" and not the Jira \"user key\".\r\n\r\nInsight Reports when exporting data as CSV do not have the option to export in \"user friendly\" format restricting output for linked Jira users to the rather meaningless user key.\r\n\r\nh3. Suggested Solution\r\nProvide the \"user friendly\" option on all Insight exports including an option to select \"username\" or \"email address\" for Jira user references.\r\n\r\nh3. Workaround\r\nCurrent workaround is adding additional attributes to an Insight Object to contain the Jira user \"display name\", \"username\" and/or \"email address\" and either scripting or manually updating these for each and every Jira user. An onerous and excessive task.\r\n\u00a0",
+      "summary": "As an Admin I would like to export Insight Reports using \"User Friendly\" export and contain Jira user names and not just user keys"
+    }
+  },
+  {
+    "key": "JSDSERVER-8390",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-14T19:44:29.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nCustomers are able to evaluate/rate the attendant and it's service, but the other way around it's not possible. Agents/attendants should also be able to evaluate the customers, their behavior, knowledge, and goodwill to help to solve their problems.\r\nh3. Solution\r\n * Develop an evaluation/rating system for both sides customers/agents, so the teams can be aware of a problematic customer, or a particular customer technical limitations, and so on.",
+      "summary": "Add the ability to mutual rate between customers and agents"
+    }
+  },
+  {
+    "key": "JSDSERVER-8389",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-14T18:05:10.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIf a user accesses the customer portal and adds a comment, on an existing issue, that contains \"\\\", the saved comment is different from the typed.\r\n\r\nIf the user adds the same comment on the project, the comment is correctly rendered.\r\nh3. Steps to Reproduce\r\n # Access the customer portal\r\n # Create a comment on an issue that contains \"\\\":\r\n{code:java}\r\nC:\\Test\\Example{code}\r\n\r\nh3. Expected Results\r\n\r\nThe comment is correctly rendered.\u00a0\r\nh3. Actual Results\r\n\r\nThe comment is saved in a different way:\u00a0\r\n{code:java}\r\nC:\\\\Test\r\nExemple\r\n{code}\r\nh3. Workaround\r\n\r\nNo workaround.",
+      "summary": "Comments that have paths do not render correctly, on customer portal"
+    }
+  },
+  {
+    "key": "JSDSERVER-8388",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-14T08:16:16.000+0000",
+      "description": "It might be handy if we have the Swagger documentation for REST API.\r\n\r\n{color:#172b4d}Customers want to connect other systems to Insight. \r\n{color}",
+      "summary": "Swagger documentation for Insight REST API "
+    }
+  },
+  {
+    "key": "JSDSERVER-8387",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-12T14:01:32.000+0000",
+      "description": "To my knowledge the order of appearance for KB articles in Service Desk/Service Management depends on the age of the articles, usage of buzz words in titles and texts itself as well as incoming/outgoing links. Currently there's no way to influence/change it (apart of the create/edit date).\r\n\r\nLet\u2019s assume there\u2019s a Service Desk portal (running on Jira Server or DC) and there\u2019s a bunch of briefing (KB) articles containing service descriptions (in German: \u201cSteckbrief Service XY\u201d). Those articles have been created most recently but shall not appear at the top of the result list within the SD portal. Nonetheless they should be available.\u00a0\r\n\r\nIt would be very helpful to be able to change that manually since the Service Desk's operator may need to decide what articles the customers potentially should read first. For example:\u00a0\r\n\r\nA customer is searching for WLAN. He's expecting to read an article about how to set up or how to troubleshoot rather than reading service descriptions where the buzz word \"WLAN\" does occur (which is a lot of times in a lot of articles).\r\n\r\nI was wondering if we can influence the order therefore I suggest to implement a solution which enables a project administrator and/or Service Management agent to do so.\r\n\r\nAs stated in a related suggestion for Cloud (see JSDCLOUD-9639),\u00a0it is important for us to be able to sort our articles.",
+      "summary": "Ability to re-order KB articles in Jira Service Desk"
+    }
+  },
+  {
+    "key": "JSDSERVER-8386",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-12T14:00:54.000+0000",
+      "description": "To my knowledge the order of appearance for KB articles in Service Desk/Service Management depends on the age of the articles, usage of buzz words in titles and texts itself as well as incoming/outgoing links. Currently there's no way to influence/change it (apart of the create/edit date).\r\n\r\nLet\u2019s assume there\u2019s a Service Desk portal (running on Jira Server or DC) and there\u2019s a bunch of briefing (KB) articles containing service descriptions (in German: \u201cSteckbrief Service XY\u201d). Those articles have been created most recently but shall not appear at the top of the result list within the SD portal. Nonetheless they should be available.\u00a0\r\n\r\nIt would be very helpful to be able to change that manually since the Service Desk's operator may need to decide what articles the customers potentially should read first. For example:\u00a0\r\n\r\nA customer is searching for WLAN. He's expecting to read an article about how to set up or how to troubleshoot rather than reading service descriptions where the buzz word \"WLAN\" does occur (which is a lot of times in a lot of articles).\r\n\r\nI was wondering if we can influence the order therefore I suggest to implement a solution which enables a project administrator and/or Service Management agent to do so.\r\n\r\nAs stated in a related suggestion for Cloud (see JSDCLOUD-9639),\u00a0it is important for us to be able to sort our articles.",
+      "summary": "Ability to re-order KB articles in Jira Service Desk"
+    }
+  },
+  {
+    "key": "JSDSERVER-8385",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-11T22:50:36.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nJira Service Management has two sets of tables: AO_54307E_VIEWPORT and AO_54307E_SERVICEDESK.\r\n These tables each have their own IDs and Service Management expects them to be the same. If for some reason they fall out of sync, some features will break.\r\n * Opening a KB (knowledge base) article from the portal works, but from within the request summary doesn't (error of non-existing article shows up)\r\n * The portal has one ID when navigating through the browser, but another \u2014 invalid \u2014 ID when requested through REST API.\r\n\r\nh3. Steps to Reproduce\r\n # Integrate JSM with Confluence through App Links\r\n # Alter AO_54307E_VIEWPORT_ID_seq or AO_54307E_SERVICEDESK_ID_seq so they no longer have the same next values\r\n # Create a Service Management project with a Confluence KB space\r\n # Create an article in confluence with the title \"HOW TO ACCESS\"\r\n # On the JSM portal, search for \"how to access\" and click on the article that shows up. It'll open\r\n # Go back and select a request from the new project\r\n # On the summary, type \"how to access\" and click on the article that shows up. I'll say the article doesn't exist.\r\n\r\nh3. Expected Results\r\n # JSM shouldn't allow the sequences to become out of sync\r\n\r\nh3. Actual Results\r\n# JSM has a heavy dependency on the sequences being in sync but there's no FK on the database enforcing it.\r\n# REST API starts producing wrong results\r\n# Confluence KB integration doesn't work when queried from the request creation form\r\n## When checking the portal ID of the request creation form in the URL, we can see that the Portal ID is correct:\r\n !Request_Creation_Form.png|thumbnail! \r\n## However, when clicking on the KB article URL, we are redirected to a page showing the following error, which is due to the fact that the incorrect Portal ID is used in the KB article URL\r\n{code}\r\nThe service project you are trying to view does not exist\r\n{code}\r\n !KB_Article_IncorrectPortalID.png|thumbnail! \r\n## If the KB article URL was properly built, it should be using the same portal ID as the one in the request form URL, and the KB should be displayed properly\r\n !KB_Article_CorrectPortalID.png|thumbnail! \r\n\r\n\r\nh3. Workaround\r\n\r\nNo workaround available. To fix this, we must update the sequences so they become synced again and update the ID on AO_54307E_VIEWPORT and its dependencies to match the AO_54307E_SERVICEDESK IDs.\r\n\r\nThe KB article [Knowledge Base articles fail to open from the request form in Jira Service Management|https://confluence.atlassian.com/display/JIRAKB/Knowledge+Base+articles+fail+to+open+from+the+request+form+in+Jira+Service+Management] provides extra details on this fix.",
+      "summary": "Jira Service Management knowledge base and REST API functionalities breaks if viewport and servicedesk sequences mismatch"
+    }
+  },
+  {
+    "key": "JSDSERVER-8384",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-11T15:25:06.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nWhen accessing the Customer Portal, the left column (Popular) shows the same amount of space (width) regardless of the width of the browser window. Also, it's not possible to expand it manually, which makes some words appear cut and difficult the comprehension\r\nh3. Suggested Solution\r\n\r\nWould be great if we could expand the width on the field or, receive a hint when putting the mouse over the text for a better understanding\r\n\r\n\u00a0\r\n\r\nBest Regards",
+      "summary": "Customer Portal - Limited width for text on the column Popular"
+    }
+  },
+  {
+    "key": "JSDSERVER-8383",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-11T10:44:26.000+0000",
+      "description": "At the moment is not possible to filter your objects based on the issue types/request type for the ticket in the Insight custom field. Therefore is not possible to filter out specific objects based on that in IQL.\r\n\r\nJira context only allow one global context and one per project. Therefore using context for filtering this will result in failure cause when selecting the different Issue Types in the project, only one option for the project context can be selected.\r\n\r\nPlease provide a way to filter objects in Insight custom field based on the selected Issue Type as well as Request Type.",
+      "summary": "Provide a way for Insight custom fields to show options depending on the project Issue type"
+    }
+  },
+  {
+    "key": "JSDSERVER-8382",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-11T09:33:06.000+0000",
+      "description": "At the moment the Insight Azure integration cannot fetch AD extension attributes:\r\n\r\nhttps://docs.microsoft.com/en-us/powershell/azure/active-directory/using-extension-attributes-sample?view=azureadps-2.0\r\n\r\nPlease implement a way to retrieve those additional attributes in the future.",
+      "summary": "Insight Azure Integration cannot fetch AD extension attributes"
+    }
+  },
+  {
+    "key": "JSDSERVER-8381",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-11T05:00:12.000+0000",
+      "description": "Hi,\r\n\r\nJira hangs whenever we navigate to Admin -> Issues and scroll/click any of the items there in Chrome. Here it is hanging for some time .\r\n\r\n\u00a0\r\n\r\nRegards\r\n\r\nUday",
+      "summary": "Slowness"
+    }
+  },
+  {
+    "key": "JSDSERVER-8380",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-09T12:16:15.000+0000",
+      "description": "At the moment the Insight global search with IQL or Free Text offer 50 results per page and there is no way to increase the number of results per page, while the search within the single object type offer this feature.\r\n\r\nPlease improve the Insight global search with the option for paging the results.",
+      "summary": "Provide a way to paginate the Insight Search results in global search"
+    }
+  },
+  {
+    "key": "JSDSERVER-8379",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-09T05:14:39.000+0000",
+      "description": "Hello Team,\r\n\r\nThe requirement is to disable the Confluence knowledge base link on the customer portal. that is opened in the new window.\r\n\r\nWe want to have access to the articles in Confluence. We just DON'T want to see the link \"open in new window\".\r\n\r\nh3. Reason:\r\nWe don't want users to jump into our confluence. \r\n\r\nPlease let us know if there is a workaround.",
+      "summary": "Disable link in knowledge base window "
+    }
+  },
+  {
+    "key": "JSDSERVER-8378",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-08T19:52:01.000+0000",
+      "description": "In the Help Center, if the portal user selects Knowledge base articles, the JSM pops windows up, which is good, however, if the portal user clicks on any related article link, they will be redirected to a Confluence page.\r\n\r\nThis is bad because, from the user's perspective, the user is being redirected to another environment and can cause confusion.\r\n\r\nAlso, it might cause the user to try to authenticate to the Confluence page, which is not expected.",
+      "summary": "JSM Help center should open related articles same as Knowledge base articles"
+    }
+  },
+  {
+    "key": "JSDSERVER-8376",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-06T11:46:11.000+0000",
+      "description": "h3. Current Situation\r\n\r\n- KB page search result is including attachment file name in Confluence page.\r\n\r\n !jsm-KB-search.png|thumbnail! \r\n !confluence-KB-search-result-page.png|thumbnail! \r\n !confluence-attachment-filename.png|thumbnail! \r\n\r\nh3. Use Case\r\n\r\n- Attachment file name is not always suitable for KB search result. \r\n\r\nh3. Proposed Solution\r\n\r\n- Provide the customization about excluding attachment file name in KB search.\r\n-- enable to exclude attachment file name in KB search result.",
+      "summary": "Provide the customization about excluding attachment file name in KB page search"
+    }
+  },
+  {
+    "key": "JSDSERVER-8375",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-07-05T03:32:39.000+0000",
+      "created": "2021-06-04T22:04:16.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nAfter uninstalling Jira Service Management, the *jira-email-processor-plugin* is disabled, which causes any further reinstallation of Jira Service Management to fail due to dependency issues.\u00a0\r\nh3. Steps to Reproduce\r\n # Install a fresh instance of Jira Software 8.13.4 - 8.13.7\r\n # Install Jira Service Management\r\n # Uninstall Jira Service Management\r\n # Reinstall Jira Service Management\r\n\r\nh3. Expected Results\r\n\r\nJira Service Management reinstalls successfully\r\nh3. Actual Results\r\n\r\nReinstallation will hang for approximately 5 minutes until a timeout occurs, where Jira Service Management will look like it is installed, but multiple plugins are not enabled and the application is nonfunctional:\r\n\r\n!image-2021-06-04-17-01-48-811.png|thumbnail!\r\nh3. Workaround\r\n\r\n*Workaround to reinstall JSM, without upgrading JSM:*\r\n\r\n1. Uninstall JSM via *Administration >> Applications >> Versions & licenses* using the *Uninstall* button underneath the JSM application\r\n 2. Stop Jira\r\n 3. Run the following SQL query directly against the DB:\r\n{code:java}\r\nDELETE FROM pluginstate WHERE pluginkey = 'com.atlassian.jira.jira-email-processor-plugin';\r\n{code}\r\n4. Physically remove {{$JIRA_HOME/plugins/installed-plugins/jira-email-processor-plugin-x.xx.x.jar}}\r\n 5. Start Jira\r\n 6. Reinstall JSM\r\n\r\n*Workaround to reinstall JSM with upgrade to a fixed version (no DB alteration or restart required):*\r\n # Uninstall existing JSM\r\n # Install JSM in version 4.5.16+ (LTS), 4.13.8+ (LTS), 4.16.2+ or 4.18.0+ appropriate for your instance\r\n # Uninstall JSM again\r\n # Navigate to:\u00a0*Manage Apps ->*\u00a0*All apps ->*\u00a0find\u00a0*jira-email-processor-plugin ->* click *Enable* button\r\n # Install JSM again",
+      "summary": "Jira Service Management cannot be reinstalled and times out after uninstalling"
+    }
+  },
+  {
+    "key": "JSDSERVER-8374",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-04T13:10:48.000+0000",
+      "description": "h3. Issue Summary\r\nJSM project permissions now heavily rely on JSM roles. When roles aren't used in permissions, permission errors will be fired.\u00a0\r\n\r\nIn some organizations, admins do not want project admins to manage project permission via the roles. With this limitation in place, it's not possible. \r\nh3. Steps to Reproduce\r\n # Edit the permissions scheme of a JSM project by removing the Admin role from the Administer project permission.\u00a0\r\n # Add the jira-administrators group to the permission.\u00a0\r\n\r\nh3. Expected Results\r\nJira should not complain.\u00a0\r\n\r\nh3. Actual Results\r\nWhen the project page is reloaded, Jira fires permissions errors:\u00a0\r\n{quote}This service desk project has configuration problems and may not work as expected\r\n{quote}\r\nAn overview of the permissions errors of JSM can be found in\u00a0[Resolve permission scheme errors in Jira Service Management|https://confluence.atlassian.com/jirakb/resolve-permission-scheme-errors-in-jira-service-management-838416389.html].\r\nh3. Workaround\r\nNo workaround is available. The roles have to be added back to the permissions scheme. \r\n\r\n",
+      "summary": "Allow Service Management projects to use groups and not roles in permissions schemes"
+    }
+  },
+  {
+    "key": "JSDSERVER-8373",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-09-01T10:57:19.000+0000",
+      "created": "2021-06-04T08:01:01.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhile searching the objects, all the attributes will not appear in column pop up and user can not add these to the view\u00a0\r\nh3. Steps to Reproduce\r\n # Create and Object type which has more then 1050 attributes\r\n # Navigate to Insight --> Search for Objects.\r\n # Search with newly created object type.\u00a0\r\n # You will see column button appearing as below\u00a0\u00a0\r\n !image-2021-06-04-13-25-29-913.png|thumbnail! \r\n# Click on columns and pop up will appear, scroll through to end. You will not find all the attributes \r\n# If you search the missing attributes by typing name, you will not find the attribute. \r\n !Insight_Search_-_Jira.jpg|thumbnail! \r\n\r\n\u00a0\r\nh3. Expected Results\r\nAll the Attributes should appear in columns for users to choose \r\n\r\nh3. Actual Results\r\nOnly 1050 attributes appear in the columns to choose.\r\n\r\nh3. Workaround\r\nMake sure you have only 1050 attributes. Remove the unused attributes from the object type. ",
+      "summary": "While searching all the attributes are not getting displayed in column pop up"
+    }
+  },
+  {
+    "key": "JSDSERVER-8372",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-03T22:32:21.000+0000",
+      "description": "When a mailbox has a very large number of email items (on the thousands), the processing of these messages will impact the processing of other mailboxes for other Jira Service Management projects.\r\n\r\nIt might eventually lead to an error like this:\r\n{code}\r\n2021-05-20 12:34:55,500-0300 ERROR [] Caesium-1-4 anonymous     Messaging Error when MailPullerWorker pulls emails from myaccount@mycompany.com: * BYE Jakarta Mail Exception: java.net.SocketTimeoutException: Read timed out\r\n{code}\r\n\r\nIn these cases, it would be beneficial for a message to be displayed in the health check, so admins would quickly know this is the problem.\r\n\r\nOne possibility to implement this would be to log an entry once a mailbox number of messages goes over a threshold (like 1000 unread emails) - then the health check could get this message.",
+      "summary": "Add a Health Check alert for large number of Email requests"
+    }
+  },
+  {
+    "key": "JSDSERVER-8370",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-03T08:59:05.000+0000",
+      "description": "*Summary*\r\n\r\nWhen using the Service Desk as a link integrated to an external website or linking the Service Desk via the widget, there is no possible way to customize the logo URL or to have a \"Back to Main page\" button located in the Customer Portal, the users who visit this external page have a disconnected experience when clicking on the \"Support Center\" link which leaves them with no options to redirect themselves to the external website. Clicking on the logo will loop the users only in the Support Center links.\r\n\r\nIt would be great if there is a \"Back to Main page\" button that can be configured or if the top left logo in the Jira Service Desk Customer Portal can be configured to change the URL for a smoother transition and customer experience.\u00a0\r\n\r\n*Workaround*\r\n\r\nThe only possible thing to do now, is to click on the\u00a0*Back*\u00a0button of the browser to return back to the original page.\u00a0",
+      "summary": "Ability to Customize Logo URL on Customer Portal"
+    }
+  },
+  {
+    "key": "JSDSERVER-8369",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-02T16:42:00.000+0000",
+      "description": "The *Introduction text* in _Portal settings_ should allow for more than 2,048 characters.",
+      "summary": "Portal introduction text should allow > 2,048 characters"
+    }
+  },
+  {
+    "key": "JSDSERVER-8368",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-06-02T16:28:16.000+0000",
+      "created": "2021-06-02T15:01:43.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen JSM instance has issues with large amount of comments (~10k) the SLA calculation and automation cause reindexing queue timeouts and as a result latency problems.\u00a0\r\nh3. Steps to Reproduce\r\n # JSM instance with issues with large amount of comments ( > 10k)\r\n # SLAs and automation covering large issues\r\n # Trigger several updates to issues (e.g. adding new comments).\u00a0\r\n\r\nh3. Expected Results\r\n\r\nThe system is able to handle the changes on issues with large amount of comments.\r\nh3. Actual Results\r\n\r\nReindexing queue timeouts appear in logs. Latency is observed on the system\r\nh3. Workaround\r\n\r\n...",
+      "summary": "Latency problems with large amount of comments on issue"
+    }
+  },
+  {
+    "key": "JSDSERVER-8367",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-02T12:29:50.000+0000",
+      "description": "h3. Issue Summary\r\nWhile creating/updating an object attribute of \"confluence\" type, unless you type a whole word which matches with one whole word of the page title Insight doesn't show the page.\r\n\r\nh3. Steps to Reproduce\r\n# Create an applink between Jira and confluence\r\n#* If Jira and Confluence doesn't share the same userbase enable anonymous access on confluence page settings (!)\r\n# Add a Confluence attribute to any objecttype\r\n#* It'd be better to select a specific space:\r\n!2021-06-02_17-37-53.png|thumbnail!\r\n# In the specific Confluence page create the following pages:\r\n#* abcdefghijkl page\r\n#* abcdefghijk page\r\n#* abcdefghij page\r\n#* _...you get the idea_ :) \r\n# Try to create/update an object's \"confluence\" attribute\r\n\r\nh3. Expected Results\r\n* If you type \"abc\" it should show you a list of pages matching that pattern\r\n\r\nh3. Actual Results\r\n\r\n* If you have a page called \"abc page\" searching with the term \"abc\" will only show this one page\r\n* if you search with the word \"page\" it finds all the pages\r\n* If you search with the word \"pag\" (without the e) it doesn't find the pages\r\n!2021-06-02_17-52-39.mp4!\r\n\r\nh3. Workaround\r\n\r\n* Type at least one matching word to the title of the pages viz., search with \"page\" and it will find all the pages above\r\n* In the *new object view page* add an wildcard ({{\\*}}) at the end of the search keyword viz., \"abc*\"\r\n** (!) *Note:* This asterisk trick won't work in the object schema view page\r\n !2021-06-02_18-24-59.png|thumbnail! \r\n !2021-06-02_18-30-10.png|thumbnail! \r\n* (!) Languages such as *German* where the likelihood of really long words is very high and this bug can cause confusion and inability to use this feature effectively. \r\n* Add a smaller word anywhere in the page title that you'd be comfortable typing in while searching for the page",
+      "summary": "Page search for \"confluence\" attribute does not fetch result(s) until a whole word matches with the page title"
+    }
+  },
+  {
+    "key": "JSDSERVER-8366",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-02T08:37:10.000+0000",
+      "description": "Hello Team, \r\n\r\nAll the search strings typed in the search bar from the customer portal should be logged in the Jira log files.\r\n\r\nExample:\r\n# Login to customer portal: <JIRA_HOSTNAME>/servicedesk/customer/portal/1?\r\n# Search for the string *TESTING*\r\n# This string should be logged into the Jira log file.\r\n",
+      "summary": "Log all search request in Jira"
+    }
+  },
+  {
+    "key": "JSDSERVER-8365",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-02T06:59:31.000+0000",
+      "description": "h3. Issue Summary\r\nIssue count Insight report does not respect the JQL query set\r\n\r\nh3. Steps to Reproduce\r\n # Create an Insight custom field and set it to filter on an object type (and/or further filter on an attribute).\r\n # Associate the Insight custom field to a project and make sure to add the field to at least 2 different issue types.\r\n# Create 2 issues in the project, one for each issue type where the Insight field exists.\r\n# Create an Insight Issue Count report to show up the issues created and connected to a specific object type (and/or attribute).\r\n# In the Issue Count report setting add a JQL to filter to an Issue Type that does not belong to the project (ex. Initiative).\r\n# Create the report and observe that instead it contains the issues related to both issue types (Initiative and Problem):\r\n !Screenshot_2021-06-02_at_08_48_15.png|thumbnail! \r\n\r\n !Screenshot 2021-06-02 at 08.55.22.png|thumbnail! \r\n\r\nh3. Expected Results\r\n\r\nThe report should show display empty.\r\nh3. Actual Results\r\nThe report show issues for all the issue types that have issues connected to the object type for the project.\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Issue count Insight report does not respect the JQL query set"
+    }
+  },
+  {
+    "key": "JSDSERVER-8364",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T17:56:54.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nIt is not possible to monitor/predict how long will take to execute all Insight Automation events when there are too many to be executed.\r\nh3. Steps to Reproduce\r\n # Have a\u00a0large object type (5000+ objects) refreshed daily from an external DB source;\r\n # Have Insight automation configurated against that object to execute on the \"Object Updated\" event.\u00a0\r\n # It takes a while for all automation events to execute.\r\n # If a single update takes place in another object type via another automation, that simple automation only runs after all 5000+ automation events are executed.\r\n # There is no way to monitor/predict when all the 5000+ automation events will finish.\r\n\r\nh3. Expected Results\r\n\r\nHave a screen in the Insight showing the execution of the automation events queue to help to predict how long it can still take.\r\nh3. Actual Results\r\n\r\nThere is no way to monitor that via Jira UI.\r\nh3. Workaround\r\n\r\nNo workaround is available.",
+      "summary": "Insight screen to monitor Automation events queue"
+    }
+  },
+  {
+    "key": "JSDSERVER-8363",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T14:17:36.000+0000",
+      "description": "At the moment the Insight issue count report only provide the number of issue created and connected to the objects in a given IQL and JQL query but there is no way to display the list of those issues together with the graph:\r\n\r\n !Screenshot 2021-06-01 at 16.12.34.png|thumbnail! \r\n !Screenshot 2021-06-01 at 16.10.02.png|thumbnail! \r\n\r\nPlease provide a way to also display the list of those issues and linkable (such as in Advanced Roadmap reporting).",
+      "summary": "improve Insight issue count report"
+    }
+  },
+  {
+    "key": "JSDSERVER-8362",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T13:36:57.000+0000",
+      "description": "h3. Issue Summary\r\nUser search on JSM portal, when using custom field of type 'User Picker (single user)', does not work as expected.\r\n\r\nh3. Steps to Reproduce\r\n # Create a group TEST_GROUP\r\n # Create a user by providing all the details like First and last name and having a valid user name. \r\n# Assign user to the TEST_GROUP group. \r\n# Create a JSM project.\r\n# Create a custom field of type User Picker (single user). Add this field to JSM project and customer portal.\r\n# Add context for custom to filter the users from TEST_GROUP. \r\n# Create an issue for this project and make sure you are able to search user in any order, last name first and first name later along with any combination. \r\n# This works fine. \r\n# Visit the customer portal and make sure you are able to search user in any order, last name first and first name later along with any combination, while searching for last name first, no user is displayed. \r\n\r\nh3. Expected Results\r\nUser should appear in the search result. \r\n\r\nh3. Actual Results\r\nNo user is displayed. \r\n\r\n\r\nh3. Workaround\r\n Currently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "User search on JSM portal for custom field does not work as expected"
+    }
+  },
+  {
+    "key": "JSDSERVER-8361",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-10-15T05:01:19.000+0000",
+      "created": "2021-06-01T13:09:00.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhenever a user is part of the {{jira-administrators}} group, they are not able to view Object Schemas *Roles* tab. Per our [Roles and Permissions|https://documentation.mindville.com/display/INSSERV/Roles+and+Permissions] documentation, the following is stated:\r\n{quote}\r\nInsight is configured to automatically grant the Insight Administrator role to all jira-administrators\r\n{quote}\r\n\r\nh3. Steps to Reproduce\r\n # Insight Plugin *8.6.13*\r\n # Login as a user with Jira administrators permission.\r\n # Navigate to an Object Schema where the user has no role and attempt to view the *Roles* tab.\r\n\r\nh3. Expected Results\r\n\r\nSince the user is a Jira administrator, they would also be an Insight Administrator, which grants them the ability to view the data under the *Roles* tab for any Object Schema.\r\n\r\nh3. Actual Results\r\n\r\nThe following error occurs in the UI when accessing the tab:\r\n !image.png|thumbnail! \r\n\r\nh3. Workaround\r\n\r\nHave a user that has the Insight Manager role grant the same role to the Jira Administrator user so they can modify these roles.\r\n\r\nh3. Additional Notes\r\n\r\n- Insight before 8.6.12 did not have this behavior. Previously, the schema wouldn't allow Jira Administrators without the necessary roles view this page.\r\n- As of 8.6.13, Jira Administrators can view this page without the necessary permissions. \r\n\r\n",
+      "summary": "Users with Jira adminsitrators permission cannot view the Roles tab under Object Schemas if they have no role in the Schema"
+    }
+  },
+  {
+    "key": "JSDSERVER-8360",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T12:09:51.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently Insight {{anyAttribute}} search is significantly slow as it invokes DB scan if it doesn't find match within the indexed attributes (Label, Key or Id). \r\nh3. Suggested Solution\r\nConvert {{anyAttribute}} search to perform \"Free text\" search instead as it can leverage the free text search index instead of a DB scan.\r\nh3. Workaround \r\nUse \"Free Text\" search",
+      "summary": "Use Free Text search index to improve performance of anyAttribute search"
+    }
+  },
+  {
+    "key": "JSDSERVER-8359",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T12:03:13.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nInsight post-function to increase object attribute value does not work as expected due to a race condition.\r\n\r\nIn particular, if the object attribute value gets increased at roughly the same time on different tickets' transition:\r\n * The first transition will execute the post-function and increase the value\r\n * At roughly the same time, the second transition will execute the post-function and consider old values, and not the new ones made by the first transition.\r\n * This is reproducible only if we are triggering transitions from two different Jira nodes in DC environment.\r\n\r\nh3. Steps to Reproduce\r\n # Create a new object type (in this example, it's called Sequences)\r\n # Inside this object type, add two new Integer-type attributes (in this example, we will call them Code 1 and Code 2)\r\n # Create an object of Sequences object type. Assign some integer values to Code 1 and Code 2 fields\r\n # Create Insight field that will contain the object reference. Configure the field as follows (here, the field is called Sequence):\r\n !screenshot-1.png|thumbnail!\r\n # Inside a workflow editor > go to some specific transition > add the following post-functions that will:\r\n ** Associate specific, newly created object (step 3)\u00a0with the custom field Sequence\r\n ** Increase the existing attribute values for Code 1 and Code 2 fields, by 1\r\n ** Store those new values into Seq 1 and Seq 2 custom fields\r\n !screenshot-4.png|thumbnail!\r\n # Publish the workflow\r\n # Create an issue inside of a project associated with the published workflow > edit Sequence field and select the object from step 3\r\n # Create another issue inside of a project associated with the published workflow > edit Sequence field and select the object from step\r\n # In a browser window, on node 1, on the 1st ticket, perform the transition that would call the post-functions and increment the Insight object attribute values\r\n # At roughly the same same time, in another browser connected to Jira on node 2, on the 2nd ticket, perform the transition that would call the post-functions and increment the Insight object attribute values.\r\n\r\nh3. Expected Results\r\n\r\nThe 2nd transition increments the new Insight attribute values that were saved by the first transition:\r\n !screenshot-2.png|thumbnail!\r\nh3. Actual Results\r\n\r\nThere is some kind of race condition that happens if the Insight attributes values are increased at roughly the same time, from two different nodes. The 2nd transition will not take newly incremented values, but it will increase the original values as the 1st transition:\r\n !screenshot-3.png|thumbnail!\r\nh3. Workaround\r\n\r\nWhenever multiple Insight PFs are set in the same transition, and trying to update the same object, you may face this race condition.\r\nAs a workaround, you may have a Groovy Condition to the 3rd 4th and consecutive PFs, to delay its execution:\r\n{code:java}\r\nsleep(n);\r\nreturn true{code}\r\nwhere n is a value in ms, and should be adjusted (trial and error);\r\ne.g. for the 3rd PF set n=300 and for the 4th, set n=600.\r\n\r\nThis will result in the 3rd PF executed with a 300ms delay, hence allowing the 1st and 2nd PFs to complete before executing.\r\nh3. Notes\r\n * This issue is only reproducible on Jira DC environment, that contains at least 2 nodes.\r\n * *The first and the second concurrent transition must be executed on different Jira nodes!*",
+      "summary": "Insight post-function to increase object attribute value does not work as expected due to a race condition"
+    }
+  },
+  {
+    "key": "JSDSERVER-8358",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T11:55:22.000+0000",
+      "description": "h3. Issue Summary\r\nObject search from the top right \"Search Objects\" drop down first invokes *Label, Key or Id* first >> either finds the matching objects with (Label, Key or Id) or reports \"{{No matches found}}\" >> then moves on to invoke an {{anyAttribute}} search\r\n\r\nThis is most likely because of the added code in New Object page global search.\r\n\r\nh3. Steps to Reproduce\r\n* Adding the internal Jira instance details as an *Internal comment*\r\n\r\nh3. Expected Results\r\nSearch continues without temporarily giving up with \"{{No matches found}}\" before performing an {{anyAttribute}} search\r\n\r\nh3. Actual Results\r\nCheck out this screen recording: !2021-06-01_17-13-10.mp4!\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Searching for attribute in \"Search Objects\" invokes anyAttribute search but breaks the flow with \"No matches found\""
+    }
+  },
+  {
+    "key": "JSDSERVER-8357",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T11:37:36.000+0000",
+      "description": "The last version of this importer was lunched in\u00a02020-11-16 since then Device 42 has changed a lot of things (9 updateds of Device 42) like the fhysical subtype of the DEVICE endpoint that didn`t appear into the data locators.",
+      "summary": "Update Device 42 Import"
+    }
+  },
+  {
+    "key": "JSDSERVER-8356",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T10:33:52.000+0000",
+      "description": "Ref:\u00a0https://jira.mindville.com/browse/ICS-1880\r\n\r\nI want to know If there is any option to import ODATA archives from URL into Insight.\r\n\r\nAnd if this doesn't exist, Is it possible to add this functionality?",
+      "summary": "ICS-1880 ODATA importer"
+    }
+  },
+  {
+    "key": "JSDSERVER-8355",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T10:30:52.000+0000",
+      "description": "ref:\u00a0https://jira.mindville.com/browse/IAI-12\r\n\r\nWe are starting to get Azure information into our schema. We are focus on Intune data and I notice that there is not data locator for aplications informations. In Intune we have this data and I want to khow if is posible to bring it to the schema. Thank you in advance. I attach one screanshot of the application data on Intune.\r\n\r\n!image-2021-06-01-12-30-31-429.png!",
+      "summary": "IAI-12 Applications Information"
+    }
+  },
+  {
+    "key": "JSDSERVER-8354",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T10:03:53.000+0000",
+      "description": "The steps to add the required permissions as per [this documentation|https://documentation.mindville.com/insight-azure-integration/latest/setting-up-insight-azure-integration] can be made even clearer by adding a screenshot of the added + granted permissions like this one\r\n !image-2021-06-01-12-01-57-511.png|thumbnail! ",
+      "summary": "Include a screenshot of the API permissions"
+    }
+  },
+  {
+    "key": "JSDSERVER-8353",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-06-01T00:17:27.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nWhen a new request is created on the CP the page loads and sometimes shows fewer SLAs than configured. After I refresh (say 5-10s later) all the configured SLAs are visible.\r\nh3. Steps to Reproduce\r\n # As a project admin configure several SLAs as viewable on the Customer Portal\r\n # Log into the CP as a customer and raise a new request\r\n\r\nh3. Expected Results\r\n * The CP displays the newly created request\r\n * All configured SLAs are displayed on the same page\r\n\r\nh3. Actual Results\r\n\r\nSometimes none, sometimes one, sometimes all (configured) SLAs are displayed.\r\nh3. Cause\r\n\r\nThis is because SLAs are calculated async to issue creation, so upon issue creation there is a chance that not all SLAs have been calculated for the new issue when the response is about to be composed.\r\nh3. Workaround\r\n\r\nRefresh the request page",
+      "summary": "Not all SLAs are visible on the Customer Portal after request creation"
+    }
+  },
+  {
+    "key": "JSDSERVER-8351",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-10-21T22:08:23.000+0000",
+      "created": "2021-05-31T14:17:41.000+0000",
+      "description": "h3. Issue Summary\r\nOriginal issue reported as [IB-530|https://portal.mindville.com/browse/IB-530] \r\n\r\n*Insight Discovery v3.0.3.1*\r\n\r\nThe Zip file is no longer copied to the right place:\r\n\r\n{noformat}\r\n24/05/2021 20:16:53 : Start transport process.\r\n24/05/2021 20:16:54 : Error transporting zip file.\r\n24/05/2021 20:16:54 : Exceptions:\r\n24/05/2021 20:16:54 : The process cannot access the file 'C:\\Program Files\\Discovery\\6DF5FdiscoveryService.lock' because it is being used by another process.\r\n   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)\r\n   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)\r\n   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)\r\n   at Insight.Discovery.Logic.FileTransfer.TransferFile() in C:\\SourceCode\\discovery_repo\\Discovery\\Logic\\FileTransfer.cs:line 50\r\n{noformat}\r\n\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Insight Discovery SFTP File Transfer is getting a file lock"
+    }
+  },
+  {
+    "key": "JSDSERVER-8350",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-31T09:19:46.000+0000",
+      "description": "h3. Problem Definition\r\nCurrently ITSM Project template only allows you to create a Jira Core (\"Business\") Project.\r\n!2021-05-31_14-46-24.png|thumbnail!\r\n\r\nh3. Suggested Solution\r\nSince Insight is now only part of JSM DC, please make this template available for \"Jira Service Management\" project types\r\n\r\nh3. Workaround \r\n# Create a Jira Core Project using the template\r\n# Change the Project type from \"Business\" to \"Service Desk\"\r\n!2021-05-21_20-37-48.png|thumbnail!",
+      "summary": "Make ITSM Project Template available for JSM only installations"
+    }
+  },
+  {
+    "key": "JSDSERVER-8349",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-05-31T06:22:20.000+0000",
+      "created": "2021-05-31T02:14:56.000+0000",
+      "description": "h3. Issue Summary\r\nUsers are not able to update avatar and clicking on the 'Insight User Information' under user Profile does not expand the object view. \r\n\r\nh3. Steps to Reproduce\r\n # Install Jira Service Management Data Center version 4.16.1\r\n# Create an object type with a User Attribute type\r\n# Make sure that the User attribute is configured to \"Show on User's Profile\"\r\n# Create an object and assign it to yourself\r\n# Navigate to your profile, see the Object is listed under 'Insight User Information'\r\n# Click on the Object to expand it\r\n# There is no way to redirect to the object page from here\r\n# Additionally - click and try to change the User's Avatar - nothing happens.\r\n\r\n\r\nh3. Expected Results\r\n* The Object is expanded, you can click the Label or Key to navigate to the Object\r\n* Avatar selection window pop-up\r\n\r\n\r\nh3. Actual Results\r\n* The object is not expanded, hence there is no option to navigate to the Objects\r\n* Nothing happens when clicking on the avatar \r\n\r\n\r\nh3. Notes\r\nUpdate Jira Service Management Data Center to version 4.17 which includes the fix",
+      "summary": "Unable to update Avatar and access Insight User Information under User Profile page"
+    }
+  },
+  {
+    "key": "JSDSERVER-8348",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2021-06-02T12:53:13.000+0000",
+      "created": "2021-05-28T13:08:44.000+0000",
+      "description": "h3. Issue Summary\r\nWildcard is needed to search for Confluence pages with German umlauts or Swedish letters in the title. However, this is not working consistently on different object and schema view\r\n\r\nh3. Steps to Reproduce\r\n # Create an application link for Jira <-> Confluence.\r\n # Create a Confluence type attribute for an Insight object type.\r\n # Create an object and try to link a page and confirm it works. It will take up to 30 minutes for the index to be available so it might not work immediately.\r\n # Create 3 Confluence pages with each title below and link it with the Insight object.\r\n #* Standard dom\u00e4n\r\n #* Standarddom\u00e4n\r\n #* Standarddoman\r\n\r\nh3. Expected Results\r\nTyping _standard_ in any views return all possible pages to be linked\r\n\r\nh3. Actual Results\r\n* Typing _standard_ in the object attribute value field returns only \"Standard dom\u00e4n\"\r\n !image-2021-05-28-15-07-30-214.png|thumbnail! \r\n* In the object view, typing _standard*_ returns all possible values (3 pages)\r\n !image-2021-05-28-15-06-44-693.png|thumbnail! \r\n* In the schema view, typing _standard*_ returns nothing at all\r\n !image-2021-05-28-15-06-28-946.png|thumbnail! \r\n\r\nh3. Workaround\r\nInclude wildcard in the object detail view instead of the schema view",
+      "summary": "Unable to include wildcard when searching for Confluence pages in object schema view"
+    }
+  },
+  {
+    "key": "JSDSERVER-8347",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-28T09:38:23.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nInsight automation fails to take action when triggered by any bulk operation viz., Object Import, Bulk Delete etc.\r\n\r\nPlease review the steps to reproduce to understand the issue better.\r\n\r\nThis is similar to the bug on bulk delete not triggering an event when there is an IF condition: https://jira.atlassian.com/browse/JSDSERVER-8491\u00a0\r\nh3. Steps to Reproduce\r\n # Have Insight automation like\r\n !Screenshot 2021-05-28 at 2.45.07 PM.png|thumbnail!\r\n If the condition need not be that long if you are testing a simple condition.\r\n # Once you have the automation in place, please proceed with importing vulnerability object type using Insight NVD Integration add-on\r\n # Make sure that the objects that are getting imported have at least one object which matched the 'if condition', so that a Jira ticket gets created as part of automation.\r\n\r\nh3. Expected Results\r\n\r\nAutomation is triggered whenever there is a matching condition found.\r\nh3. Actual Results\r\n\r\nAutomation gets triggered but the \"_then_\" action is not taken. We kind of understand why this could be happening.\r\n\r\nFew attributes like (affected products, Metrics) are getting updates either after several minutes or hours after the object is created (as part of the import). The attributes are not updated as part of object creation. Since the 'if condition' is triggered only during the create event and not the update event, we are not seeing JIRA tickets created.\r\nh3. Workaround\r\n\r\nCurrently, there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Insight Automation does not take action when IF condition is met via bulk create"
+    }
+  },
+  {
+    "key": "JSDSERVER-8346",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-27T23:46:14.000+0000",
+      "description": "The UserPicker is showing the \"Add new customer\" functionality when used as a custom field (see screenshot). This should not be possible for custom fields as unregistered email addresses can only be used through \"Raise on behalf-of\" or \"Share request\" fields. Full details here:\u00a0[https://bulldog.internal.atlassian.com/browse/JSDSJAC-226]\r\nh4. How to reproduce:\r\n # Create a \"User Picker (Single User)\" custom field and associate it with the Service Desk screen\r\n # Modify a Request Type in the Service Desk so that the form incorporates that custom field\r\n # Configure the permissions as per screenshot (allow anyone to raise request and search in the portal)\r\n # login to the Customer Portal as admin and raise a new request, when filling up the \"User Picker (Single User)\" field, type a random email address that is not an existing customer.\r\n\r\nh4. Expected:\r\n\r\nNothing should happen and the field should be marked as invalid when submitting the request.\r\nh4. Actual:\r\n\r\nThe dropdown shows an option \"Add new customer <email-address>\" allowing the customer to select it let him think that it is possible to do so.",
+      "summary": "UserPicker shows \"Add new customer\" functionality when used as custom field"
+    }
+  },
+  {
+    "key": "JSDSERVER-8345",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-27T22:21:12.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nOn Jira Cloud, there is an option to \"Hide Details\" of the Description field in the Customer Portal.\u00a0\r\n\r\nThis option does not exist in Jira Service Management - Server.\u00a0\u00a0\r\nh3. Steps to Reproduce\r\n # Create a ticket in Jira Service Management Server.\u00a0\r\n # Access the ticket via the Customer Portal.\u00a0\r\n # The Description is called \"Details\" and there is no option to \"Hide Details\" like there is in Cloud.\u00a0\r\n\r\nh3. Expected Results\r\n\r\nThis option will exist in both JSM incarnations.\u00a0\r\nh3. Actual Results\r\n\r\nThis option does not exist in JSM Server.\r\nh3. Workaround\r\n\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available",
+      "summary": "Add \"Hide Details\" option in Customer Portal on Service Management Server"
+    }
+  },
+  {
+    "key": "JSDSERVER-8344",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-27T21:27:54.000+0000",
+      "description": "As a System Admin, I have created Project Groups to add users to specific projects.\u00a0 I find it to be an easy and efficient way for me to add new users to growing projects as well as to label/identify users as part of a particular team/group/project.\r\n\r\nAfter doing this a while, it appears there are limitations to Groups and may not be a good use since the Project Admin (PA) cannot add users via Groups.\u00a0 Also the Group shows as a user of the project to the PA in \"Project Setting | People\" function, however the PA can only see the Group label and user type (developer) but cannot see who is in that Group.\u00a0\u00a0\r\n\r\nCan the Group function be expanded so Project Admins can add teammates via Groups and/or see who all is part of that Group to insure the correct people belong?\u00a0 Any other tips to adding and organizing users without giving Project Admins access to the who Jira system and other peoples projects?\u00a0 Please advise.",
+      "summary": "Using Groups to add users to projects"
+    }
+  },
+  {
+    "key": "JSDSERVER-8343",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-27T08:29:39.000+0000",
+      "description": "At Deviniti, we'd like to support your Insight fields in our Search criteria provided by My Requests Extension app. Nevertheless, during our investigation, we've learned, that there is a missing endpoint that would allow to get the objects by the customers. Let me describe the use case.\r\nTo allow the customers to search by Insight objects, they need to have an access to a related scheme indicated by Jira Administrator in its settings (more information is described here, in step 6. [https://documentation.mindville.com/insight/latest/integration-with-jira-service-desk-33466851.html)]. \r\nIn the documentation ([https://insight-javadoc.riada.io/insight-javadoc-8.6/insight-rest/)] we found that there is a REST API that gives the ability to get Insight objects, however, it doesn't respect scheme settings what means that the customers always receive an empty list of objects. Unfortunately, as the Insight field doesn't provide any API that would the customers to get the objects that way to respect permission indicated by Jira Admin, we'd like to ask if it's possible to ask you for adding such endpoint as it will help us to support your app in ours?",
+      "summary": "Insight Rest API inquiry"
+    }
+  },
+  {
+    "key": "JSDSERVER-8342",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-27T06:56:36.000+0000",
+      "description": "h3. Issue Summary\r\nIn an ['Insight Referenced Objects'|https://confluence.atlassian.com/servicemanagementserver/referenced-insight-custom-field-1044784430.html] custom field, regardless single or multiple, the changes made to the _Reference type_ option is not reflected on the custom field configuration page. \r\n\r\nAdministrators had to navigate back 1 page to the configuration summary in order to view the change.\r\n\r\nh3. Steps to Reproduce\r\n# Create an Insight Referenced Objects custom field\r\n# Configure the custom field \r\n# Make changes to the _Reference type_ option (eg: select any reference) - [^insightcf1.png]\r\n# Save the change\r\n# Note the value of the _Reference type_ option remains to be \"All reference types\" despite the 'Successful updated configuration' message - [^insightcf2.png]\r\n# Return to Jira Custom Field and note the changes there - [^insightcf3.png]\r\n\r\nh3. Expected Results\r\n_Reference type_ option reflects the selected reference type\r\n\r\nh3. Actual Results\r\n_Reference type_ option shows \"All reference types\"\r\n\r\nh3. Workaround\r\nCurrently there is no known workaround for this behavior. A workaround will be added here when available\r\nThis does not affect Functionality. If you click to \"Return to Jira Customfield\" to see the summary of the configuration, it will show the selected Reference Type - correctly",
+      "summary": "Changes are not reflected in the 'Reference type' option of a Insight Referenced Objects custom field "
+    }
+  },
+  {
+    "key": "JSDSERVER-8340",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T19:01:21.000+0000",
+      "description": "h3. Issue Summary\r\n\r\nCreating a \"Due Date\" hidden field for a Request Type in a Service Desk project while the system language is \"English\" will lead to customers unable to create requests via the portal if the same has a different personal language(Spanish for example).\r\n\r\nThe customer will hit into the \"Este formulario contiene un campo oculto que no tiene un valor por defecto configurado\" error.\r\nh3. Steps to Reproduce\r\n # Add the duo date field into a request type.\r\n # Hide the field choosing a default value.\r\n # Change your personal language to Spanish\r\n # Raise a ticket in your service desk project\r\n # Now, try to create the ticket.\r\n\r\nh3. Expected Results\r\n\r\nThe ticket should be created without an error message.\r\nh3. Actual Results\r\n\r\nWhen creating the ticket, I'm receiving the error message:\u00a0\"Este formulario contiene un campo oculto que no tiene un valor por defecto configurado\"\r\nh3. Workaround\r\n * Change the personal language to English.\r\n * Configure the duo date field to not be hidden.",
+      "summary": "Setting Due Date with Spanish Language results in portal requests failed to be created."
+    }
+  },
+  {
+    "key": "JSDSERVER-8339",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T01:07:02.000+0000",
+      "description": "For users with large Service Desk Queues, the ability to sort the queue on the fly by clicking a column header is extremely beneficial.\r\n\r\nJSM/JSD\u00a0 already offers this ability, but only some Jira fields such as Description, Priority, Summary and etc... but still doesn't allow users to sort by a custom field such as Text Single Line, which would also be very handy in many cases.\r\n\r\nPlease find the screen recording attached for an example.\r\n\r\nGreetings!",
+      "summary": "Allow users to sort Queues by a Custom Fields (e.g. Text Based)"
+    }
+  },
+  {
+    "key": "JSDSERVER-8071",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:08.000+0000",
+      "description": "please add the option to filter and search the list in confluence",
+      "summary": "Posibillity to filter and search the List"
+    }
+  },
+  {
+    "key": "JSDSERVER-8070",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:08.000+0000",
+      "description": "Hi!Selection of attributes in referenced objects sometimes makes me crazy.\u00a0It would be nice to have Insight macro editing more\u00a0understandable.Maybe you can make a graph preview on editing macro window? Showing only non-empty attributes would be good too.",
+      "summary": "Preview for editing macro"
+    }
+  },
+  {
+    "key": "JSDSERVER-8069",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:07.000+0000",
+      "description": "Customer request to be able to see insight object logo from confluence macro",
+      "summary": "Possibility to show insight object logo"
+    }
+  },
+  {
+    "key": "JSDSERVER-8068",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:07.000+0000",
+      "description": "The \"Export to CSV\" is awesome. But depending on how you use the macro in different scenarios on a confluence page it looks ugly to show this text and the use case of exporting might not be applicable.\u00a0Please make this feature optional by a config check-box.",
+      "summary": "\"Export to CSV\" should be configurable visible"
+    }
+  },
+  {
+    "key": "JSDSERVER-8067",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:07.000+0000",
+      "description": "When using single line mode it can be useful to be able to disable the column name (attribute name) of an object.\u00a0As I user I would like to be able to configure of the column name should be visible or not.",
+      "summary": "Disable column names"
+    }
+  },
+  {
+    "key": "JSDSERVER-8066",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:07.000+0000",
+      "description": "Please add the same configurationoptions when exporting objects from insight to IMFC.\u00a0Such as delimiter, encoding and \"user friendly\".\u00a0",
+      "summary": "Export to CSV should have same configuration as \"Export object\" in Insight"
+    }
+  },
+  {
+    "key": "JSDSERVER-8065",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:06.000+0000",
+      "description": "Like I can see if an confluence page has JIRA-issue connection I would like to see if an conflunce page has Insight references.!Ska\u0308rmavbild 2017-12-15 kl. 15.10.20.png!",
+      "summary": "As I user I would like to see if a confluence page has an reference in an Insight object"
+    }
+  },
+  {
+    "key": "JSDSERVER-8064",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:06.000+0000",
+      "description": "It would be nice if we can copy an import-configuration and also a object type mapping.usecase:have to import from a large csv into different object types (e.g. PC, MAC, ...), PC and MAC are inherited object types of Computer. I will copy the mapping and change the IQL.h\u00e4lsningarmartin\u00a0",
+      "summary": "Copy of Import Configurations"
+    }
+  },
+  {
+    "key": "JSDSERVER-8063",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:06.000+0000",
+      "description": "Requesting that object graphs be displayed in Confluence.\u00a0",
+      "summary": "Object Graph view in Confluence"
+    }
+  },
+  {
+    "key": "JSDSERVER-8062",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:05.000+0000",
+      "description": "The JIRA macros also have a mixed-mode toggle for allowing snapshot or live retrieval; we want to include Insight data in our baseline (snapshot) documentation, but cannot do that without taking screenshots at present which is not a viable solution. Expected behavior would be that the macro offers to work in a \u201csnapshot\u201d mode \u2013 retrieving the latest data and storing versus the page storage \u2013 or in a \u201clive\u201d mode \u2013 always performing lookups on each page visit.",
+      "summary": "IFC - snapshot mode"
+    }
+  },
+  {
+    "key": "JSDSERVER-8061",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:05.000+0000",
+      "description": "Will be nice to have the Tree View available in the Graph for Objects in the Confluence Macro",
+      "summary": "Have the Tree View available in the Graph for Object in the Confluence Macro"
+    }
+  },
+  {
+    "key": "JSDSERVER-8060",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:05.000+0000",
+      "description": "Hello,\u00a0I would like to see an option in the macro setting to remove the 'Export to CSV'\u00a0!image-2019-05-29-14-24-29-449.png!Thank you.\u00a0Best regards,Johan\u00a0",
+      "summary": "Option in macro setting to remove 'Export to CSV'"
+    }
+  },
+  {
+    "key": "JSDSERVER-8059",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:05.000+0000",
+      "description": "We have an objecttype with references and a confluence page with the macro on it (v1.3.16) to show some of the objects including their references.When exporting this set of objects to csv, the resulting values in the csv are extended with the object keys added in parentheses.We would like to see an option to exclude the object keys from the export.",
+      "summary": "Add option to Insight Macro to exclude Key from csv-exports"
+    }
+  },
+  {
+    "key": "JSDSERVER-8058",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:04.000+0000",
+      "description": "We are using Insight heavily between Jira and Confluence. We are populating documentation in Confluence with our Insight information and would like to know if there is a way to change what's displayed as the headers in the resulting table when using the confluence plugin.We would like to rename some of the columns that are presented to be more descriptive for the Confluence document.We are using Insight Macro for Confluence version 1.3.16 (The drop down stops at 1.3.12).",
+      "summary": "Ability to set header on Insight for Confluence"
+    }
+  },
+  {
+    "key": "JSDSERVER-8057",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:04.000+0000",
+      "description": "Hi,it's really cool and convenient to get those reports out of insight in confluence.However, business keeps repeatedly asking for an edit feature. They wanna be able to edit via the macro - or a similar solution.By when do you think this will be doable?BR,Florian",
+      "summary": "Edit-Feature for Confluence Makro"
+    }
+  },
+  {
+    "key": "JSDSERVER-8056",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:04.000+0000",
+      "description": "The graph view button show an object graph that is dynamic but it produces poor results in display. If a r\u00e9arrange the graph to my liking , its good but I can find no way to \u00absave\u00bb the graph layout for the next time I view it. This is a major flaw if its as designed.Mainly when setting the Reference Depth to any value > 1.\u00a0",
+      "summary": "Allow configuration to be saved for the Graph View"
+    }
+  },
+  {
+    "key": "JSDSERVER-8055",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:03.000+0000",
+      "description": "Hi,it would be very useful to be able to view\u00a0the spatial position of an asset on a floor plan (e.g. dwg).The idea of creating a link between an object in insight and an object in the floor plan could bring many advantages in the work of many organizations.\u00a0",
+      "summary": "Show insight objects on floor plans"
+    }
+  },
+  {
+    "key": "JSDSERVER-8054",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:03.000+0000",
+      "description": "Hello,\u00a0\u00a0When we export a Jira issue on Printable format, then the object is shown only by its name. No attributes are visible whatsoever.\u00a0We would like the attributes of the object to be printed as well as they are shown on View screen of the issue.\u00a0\u00a0\u00a0",
+      "summary": "Export Issue to PDF - attributes"
+    }
+  },
+  {
+    "key": "JSDSERVER-8053",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:03.000+0000",
+      "description": "Dear mindville support,we make use of several schemas for our CMDB. In confluence we would like to display objects, e.g. a certain service which is located in one schema. That service has a relation to a virtual machine which is located in another schema. I would like to display attributes ('reference attributes') of this VM together in the table with the service object.Version is actually 1.6.3Best regardsSebastian Woitscheck",
+      "summary": "Display attributes of related objects in other schemes"
+    }
+  },
+  {
+    "key": "JSDSERVER-8052",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:02.000+0000",
+      "description": "Dear mindville support,we would like to display single objects using the vertical header view of the plugin.One attribute is called description and it sometimes contains a larger amount of text.\u00a0At the moment the table only displays single lines and creates a vertical scrollbar to scroll though the excess lines. For longer text this is not that practical, therefore I would like to ask you to implement automatic line breaks for text attributes on vertical view.\u00a0Thanks and best regardsSebastian",
+      "summary": "Enable line breaks for long text on vertical table"
+    }
+  },
+  {
+    "key": "JSDSERVER-8051",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/15611",
+        "id": "15611",
+        "key": "JSDSERVER",
+        "name": "Jira Service Management Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=15611&avatarId=105295",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=15611&avatarId=105295",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=15611&avatarId=105295",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=15611&avatarId=105295"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2021-05-26T00:29:02.000+0000",
+      "description": "As in Insight Core, this should also be available in Insight for Confluence.",
+      "summary": "IFC: Option to sum integer columns in the table footer"
+    }
+  }
+]

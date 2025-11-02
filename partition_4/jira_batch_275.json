@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "JSWSERVER-2753",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-01-11T06:08:39.000+0000",
+      "created": "2010-12-29T11:25:18.000+0000",
+      "description": "This happened in the latest GreenHopper 5.4\r\n\r\nThe time remaining shown in task board, is not the same compare to Planning board and in the burndown chart.\r\n\r\nAnd the remaining estimate is not the same as the one calculated directly from an excel export. \r\n\r\nSummary:\r\n\r\nTime remaining:\r\nTask board: 400 days\r\nPlanning board and burndown chart 676 days\r\nExcel Export: 200 days\r\n\r\nFor more information refer to screenshot.\r\n\r\n\r\n",
+      "summary": "CLONE - Version Remaining Estimate shown in GreenHopper are not consistent"
+    }
+  },
+  {
+    "key": "JSWSERVER-2752",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-20T05:59:06.000+0000",
+      "created": "2010-12-28T23:45:42.000+0000",
+      "description": "If you run the anonymizer against a Greenhopper 5.3 or 5.4 enabled JIRA XML backup, it kills the GH Configuration in the PropertyEntry table.\r\n\r\nTest case:\r\nClean instance, 1 project, enabled GH 5.3 against J4.3\r\nXML Dump\r\n\r\njava -jar joost.jar dump anon.stx > dump2\r\n\r\nRestored-- GH Dies w/\r\n{code}\r\n2010-12-28 15:22:37,293 Spring executor 5 ERROR admin 922x51x1 1n9m90e 0:0:0:0:0:0:0:1%0 /secure/admin/XmlRestore.jspa [plugin.osgi.factory.OsgiPlugin] Unable to start the Spring context for plugin com.pyxis.greenhopper.jira\r\norg.springframework.beans.factory.BeanCreationException: Error creating bean with name 'gh-hourBurndownChartService': Injection of resource fields failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'gh-worklogHistoryService': Injection of resource fields failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'gh-worklogHistoryCache' defined in URL [bundle://42.0:1/com/atlassian/greenhopper/service/timetracking/DefaultWorklogHistoryCache.class]: Invocation of init method failed; nested exception is com.thoughtworks.xstream.io.StreamException:  : only whitespace content allowed before start tag and not x (position: START_DOCUMENT seen x... @1:1) \r\n        at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessAfterInstantiation(CommonAnnotationBeanPostProcessor.java:292)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:959)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:472)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory$1.run(AbstractAutowireCapableBeanFactory.java:409)\r\n        at java.security.AccessController.doPrivileged(Native Method)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:380)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:264)\r\n        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:261)\r\n\r\n{code}\r\nRan this query:\r\nmysql> select * from propertyentry pe join propertytext pt on pe.id = pt.id where pe.entity_name like 'Gree%';\r\n\r\n\r\nAnd recieved:\r\n{code}| 10063 | GreenHopper |         1 | GH_CONFIGURATION                     |            6 | 10063 | xxxxx\r\n  xxxxxxx\r\n    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n    xxxxxxx\r\n  xxxxxxxx\r\n  xxxxxxx\r\n    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n    xxxxx\r\n      xxxxxxx\r\n        xxxxxxxxxxxxxxxxxx\r\n        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n      xxxxxxxx\r\n    xxxxxx\r\n  xxxxxxxx\r\nxxxxxx                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |\r\n| 10073 | GreenHopper |     10000 | CONFIGURATION                        |            6 | 10073 | xxxxx\r\n  xxxxxxx\r\n    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n    xxxxxxxxxxxxxxxxxxx\r\n  xxxxxxxx\r\nxxxxxx                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |\r\n| 10062 | GreenHopper |         1 | LICENSE                              |            6 | 10062 | xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\nxxxx                                                                                                                                                                                                                                                                                                                                                                                                  |\r\n\r\n\r\n\r\n{code}\r\n\r\nTested with the anonymizer script, but it ought to also affect the support utility.",
+      "summary": "Content Anonymizer kills Greenhopper configuration data."
+    }
+  },
+  {
+    "key": "JSWSERVER-2751",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-15T02:32:02.000+0000",
+      "created": "2010-12-24T09:43:58.000+0000",
+      "description": "This affects what ever the current version is on JAC.\r\nThe magnifying glass icon used in the top left of cards (when you hover) is loaded from http://confluence.atlassian.com/images/icons/magnify_16.png\r\n\r\nThis seems unnecessary. I only noticed because I work remotely via the authenticating proxy and see multiple authentication requests when I try to access the task board. There are a few others that I haven't been able to track down yet.",
+      "summary": "The magnifying glass icon on the top left of a card is fetched from confluence.atlassian.com"
+    }
+  },
+  {
+    "key": "JSWSERVER-2750",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-23T00:04:55.000+0000",
+      "created": "2010-12-22T18:16:21.000+0000",
+      "description": "We recently upgraded Jira from 4.0 to 4.2 and Green Hopper 5.3 as well as 5.4 is not working getting an exception when clicked on Task Board under Agile menu. \r\n\r\nI am not able to view the Task Board in Jira under the 'Agile' menu. It shows the following exception: \r\n\r\nAn error occurred whilst rendering this message. Please contact the administrators, and inform them of this bug. Details: ------- org.apache.velocity.exception.MethodInvocationException: Invocation of method 'isByBoardFilterSupported' in class com.pyxis.greenhopper.jira.boards.TaskBoard threw exception class java.lang.NullPointerException : null at org.apache.velocity.runtime.parser.node.ASTIdentifier.execute(ASTIdentifier.java:183) at org.apache.velocity.runtime.parser.node.ASTReference.execute(ASTReference.java:175) at org.apache.velocity.runtime.parser.node.ASTReference.evaluate(ASTReference.java:307) at org.apache.velocity.runtime.parser.node.ASTExpression.evaluate(ASTExpression.java:45) at org.apache.velocity.runtime.parser.node.ASTIfStatement.render(ASTIfStatement.java:68) at ..... \r\n\r\nLet me know if you need any more details.\r\n\r\nThanks,\r\nPrachi\r\n",
+      "summary": "Green Hopper 5.3 and 5.4 (Task Board) is not working in JIRA 4.2 version"
+    }
+  },
+  {
+    "key": "JSWSERVER-2749",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:19:29.000+0000",
+      "created": "2010-12-21T22:45:16.000+0000",
+      "description": "GreenHopper users ask for the feature to customize burndown dependency. So far, the burndown is based on the \"Done\" column of Task Board Column Mapping, which is not so convenient for some scenarios. They want the burndown definition can be independent from Task Board Column Mapping and customizable to base on the specific statuses/resolution. ",
+      "summary": "GreenHopper users want to customize burndown dependency "
+    }
+  },
+  {
+    "key": "JSWSERVER-2748",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:19:01.000+0000",
+      "created": "2010-12-21T19:33:30.000+0000",
+      "description": "I'm finding that if you freshly import data from an external system such as Bugzilla, and then turn on Ranking in Greenhopper, you start getting these errors randomly when viewing the Planning Board.  To reproduce it, you have to click through the Projects while in the planning board.\r\n\r\n{code}\r\n2010-12-21 11:24:46,413 http-8080-4 ERROR admin 684x435x1 lbp4ko 0:0:0:0:0:0:0:1 /secure/VersionBoard.jspa [com.atlassian.velocity.DefaultVelocityManager] MethodInvocationException occurred getting message body from Velocity: org.apache.lucene.store.AlreadyClosedException: this IndexReader is closed\r\norg.apache.lucene.store.AlreadyClosedException: this IndexReader is closed\r\n        at org.apache.lucene.index.IndexReader.ensureOpen(IndexReader.java:209)\r\n        at org.apache.lucene.index.IndexReader.document(IndexReader.java:946)\r\n        at org.apache.lucene.search.IndexSearcher.doc(IndexSearcher.java:152)\r\n        at com.atlassian.jira.index.DelegateSearcher.doc(DelegateSearcher.java:76)\r\n        at com.atlassian.jira.issue.statistics.util.DocumentHitCollector.collect(DocumentHitCollector.java:22)\r\n        at org.apache.lucene.search.HitCollectorWrapper.collect(HitCollectorWrapper.java:46)\r\n        at org.apache.lucene.search.IndexSearcher.searchWithFilter(IndexSearcher.java:294)\r\n        at org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:254)\r\n        at org.apache.lucene.search.Searcher.search(Searcher.java:150)\r\n        at com.atlassian.jira.index.DelegateSearcher.search(DelegateSearcher.java:136)\r\n        at com.atlassian.jira.issue.search.providers.LuceneSearchProvider.search(LuceneSearchProvider.java:241)\r\n        at com.atlassian.jira.issue.search.providers.LuceneSearchProvider.search(LuceneSearchProvider.java:100)\r\n        at sun.reflect.GeneratedMethodAccessor392.invoke(Unknown Source)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at com.atlassian.plugin.osgi.hostcomponents.impl.DefaultComponentRegistrar$ContextClassLoaderSettingInvocationHandler.invoke(DefaultComponentRegistrar.java:129)\r\n        at $Proxy138.search(Unknown Source)\r\n        at sun.reflect.GeneratedMethodAccessor392.invoke(Unknown Source)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at com.atlassian.plugin.osgi.bridge.external.HostComponentFactoryBean$DynamicServiceInvocationHandler.invoke(HostComponentFactoryBean.java:147)\r\n        at $Proxy138.search(Unknown Source)\r\n        at com.atlassian.greenhopper.service.DefaultStatService.loadStatsAndIssues(DefaultStatService.java:221)\r\n        at com.atlassian.greenhopper.service.DefaultStatService.getSummariesForVersionIds(DefaultStatService.java:91)\r\n        at com.pyxis.greenhopper.jira.actions.CardBoardAction.getSummaryForBoard(CardBoardAction.java:352)\r\n        at sun.reflect.GeneratedMethodAccessor787.invoke(Unknown Source)\r\n{code}\r\n\r\nReindexing does not fix it.\r\n\r\nTo fix it, I had to go through every project and click \"Optimize/Repair\" on the rank field.  This problem ought to go away if one turns on the Greenhopper nightly rank repair service I imagine.",
+      "summary": "Freshly imported data can error out in org.apache.lucene.store.AlreadyClosedException"
+    }
+  },
+  {
+    "key": "JSWSERVER-2747",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-03-31T21:32:42.000+0000",
+      "created": "2010-12-21T01:55:03.000+0000",
+      "description": "Upgrade and Removal via UPM.",
+      "summary": "Revise Installation and Upgrade guide for UPM"
+    }
+  },
+  {
+    "key": "JSWSERVER-2746",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-11-24T06:33:13.000+0000",
+      "created": "2010-12-20T22:41:22.000+0000",
+      "description": "Every GreenHopper related chart accessed via Issue Navigator search results > Views > Charts will pop the following error message:\r\n{quote}\r\nThere are problems with the current configuration for this gadget. The errors below may have been caused by the deletion of entities required by the gadget or by changes to your permissions.\r\n\r\nInvalid project\r\n{quote}\r\n\r\nEvery other chart builds based on the current issues in the Issue Navigator search results.",
+      "summary": "Issue Navigator search results > Views > Charts errors"
+    }
+  },
+  {
+    "key": "JSWSERVER-2745",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-10-27T23:13:50.000+0000",
+      "created": "2010-12-20T22:37:38.000+0000",
+      "description": "http://confluence.atlassian.com/display/DOCSPRINT/Understanding+GreenHopper+charts\r\n\r\nhttp://confluence.atlassian.com/display/DOCSPRINT/Backlog+management+in+GreenHopper\r\n\r\nhttp://confluence.atlassian.com/display/DOCSPRINT/Working+with+Epics+in+GreenHopper (DONE/OBSOLETE)",
+      "summary": "Migrate DocSprint work to GH space on CAC"
+    }
+  },
+  {
+    "key": "JSWSERVER-2744",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-30T00:22:19.000+0000",
+      "created": "2010-12-20T16:26:33.000+0000",
+      "description": "For instance, 5000d is displayed as \"5, 65d\" as per the attached screenshot.",
+      "summary": "CLONE - Incorrect formatting when there is a four digit (or greater) time estimate/remaining/spent"
+    }
+  },
+  {
+    "key": "JSWSERVER-2743",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:18:35.000+0000",
+      "created": "2010-12-20T14:21:15.000+0000",
+      "description": "In JIRA, if a field is required there is a 'None' option automatically selected. \r\nThis forces the user to make a selection. This is important UI and often the intention when not setting a default for any field configuration.\r\n\r\nI would like the GreenHopper cards to do this too. \r\n\r\n\r\nsee  JRA-3666",
+      "summary": "With \"new card\" use 'None' option if select list is required and has no default"
+    }
+  },
+  {
+    "key": "JSWSERVER-2742",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-02-14T05:51:12.000+0000",
+      "created": "2010-12-20T07:44:57.000+0000",
+      "description": "In some JIRA instances, NullPointerException is thrown when clicking into \"Time Tracking Analysis\" of Hour Burndown Chart, \r\n\r\n{noformat}\r\njava.lang.NullPointerException\r\nat com.atlassian.greenhopper.web.chart.action.TimelineAnalysisRenderer.getFormattedInitialRemainingEstimate(TimelineAnalysisRenderer.java:104)\r\nat sun.reflect.GeneratedMethodAccessor309.invoke(Unknown Source)\r\nat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\nat java.lang.reflect.Method.invoke(Method.java:597)\r\n...\r\n{noformat}",
+      "summary": "Throw NullPointerException when clicking into \"Time Tracking Analysis\" of Burndown Chart"
+    }
+  },
+  {
+    "key": "JSWSERVER-2741",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-03-23T01:25:09.000+0000",
+      "created": "2010-12-20T05:29:58.000+0000",
+      "description": "Some customers want new issues that are raised to appear at the top of the planning board, currently to achieve this you have to select the top-most bug so when a new card is created it appears above the highlighted bug.\r\n\r\nIt should be possible to have a default rank set so new cards will appear at that rank automatically. Currently people are trying (understandably) to edit the default value of the Rank custom field (GHS-2312, GHS-2590) but it throws a stack trace (or did up until GH 5.4 anyway). A separate option within GreenHopper's settings to configure this would be great.",
+      "summary": "Ability to choose default rank for new bugs"
+    }
+  },
+  {
+    "key": "JSWSERVER-2740",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:18:19.000+0000",
+      "created": "2010-12-17T15:54:50.000+0000",
+      "description": "This bug affects Greenhopper 5.4, version not listed in Affects Version field.\r\n\r\nTo repeat:\r\n# Navigate to Task Board\r\n# Allow session to time out\r\n# Click the grey arrow to expand the dropdown box on a card.\r\n\r\nStack trace will show up overlayed on top of Task Board:\r\n\r\nMethodInvocationException: TaskBoardAction threw IssuePermissionException. user \"null\" does not have permission to see issue at ASTIdentifier.java:183.",
+      "summary": "IssuePermissionException when logging work in GH after session timeout"
+    }
+  },
+  {
+    "key": "JSWSERVER-2739",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-28T04:14:25.000+0000",
+      "created": "2010-12-17T13:05:44.000+0000",
+      "description": "Hi,\r\n\r\nI have a lot of warning in the logs related to greenhopper.\r\n(I think it is related to Greenhopper because I see this package in the stacktrace com.pyxis.greenhopper.jira.actions.AbstractBoardAction.getIssueOperations)\r\n\r\nThere is however no error on the taskboard. It's maybe minor but it's polluting the log. \r\n\r\n\r\n\r\n{code}\r\n2010-12-17 13:57:13,058 TP-Processor18 WARN naima.chamil@directassurance.fr 837x6801x1 14ufnwb 171.18.2.142 /secure/TaskBoard.jspa [velocity] org.apache.velocity.runtime.exception.ReferenceException: reference : template = getEncodedBodyFromContent [line 1,column 79] : $issue.id is not a valid reference.\r\n\tat org.apache.velocity.runtime.parser.node.ASTReference.render(ASTReference.java:277)\r\n\tat org.apache.velocity.runtime.parser.node.SimpleNode.render(SimpleNode.java:230)\r\n\tat org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:300)\r\n\tat org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:202)\r\n\tat com.atlassian.velocity.DefaultVelocityManager.getEncodedBodyForContent(DefaultVelocityManager.java:143)\r\n\tat com.atlassian.jira.plugin.webfragment.JiraWebFragmentHelper.getHtml(JiraWebFragmentHelper.java:115)\r\n\tat com.atlassian.jira.plugin.webfragment.JiraWebFragmentHelper.renderVelocityFragment(JiraWebFragmentHelper.java:106)\r\n\tat com.atlassian.plugin.web.model.DefaultWebLink.getRenderedUrl(DefaultWebLink.java:35)\r\n\tat com.atlassian.jira.plugin.webfragment.model.JiraWebLink.getRenderedUrl(JiraWebLink.java:35)\r\n\tat com.atlassian.jira.plugin.webfragment.DefaultSimpleLinkManager.convertWebItemToSimpleLink(DefaultSimpleLinkManager.java:256)\r\n\tat com.atlassian.jira.plugin.webfragment.DefaultSimpleLinkManager.getLinks(DefaultSimpleLinkManager.java:178)\r\n\tat com.atlassian.jira.plugin.webfragment.DefaultSimpleLinkManager.getLinksForSectionIgnoreConditions(DefaultSimpleLinkManager.java:131)\r\n\tat com.pyxis.greenhopper.jira.actions.AbstractBoardAction.getIssueOperations(AbstractBoardAction.java:220)\r\n\tat sun.reflect.GeneratedMethodAccessor1127.invoke(Unknown Source)\r\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat org.apache.velocity.util.introspection.UberspectImpl$VelMethodImpl.invoke(UberspectImpl.java:234)\r\n\tat org.apache.velocity.runtime.parser.node.ASTMethod.execute(ASTMethod.java:203)\r\n\tat org.apache.velocity.runtime.parser.node.ASTReference.execute(ASTReference.java:175)\r\n\tat org.apache.velocity.runtime.parser.node.ASTReference.value(ASTReference.java:327)\r\n\tat org.apache.velocity.runtime.directive.Foreach.render(Foreach.java:131)\r\n\tat org.apache.velocity.runtime.parser.node.ASTDirective.render(ASTDirective.java:114)\r\n\tat org.apache.velocity.runtime.parser.node.SimpleNode.render(SimpleNode.java:230)\r\n\tat org.apache.velocity.runtime.directive.Parse.render(Parse.java:181)\r\n\tat org.apache.velocity.runtime.parser.node.ASTDirective.render(ASTDirective.java:114)\r\n\tat org.apache.velocity.runtime.parser.node.SimpleNode.render(SimpleNode.java:230)\r\n\tat org.apache.velocity.Template.merge(Template.java:256)\r\n\tat org.apache.velocity.app.VelocityEngine.mergeTemplate(VelocityEngine.java:422)\r\n\tat com.atlassian.velocity.DefaultVelocityManager.getEncodedBody(DefaultVelocityManager.java:77)\r\n\tat com.atlassian.jira.plugin.webwork.JiraPluginWebworkVelocityServlet.service(JiraPluginWebworkVelocityServlet.java:53)\r\n\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:717)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:646)\r\n\tat org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:436)\r\n\tat org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:374)\r\n\tat org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:302)\r\n\tat com.atlassian.jira.web.dispatcher.JiraWebworkActionDispatcher.dispatchView(JiraWebworkActionDispatcher.java:293)\r\n\tat com.atlassian.jira.web.dispatcher.JiraWebworkActionDispatcher.service(JiraWebworkActionDispatcher.java:199)\r\n\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:717)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.jira.web.filters.JiraLastFilter.doFilter(JiraLastFilter.java:69)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.core.filters.HeaderSanitisingFilter.doFilter(HeaderSanitisingFilter.java:44)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.jira.web.filters.accesslog.AccessLogFilter.executeRequest(AccessLogFilter.java:102)\r\n\tat com.atlassian.jira.web.filters.accesslog.AccessLogFilter.doFilter(AccessLogFilter.java:86)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.jira.security.xsrf.XsrfTokenAdditionRequestFilter.doFilter(XsrfTokenAdditionRequestFilter.java:50)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:119)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:55)\r\n\tat com.atlassian.jira.web.filters.PathExclusionFilter.doFilter(PathExclusionFilter.java:118)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.seraph.filter.SecurityFilter.doFilter(SecurityFilter.java:213)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.security.auth.trustedapps.filter.TrustedApplicationsFilter.doFilter(TrustedApplicationsFilter.java:98)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.seraph.filter.BaseLoginFilter.doFilter(BaseLoginFilter.java:140)\r\n\tat com.atlassian.jira.web.filters.JiraLoginFilter.doFilter(JiraLoginFilter.java:70)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter$1.doFilter(DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.oauth.serviceprovider.internal.servlet.OAuthFilter.doFilter(OAuthFilter.java:69)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter.doFilter(DelegatingPluginFilter.java:74)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:42)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.util.profiling.filters.ProfilingFilter.doFilter(ProfilingFilter.java:99)\r\n\tat com.atlassian.jira.web.filters.JIRAProfilingFilter.doFilter(JIRAProfilingFilter.java:16)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.jira.web.filters.ActionCleanupDelayFilter.doFilter(ActionCleanupDelayFilter.java:59)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.jira.web.filters.RequestCleanupFilter.doFilter(RequestCleanupFilter.java:53)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.johnson.filters.AbstractJohnsonFilter.doFilter(AbstractJohnsonFilter.java:72)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat org.tuckey.web.filters.urlrewrite.UrlRewriteFilter.doFilter(UrlRewriteFilter.java:350)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.gzipfilter.GzipFilter.doFilterInternal(GzipFilter.java:75)\r\n\tat com.atlassian.gzipfilter.GzipFilter.doFilter(GzipFilter.java:51)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:77)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:63)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.core.filters.cache.AbstractCachingFilter.doFilter(AbstractCachingFilter.java:33)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.core.filters.encoding.AbstractEncodingFilter.doFilter(AbstractEncodingFilter.java:41)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat com.atlassian.jira.web.filters.PathMatchingEncodingFilter.doFilter(PathMatchingEncodingFilter.java:49)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.jira.startup.JiraStartupChecklistFilter.doFilter(JiraStartupChecklistFilter.java:76)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat com.atlassian.jira.web.filters.JiraFirstFilter.doFilter(JiraFirstFilter.java:65)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)\r\n\tat org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:567)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)\r\n\tat org.apache.jk.server.JkCoyoteHandler.invoke(JkCoyoteHandler.java:190)\r\n\tat org.apache.jk.common.HandlerRequest.invoke(HandlerRequest.java:291)\r\n\tat org.apache.jk.common.ChannelSocket.invoke(ChannelSocket.java:769)\r\n\tat org.apache.jk.common.ChannelSocket.processConnection(ChannelSocket.java:698)\r\n\tat org.apache.jk.common.ChannelSocket$SocketConnection.runIt(ChannelSocket.java:891)\r\n\tat org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:690)\r\n\tat java.lang.Thread.run(Thread.java:619)\r\n{code}",
+      "summary": "$issue.id is not a valid reference."
+    }
+  },
+  {
+    "key": "JSWSERVER-2738",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-14T01:59:28.000+0000",
+      "created": "2010-12-17T11:37:44.000+0000",
+      "description": "If you close issue (by \"resolve\", for example) which has still some remaining estimate left, then this will be cleared to 0 in jiraissue table, but no record will be put in changeitem/changegroup tables. Thus, jira will be still adding last value of estimation to the \"todo\" value (and also green line on chart), nevertheless you cannot see this value in issue details. This way we have inconsistency between sum of \"remaining\" in each tasks, and on the chart (and version/project summaries).\r\n\r\n(update)\r\nI've checked, that this setting of 'estimated' to zero is done by our workflow:\r\n\r\n- THEN\r\nThe Remaining Estimate of the issue will be set to 0h.\r\n\u2014 THEN\r\nFire a Issue Resolved event that can be processed by the listeners.\r\n\r\n...but I still treat this as a bug as this is perfectly possible to change some value without adding record in change* tables and green hopper doesn't support such case properly.\r\n\r\n{code}\r\nmysql> select issueid, AUTHOR, CREATED, FIELD, oldvalue / 3600, newvalue / 3600 from changegroup left join changeitem on ( changeitem.groupid = changegroup.id ) where issueid = 44080 and field = 'timeestimate';\r\n+---------+--------+---------------------+--------------+-----------------+-----------------+\r\n| issueid | AUTHOR | CREATED             | FIELD        | oldvalue / 3600 | newvalue / 3600 |\r\n+---------+--------+---------------------+--------------+-----------------+-----------------+\r\n|   44080 | pp5091 | 2010-12-17 12:16:57 | timeestimate |               5 |               3 |\r\n+---------+--------+---------------------+--------------+-----------------+-----------------+\r\n1 row in set (0.00 sec)\r\n\r\nmysql> select id, pkey, TIMEESTIMATE / 3600, TIMEORIGINALESTIMATE / 3600, TIMESPENT / 3600 from jiraissue where pkey = 'SEM-2791';\r\n+-------+----------+---------------------+-----------------------------+------------------+\r\n| id    | pkey     | TIMEESTIMATE / 3600 | TIMEORIGINALESTIMATE / 3600 | TIMESPENT / 3600 |\r\n+-------+----------+---------------------+-----------------------------+------------------+\r\n| 44080 | SEM-2791 |              0.0000 |                      5.0000 |           2.0000 |\r\n+-------+----------+---------------------+-----------------------------+------------------+\r\n1 row in set (0.00 sec)\r\n{code}\r\n\r\nActually I'm not sure if this is bug in GreenHopper or rather in Jira itself - but it appears in GreenHopper, so I post it here.\r\n",
+      "summary": "Invalid value for remaining estimate when closing issue without setting remaining to 0"
+    }
+  },
+  {
+    "key": "JSWSERVER-2737",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-06T00:32:20.000+0000",
+      "created": "2010-12-17T05:34:12.000+0000",
+      "description": "This issue is raised from [https://support.atlassian.com/browse/JST-12771]:\r\n\r\nWhen viewing the issues in Planning Board with [Version mode|http://avaleojirastudio.jira.com/secure/VersionBoard.jspa?selectedBoardId=&type=CB&selectedProjectId=10061&colPage=1], the statistics is as below:-\r\n{noformat}\r\nTime estimate: 105d 5.5h\r\nTime spent: 15d 7h 29m\r\nTime remaining: 40d\r\n{noformat}\r\n\r\nIf switch to another mode such as [Component mode|http://avaleojirastudio.jira.com/secure/ComponentBoard.jspa?selectedBoardId=&type=VB&selectedProjectId=10061&colPage=1], the statistics is as below:-\r\n{noformat}\r\nTime estimate: 62d 7h\r\nTime Spent: 16d\r\nTime remaining: 1d 2.5h\r\n{noformat}\r\n\r\nThe statistics for total issues and all statuses is the same:\r\n{noformat}\r\nSub-task: 72\r\nTotal Issues: 96\r\nTask: 24\r\nTo Do: 4\r\nIn Progress: 2\r\nDone: 90\r\nUnresolved: 6\r\nResolved: 90\r\n{noformat}\r\n",
+      "summary": "Time Estimate & Time Remaining Inaccurate in Planning Board"
+    }
+  },
+  {
+    "key": "JSWSERVER-2736",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-04T12:24:22.000+0000",
+      "created": "2010-12-16T23:06:58.000+0000",
+      "description": "Somehow, the ordering of our backlog keeps getting rearranged - no one is physically doing this (on purpose anyway).  It is causing a fair it of confusion and higher priority work not being done.",
+      "summary": "Greenhopper is not remembering backlog order"
+    }
+  },
+  {
+    "key": "JSWSERVER-2734",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-03-29T01:01:57.000+0000",
+      "created": "2010-12-16T21:02:55.000+0000",
+      "description": "Update Links Hierarchy Report plugin in order to work with JIRA 4.2",
+      "summary": "Update Links Hierarchy Report plugin to support JIRA 4.2"
+    }
+  },
+  {
+    "key": "JSWSERVER-2733",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-15T02:32:34.000+0000",
+      "created": "2010-12-15T19:07:14.000+0000",
+      "description": "It seems to have to do specifically the 'Velocity' tab of the Agile Gadget on JIRA's dashboard. The chart displayed in this tab overlooks the 'context' option and shows the chart you last see when you check Agile > Chart Board > Value Chart. This is true, regardless of the filter type you choose on the gadget. This is also user specific, meaning it will show the user's last access to that particular chart.\r\n\r\nFor example:\r\n\r\n    * UserA goes to Agile > Chart Board and selects the options: Default context, version SPRINT, Value Chart, Story Points, Children.\r\n    * UserA will now always see that same chart when looking at his Agile Gadget > Velocity regardless of the context chosen. Changing the other fields, such as the version will still update the charts to the correct version type.\r\n    * Any other user accessing the Agile Gadget will see their own chart, following the same condition as mentioned above. The 'context' option is also overlooked. Meaning, users will then see different charts depending on their cached history with the chart.",
+      "summary": "'Velocity' tab of the Agile Gadget seems to ignore the 'Context' option when displaying charts."
+    }
+  },
+  {
+    "key": "JSWSERVER-2731",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:18:00.000+0000",
+      "created": "2010-12-13T15:23:23.000+0000",
+      "description": "When ranking issues in GreenHopper, the ideal way is to use \"Project Overview\" mode, where you can drag&drop cards and rank them as you wish. This will include all cards within all \"Sprints\" across the selected project.\r\n\r\nWhen you are seeing an issue in JIRA, then you select ranking field and edit, it shows only the issues that are in the same \"Sprint\" (NOT across all sprints, so different than using GH project overview).\r\n\r\nIMPROVEMENT: allow users to switch from \"Sprint\" to \"Project Overview\" options when editing rank field.",
+      "summary": "Allow users to switch from \"Sprint\" to \"Project Overview\" options when editing rank field"
+    }
+  },
+  {
+    "key": "JSWSERVER-2730",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-02T02:48:01.000+0000",
+      "created": "2010-12-12T23:47:32.000+0000",
+      "description": "We have been working on a QA taskboard in JAC, so that we can view all tasks assigned to QA across all of the subteams, to give us an overview of the current sprint and the work we have committed to.\r\n\r\nThere is a problem in that the Confluence subteams are working concurrently on different versions - 3.5 and 4.0. The UI in GH only allows us to view one of these at a time, so we cannot get the overview we are looking for.\r\n\r\nThere are various ways we can workaround this, but it would be great if GH catered for this usecase.",
+      "summary": "GreenHopper QA view - would like to have ability to view a task board for multiple versions"
+    }
+  },
+  {
+    "key": "JSWSERVER-2729",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-03-16T04:52:28.000+0000",
+      "created": "2010-12-10T21:05:17.000+0000",
+      "description": "On the task board, when a task gets moved to the Done column, it disappears.  When you click on the Issue Navigator button to show the query, it shows the very incorrect query that's being generated.  Here's an example:\r\n\r\nproject = TEST AND fixVersion = \"Sprint 4\" AND assignee = test AND status in (Resolved, Closed) AND NOT status in (Resolved, Closed) ORDER BY Ranking ASC, key ASC\r\n\r\nThis incorrect query appears to be generated for whatever column is in the far right.  If I create a Task Board column and put it to the right, a similar always-false query gets generated.\r\n\r\nThis problem also manifests in the Chart Board.  If, for example, my project starts with 250 story points.  Two days in, someone completes a task worth 8 points.  When I go to the Burndown chart of Story Points, what I expect to see is two days at 250 points and one day at 242 points.  What happens, however, is that 8 points are deducted from all 3 days and what I see on day 3 is three days at 242 points.  The 8-point task completely disappears from the chart.",
+      "summary": "Tasks marked \"Done\" disappear from Greenhopper"
+    }
+  },
+  {
+    "key": "JSWSERVER-2728",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:17:08.000+0000",
+      "created": "2010-12-10T18:28:37.000+0000",
+      "description": "Please add a Total Scope line to the burnup chart in the Chart Board.  This would show the total number of story points (or points of business value) that WERE included in the selected version on each chart date.\r\n\r\nThe line would often be flat - i.e. a horizontal line at 20 if there are 20 story points (of all statuses) in the sprint.  But the line would go up for days on which scope was added to the sprint.\r\n\r\nTo me this is the whole point of a burnup chart - if you have increasing scope you can see that you're still making progress but toward a moving target.  A burndown chart shows this as a lack of progress.\r\n\r\nThe historical scope info required would also be very helpful in calculating velocity and planning new sprints.",
+      "summary": "Add Scope line to burnup charts"
+    }
+  },
+  {
+    "key": "JSWSERVER-2727",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-10-24T05:05:34.000+0000",
+      "created": "2010-12-10T04:21:13.000+0000",
+      "description": "Currently the reindexing mechanism in the GreenHopper ranking field is reindexing all issues which could cause a long waiting period for the user if the project has a big number of issues (in the unscheduled or have at least 1 unreleased version)\r\nThe mechanism should be smarter and select just a certain number of issues to be \"reflattened\" and thus reindexed. This will avoid all issues to be reindexed and greatly ameliorate the waiting experience of the users.",
+      "summary": "The ranking reindex mechanism should be smarter and avoid reindexing all issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-2725",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-03-23T01:27:27.000+0000",
+      "created": "2010-12-10T00:05:11.000+0000",
+      "description": "So far, if focusing on any existing card in Planning Board,when creating a new card, ranking field will be set a value to put the new one in front of the focused card. However, although rank value can be changed, but no way to set it as 'last'; the same thing happens when the ranking field is set as 'last' by default, as long as you change it, you can not set it back to 'last'. GreenHopper user asks to make ranking field can select 'last' position at any time. \r\n\r\nSo far, a workaround is to unfocus card by CMD + Click (for Mac), or Alt + Click (for PC), then creating a new card will have a rank field auto set as 'last' by default.",
+      "summary": "GreenHopper user wants the feature to pick 'Last' position when setting ranking field"
+    }
+  },
+  {
+    "key": "JSWSERVER-2723",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-10-23T23:02:03.000+0000",
+      "created": "2010-12-08T16:49:28.000+0000",
+      "description": "When trying to add the GreenHopper Statistics Burndown Chart to a Confluence page, it's not possible to select the 'Version' in the drop-down box.\r\n",
+      "summary": "GreenHopper Statistics Burndown Chart doesn't show 'version' option in Confluence"
+    }
+  },
+  {
+    "key": "JSWSERVER-2722",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-30T00:22:03.000+0000",
+      "created": "2010-12-08T16:03:30.000+0000",
+      "description": "The workflow for my team has multiple stages as it goes through different teams. I would like to be able to track how one team is performing, but the project progress bar only goes green when all the teams have finished on it, that's two weeks too late for me to glean any information. Every iteration every item is \"in progress\" the whole iteration, which is worthless.",
+      "summary": "Show other workflow status in Project Progress Gadget"
+    }
+  },
+  {
+    "key": "JSWSERVER-2721",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-08-02T00:39:52.000+0000",
+      "created": "2010-12-08T14:23:25.000+0000",
+      "description": "For a better use, I want to be able to set a different ordering attribute and direction for each column of the Taskboard.\r\n\r\nE.g. f\u00fcr better use in a daily meeting\r\n- Sort the \"Open\" column by increasing rank (which issues should be done next)\r\n- Sort the \"In Progress\" column by \"Assignee\" (so each one tasks are shown nearby)\r\n- Sort the \"Done\" column by decreasing \"Resolved Date\" or decreasing \"Updated\" (which issues were done yesterday)",
+      "summary": "As a GH-User I want to sort the taskboard columns in different and independent ways"
+    }
+  },
+  {
+    "key": "JSWSERVER-2720",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-15T02:32:59.000+0000",
+      "created": "2010-12-08T13:16:09.000+0000",
+      "description": "From the planning board I clicked on the gear icon and chose to edit a card in JIRA.\r\n\r\nThe issue was displayed in a modal pop-up window.  However the size of the pop-up is such that the bottom end of the window is not visible on my 13\" Mac Book.  This means that I cannot dismiss the window.  The only way out of this state is to refresh the whole page.",
+      "summary": "Cannot dismiss edit pop-up on a laptop"
+    }
+  },
+  {
+    "key": "JSWSERVER-2719",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-09-20T06:13:09.000+0000",
+      "created": "2010-12-07T22:12:59.000+0000",
+      "description": "It would be useful to have the version panel having its position frozen.\r\nAlso it would bemore easy to drag a card from bottom into the right version without having to go back to the top of the screen.\r\n",
+      "summary": "Scrooling on card in Planning board should not move the version's panel"
+    }
+  },
+  {
+    "key": "JSWSERVER-2718",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-08T03:48:22.000+0000",
+      "created": "2010-12-07T22:08:46.000+0000",
+      "description": null,
+      "summary": "In Board, when a card has the focus, the background color is changed with apparently the color of the color defined by the first issue type."
+    }
+  },
+  {
+    "key": "JSWSERVER-2717",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-08-02T00:54:47.000+0000",
+      "created": "2010-12-07T11:38:59.000+0000",
+      "description": "We are currently assigning 2 or more components to most of the cards we create, and this operation is impossible on the Agile Tab. Worse, because of a bug on Chrome, this cannot be edited either in Jira view on the Agile tab. \r\nCould we selectthe components the same way as we do in JIRA 4.2?",
+      "summary": "It would be great to have the possibility to assign more than one component at cards creation (similar to JIRA 4.2)"
+    }
+  },
+  {
+    "key": "JSWSERVER-2716",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-29T07:06:07.000+0000",
+      "created": "2010-12-06T17:11:10.000+0000",
+      "description": "Taskboard is incorrectly labeling the columns once their positions have changed.  It follows the following rules:\r\n\r\n    * The columns do not follow the selected status, but simply by positioning.\r\n    * 'To Do' (red) section takes the first two columns.\r\n          o Exception: If the first column has no issues, or is empty, the entire 'To Do' section becomes the 'In Progress' section\r\n          o Exception: If the second column has no issues, this column becomes the 'In Progress' section\r\n    * 'Done (green) section is very last column.\r\n          o Exception: If the last column is empty, it becomes the 'In Progress' section.\r\n    * 'In Progress' (yellow) is all the sections between the 'To Do' and 'Done' sections, including any exceptions from them.",
+      "summary": "Taskboard is incorrectly labeling the columns once their positions have changed."
+    }
+  },
+  {
+    "key": "JSWSERVER-2713",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-06T00:50:59.000+0000",
+      "created": "2010-12-03T10:30:24.000+0000",
+      "description": "This problem only happen After:\r\n\r\n# Adding *a post function to set the remaining time = 0* as stated by [JC's comment in GHS-2696|http://jira.atlassian.com/browse/GHS-2696?focusedCommentId=218061&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-218061].\r\n# Reopen issue and close issue again to correcting the worklog (time spent).\r\n|\r\n\r\n*Steps to reproduce:*\r\n# Set post function *The Remaining Estimate of the issue will be set to 0.* for Transitions Close Issue and Resolve issue.\r\n!Transtition.PNG!\r\n# Create 2 issues (with 1 day original estimated each) and associate to version 1.\r\n!InitialSetup.PNG!\r\n# Close one ticket (STR-15) in taskboard without log work (*\"Time Spent\"*). \r\n!CloseIssue.PNG!\r\n# Chart board show normally in this state with initial idea burndown of 16 hours.\r\n!NormalChart.PNG!\r\n# Reopen issue and close issue again with setting *\"Time Spent\"* to 1 day, Chart Display wrong Starting Idea Guideline without calculating the Original Estimated time of Issue STR-15.\r\n!ChartProblem.PNG!\r\n\r\nProblem reproducible regardless of Legacy mode. \r\n\r\n",
+      "summary": "Reopen an Issue cause it's original estimate being remove from Ideal Burn Down Guideline"
+    }
+  },
+  {
+    "key": "JSWSERVER-2712",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-03T02:41:37.000+0000",
+      "created": "2010-12-02T20:17:08.000+0000",
+      "description": "Adding Cumulative Flow Chart gadget in a Confluence page through the Macro browser- shows the dialog to select _Project_ and _Version_. \r\nSelecting the project works fine, but Version drop down box is ALWAYS empty.",
+      "summary": "Cumulative Flow Chart gadget doesn't work in Confluence"
+    }
+  },
+  {
+    "key": "JSWSERVER-2711",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-06T00:10:41.000+0000",
+      "created": "2010-12-02T06:09:59.000+0000",
+      "description": null,
+      "summary": "If the ranking custom field is not  included on the default screen but is included in the resolve screen, the required javascript files are never loaded"
+    }
+  },
+  {
+    "key": "JSWSERVER-2710",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-02T22:49:59.000+0000",
+      "created": "2010-12-02T06:02:47.000+0000",
+      "description": "http://confluence.atlassian.com/display/GH/Supported+Platforms",
+      "summary": "Incorrect JIRA compatibility version on Supported Platform page"
+    }
+  },
+  {
+    "key": "JSWSERVER-2709",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-02T05:26:00.000+0000",
+      "created": "2010-12-02T01:47:39.000+0000",
+      "description": "1. Add the original estimate field to the card\r\n2. set an original estimate, e.g. 8h\r\n3. 8 hours is displayed\r\n4. edit the estimate. the text box contains \"8 hours\" instead of \"8h\"\r\n\r\n-> edit field should not contain pretty text but short text",
+      "summary": "Original estimate edit contains incorrect formatting once a value is set"
+    }
+  },
+  {
+    "key": "JSWSERVER-2708",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-02T01:25:48.000+0000",
+      "created": "2010-12-02T00:23:06.000+0000",
+      "description": null,
+      "summary": "NPE thrown from label listener when epic field is set on an issue with no existing value in the epic field."
+    }
+  },
+  {
+    "key": "JSWSERVER-2707",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-01T23:53:16.000+0000",
+      "created": "2010-12-01T12:07:24.000+0000",
+      "description": "Configuration:\r\n- put Days Remaining gadget on system dashboard\r\n- configure DR gadget to show info for \"Next release due (auto)\"\r\n- configure JIRA to allow browsing projects without logging in,\r\n- logout and go to system dashboard \r\n... Days Remaining gadget shows empty space (please see attachment)\r\n\r\nThis gadget is empty also when one selects a version (not automatic).",
+      "summary": "Days Remaining gadget shows empty space when user is not logged in"
+    }
+  },
+  {
+    "key": "JSWSERVER-2706",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-01T06:19:21.000+0000",
+      "created": "2010-12-01T05:38:18.000+0000",
+      "description": "h4. Symptom\r\nWhen there are the multiple users have a ranking on the same version concurrently, the UI may hang, and the below ConcurrentModificationException is thrown in log file\r\n{noformat}\r\njava.util.ConcurrentModificationException\r\nat java.util.TreeMap$PrivateEntryIterator.nextEntry(TreeMap.java:1100)\r\nat java.util.TreeMap$KeyIterator.next(TreeMap.java:1154)\r\nat com.pyxis.greenhopper.jira.customfields.RankingCFType.reIndexAll(RankingCFType.java:213)\r\nat com.pyxis.greenhopper.jira.customfields.RankingCFType.updateValue(RankingCFType.java:409)\r\nat com.pyxis.greenhopper.jira.customfields.RankingCFType.updateValue(RankingCFType.java:177)\r\nat com.pyxis.greenhopper.jira.actions.MultipleRankingAction.doRank(MultipleRankingAction.java:47)\r\n...\r\n{noformat}\r\n\r\nh4. Cause\r\nIt seems that in com.pyxis.greenhopper.jira.customfields.RankingCFType TreeMap is used by a static way without synchronized. \r\nWe should fix this problem, and also consider how to handle the concurrent ranking operations by a more friendly method.",
+      "summary": "Ranking does not support concurrent operations"
+    }
+  },
+  {
+    "key": "JSWSERVER-2704",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-01T12:45:48.000+0000",
+      "created": "2010-12-01T03:52:49.000+0000",
+      "description": "GH produces queries like the following when viewing the TaskBoard.jspa\r\n\r\n{noformat}\r\n JQL Query: {project = 10240} AND {fixVersion = 14978} AND ( {fixVersion is EMPTY} OR {fixVersion in unreleasedVersions(JRA)} ) AND {parent = \"JRA-19051\"} AND ( {status in (\"1\", \"10005\", \"10033\", \"4\", \"10004\")} OR {status = \"3\"} OR {status in (\"6\", \"5\")} ) AND {issuetype in subTaskIssueTypes()} order by cf ASC, key ASC\r\n{noformat}\r\n\r\nThere are a number of potential speedups here:\r\n\r\n# This query has lots of redundant clauses. When you specify {{fixVersion = 14978}} you don't need the {{fixVersion is EMPTY OR fixVersion in unreleasedVersions(JRA)}} part at all. \r\n# It is much quicker to use issues IDs as arguments to the parent clause.\r\n# ...",
+      "summary": "GH is producting inefficient queries when viewing the TaskBoard"
+    }
+  },
+  {
+    "key": "JSWSERVER-2703",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-01T12:45:38.000+0000",
+      "created": "2010-12-01T03:47:00.000+0000",
+      "description": "GH is generating queries like this:\r\n\r\n{noformat}\r\nJQL Query: {project = 10240} AND {fixVersion = 14978} AND ( {fixVersion is EMPTY} OR {fixVersion in unreleasedVersions()} ) AND {status in (\"6\", \"5\")} order by cf ASC, key ASC\r\n{noformat}\r\n\r\nThe {{unreleasedVersions()}} function is inefficient when you don't pass a project because it will return all versions across JIRA that have been unreleased. On a JIRA with a lot of unreleased versions (e.g. 600) this will slow down both query generation and the Lucene querying. Passing a project into the unreleasedVersion will significantly increase the performance of GH on instances with a large number of unreleased versions. For example: \r\n\r\n{noformat}\r\nJQL Query: {project = 10240} AND {fixVersion = 14978} AND ( {fixVersion is EMPTY} OR {fixVersion in unreleasedVersions('JRA')} ) AND {status in (\"6\", \"5\")} order by cf ASC, key ASC\r\n{noformat}\r\n\r\nNote that when you pass the project into the 'unreleasedVersions' function it much faster to pass the project KEY when compared against the project ID.\r\n",
+      "summary": "GH should always place the project key into the 'unreleasedVersion()' function when generating queries."
+    }
+  },
+  {
+    "key": "JSWSERVER-2702",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-11T01:14:26.000+0000",
+      "created": "2010-12-01T03:36:02.000+0000",
+      "description": "When viewing the task board there are 35 JQL queries run on my instance of which only 21 are unique (i.e. GH is issuing the same query multiple times). Check out [^query.txt] for all the queries that are actually run. On instances with a large number of issues, this causes a lot of pain because each search can take between 100-1000ms and as such can blow the task board loading over ~ 30seconds. Please reduce the number of queries. \r\n\r\nFor example, GH seems to be using queries to filter the sub-tasks and the parents from issues without sub-tasks. It believe it would be better to just find all the issues that GH is going to display and then filter them in memory. ",
+      "summary": "Investigate: Executes way too many queries when displaying the taskboard."
+    }
+  },
+  {
+    "key": "JSWSERVER-2701",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-02T03:10:28.000+0000",
+      "created": "2010-11-30T23:27:44.000+0000",
+      "description": "I am unable to switch correctly between project and issue. css problem?",
+      "summary": "Card view gadget configuration broken on IE7"
+    }
+  },
+  {
+    "key": "JSWSERVER-2698",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-02T00:45:30.000+0000",
+      "created": "2010-11-30T00:36:16.000+0000",
+      "description": "- Projectoverview should not be an option\n- Changing the version should change the overview content\n- Crumb should not show chart type dropdown",
+      "summary": "Release notes navigation is clunky"
+    }
+  },
+  {
+    "key": "JSWSERVER-2696",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-29T23:11:42.000+0000",
+      "created": "2010-11-29T13:11:24.000+0000",
+      "description": "Please restore the old transition screen behavior that made it easy and intuitive to close or resolve tasks on the Task Board.\r\n\r\nPreviously the Greenhopper transition screen presented the user with an option to close or resolve a task when a card was dropped in the done column. On the same screen the remaining estimate was automatically set to 0, with the ability to be changed. Also when the tranition was completed the burndown graph would automatically show the correct reduction in outstanding hours, even though the user was not required to log work on the close / resolve transition.\r\n\r\nIn version 5.3 the user is now presented with the standard Jira transition screen, which presents the following extremely annoying behaviors:\r\n 1. The user now has to log work manually to correctly update the burndown graph\r\n 2. The \"Log Work\" field is not included by default on the transition screen, so to get a working system out of the box the user have to change a standard build-in screen.\r\n 3. Due to 1. and 2. above the user frequently forgets to log work and then closes the isue. In this case to fix the burndown graph, the administrator has to filter through all the \r\n    closed issues that might have inaccurate / incomplete work log entries, reopen them, and then close them while logging the matching number of hours to reflect a correct burndown graph.\r\n 4. The remaining estimate is not automatically set to 0, so together with all of the above, renders a very tedious and cumborsome Task Board expirience.",
+      "summary": "Restore transition screen behavior"
+    }
+  },
+  {
+    "key": "JSWSERVER-2695",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-29T23:18:21.000+0000",
+      "created": "2010-11-29T08:38:50.000+0000",
+      "description": "On a system dashboard I added GH Statistics burndown chart gadget. It is configured to show story points burndown for two defined contexts. Unfortunately it is uncapable of showing proper charts for contexts, it shows \"default\" context burndown instead.\r\n\r\nConfiguration:\r\n* Custom field was introduced to specify which team is responsible for each issue. (field with simple selector: team A/ team B)\r\n* Administrator created two filters, showing issues for each of the teams respectively. (filter consists only a custom field condition)\r\n* Administrator shared those filters with all users.\r\n* Two contexts were created based on those two filters. \r\n* System dashboard was configured to show burndown chart statistics gadget (story points) for two contexts.\r\n\r\nProblem:\r\nThe \"Agile Charts\" show correct data for each context (Agile -> Chart board -> Statistics burndown chart / story points) - see attached images.\r\nThe same information showed in system dashboard gadget is incorrectly presented - see attached image.\r\n\r\nMaybe filter sharing makes charting gadget uncapable of resolving contexts propertly?\r\n",
+      "summary": "issue burndown chart gadget shows incorrect data when context selected"
+    }
+  },
+  {
+    "key": "JSWSERVER-2694",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-04-18T02:27:26.000+0000",
+      "created": "2010-11-29T05:07:15.000+0000",
+      "description": null,
+      "summary": "Handle Session Timeouts"
+    }
+  },
+  {
+    "key": "JSWSERVER-2693",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-30T03:36:32.000+0000",
+      "created": "2010-11-26T02:40:06.000+0000",
+      "description": null,
+      "summary": "Arrow of the page preview is offset when in Full Screen Mode"
+    }
+  },
+  {
+    "key": "JSWSERVER-2692",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-10-22T23:09:53.000+0000",
+      "created": "2010-11-26T00:26:12.000+0000",
+      "description": "IE7, IE8\nClick handling issue, cannot stop propagation of event to multi-select.",
+      "summary": "IE : Middle-click for sub-task link does not work"
+    }
+  },
+  {
+    "key": "JSWSERVER-2691",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-26T04:15:34.000+0000",
+      "created": "2010-11-25T19:32:58.000+0000",
+      "description": "The remaining time that shows in Greenhopper Planning Board / Chart Board in hours or days does not match the time stored in the database in seconds. \r\nPlease see the attached data / screenshots ",
+      "summary": "Remaining Time Conversion is wrong"
+    }
+  },
+  {
+    "key": "JSWSERVER-2690",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-25T11:54:25.000+0000",
+      "created": "2010-11-25T06:45:42.000+0000",
+      "description": "When I click on Agile tab, I see the following error in the javascript console:\r\n\r\n{code}\r\nNode was not found\" code: \"8\r\n[Break on this error] var GH={};GH.VERSION=\"4.0\";GH.Util={do...n(){},enable:function(){}};return D};\r\n{code}\r\n\r\nAll Agile pages got this error, so most of the javascript are broken: User preferences, clicking on the issue name, Edit in Jira...",
+      "summary": "Javascript error break most of the javascript in Greenhopper"
+    }
+  },
+  {
+    "key": "JSWSERVER-2689",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-25T05:50:53.000+0000",
+      "created": "2010-11-25T05:50:40.000+0000",
+      "description": null,
+      "summary": "Support the unmapped statuses in the CFD ~ Issues should be ignored"
+    }
+  },
+  {
+    "key": "JSWSERVER-2688",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-26T03:29:34.000+0000",
+      "created": "2010-11-25T05:11:28.000+0000",
+      "description": null,
+      "summary": "Version with no end or release date appeared as Next Release Due (Auto) in GH Days Remaining gadget"
+    }
+  },
+  {
+    "key": "JSWSERVER-2687",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-29T04:59:07.000+0000",
+      "created": "2010-11-24T05:41:00.000+0000",
+      "description": "h4. Symptom\r\nWhen accessing burndown chart for a specific version, JIRA instnace is blocked and CPU usage is maxing out.\r\n\r\nh4. Cause\r\nThrough thread dumps, I found that thread never jumped out of the below loop in com.pyxis.greenhopper.charts.GHChartUtil numberOfWorkingDays() function.\r\n{code}\r\nwhile (end.after(begin))\r\n        {\r\n            begin.add(GregorianCalendar.DAY_OF_YEAR, 1);\r\n            int day = begin.get(GregorianCalendar.DAY_OF_WEEK);\r\n            if (day > minBound && day < maxBound && !nonWorkingDates.contains(begin.getTime()))\r\n            {\r\n                days++;\r\n            }\r\n        }\r\n{code}\r\n\r\nThen go to the database, found that in GreenHopper project configuration, the version has a wrong start date setting as below\r\n{noformat}\r\n  <entry>\r\n    <string>BURNDOWN_START_DATE_10475</string>\r\n    <long>-61826266800000</long>\r\n  </entry>\r\n{noformat}\r\n\r\nh4. Workaround\r\nReset version start date in Planning Board may resolve the problem.\r\n\r\nSo far I can't find the reason that may cause BURNDOWN_START_DATE being set as a negative value. ",
+      "summary": "JIRA is blocked by burndown chart calculating (wrong BURNDOWN_START_DATE setting)"
+    }
+  },
+  {
+    "key": "JSWSERVER-2686",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-06T00:48:51.000+0000",
+      "created": "2010-11-24T03:40:22.000+0000",
+      "description": "This can be seen when releasing an issue in the task board with the ranking field as one of the selectable options.\n\nThe only issues that are selected are in the version unscheduled. This can also be seen when creating an issue in jira. No matter which version is selected, the ranking edit doesn't pick it up on the create.\n\nPreviously was a select, now it is a frother control which is a multi-select.",
+      "summary": "Ranking field fails to pick up selected version from a frother control"
+    }
+  },
+  {
+    "key": "JSWSERVER-2685",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-03-08T13:24:11.000+0000",
+      "created": "2010-11-23T20:08:53.000+0000",
+      "description": "In Planning/Task Board, when a group has a lot of projects, e.g. 30 ones, the project dropdown box will be extended out of browser range, then user has to scroll the whole page to achieve the bottom of project list, it's not so convenient. Customer requires to restrict the length of version dropdown box and show a vertical scroll bar for it (rather than the whole web page) when getting too many versions to be handled by the defined length of dropdown box.",
+      "summary": "Project Dropdown Box should have a vertical Scroll Bar"
+    }
+  },
+  {
+    "key": "JSWSERVER-2684",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-26T03:12:32.000+0000",
+      "created": "2010-11-23T17:09:42.000+0000",
+      "description": "The operations dialog fails to load actions when launched from the \"view issue\" dialog available from the planning board.  No errors or warnings appear in the logs.\r\n\r\nSteps to reproduce:\r\n\r\n# Navigate to the \"Planning Board\"\r\n# Highlight an issue using the j and k keys\r\n# Hit \"enter\" to open the \"view issue\" dialog.\r\n# From within the dialog, hit the dot key\r\n# The operations menu appears, but fails to populate with a list of actions\r\n\r\nIf you monitor the loading of the dot menu using the developer tools in Chrome, you can see that an XHR request is sent for ActionsAndOperations, and that it returns data.  It seems like the data just isn't being used correctly once it's retrieved.\r\n\r\nThe workaround for the time being is to perform the action directly on the issue using the dot key without opening the \"view issue\" dialog.",
+      "summary": "Operations menu fails to load actions when launched from the issue popup...."
+    }
+  },
+  {
+    "key": "JSWSERVER-2683",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-26T00:17:56.000+0000",
+      "created": "2010-11-23T16:26:18.000+0000",
+      "description": "Drop down list (associated with Affects Version/Fix Version/Label) displayed in wrong location in edit in JIRA IFRAME mode after scrolling in Internet Explorer.\r\n\r\nSteps to replicate:\r\n1) Click in Agile\r\n2) Click \"Edit in Jira\" at the card menu(gear icon).\r\n3) Scroll down using the mouse wheel\r\n4) Click on the drop down for Affects Version/s, Fix Version/s or Label\r\n\r\nOnly happens in IE, unable to test in Chrome due to GHS-2617.\r\n\r\nTested with Internet Explorer 8 and Chrome 7 using a (relatively) new JIRA instance.",
+      "summary": "Drop down displayed in wrong location in edit in JIRA IFRAME mode after scrolling in Internet Explorer"
+    }
+  },
+  {
+    "key": "JSWSERVER-2682",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-24T23:35:38.000+0000",
+      "created": "2010-11-23T06:50:21.000+0000",
+      "description": "List view: Menu can be opened by clicking on the cog as long as the actual card is not selected. Once selected though the cog does not appear anymore and thus can't be clicked on neither",
+      "summary": "TaskBoard/IE8: Cog menu not working when issue is selected"
+    }
+  },
+  {
+    "key": "JSWSERVER-2679",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-08-05T03:03:55.000+0000",
+      "created": "2010-11-23T04:53:15.000+0000",
+      "description": "How to reproduce:\r\n1. Go to create new issue page\r\n2. Select a rank for the issue\r\n3. Submit.\r\n\r\nAn error will be displayed as the Summary field is empty.\r\n\r\nExpected: the rank value is what was previously selected\r\nReceived: the rank value is reset to the default value\r\n\r\nThe same happens when an existing issue is edited",
+      "summary": "Change of rank field value lost when JIRA issue save fails"
+    }
+  },
+  {
+    "key": "JSWSERVER-2678",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-25T04:50:15.000+0000",
+      "created": "2010-11-22T23:40:13.000+0000",
+      "description": null,
+      "summary": "Ajaxified the dropdowns in the crumb (Board and ByBoard)"
+    }
+  },
+  {
+    "key": "JSWSERVER-2677",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-25T02:40:53.000+0000",
+      "created": "2010-11-22T23:17:21.000+0000",
+      "description": null,
+      "summary": "Releasing a version breaks the gadgets aiming at this version"
+    }
+  },
+  {
+    "key": "JSWSERVER-2674",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-02T00:18:08.000+0000",
+      "created": "2010-11-22T20:18:51.000+0000",
+      "description": "I accidentally created a task instead of a story. I changed the issue type to \"story\", and wondered why I couldn't set the epic of that story. It seems that if you convert an issue to a story, the custom field \"epic\" doesn't become available.",
+      "summary": "Changing issue type doesn't make \"epic\" custom field available"
+    }
+  },
+  {
+    "key": "JSWSERVER-2673",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:16:36.000+0000",
+      "created": "2010-11-22T10:13:06.000+0000",
+      "description": "Many times my charts aren't accurate as the scrum masters forgot to put a Story \"in progress\", while the subtasks are moved from the \"to do\" column. This is mainly caused by the fact that you cannot \"move\" a task on the board when this task has subtasks. Is there a way to automatically declare \"In Progress\" a task when one of its subtasks goes \"in progress\"?\r\nthanks for your help :)",
+      "summary": "I'd like the tasks to be automatically put \"In Progress\" when at least one subtask is put \"in Progress\""
+    }
+  },
+  {
+    "key": "JSWSERVER-2672",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-18T09:57:20.000+0000",
+      "created": "2010-11-18T09:50:56.000+0000",
+      "description": "If a user creates a context and shares it, he'll be the only one with correct datas on the Cumulative Flow Chart Gadget. Other users will be able to select the context in the droplist, but it won't have any effect on the datas. ",
+      "summary": "Greenhopper Cumulative Flow Chart gadget displays incorrect datas when shared contexts are used"
+    }
+  },
+  {
+    "key": "JSWSERVER-2671",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-24T05:01:16.000+0000",
+      "created": "2010-11-18T04:36:23.000+0000",
+      "description": "In most browsers, Resolved issues appear in the Done column of the Task Board with a line through the issue ID. Displayed in IE 8, the line does not appear. This makes it look like the issue is not really resolved. We recently upgraded to GH 5.3; this problem didn't exist in the older version.",
+      "summary": "Task Board: No line through ID for Resolved issues in IE8, GH 5.3"
+    }
+  },
+  {
+    "key": "JSWSERVER-2670",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-01T00:21:30.000+0000",
+      "created": "2010-11-17T01:42:04.000+0000",
+      "description": "- Fix issues with the Excel export, the data is incorrect and we need to provide more information about the data provided (start and end date, JQL query used) - [GHS-2634]\r\n- Document the discrepancy between GreenHopper and the JIRA Time Tracking report (burndown charts in GreenHopper are per version *and* date, not simply version) - [GHS-2396]\r\n- Logging, adding an info log level to assist the support team in identifying issues with statistics, particularly time, in GreenHopper [GHS-2669]\r\n- Transparency, reveal more data in GreenHopper and explore interactive charts for providing detail on a particular plot point on a graph\r\n- Fix the discrepancies between the task board and the statistics column [GHS-2642], [GHS-2557]",
+      "summary": "Time Tracking Confusion & Bugs"
+    }
+  },
+  {
+    "key": "JSWSERVER-2669",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-12-01T00:14:42.000+0000",
+      "created": "2010-11-17T00:12:17.000+0000",
+      "description": null,
+      "summary": "As a GH admin I would like to have a way to print out the timeline"
+    }
+  },
+  {
+    "key": "JSWSERVER-2666",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:15:59.000+0000",
+      "created": "2010-11-16T02:15:55.000+0000",
+      "description": "When using drag & drop in card view, I often find it frustrating to determine where cards will end up when I drag one card on top of another one. Sometimes it is positioned before the drop target, sometimes behind it. It does not seem to matter whether I drop onto the left or the right side of the card. It may depend on whether I'm dragging from one row to another or within a row. Trying to drop into the space between cards does nothing at all.\r\n\r\nI'd make a few suggestions:\r\n\r\n* Drop zones should be consistent. I would recommend dividing the card in two and looking at where the mouse pointer is when dropping. If it's on the left half of the card, drop before. If it's on the right half of the card, drop after.\r\n* The space between cards should be a valid drop zone.\r\n* Rather than highlighting the card that the mouse is over, I would add an indicator to the space between cards where the dropped issue will appear.\r\n* When hovering over an invalid drop zone, change the indicator to show that the card will return to the original location. Maybe change the mouse cursor style to {{no-drop}} as well (see http://www.quirksmode.org/css/cursor.html).",
+      "summary": "When reordering with drag & drop in card view, it is unclear where the dropped card will be positioned"
+    }
+  },
+  {
+    "key": "JSWSERVER-2665",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-05-28T04:40:04.000+0000",
+      "created": "2010-11-16T02:05:54.000+0000",
+      "description": "As it is, this has to be assigned manually.",
+      "summary": "Subtasks should inherit the epic/theme from their parent"
+    }
+  },
+  {
+    "key": "JSWSERVER-2664",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-16T02:09:42.000+0000",
+      "created": "2010-11-15T11:05:58.000+0000",
+      "description": "Error below will be thrown after click on \"Project Templates\" (via _Administration>GreenHopper>Project Templates_) when JIRA do not have any project created.\r\n\r\nStep to reproduce:\r\n# Setup new JIRA 4.2 and install GreenHopper 5.3.\r\n# Do not create any new project\r\n# Click at Project Templates\r\n|\r\n\r\n\r\n{noformat}\r\nAn error occurred whilst rendering this message. Please contact the administrators, and inform them of this bug. Details: ------- org.apache.velocity.exception.MethodInvocationException: Invocation of method 'getPreferences' in class com.pyxis.greenhopper.jira.actions.GlobalConfigurationAction threw exception class java.lang.NullPointerException : null at org.apache.velocity.runtime.parser.node.ASTIdentifier.execute(ASTIdentifier.java:183) at org.apache.velocity.runtime.parser.node.ASTReference.execute(ASTReference.java:175) at \r\n{noformat}\r\n\r\nGreenHopper should showing a message instead of throwing error.",
+      "summary": "Invocation of method 'getPreferences' in class after click at Project Template in GreenHopper"
+    }
+  },
+  {
+    "key": "JSWSERVER-2663",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-26T00:28:12.000+0000",
+      "created": "2010-11-14T23:22:18.000+0000",
+      "description": "It would be useful to be able to middle-click the link to a parent issue and have it open in a new tab, which is the browser's default behaviour. This currently works for regular issue links.",
+      "summary": "Links to parent issues should be middle-clickable like regular links"
+    }
+  },
+  {
+    "key": "JSWSERVER-2662",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-09-26T03:56:43.000+0000",
+      "created": "2010-11-12T04:10:54.000+0000",
+      "description": "Hi,\r\nIn the Release Board view in Agile tab, it shows the completed Sprints, story points completed so far, and also has the target (total number of story points already estimated).\r\n\r\nIt would be really nice (and the Product Owners often ask this) for a prediction on when we might complete a project.\r\n\r\nNote green-hopper has all the information, it knows the Velocity and can provide a trend line (already in the legend) but not shown, if the trend line could be extended until it reaches the total story points (in the future) this would provide a really good prediction and we could print the graph and show to all stakeholders. Future sprints could be different colour or opaque (to indicate future sprints) \r\n\r\nAs work progresses and stories added and completed, changes to the release prediction should be easily seen and decisions can be made if needed.\r\n\r\nAdditional information which could be shown: Number of expected Sprints needed to reach Total story points, Expected date, using release cycle period (calculated or averaged using release dates of sprint versions)...",
+      "summary": "Greenhopper - provide a Release plan projection"
+    }
+  },
+  {
+    "key": "JSWSERVER-2661",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-30T03:03:21.000+0000",
+      "created": "2010-11-12T18:09:34.000+0000",
+      "description": "When I change the text of the Summary field in List view, the characters displayed do not keep up with typing speed. This is problematic during sprint planning, when five people are waiting around for my typing to complete.\r\n\r\nREPRO\r\n1. Open the Planning Board in List view. (When I first encountered this bug I had about 15 cards displayed.)\r\n2. Click the pencil icon next to the Summary field for one card. \r\n3. Begin typing.\r\n\r\nRESULT\r\nDisplayed characters do not even remotely keep up with typing speed. Characters display at a rate of about 2 per second, while my typing speed is around 8 chars per second (90 wpm).\r\n\r\nI noticed there is a remaining character count that decreases as I type. If that is the culprit I wouldn't mind turning it off.\r\n  ",
+      "summary": "Editing a story's description in Planning Board list view is very slow"
+    }
+  },
+  {
+    "key": "JSWSERVER-2660",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-14T21:47:51.000+0000",
+      "created": "2010-11-12T17:11:04.000+0000",
+      "description": "It would be great to add the ability to set the background color of cards not only per issue type but for example per issue status. So the user could select by which issue field he would like to set the different background colors.\r\nPer [this guide|http://confluence.atlassian.com/display/GH/Configuring+your+Card+Styles] it is only possible to set different background colors for different issue types and not based for example on their status. This would help to  see the issues that require attention immediately based on their colors based on the required issue property (status, priority, ...).",
+      "summary": "Ability to set card style background colors not only per issue type but per issue status or priority"
+    }
+  },
+  {
+    "key": "JSWSERVER-2659",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-25T04:15:46.000+0000",
+      "created": "2010-11-12T14:53:40.000+0000",
+      "description": "We don't always use fix versions with issues (by preference).\r\n\r\nWhen using the agile gadget in 'filter mode' it would be really useful if there was an option for the burndown chart to include all issues returned by the filter (not just those with a fix version). The current behaviour is that issues with an empty fix version get excluded from the burndown. This means that the burndown chart does not give us the full picture of work still remaining as represented by the results of the filter.",
+      "summary": "Provide option to include issues without a fix version in burndown chart when a filter is specified"
+    }
+  },
+  {
+    "key": "JSWSERVER-2658",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-06T00:01:35.000+0000",
+      "created": "2010-11-11T23:16:43.000+0000",
+      "description": "GreenHopper can display items in Story Card form.  However, these cards don't make good use of screen space.  For example, if the Description field is longer than 3 lines of text, the tool will (annoyingly) truncate the text, even though the remaining space the card uses on the screen is largely blank space!\r\n\r\nGH should use all available space on the story card before truncating any displayed information.",
+      "summary": "GreenHopper:  Should be smarter about formatting story cards."
+    }
+  },
+  {
+    "key": "JSWSERVER-2657",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-29T00:05:18.000+0000",
+      "created": "2010-11-10T05:21:32.000+0000",
+      "description": null,
+      "summary": "As a GreenHopper user I would like the CFD gadget to display the selected context"
+    }
+  },
+  {
+    "key": "JSWSERVER-2656",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-15T05:34:20.000+0000",
+      "created": "2010-11-10T04:34:55.000+0000",
+      "description": "If you click the summary of an issue in the card view, it begins to edit ti.  Fair enough but click anywhere outside the live area does not cancel.\r\n\r\nIt really should.  Fairly standard behaviour I think\r\n\r\n!screenshot_43.png!",
+      "summary": "Clicking outside the inline edit field does not cancel.  Very annoying"
+    }
+  },
+  {
+    "key": "JSWSERVER-2655",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-03-13T02:39:03.000+0000",
+      "created": "2010-11-10T04:08:34.000+0000",
+      "description": null,
+      "summary": "As a GreenHopper user I would like an option to reset the remaining estimate to zero upon transition to 'done' (RHS column) on the Rapid Board"
+    }
+  },
+  {
+    "key": "JSWSERVER-2654",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-28T23:59:05.000+0000",
+      "created": "2010-11-10T04:04:41.000+0000",
+      "description": null,
+      "summary": "Incorrect screenshot for New Context - 'General' Tab http://confluence.atlassian.com/display/GH/Using+Contexts+to+Filter+and+Highlight+Issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-2653",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-05T23:57:23.000+0000",
+      "created": "2010-11-09T19:33:41.000+0000",
+      "description": "Presently, floating the mouse cursor over a taskboard item in GH produces nothing terribly useful (the word \"summary\" in a text box, e.g.).  How much nicer it would be if floating over an item caused detailed info about the item to be displayed in a floating box!  Esp. if the cards are in summary or list form, there is often a lot of info hidden away, requiring the user to open the card in JIRA to get at it.\r\n\r\nThe NetFlix web site now does something like this--floating over movie titles causes a summary box to appear.  Really a time saver.",
+      "summary": "GreenHopper: Floating over a taskboard item should produce more valueable info."
+    }
+  },
+  {
+    "key": "JSWSERVER-2652",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-29T00:43:25.000+0000",
+      "created": "2010-11-09T06:38:26.000+0000",
+      "description": "When rendering GH card gadget in Confluence, I get the following error message (see screenshot):\r\n\r\n{quote}\r\nThere are problems with the current configuration for this gadget. The errors below may have been caused by the deletion of entities required by the gadget or by changes to your permissions.\r\n\r\n* *The issue specified no longer exists*\r\n{quote}\r\n\r\nWhen I authenticate, the gadget renders correctly. It seems like when the authentication fails, JIRA provides a message suitable for an anonymous user, rather than suggesting that I might be able to log in to improve my chances of seeing the issue.\r\n\r\nThis is actually a GreenHopper gadget, so if it actually their problem, please move the issue accordingly.",
+      "summary": "Error message when gadget authentication fails is misleading: \"The issue specified no longer exists\""
+    }
+  },
+  {
+    "key": "JSWSERVER-2651",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-15T05:35:21.000+0000",
+      "created": "2010-11-09T09:44:01.000+0000",
+      "description": "Blocked issue icons disappear if you make your window size smaller",
+      "summary": "Task Board: blocked issues are missing icon when column is too narrow"
+    }
+  },
+  {
+    "key": "JSWSERVER-2650",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-15T05:38:59.000+0000",
+      "created": "2010-11-09T08:33:48.000+0000",
+      "description": "When we drag an issue from the 'Open' to 'In progress' swim lane the values of 'original Estimate' and 'Remaining Estimate' are wiped. The value change is shown in the history of the Jira afterwards.\r\n\r\nThis only happens in Greenhopper. When the same transition is done on the Jira directly this does not happen.\r\n\r\nAlso, it only happens on one particular project. Other projects do not seem to suffer from this.",
+      "summary": "\"Original Estimate\" and \"Remaining Estimate\" get blanked when moving a Jira from \"Open\" to \"In progress\""
+    }
+  },
+  {
+    "key": "JSWSERVER-2649",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-23T05:01:08.000+0000",
+      "created": "2010-11-09T06:10:49.000+0000",
+      "description": "See this dashboard (https://jdog.atlassian.com/secure/Dashboard.jspa?selectPageId=10700) where I am trying to get a burn down and CFD for the 4 streams of work going on in 4.3.  Note that the only difference between the gadgets is the context.",
+      "summary": "Multiple CFD and Statistics gadgets on the same dashboard seem to be interfering with each other."
+    }
+  },
+  {
+    "key": "JSWSERVER-2647",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-10T03:04:42.000+0000",
+      "created": "2010-11-08T22:16:23.000+0000",
+      "description": "Is it possible to add such a field, and have Burndown Charts use that value?\r\n\r\nOr is this a violation of \"how Scrum works\"?\r\n\r\nRelated to this is logging of work. Normally you log work in time units. But we would like to log work as \"story points worth of work\". Basically, we're after the same functionality for Story Points as we already have for time (Estimate, Spent, Remaining).",
+      "summary": "\"Remaining Story Points\" field for individual Stories"
+    }
+  },
+  {
+    "key": "JSWSERVER-2646",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-03-30T04:15:51.000+0000",
+      "created": "2010-11-08T21:29:06.000+0000",
+      "description": "You could create a custom JIRA filter and use that in your view context, but that's not nearly as straightforward as a Labels text box.\r\n\r\nMaybe this could be implemented by modifying the behavior of the \"Board Search\" text box, but I think I'm really looking for a separate box - either next to the \"Board Search\", or in the \"Manage View Context\" dialog's \"Filter\" tab.",
+      "summary": "During Sprint planning, I would like to be able to filter cards by label/s."
+    }
+  },
+  {
+    "key": "JSWSERVER-2645",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-08-03T07:17:26.000+0000",
+      "created": "2010-11-08T18:52:07.000+0000",
+      "description": "The print cards feature in Greenhopper 5.3 go from 2 to 6 cards in your printing and leave out the 4 cards which would be the 4x5 cards that are usually bought to do scrums on a board.",
+      "summary": "Ability to print 4 cards to a page"
+    }
+  },
+  {
+    "key": "JSWSERVER-2644",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-23T23:30:01.000+0000",
+      "created": "2010-11-08T13:58:18.000+0000",
+      "description": "When clicking on an issue to bring the popup menu the menu is hidden under other issues. This happens in Google Chrome 7.0.517.41 Linux but not in Firefox (same OS).",
+      "summary": "Popup menu for editing a task/issue is hidden under other tasks in google chrome"
+    }
+  },
+  {
+    "key": "JSWSERVER-2643",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-17T03:48:35.000+0000",
+      "created": "2010-11-08T11:15:57.000+0000",
+      "description": "1.  Main Task is created without defining original estimate. ABC-123\r\n2.  Add TWO Subtasks to the main Task and specify the original estimate - 8 hours each subtask.\r\n3.  JIRA output for the filter containing above three items  is - Original estimate of ABC-123 = 16 hours.\r\n4.  Get the GH Excel sheet using Export to excel through chart board - Original estimate of ABC-123 = 0 hours.\r\n5.  On other hand with the same scenario Original estimate of ABC-567 = 40 hours.\r\n\r\n",
+      "summary": "GH shows wrong original estimate even when there is no work clocked against main task or subtask of the main task"
+    }
+  },
+  {
+    "key": "JSWSERVER-2642",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-17T04:06:05.000+0000",
+      "created": "2010-11-08T07:47:39.000+0000",
+      "description": "In GreenHopper, the remaining estimate of version is shown in the different places, including Burndown chart, statistic column of version panel, Excel (Chart Data) download, and top sum in Task Board. In some cases, remaining estimate values shown in the different places are not consistent, which cause customer's confusion.",
+      "summary": "Version Remaining Estimate shown in GreenHopper are not consistent"
+    }
+  },
+  {
+    "key": "JSWSERVER-2641",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-15T05:44:32.000+0000",
+      "created": "2010-11-08T04:40:57.000+0000",
+      "description": null,
+      "summary": "All labels are not visible on the card view"
+    }
+  },
+  {
+    "key": "JSWSERVER-2640",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-14T23:16:32.000+0000",
+      "created": "2010-11-06T00:32:33.000+0000",
+      "description": "It would be great to have some way to emit the current GreenHopper taskboard, planning board, etc. in a way that could be processed by other tools.  Presently, all you can do is print cards, which is not terribly useful for this.\r\n\r\nI don't think anything elaborate is needed; a comma-separated-value text file would probably be fine.  (This would allow you, e.g., to import the material into Excel, etc., for additional custom processing.)\r\n\r\nI'm a little surprised GH doesn't have something like this already.\r\n\r\n*Workaround*\r\n\r\nSwitch to Planning Board where you will be on the same version, then follow the Issue Navigator link.",
+      "summary": "GreenHopper:  Would like to be able to export the current view in CSV form."
+    }
+  },
+  {
+    "key": "JSWSERVER-2639",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-06-03T05:17:34.000+0000",
+      "created": "2010-11-05T14:12:48.000+0000",
+      "description": "Sometimes in scrum, we add stories to the backlog. When we do, GH automatically switches to the Planning Board. Then when we switch back to the Task Board, it has reverted to a different sprint and we have to switch it to the current sprint. There are other actions that cause us to automatically switch out of Task Board and into Planning Board. \r\n\r\nIn general, when we are in scrum, we want to stay on the Task Board. It would be great if we had an option to say, \"Don't ever switch me out of the board I am on\".",
+      "summary": "Add an option to turn off automatic switching from Task Board to Planning Board "
+    }
+  },
+  {
+    "key": "JSWSERVER-2638",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-17T04:00:55.000+0000",
+      "created": "2010-11-05T06:05:23.000+0000",
+      "description": "h4. Symptom\r\n'Original Estimate' shown in Burndown chart may not correct for the specific date.\r\n\r\nh4. Cause\r\nWhen work is log against issue on start date of version without remaining estmate is changed with it, that issue's estimate time may not be counted into the 'Original Estimate' shown in Burndown chart, because if there is any work logging in planning session (version start date), GreenHopper tries to catch the related remaining estimate after logging work to reflect the planned estimate, but it may run out of gear when failing to find it.\r\n\r\nh4. Workaround\r\nSince this kind of work logging should be a rare scenario, adjusting version to start from the date before or after the current 'start date' may fix the burndown chart.",
+      "summary": "Original estimate of Burndown Chart can be wrong when work is logged on version start date without changing remaining estimate"
+    }
+  },
+  {
+    "key": "JSWSERVER-2637",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2010-11-16T00:48:12.000+0000",
+      "created": "2010-11-05T03:08:38.000+0000",
+      "description": "It happens to me very often that I accidentally click the \"Close\" button on the modal screen of an issue when I mean to click the \"Resolve\" button, losing my resolution comment. This is particularly easy to fall into the trap if the modal screen is not scrolled down enough to show the \"Resolve\" button.\r\n\r\nNow I have to repeatedly remind myself not to fall into the trap again whenever I work with a modal screen of GH. This makes using GH a very unpleasant experience for me.\r\n\r\nI propose to replace the \"Close\" button of modal screens with a round cross icon on the top-left or top-right of the modal screens. (The button panel can be hidden if no other buttons are left.)\r\n\r\nAlternatively, please warn the user if the \"Close\" button is clicked but the user has entered some changes on the modal screen, just like what JIRA does. ",
+      "summary": "It is easy to accidentally close a JIRA iframe and lose changes"
+    }
+  }
+]

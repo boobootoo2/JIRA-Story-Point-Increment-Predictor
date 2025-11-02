@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "JSWSERVER-14488",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:47.000+0000",
+      "created": "2013-02-12T14:33:23.000+0000",
+      "description": "I think it would be a real value-add to mark comments (in the comment tab) as having originated with Github, and extend that so that when you see such a comment and click on it, it bounces you over to the Commits tab to the actual commit.",
+      "summary": "Identify comment as originating with Github commit"
+    }
+  },
+  {
+    "key": "JSWSERVER-14487",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-02-10T06:11:11.000+0000",
+      "created": "2012-01-23T06:07:13.000+0000",
+      "description": "[com.atlassian.jira.plugins.bitbucket.spi.bitbucket.impl.BitbucketCommunicator.getChangesets(SourceControlRepository, String, int)|https://bitbucket.org/atlassian/jira-bitbucket-connector/src/ff0eab80bdbf/src/main/java/com/atlassian/jira/plugins/bitbucket/spi/bitbucket/impl/BitbucketCommunicator.java#cl-136] tries to parse HTML responses (in case of error) from the bitbucket API.\n\nThe erroneous response in our case was:\n\n{noformat}\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n<head>\n  <title>Someone kicked over the bucket, sadface &mdash; Bitbucket</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n  <link rel=\"icon\" href=\"//bitbucket.org/m/img/logo_new.png\" type=\"image/png\" />\n</head>\n<body>\n  <div style=\"width:100%; text-align:center;\">\n    <img src=\"//bitbucket.org/m/img/500.png\" width=\"798\" height=\"366\" style=\"margin:100px auto\"\n         alt=\"Oops! An error occurred. We've been notified and we'll look into the problem.\" />\n  </div>\n\n  <script>\n  BB.gaqPush(\n      ['_trackPageview'],\n      ['atl._trackPageview']\n  );\n\n  (function () {\n      var ga = document.createElement('script');\n      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n      ga.setAttribute('async', 'true');\n     document.documentElement.firstChild.appendChild(ga);\n }());\n </script>\n</body>\n</html>\n{noformat}\n\ncom.atlassian.jira.plugins.bitbucket.spi.ExtendedResponseHandler.ExtendedResponse.isSuccessful() should be checked before trying to parse the getResponseString(). That test boils down to:\n\n{code}\npublic boolean isSuccessful()\n{\n    int codeOrder = method.getStatusCode() / 100;\n    return codeOrder == 2 || codeOrder ==  3;\n}\n{code}\n\n*I don't think it's a good idea to escape here.* We've got the ChangeSet id, so we can at least link to bitbucket. We can then show that the retrieval of the ChangeSet's details failed and encourage the user to retry syncing (maybe allow him to sync/retrieve details straight from the source tab?). I'd change the return value of this method to a Map<String,Either<ResponseError,ChangeSet>> where the String is the ChangeSet id, or I'd probably split up the ChangeSet contract.\n\n",
+      "summary": "BitbucketCommunicator.getChangesets escapes while retrieving the details of a ChangeSet due to an unexpected response"
+    }
+  },
+  {
+    "key": "JSWSERVER-14486",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2016-05-07T04:37:15.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nIf a JIRA issue has multiple pull requests associated with it you should be able to set a trigger, or a validator, so that the issue can't be transitioned until all pull requests are resolved.\r\n \r\nh3. Workaround\r\n\r\nBreak up issues into smaller chunks so that each issue is only associated with 1 pull request.",
+      "summary": "JIRA Trigger for multiple pull requests"
+    }
+  },
+  {
+    "key": "JSWSERVER-14485",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-22T10:22:05.000+0000",
+      "created": "2015-01-18T23:11:48.000+0000",
+      "description": "The Development section in the JIRA issue screen show the related Commits and the Branch list but it is not possible to browse branch commits from the JIRA Issue itself.\r\n\r\nOne can click the branch and be redirected but JIRA doesn't provide an embedded browser.",
+      "summary": "As a QA reviewer I would like branches to be browsable within the JIRA issue"
+    }
+  },
+  {
+    "key": "JSWSERVER-14483",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T04:24:44.000+0000",
+      "created": "2011-05-19T02:06:47.000+0000",
+      "description": "From: https://studio.atlassian.com/wiki/display/GHC/Clarifications+from+PM\n\nSomething along the lines of \"make sure you have the correct oauth settings configured\".",
+      "summary": "When adding or force syncing a repository, error message should suggest the user to check their OAuth settings"
+    }
+  },
+  {
+    "key": "JSWSERVER-14482",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-03-13T11:37:01.000+0000",
+      "description": "Allowing the mapping between JIRA project and BitBucket repository would have the following advantage\r\n* While clicking on \"Create Branch\" in Development Panel, it will automatically suggest the repository that is linked to the project.\r\n* Remove the list of repositories that the user/team has access to but not linked to JIRA\r\n\r\nElse, we could have the communication to be a step smarter with automatically suggest repository during \"Create Branch' from the last commit to the project.",
+      "summary": "Configure Link Between a BitBucket Repository and a JIRA Project"
+    }
+  },
+  {
+    "key": "JSWSERVER-14481",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-07-11T01:17:30.000+0000",
+      "created": "2013-02-12T14:40:33.000+0000",
+      "description": "We are noticing that when we introduced Github + JIRA integration, a number of projects had people start making commits before their repositories were actually added and synchronized.\n\nOn the initial synchronization, it's our experience that only the actual commit is linked to the issue, and that #hashtag commands are ignored. After that initial sync, of course, everything works as expected.\n\nWe realize that there are performance implications; are you considering refactoring the initial sync so that it can interpret #hashtag commands, or is that just prohibitively expensive?",
+      "summary": "Improve initial sync operations to recognize #hashtag commands"
+    }
+  },
+  {
+    "key": "JSWSERVER-14480",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-07-11T03:55:55.000+0000",
+      "created": "2013-07-29T11:32:28.000+0000",
+      "description": "Sometimes issues will be moved between projects. The Commit linked to these issues will no longer be associated to the Issue, as the DVCS connector only checks if the current Issue Key is linked to a changeset.\r\n\r\nTo improve with moved issues, it should also check the {{moved_issue_key}} table (perhaps on manual resync) and link up the commits to the updated issue key.\r\n\r\nThis will preserve the full commit history, even if the issue is moved around projects for any reason.",
+      "summary": "The DVCS connector should check for Moved issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-14478",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-22T11:18:02.000+0000",
+      "created": "2014-08-11T05:45:56.000+0000",
+      "description": "Pull request synchronization was introduced from 1.4.4.0. Users who upgraded from pre-1.4.4.0 versions will not have the PR Hook configured for their existing repositories. Thus they will not received PR events from BB/GitHub.\r\n\r\nPR would still be sync-ed as part of the hourly synchronization. But this could cause a delay of seeing the update on the Development panel for up to one hour.\r\n\r\n*Workaround*: unlinking and re-linking the affected repos will install the PR Hook.\r\n\r\nLooks like this affects about an estimated of 90% of OnDemand customers, as we only pushed a version containing the PR sync feature in 1.4.15 in January 2014. So only customers who signed up after 1.4.15 was deployed will have the PR webhook setup properly.",
+      "summary": "Updates of pull requests were received with up to one hour of delay"
+    }
+  },
+  {
+    "key": "JSWSERVER-14477",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-07-20T21:49:41.000+0000",
+      "created": "2011-07-18T03:25:07.000+0000",
+      "description": "Need to make sure the BBC works in JIRA 4.4",
+      "summary": "Confirm JIRA 4.4 Compatibility"
+    }
+  },
+  {
+    "key": "JSWSERVER-14476",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-20T12:06:35.000+0000",
+      "created": "2014-05-02T12:25:58.000+0000",
+      "description": "When the synchronization finishes quickly, there is no progress shown and the sync icon does not spin.\r\n\r\nIt will be good to still have some visual indication about the sync after clicking on it, so that the user is informed about the fact that the sync has been started.",
+      "summary": "Synchronisation progress is no longer showing for soft sync"
+    }
+  },
+  {
+    "key": "JSWSERVER-14475",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-10-09T04:12:36.000+0000",
+      "created": "2015-03-10T00:35:33.000+0000",
+      "description": "When the DVCS Connector communicates with github.com, it is (I think) able to understand and respect rate limit headers.\r\n\r\nUnfortunately, Github Enterprise disables rate limiting, so it's possible for the DVCS Connector to swamp a GHE instance with many, many requests. We have measured periods in which we received 600 requests/second between our JIRA host and our Github Enterprise instance.\r\n\r\nBased on a support issue, we've set *jira.devstatus.applink.ratelimit* to 60, but we anecdotally observe that it seems to affect the rate on a per-organization basis. If there are pushes to multiple repositories in several different organizations at about the same time, the request rates will spike again.\r\n\r\nWe would like to be able to specify that our JIRA host should never exceed _N_ requests per second to our Github Enterprise instance for any reason.\r\n",
+      "summary": "Rate Limiting Connection to Github Enterprise"
+    }
+  },
+  {
+    "key": "JSWSERVER-14474",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-12-05T12:29:58.000+0000",
+      "created": "2011-05-19T21:58:50.000+0000",
+      "description": "Issue cloned from https://studio.atlassian.com/browse/GHC-18\n\nFrom: https://studio.atlassian.com/wiki/display/GHC/Clarifications+from+PM\n\nRecommendation: \"No commits/changesets found on repository\".",
+      "summary": "Show message when syncing a repo that does not have any commits yet"
+    }
+  },
+  {
+    "key": "JSWSERVER-14473",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-06-23T04:17:27.000+0000",
+      "created": "2014-05-28T09:30:09.000+0000",
+      "description": "Currently, create branch is only possible for Bitbucket and Stash integration with JIRA but not Github.",
+      "summary": "Implement 'Create Branch' feature in DVCS connector plugin for Github integration"
+    }
+  },
+  {
+    "key": "JSWSERVER-14472",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-27T00:04:08.000+0000",
+      "created": "2011-05-19T21:58:46.000+0000",
+      "description": "Issue cloned from https://studio.atlassian.com/browse/GHC-27\n\nRelated to https://studio.atlassian.com/browse/GHC-26\n\n\nSyncing to \"https://github.com/grails/grails/master\" takes > 6 minutes on my clean unicorn instance. All this time the only indication that I got that something was happening was the browser spinning icon on the tab. We should show that some progress is being made, some options:\n- \"processing X out of Y commits\" that updates as we page through the commit pages.\n- \"Processing X total commits, this may take several minutes\", an option that does not involve updating the UI.\n",
+      "summary": "Show some form of feedback while repository is syncing."
+    }
+  },
+  {
+    "key": "JSWSERVER-14471",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-11-30T06:23:56.000+0000",
+      "created": "2014-09-15T15:03:17.000+0000",
+      "description": "*Steps to reproduce*:\r\n# integrate JIRA with Bitbucket via DVCS plugin\r\n# add smart commit in Bitbucket with multi-line. Eg:\r\n{code}\r\nTEST-1 #comment will need review\r\n#time 1h need more write up \r\n#start-progress\r\n{code}\r\n# synchronize JIRA with the repository\r\n# (Limitation) in JIRA issue, only comment will be added to the issue. The issue will not have log time or transited to a different status.\r\n\r\n\r\nTo be clear, smart commits in single line will trigger all action. ",
+      "summary": "Multi-line Smart Commit should trigger action in JIRA"
+    }
+  },
+  {
+    "key": "JSWSERVER-14470",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T04:35:28.000+0000",
+      "created": "2011-05-31T02:49:07.000+0000",
+      "description": "Assigning to PM for feedback.\n\nCurrent implementation bi-passes GitHub's permissions. Only the person linking the repository to a project needs to have permissions for the private repo, once this is done any person that can view JIRA issues can view github's private commits.",
+      "summary": "User viewing commits for an issue should be asked to authenticate with github if the repository is private"
+    }
+  },
+  {
+    "key": "JSWSERVER-14469",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-06-19T05:29:06.000+0000",
+      "created": "2014-01-30T08:33:08.000+0000",
+      "description": "It appears that the DVCS connector is polling for new commits once an hour:\r\n!dvcs~.png!\r\nThis is far too long an interval (perhaps chosen to avoid DDOS'ing bitbucket?), and is leading developers to think the integration is broken. We use a local Github Enterprise, and would like to reduce the interval.\r\n\r\nPlease add a setting for this in the DVCS config page.\r\n\r\n\r\n--- \r\nAs for workarounds, editing the service through the web UI doesn't work (JRA-36774), and editing the service interval in the database and restarting doesn't work either, as something resets the interval to 60 minutes on start.",
+      "summary": "Allow configurable refresh times for commit checks"
+    }
+  },
+  {
+    "key": "JSWSERVER-14468",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-15T13:13:57.000+0000",
+      "created": "2013-09-25T00:51:16.000+0000",
+      "description": "Currently the DVCS Connector shows commits from oldest at the top to newest at the bottom. It would be nice to be able to flip that around to newest at the top.",
+      "summary": "Add ability to change commit order to newest first"
+    }
+  },
+  {
+    "key": "JSWSERVER-14467",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T04:24:34.000+0000",
+      "created": "2011-05-19T02:00:16.000+0000",
+      "description": "From: https://studio.atlassian.com/wiki/display/GHC/Clarifications+from+PM\n\nRecommendation: \"No commits/changesets found on repository\".",
+      "summary": "Show message when syncing a repo that does not have any commits yet"
+    }
+  },
+  {
+    "key": "JSWSERVER-14466",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-22T10:21:54.000+0000",
+      "created": "2014-12-19T02:26:09.000+0000",
+      "description": "We use JIRA with Bitbucket's pull request process and the DVCS auto-transition of issues (in our JIRA workflow from In Progress -> Review when a PR is opened) generally works very well for us.\r\n\r\nHowever we have occasions where we will keep a feature under development on its own feature branch, separate from master and/or one of our release branches for a significant amount of time.  In order to keep these feature branches \"fresh\", we occasionally will do a pull request *from* the master branch into the feature branch.  In these cases we have sometimes observed that the DVCS auto-transition incorrectly transitions \"in progress\" issues that were noted in commits on *master* (and that we're previously merged in via PR, but still have additional work or merges in order to complete, hence they are still \"in progress\") to review, as well as any issue keys for commits on the feature branch, including from merge commits from master.\r\n\r\nAt the very least, it would be nice if in this scenario, the issue keys in the merge commits were ignored rather than auto transitioning all issues as it has caused some confusion among our developers.\r\n\r\nSome more specifics on what we observed can be found in [this service desk case|https://support.atlassian.com/servicedesk/customer/portal/23/JST-117861]\r\n\r\nPlease let me know if you have any questions or need more clarification about what we're looking for.\r\n\r\nThanks!",
+      "summary": "DVCS issue transition improvements for pull requests that merge from master into a feature branch"
+    }
+  },
+  {
+    "key": "JSWSERVER-14465",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T06:59:54.000+0000",
+      "created": "2011-10-17T22:22:00.000+0000",
+      "description": "Indexing a repository with more than 9 pages takes an extremely long time to process and brings JIRA Studio to it's knees.  Possibly related to GHC-105.",
+      "summary": "Improve 'Force Sync' synchronization of large repositories"
+    }
+  },
+  {
+    "key": "JSWSERVER-14464",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-05-06T13:51:10.000+0000",
+      "created": "2013-02-22T00:38:51.000+0000",
+      "description": "When adding a new user in JIRA, the DVCS connector is configured to add users to the Developers group of a new OnDemand Bitbucket team by default. This behavior is confusing and causes uses concern over the security of the add-on. Please default to not adding any users to Bitbucket groups without ample explanation that this will happen.\r\n\r\nh3. How to change the default\r\nhttps://confluence.atlassian.com/display/BITBUCKET/Configure+Automatic+Team+Invites\r\n\r\nThe link above shows you have to change the default.",
+      "summary": "Disable adding users to Bitbucket teams by default."
+    }
+  },
+  {
+    "key": "JSWSERVER-14463",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-27T10:25:00.000+0000",
+      "created": "2015-06-26T00:29:01.000+0000",
+      "description": "Bitbucket linkers that have been manually setup for a JIRA instance are overridden / removed when the DVCS synchronisation process runs and are replaced with a regex that matches issue keys that are associated with commits in the repository.\r\n\r\nThe reasoning behind the current functionality is that creating a linker for a project in JIRA that either does not exist or has no commits will result in the linker url in Bitbucket not resolving to a valid JIRA page.\r\n\r\nManual linker configuration for that same JIRA instance may still be useful however as you could change it to say resolve to an agile board or release based on a different regex. Or you may want a custom project link.",
+      "summary": "Allow manual configuration of linkers"
+    }
+  },
+  {
+    "key": "JSWSERVER-14462",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T12:22:54.000+0000",
+      "created": "2013-05-28T00:26:12.000+0000",
+      "description": "When attempting to Sync a GitHub respository with the DVCS connector the following stacktrace was seen:\r\n{noformat}\r\ncom.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'MESSAGE' at row 1\r\ncom.atlassian.activeobjects.internal.ActiveObjectsSqlException: There was a SQL exception thrown by the Active Objects library:\r\nDatabase:\r\n\t- name:MySQL\r\n\t- version:5.5.29-0ubuntu1\r\n\t- minor version:5\r\n\t- major version:5\r\nDriver:\r\n\t- name:MySQL Connector Java\r\n\t- version:mysql-connector-java-5.1.25 ( Revision: ${bzr.revision-id} )\r\n\r\ncom.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'MESSAGE' at row 1\r\n\tat com.atlassian.activeobjects.internal.EntityManagedActiveObjects.create(EntityManagedActiveObjects.java:105)\r\n\tat com.atlassian.activeobjects.osgi.DelegatingActiveObjects.create(DelegatingActiveObjects.java:61)\r\n...\r\nCaused by: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'MESSAGE' at row 1\r\n\tat com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4185)\r\n\tat com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4119)\r\n\tat com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2570)\r\n\tat com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2731)\r\n\tat com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2815)\r\n\tat com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)\r\n\tat com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2458)\r\n\tat com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2375)\r\n\tat com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2359)\r\n\tat org.apache.commons.dbcp.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:105)\r\n{noformat}\r\n* Strict Mode did not do anything as well.  \r\n* Ultimately changing the datatype to 'LONGTEXT' solved this issue. \r\n\r\n\r\n{panel:title=Workaround| borderStyle=dashed| borderColor=#3C78B5| titleBGColor=#a7c4e2 | bgColor=#E7F4FA}\r\nThe problem here was that the length of the message in the repository was beyond what the datatype \"text\" could receive (64k), so making this bigger solved the issue.\r\n{code}\r\nALTER TABLE 'AO_E8B6CC_CHANGESET_MAPPING' MODIFY MESSAGE LONGTEXT;\r\n{code}\r\n\r\n\r\n{panel}\r\n\r\nCan we make this error more descriptive or possibly output the value that is too long in the logs, or even the frontend for the customer to easily understand?",
+      "summary": "Data Truncation Error Should be More Descriptive"
+    }
+  },
+  {
+    "key": "JSWSERVER-14461",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-05-04T23:12:57.000+0000",
+      "description": "Format could be something like:\r\n\r\n<issue_key> #create <description>\r\n\r\nNote that only the project key would be meaningful in <issue_key> and any issue number would be ignored. So,\r\n\r\nABC-123 #create This is a new issue.\r\n\r\nWould result in a new issue in Project ABC with a description of \"This is a new issue.\" The \"123\" is ignored.",
+      "summary": "Add a \"create\" smart commit message that would create an issue from a commit message."
+    }
+  },
+  {
+    "key": "JSWSERVER-14460",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-27T20:13:14.000+0000",
+      "created": "2015-08-13T23:29:38.000+0000",
+      "description": "The \",\" acts like a delimiter in the smart commit message parser so the only thing being processed in a message such as \"code-review-completed,-released-to-qa\", is \"code-review-completed\", and if there are two workflow statuses with that prefix, then the smart commit fails.\r\n\r\nIt seems that the DVCS smart commit parser uses commas as a delimiter so that you can do things like: \"TEST-1 #in-progress, TEST-2 #done\".\r\n\r\nCan we remove commas as delimiters, and find another way to chain smart commit messages -  maybe a different delimiter that isn't valid in a status could be chosen?",
+      "summary": "Remove recognition of commas (,) as a delimiter in smart commit messages."
+    }
+  },
+  {
+    "key": "JSWSERVER-14459",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-07-17T11:14:35.000+0000",
+      "created": "2011-05-20T05:41:23.000+0000",
+      "description": "GitHubCommitsTabPanel.java (Line 230)\n\nUsually a project has a number of steady committers, however, right now as we are iterating through each commit, we make a new request to github to fetch the user's details. Caching the user details should help in this case to decrease the number of IO calls.\n",
+      "summary": "Cache the user details while iterating over commits"
+    }
+  },
+  {
+    "key": "JSWSERVER-14458",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-10-27T06:46:32.000+0000",
+      "created": "2011-06-22T22:52:16.000+0000",
+      "description": "Suggestion from the support team. If a repo failed to sync (ie. does not exist, communication went down, bad user/pass) it should indicate its state on the repo page.",
+      "summary": "Add a visual indication that a repo failed to sync on the table."
+    }
+  },
+  {
+    "key": "JSWSERVER-14457",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T04:22:43.000+0000",
+      "created": "2011-09-21T23:31:47.000+0000",
+      "description": null,
+      "summary": "Replace property set storage with Active Objects"
+    }
+  },
+  {
+    "key": "JSWSERVER-14456",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:03:10.000+0000",
+      "created": "2013-02-12T14:35:17.000+0000",
+      "description": "Some of our repos are empty, and the \"last commit\" line shows up as a blank space. From an admin perspective, it'd be desirable to have those repos marked as \"Empty\" or something similar, to differentiate \"repos that have stuff in them that aren't working\" from \"sync'd repos\" from \"repos that are actually empty\".",
+      "summary": "Indicate empty repos in synchronization display"
+    }
+  },
+  {
+    "key": "JSWSERVER-14455",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-04-17T14:54:49.000+0000",
+      "description": "Jira automatically creates post-commit webhooks in GitHub.com when linking a repository via the DVCS connector.  These use a url similar to:\r\n\r\n{code}\r\nhttp://jira.example.com/rest/bitbucket/1.0/repository/5/sync\r\n{code}\r\n\r\nOur Jira runs behind our firewall, so the default Jira URL is inaccessible from GitHub.com.  We can set up a reverse proxy at another URL (restricted to GitHub's IP addresses) that proxies sync requests to our internal Jira.  However, linking new repositories is a manual process:\r\n\r\n1. Link repository in Jira\r\n2. Manually change the two auto-created GitHub webhooks to use our reverse proxy.\r\n\r\nIt would be great if DVCS had a \"reverse proxy endpoint\" option that would allow customizing the base url for the post-commit hook.  That way, instead of adding hooks for {code}http://jira.example.com/rest/bitbucket/1.0/repository/5/sync{code} it would add hooks for {code}http://gh-jira-proxy.example.com/githubsync/rest/bitbucket/1.0./repository/5/sync{code}\r\n\r\nFor comparison, the GitHub Jenkins plugin does something similar: https://wiki.jenkins-ci.org/display/JENKINS/GitHub+Plugin#GitHubPlugin-Jenkinsinsideafirewall",
+      "summary": "Allow specifying reverse proxy for auto-linked GitHub post-commit hooks"
+    }
+  },
+  {
+    "key": "JSWSERVER-14454",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:44.000+0000",
+      "created": "2013-02-12T14:37:32.000+0000",
+      "description": "From an admin perspective, it'd be nice to be able to collapse or expand the repositories list on the DVCS account page. With large repos, it can get a bit scrolly.\n\nThis would also make it easier to vet the list of organizations/repos to make sure all of the appropriate ones have been added.",
+      "summary": "Collapse or expand feature on DVCS account admin page"
+    }
+  },
+  {
+    "key": "JSWSERVER-14453",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-10-23T21:12:28.000+0000",
+      "description": "In Jira 6.1 creating branches from Jira was added which now provides a structured naming convention to branches. I would like to be able to leave out the issue key from commits and still have the commits show in Jira. While you may not want this to be the default behavior it would be nice if it was an option.",
+      "summary": "Branch name containing issue key should recognize commits without inserting key in the commit message"
+    }
+  },
+  {
+    "key": "JSWSERVER-14452",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T06:36:57.000+0000",
+      "created": "2011-07-05T16:36:00.000+0000",
+      "description": "GitHub allows users to run their own private copy of GitHub on your own server under you own company.com URL.\n\nIf we try to add a repository from such an installation using GitHub-Studio integration you just released I get \"Please supply a valid GitHub repository URL.\" error message.",
+      "summary": "Support GitHub:FI"
+    }
+  },
+  {
+    "key": "JSWSERVER-14451",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-11-09T08:07:35.000+0000",
+      "created": "2012-09-26T18:28:36.000+0000",
+      "description": "When attempting to connect to a Bitbucket or GitHub user, organization or team account where you do not have administrator permissions on a repository, you get the following message:\n\n{noformat}\nUnable to link selected repository. Do you have administrator permissions?\n{noformat}\n\nThis is confusing and could lead one to believe that they don't have JIRA permissions. The copy should probably read:\n{noformat}\nUnable to link selected repository. Do you have administrator permissions on the {GitHub|Bitbucket} repository you are attempting to sync?\n{noformat}",
+      "summary": "Change permissions message to be more clear"
+    }
+  },
+  {
+    "key": "JSWSERVER-14450",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-05-16T01:10:32.000+0000",
+      "created": "2014-04-22T04:35:58.000+0000",
+      "description": "When Testers and Release Managers are reviewing issues on JIRA, they often make use of the \"Development\" information provided by the DVCS connector to BitBucket to assess where in the life-cycle a particular issue is.\r\n!Development_Commit.jpg!\r\nHaving the ability to see, at a glance, which Branch a given commit originated from, and a status of that Branch (e.g. is it still open, was it merged with dwefault since the commit, is it closed?) would greatly help them to understand the lifecycle of a commit and the state of default/mainline without having to refer to developers.",
+      "summary": "Commit Pop-Up to list Branch Name and Status"
+    }
+  },
+  {
+    "key": "JSWSERVER-14449",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-20T12:07:46.000+0000",
+      "created": "2014-04-28T16:46:25.000+0000",
+      "description": "The DVCS connector works well connecting to code repos, but doesn't seem to support connecting to other types of GitHub data that is backed by a git repo, such as the wiki associated with the repo, which has a different clone URL. For instance, the repo's wiki is:\r\n\r\n  git@github:org/admin.wiki.git\r\n\r\nwhile the repo's code is:\r\n\r\n  git@github:org/admin.git",
+      "summary": "Link JIRA to GitHub wiki repo"
+    }
+  },
+  {
+    "key": "JSWSERVER-14448",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-06-06T01:33:55.000+0000",
+      "created": "2013-02-11T16:21:35.000+0000",
+      "description": "Now that you've given us the ability to link Github Enterprise into JIRA, we are of course full of exciting suggestions!\n\nThe top of the list from my users is a reverse linking of JIRA issues to Github Enterprise commits; that is, the same kind of commit-to-issue link that's happening in JIRA, only on the other end.\n\nThis may not be so much a pony as a full-blown horse farm, but it can't hurt to ask. I imagine it would have to involve some sort of trusted-application setup between GHE and JIRA, but it seems like it should be possible.",
+      "summary": "Reverse linking of JIRA issues within Github Enterprise"
+    }
+  },
+  {
+    "key": "JSWSERVER-14447",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-07-17T11:20:10.000+0000",
+      "created": "2012-05-14T20:50:48.000+0000",
+      "description": "With very large repositories, GitHub may return a 502 (Server Overloaded) while performing the first synchronization. When this occurs, there should be a way to retry from the last point reached in the synchronization.",
+      "summary": "When failing, add the ability to retry from the failing point"
+    }
+  },
+  {
+    "key": "JSWSERVER-14446",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-04-02T00:33:23.000+0000",
+      "created": "2011-05-26T21:43:29.000+0000",
+      "description": "If a user adds multiple repositories for the same project, commits from both repositories may target the same issue. In this case, there is nothing in the commit entry UI that shows from which repository the commit came from.",
+      "summary": "GitHub commit panel: Include from what repo the commit came from"
+    }
+  },
+  {
+    "key": "JSWSERVER-14445",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-06-19T00:23:01.000+0000",
+      "created": "2011-05-27T05:49:30.000+0000",
+      "description": "I other parts of JIRA the pencil icon is used to turn current page/section into edit mode.\n\nExamples:\n- HAUP edit user's application access\n- JIRA issue edit labels\n- JIRA issue edit comment",
+      "summary": " \"Pencil\" give visual indication that clicking will turn current screen to edit mode, when in fact will product navigation to another screen"
+    }
+  },
+  {
+    "key": "JSWSERVER-14444",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2019-08-08T12:28:10.000+0000",
+      "created": "2016-03-21T14:50:35.000+0000",
+      "description": "Hello, \r\n\r\nMy team is using the cloud versions of JIRA and Bitbucket. I routinely use the `#time` Smart Commit command, but there does not appear to be any way to modify the time remaining to 0.\r\n\r\nOptimally, \"PROJ-123 blah blah #done #time 30m\" would set time remaining to 0 on account of having transitioned to Done, but it would suffice (and be more generally useful) to be able to do something like \"PROJ-345 not quite done #time 1h #remaining 3m\".\r\n\r\nThanks!",
+      "summary": "JIRA Smart Commits: #remaining"
+    }
+  },
+  {
+    "key": "JSWSERVER-14443",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-09-11T06:22:15.000+0000",
+      "created": "2015-09-04T09:54:58.000+0000",
+      "description": "Increase DVCS connector limit on fetching commits into JIRA issues. Currently, it is set to 401 commits which is blocking JIRA users from getting the information.",
+      "summary": "Increase DVCS connector limit on fetching commits into JIRA issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-14442",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-10-27T05:55:56.000+0000",
+      "created": "2011-09-28T23:26:33.000+0000",
+      "description": "Bitbucket has Git support now.  Update the plugin to support both Hg and Git BB repos.",
+      "summary": "Support Git Repositories in Bitbucket"
+    }
+  },
+  {
+    "key": "JSWSERVER-14441",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-20T12:07:51.000+0000",
+      "created": "2014-05-17T14:44:38.000+0000",
+      "description": "Currently, when there is a sync error in the DVCS Connector on OnDemand, an error message like \"Error during sync. See server logs.\" is shown on the \"DVCS Accounts\" page. However, this message is useless as OD users do not have access to the log.\r\n\r\nWe should provide more meaningful error messages and helpful instructions about how to handle the error. If the errors are transient, inform the users to wait or retry later. If the errors are permanent, inform the users to contact support.",
+      "summary": "Provide more meaningful messaging when errors occur on OD"
+    }
+  },
+  {
+    "key": "JSWSERVER-14440",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-09-05T01:21:48.000+0000",
+      "created": "2012-10-10T07:08:47.000+0000",
+      "description": "e.g. marke JIRA version as released, ...",
+      "summary": "Plugin could detect maven releases in commits and execute appropriate actions in JIRA"
+    }
+  },
+  {
+    "key": "JSWSERVER-14439",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-26T20:28:16.000+0000",
+      "created": "2013-02-25T20:45:04.000+0000",
+      "description": "How soon will version 1.3 of JIRA DVCS Connector be released?\r\n\r\nIn the next week or two, our company is doing a big push to move our code into GitHub Enterprise. The support for GitHub Enterprise was only added recently and it seems like it's only available in the milestone releases so far (DCON-172).\r\n\r\nWe don't install milestone releases of JIRA plugins, so we would like to know the timeline of when 1.3 will be released so we know how it'll impact us.",
+      "summary": "Release Date For Version 1.3"
+    }
+  },
+  {
+    "key": "JSWSERVER-14438",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-11-11T03:19:59.000+0000",
+      "created": "2011-10-27T07:14:41.000+0000",
+      "description": "Both plugins do almost the same. It will be easier to develop if they are shared. It will be easier for users to have only one configuration screen to manage repositories.",
+      "summary": "Merge jira-github-connector plugin into jira-bitbucket-connector plugin"
+    }
+  },
+  {
+    "key": "JSWSERVER-14437",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2016-07-11T04:07:48.000+0000",
+      "created": "2013-02-19T00:02:40.000+0000",
+      "description": "See https://extranet.atlassian.com/display/JIRADEV/Plugin+communication+for+6.0+Breaking+Changes\r\n\r\nPlease read https://developer.atlassian.com/display/JIRADEV/Preparing+for+JIRA+6.0 for more details.\r\n\r\nhttps://extranet.atlassian.com/display/JIRADEV/2013/02/19/JIRA+6.0+-+The+road+to+getting+Breaking+Changes+to+OnDemand+is+ever+winding\r\n\r\nStart with JIRA 6.0-m7",
+      "summary": "Ensure compatibility with JIRA 6.0 breaking changes"
+    }
+  },
+  {
+    "key": "JSWSERVER-14436",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-12-05T12:38:05.000+0000",
+      "created": "2011-05-31T04:13:40.000+0000",
+      "description": "This is a studio coding standard. For more information, please contact [~jwilson]",
+      "summary": "Move CSS style to a stylesheet instead of inline"
+    }
+  },
+  {
+    "key": "JSWSERVER-14435",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-11-11T03:20:00.000+0000",
+      "created": "2011-10-29T17:12:04.000+0000",
+      "description": "Before repository is added check that it is valid and accessible.",
+      "summary": "Check the validity of the repository as its added"
+    }
+  },
+  {
+    "key": "JSWSERVER-14434",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2016-07-11T04:16:05.000+0000",
+      "created": "2013-02-05T23:02:30.000+0000",
+      "description": "A user requested the ability to create links to repos via an API. We did not have the API for this plugin documented anywhere. Thus I can not know if this is possible or not. Nor can the user reasonably develop against the API. We should publish a document on this topic, even if it just says \"the API is in flux and should not be used\" or something along those lines.\n\nThis includes in API docs which would be picked up by the REST API browser in the Developer Toolbox Plugin.",
+      "summary": "Document the REST API"
+    }
+  },
+  {
+    "key": "JSWSERVER-14432",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-02-21T13:12:31.000+0000",
+      "created": "2014-02-20T16:07:04.000+0000",
+      "description": "It seem user having an issue where hitting this blocker bug ticket: [DCON-348|https://jira.atlassian.com/browse/DCON-348] because JIRA 6.1.7 still using DVCS v1.4.2.12. This problem could cause user always need to manually update the DVCS plugin to v1.4.3 .",
+      "summary": "Update DVCS plugin to the latest version when JIRA is in latest version."
+    }
+  },
+  {
+    "key": "JSWSERVER-14431",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-26T07:04:09.000+0000",
+      "created": "2011-05-19T21:58:50.000+0000",
+      "description": "Issue cloned from https://studio.atlassian.com/browse/GHC-17\n\n",
+      "summary": "Add an operation to display the Post-Recieve hook once a repo has been added."
+    }
+  },
+  {
+    "key": "JSWSERVER-14430",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-05-27T00:10:30.000+0000",
+      "created": "2011-05-19T21:58:49.000+0000",
+      "description": "Issue cloned from https://studio.atlassian.com/browse/GHC-21\n\nThe assumption is that this is what the users would have intended most of the times.",
+      "summary": "If it is missing, append \"default\" when adding repo url when adding a bitbucket repository"
+    }
+  },
+  {
+    "key": "JSWSERVER-14428",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2016-07-11T04:49:55.000+0000",
+      "created": "2016-05-30T15:29:18.000+0000",
+      "description": "The current documentation on linking Bitbucket with JIRA is using old screen shots of Bitbucket, thus, confusing users who read them:\r\n* https://confluence.atlassian.com/adminjiracloud/getting-started-with-bitbucket-and-jira-cloud-776830280.html\r\n* https://confluence.atlassian.com/display/BITBUCKET/Processing+JIRA+Software+issues+with+Smart+Commit+messages\r\n\r\nPlease update the documentation to reflect the changes in Bitbucket & JIRA Cloud UI.",
+      "summary": "Update documentation for linking Bitbucket and JIRA Cloud"
+    }
+  },
+  {
+    "key": "JSWSERVER-14427",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-11-10T23:10:19.000+0000",
+      "created": "2011-11-10T08:13:26.000+0000",
+      "description": "We need to communicate with github through HTTPS. Github.com server uses SSL certificate which was provided by DigiCert High Assurance EV Root CA and certificate from this CA is not in trusted keystore in JDK. Therefore connection to github API throws SSLHandshakeException. \nWe have two kinds of possible solutions: \n\nFirst-one is to download DigiCert certificate and import it to trusted keystore manualy with keytool utility on every instance where plugin is used. Is that feasable in Studio?\n\nSecond-one is to do it by silent way programmatically. But this way may not be very secure as we will just blindly accept any certificate that we get.\n\t\nFor now the certificate have to be imported manually.",
+      "summary": "Import public DigiCert High Assurance EV Root CA certificate to cacerts  "
+    }
+  },
+  {
+    "key": "JSWSERVER-14426",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T06:30:13.000+0000",
+      "created": "2011-05-31T04:14:02.000+0000",
+      "description": "Issue cloned from https://jira.atlassian.com/browse/DCON-35\n\nThis is a studio coding standard. For more information, please contact [~jwilson]",
+      "summary": "Move CSS style to a stylesheet instead of inline"
+    }
+  },
+  {
+    "key": "JSWSERVER-14424",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-20T12:14:21.000+0000",
+      "created": "2014-09-17T12:02:24.000+0000",
+      "description": "\r\nHow to connect own Mercurial server and own JIRA server?\r\nvia DVCS?\r\n\r\nJIRA 6.1.7\r\n",
+      "summary": "How to connect own Mercurial server and own JIRA server via DVCS?"
+    }
+  },
+  {
+    "key": "JSWSERVER-14423",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-11-11T03:19:59.000+0000",
+      "created": "2011-11-10T18:50:35.000+0000",
+      "description": "When adding new repository check that it doesn't already exists.",
+      "summary": "Prevent adding duplicate repositories"
+    }
+  },
+  {
+    "key": "JSWSERVER-14422",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-10-27T07:17:13.000+0000",
+      "created": "2011-07-12T23:45:59.000+0000",
+      "description": "There is a lot of shared design between the BBC and the GHC, we should restructure the BBC to allow for them to share implementation where it makes sense.",
+      "summary": "Restructure source modules to allow sharing between the BBC and the GHC"
+    }
+  },
+  {
+    "key": "JSWSERVER-14421",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-02-10T14:42:25.000+0000",
+      "created": "2011-09-11T23:06:37.000+0000",
+      "description": "A customer has come to me with this change documentation request as this could have saved him. The link to the support ticket is [here|https://support.atlassian.com/browse/JSP-89041]\n\n\n*He says:*\n\nAlthough I have system admin rights, the BitBucket tab would not appear unless I was a member of a project Role that had View Versions rights.\n\nThis is clear in hindsight but not obvious. I suggest that the documentation be updated, I re-traced my steps and I would have seen it quite quickly if noted on this page:\n\nhttps://studio.atlassian.com/wiki/display/BBC/Viewing+Bitbucket+Commits+related+to+a+JIRA+Issue\n\nI suggest adding a \"Note\" panel after this existing sentence:\n\nNavigate to an issue in a JIRA project that is linked to a\nBitbucket repository. If there are commits that have the\nJIRA issue key mentioned in the commit message, it will\nshow in the Bitbucket tab of the issue.\n\ne.g. add something like this:\n\nNote: The BitBucket tab will only be displayed in the Activity\nsection for users that have the View Version Control permission.\nSee Managing Project Permissions (with link).\nThanks, this issue should probably be changed now to a documentation fix.",
+      "summary": "Please add note to doco"
+    }
+  },
+  {
+    "key": "JSWSERVER-14420",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-08-29T04:53:18.000+0000",
+      "created": "2011-08-29T04:16:23.000+0000",
+      "description": "According to PAC this plugin uses the 'old' Plugin, however the plugin has been developed for Plugin 2 framework support.\n\n!bbc.png!\n\nWe have had just a support request caused by this problem. \n{noformat}\n********************************************************************************************************************************************************************************************************\n\nThe following plugins failed to load:\nBitbucket Connector: OSGi plugins cannot be deployed via the classpath, which is usually WEB-INF/lib.\n URL is: jar:file:/C:/Program%20Files/Atlassian/JIRA/atlassian-jira/WEB-INF/lib/jira-bitbucket-connector-plugin-0.4.jar!/atlassian-plugin.xml\n\n********************************************************************************************************************************************************************************************************\n\n{noformat}\n\nFor ref the following error is returned in the log file:\n{noformat}\n2011-08-26 17:33:33,765 http-8080-1 ERROR admin 1053x151x1 1868jqz 127.0.0.1 /secure/admin/ConfigureBitbucketRepositories!default.jspa [webwork] Error instantiating 'com.atlassian.jira.plugins.bitbucket.webwork.ConfigureBitbucketRepositories': com.atlassian.jira.plugins.bitbucket.webwork.ConfigureBitbucketRepositories doesn't have any satisfiable constructors. Unsatisfiable dependencies: [[interface com.atlassian.sal.api.pluginsettings.PluginSettingsFactory]]\n\norg.picocontainer.defaults.UnsatisfiableDependenciesException: com.atlassian.jira.plugins.bitbucket.webwork.ConfigureBitbucketRepositories doesn't have any satisfiable constructors. Unsatisfiable dependencies: [[interface com.atlassian.sal.api.pluginsettings.PluginSettingsFactory]]\n\n\tat org.picocontainer.defaults.ConstructorInjectionComponentAdapter.getGreediestSatisifableConstructor(ConstructorInjectionComponentAdapter.java:138)\n\n\tat org.picocontainer.defaults.ConstructorInjectionComponentAdapter.instantiateComponent(ConstructorInjectionComponentAdapter.java:193)\n\n\tat org.picocontainer.defaults.InstantiatingComponentAdapter.getComponentInstance(InstantiatingComponentAdapter.java:48)\n\n...\n{noformat}",
+      "summary": "PAC displays incorrect info re Plugin System used by the plugin"
+    }
+  },
+  {
+    "key": "JSWSERVER-14419",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-07-17T11:27:51.000+0000",
+      "created": "2012-06-28T13:21:22.000+0000",
+      "description": "The following enhancement request came through the AOD docs. Recorded here for the customer.\n\nIs there a way to link user accounts on JIRA with user accounts on bitbucket? As an example:\n\nI have the user foo@example.com on bitbucket. I have the user foo with email address foo@example.com in my JIRA instance. When foo@example.com pushes a change to bitbucket, I would like the activity stream in JIRA to understand that this is actually the user foo.",
+      "summary": "Automatically Link User Accounts on JIRA with User Accounts on bitbucket"
+    }
+  },
+  {
+    "key": "JSWSERVER-14418",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-04-02T00:29:23.000+0000",
+      "created": "2011-11-29T18:01:37.000+0000",
+      "description": "Allow build plans created by the version of Bamboo within JIRA studio to check out code from repositories hosted on github.",
+      "summary": "GitHub Integration for Bamboo within JIRA Studio"
+    }
+  },
+  {
+    "key": "JSWSERVER-14417",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:03:06.000+0000",
+      "created": "2012-02-24T02:31:31.000+0000",
+      "description": "In DCON-65, a feature was added that uses the BitBucket api to add a commit hook rather than relying on the user to do it.\n\nHowever, this requires that the user enter credentials that have admin access to the repo into Jira. If I understand correctly, this hook is the *only* thing that requires admin credentials; everything else would work just dandy with mere read access.\n\nMy feature request is to make supplying admin credentials optional. If the connector is only given read access, it should nag the user to either supply better credentials or fix the hook themselves.",
+      "summary": "Allow the user to provide read-only credentials"
+    }
+  },
+  {
+    "key": "JSWSERVER-14416",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-05-01T17:14:40.000+0000",
+      "description": "We use Git (+Gerrit +Jenkins) and would love to adopt this plug-in, but we don't want to use GitHub nor do we plan to migrate to GitHub enterprise.",
+      "summary": "Support git in addition to GitHub/GitHub Enterprise"
+    }
+  },
+  {
+    "key": "JSWSERVER-14415",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-02-10T06:21:58.000+0000",
+      "created": "2011-11-30T14:02:56.000+0000",
+      "description": "Currently, the POST-commit hook is designed to be associated with one Jira project to one Git repo.\n\nHowever, there is a need to allow one post-commit to let multiple Jira project get scanned for commits.\n\nTypically, a big Git repo can have many working projects inside a large folder structure. Jira projects use different folders of that Git repository.",
+      "summary": "Define a bitbucket POST-COMMIT hook of single Git repository for multiple Jira projects"
+    }
+  },
+  {
+    "key": "JSWSERVER-14414",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:53.000+0000",
+      "created": "2012-11-10T16:57:16.000+0000",
+      "description": "Example: \"ABC-123 #peer-review #comment finally integrated the awesome new user assignment feature. @scald\" \n\nAbove example would do the expected comment, move to the Peer Review workflow step, and also assign the issue to me. This feature would make this connector a slam dunk for our daily operations. ",
+      "summary": "Ability to assign user from a commit."
+    }
+  },
+  {
+    "key": "JSWSERVER-14413",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:46.000+0000",
+      "created": "2012-05-10T21:25:16.000+0000",
+      "description": "It would be nice if a BB/GH content follows a jira issue when it's moved. \nMaybe picking the issue key (FOOBAR-123) comment from a BB/GH commit and associating with the \"id\" field from the jiraissue table.\n",
+      "summary": "BB/GH data isn't carried over when ticket is moved"
+    }
+  },
+  {
+    "key": "JSWSERVER-14412",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2020-11-23T14:38:02.000+0000",
+      "created": "2015-04-24T23:37:18.000+0000",
+      "description": "{panel:title=Atlassian status as of October 2020|borderStyle=solid|borderColor=#3c78b5|titleBGColor=#3c78b5|bgColor=#e7f4fa}\r\nHi everyone,\r\n\r\nThank you for your votes and comments on this issue.\r\n\r\nWe would like to inform you that the official support for GitLab will be available in the upcoming 8.14.0 release of Jira Server and Data Center.\r\n\r\nWe will change the status of this suggestion when Jira 8.14 is available. At the moment, you can read our latest [EAP version|https://confluence.atlassian.com/jiracore/integrating-jira-with-gitlab-1019398724.html] for Integrating Jira with GitLab.\r\n\r\nThank you,\r\nDamian Reweda\r\nSenior Product Manager, Jira Server and Data Center\r\n{panel}\r\n\r\n*Original request description:*\r\n\r\nAdd support for Gitlab hosted privately or publicly.",
+      "summary": "Add support for Gitlab"
+    }
+  },
+  {
+    "key": "JSWSERVER-14411",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-11-09T08:05:56.000+0000",
+      "created": "2012-05-04T11:59:04.000+0000",
+      "description": "Currently, our workflow involves developers forking a main repository and then sending pull requests back to the project lead. JIRA is connected to the main repository through this plugin. It appears a sync (post service) is only triggered when pushing commits directly to the main repository.  Accepting pull requests, while it does create a merge commit, does not post back to JIRA.\n\nIt would be hugely beneficial if merges were also posted back to JIRA. As it is, we have to force sync all our repositories to pull in commits.",
+      "summary": "Post back merge commits"
+    }
+  },
+  {
+    "key": "JSWSERVER-14410",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-03-25T03:41:12.000+0000",
+      "created": "2013-03-19T00:36:02.000+0000",
+      "description": "When an issue is moved all of the linked commit history is removed (as the ID changes) users would like to have the option of keeping that linked commit history when moving the issue.",
+      "summary": "Allow an issue that's been moved to keep its linked commit history"
+    }
+  },
+  {
+    "key": "JSWSERVER-14409",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-16T08:26:43.000+0000",
+      "created": "2013-10-18T10:57:43.000+0000",
+      "description": "Why can't you add a STASH account?",
+      "summary": "provide a link to \"STASH\" in the Manage DVCS account"
+    }
+  },
+  {
+    "key": "JSWSERVER-14408",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-22T11:18:36.000+0000",
+      "created": "2014-08-28T08:27:33.000+0000",
+      "description": "Provide the functionality to restrict the integration based on repository to project basis.\r\n\r\nFor example, Project A will only shows commits, pull request, branches, etc. from Repository A. Project B with repository B.",
+      "summary": "Provide the functionality to restrict the integration based on repository to project basis"
+    }
+  },
+  {
+    "key": "JSWSERVER-14407",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-27T20:13:54.000+0000",
+      "created": "2015-09-24T19:31:00.000+0000",
+      "description": "When allowing Smart Commits, it is (very) often a problem of mismatching Git/BitBucket email address, and Jira's email address.\r\nThe issue is, BitBucket address is almost always a general one that is being used in multiple teams and projects, whereas the Jira's email address is often company specific (a Google Apps address for example).\r\nThis can easily be fixed if the feature mentioned in CONF-29835 is implemented (there wasn't a compelling reason earlier to do this feature before, there is now).\r\n\r\n\r\n",
+      "summary": "Multiple Email addresses to support Smart Commits"
+    }
+  },
+  {
+    "key": "JSWSERVER-14406",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-05-14T06:23:48.000+0000",
+      "created": "2014-04-15T19:14:07.000+0000",
+      "description": null,
+      "summary": "demo"
+    }
+  },
+  {
+    "key": "JSWSERVER-14405",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:03:01.000+0000",
+      "created": "2012-11-07T22:29:59.000+0000",
+      "description": "In addition to being able to modify existing JIRA issue -> commit links",
+      "summary": "Ability to select relating changeset"
+    }
+  },
+  {
+    "key": "JSWSERVER-14404",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:03:15.000+0000",
+      "created": "2012-04-27T14:42:23.000+0000",
+      "description": "Expose the commit information cached by the DVCS Connector through an api. Ideally, it would show all information shown in the UI associated with a specific Issue Key(s).",
+      "summary": "Expose commit information through an api"
+    }
+  },
+  {
+    "key": "JSWSERVER-14403",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T12:22:51.000+0000",
+      "created": "2013-07-15T18:38:17.000+0000",
+      "description": "Would like to comment on a JIRA issue and Link to a BitBucket Commit. Ex: \"Already fixed [BBi-C-ID]\"",
+      "summary": "Ability to Link Comment to BitBucket Commit"
+    }
+  },
+  {
+    "key": "JSWSERVER-14402",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2011-11-02T07:37:02.000+0000",
+      "created": "2011-07-08T07:40:49.000+0000",
+      "description": "Use the remote API to create the bitbucket post commit hook instead of relying on the use to.\n\nSee: https://confluence.atlassian.com/display/BBDEV/Services",
+      "summary": "Use remote API to create post commit hook"
+    }
+  },
+  {
+    "key": "JSWSERVER-14401",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-03-27T05:09:38.000+0000",
+      "created": "2013-03-08T00:40:34.000+0000",
+      "description": null,
+      "summary": "Ability to link pull requests to JIRA issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-14400",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-03-13T18:32:46.000+0000",
+      "description": "Users should be able to filter activity streams for commits by repos",
+      "summary": "Show BitBucket/github pull requests for a select set of repos in activity stream gadget"
+    }
+  },
+  {
+    "key": "JSWSERVER-14399",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-08-18T23:43:16.000+0000",
+      "created": "2014-08-15T13:24:22.000+0000",
+      "description": "As I'm tasked with tracking my work against tickets whenever possible, the ability to create a ticket while committing work on an undocumented issue would be of great use to me. \r\n\r\nI imagine the commit message would look something this:\r\n\"#create  An undocumented issue\"\r\n\r\nThis would create a ticket and set its summary as \"An undocumented issue.\"\r\n\r\nYou have my gratitude in advance for your consideration. ",
+      "summary": "Add #create as a smart commit directive"
+    }
+  },
+  {
+    "key": "JSWSERVER-14398",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-07-03T00:20:46.000+0000",
+      "created": "2015-06-26T19:45:29.000+0000",
+      "description": "We have 2 Github accounts, and each one have their projects. \r\nIt would be nice to setup Github integration per project.\r\n\r\n- Set up *default* Github account\r\n- Set up Github account of a specific project",
+      "summary": "Ability to setup Github account per project"
+    }
+  },
+  {
+    "key": "JSWSERVER-14397",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-20T12:06:56.000+0000",
+      "created": "2014-05-27T19:48:21.000+0000",
+      "description": "Right now, any BitBucket commits are relegated to the \"Development\" section of an issue, as well as \"Activity\", but when you view the \"All\" tab, you don't see any commit information.  We'd like to see the \"All\" tab show all activity in chronological order, including the commit activity.  This was a feature we enjoyed from Assembla's Ticket Activity that we migrated from, it showed a better chronological time of all activity - good for managers and devs alike to get caught up.",
+      "summary": "Allow \"All\" comment tab, on an issue, to also show inline commits chronologically"
+    }
+  },
+  {
+    "key": "JSWSERVER-14396",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:51.000+0000",
+      "created": "2012-10-11T09:20:06.000+0000",
+      "description": "DVCS Connector could offer to create new repository each time new JIRA project is created",
+      "summary": "Create new repository when new JIRA project is created"
+    }
+  },
+  {
+    "key": "JSWSERVER-14395",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-20T12:06:41.000+0000",
+      "created": "2014-04-17T20:23:54.000+0000",
+      "description": "Support the ability to use the \"Code Committed Condition\" (only allow the transition to execute if code either has or has not been committed against the issue) with Git/Mercurial commits.",
+      "summary": "Support \"FishEye\" workflow conditions"
+    }
+  },
+  {
+    "key": "JSWSERVER-14394",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-07-13T19:58:35.000+0000",
+      "created": "2011-05-18T20:10:06.000+0000",
+      "description": "We currently require the user to enter his Bitbucket credentials into the configuration screen, then manually paste a url for the repo in. Once the user has entered his credentials, we should be able to query Bitbucket and return a list of their repos, so that the user can select it from a list rather than manually entering a URL, simplifying the configuration.",
+      "summary": "provide list of user's repos when choosing project association"
+    }
+  },
+  {
+    "key": "JSWSERVER-14393",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:45.000+0000",
+      "created": "2013-01-06T01:00:48.000+0000",
+      "description": "Customer wants to be able to search for issues that have not had a commit for a certain period of time (or issues that have not had a commit at all).",
+      "summary": "Search in JIRA for time since last commit"
+    }
+  },
+  {
+    "key": "JSWSERVER-14392",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-22T10:22:09.000+0000",
+      "created": "2014-12-03T15:11:49.000+0000",
+      "description": "We would like to be able to include a portion of a commit hash (at least 7 leading chars) in a comment in Jira OnDemand and have it automatically link to our Bitbucket installation to that commit.\r\n\r\nWe currently have Bitbucket linking back to Jira when we include issue identifiers in the commit message, this request is sort of for the reverse.",
+      "summary": "Link commit hashes in Jira OnDemand comments to Bitbucket"
+    }
+  },
+  {
+    "key": "JSWSERVER-14391",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2012-03-21T10:40:13.000+0000",
+      "created": "2011-10-04T20:38:43.000+0000",
+      "description": "It would be nice to be able to trigger status changes for a JIRA issue from GitHub or Bitbucket commit messages. For example, \"fixes PONE-23\", or \"Fix PONE-23\"",
+      "summary": "Trigger status changes for a JIRA issue from GitHub or Bitbucket commit messages."
+    }
+  },
+  {
+    "key": "JSWSERVER-14390",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-22T10:22:40.000+0000",
+      "created": "2014-10-08T21:19:25.000+0000",
+      "description": "It would be nice if we could associate branches with JIRA issues via their name (like DCON-111-text-description) automatically. I know you can create the branch from within JIRA and have it be associated, but it's a bit onerous to go the page and do that every time you're making a branch. Pushing a new branch that matches the issue should do this automatically.",
+      "summary": "Automatic linking of branches to JIRA issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-14389",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-03-27T03:15:42.000+0000",
+      "created": "2013-08-20T16:16:39.000+0000",
+      "description": "Provide a way to navigate from a JIRA issue to a corresponding branch or pull request in Bitbucket or GitHub. I see that I can navigate to individual commits. I'm looking for the best way to navigate to the aggregate changes of all the commits corresponding to a JIRA issue.\r\n\r\nFrom this answers post: https://answers.atlassian.com/questions/202861/navigate-from-jira-to-branch-or-pull-request-in-bitbucket-or-github?page=1#202933",
+      "summary": "Navigate from JIRA to branch or pull request"
+    }
+  },
+  {
+    "key": "JSWSERVER-14388",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-29T07:47:54.000+0000",
+      "created": "2016-01-29T18:08:20.000+0000",
+      "description": "h3. Problem Definition\r\n\r\nCurrently the DVCS connector account requires write access to create the initial Webhook and OAUTH functionality. \r\n\r\nh3. Suggested Solution\r\n\r\nProvide a read only option for the DVCSaccount that will allow smart commits in one direction only.\r\n\r\ni.e.\r\n\r\nBitbucket ---> JIRA\r\nGithub ---> JIRA\r\n \r\n",
+      "summary": "Provide read only option for the DVCS connector for smart commits only (JIRA/BitBucket). "
+    }
+  },
+  {
+    "key": "JSWSERVER-14387",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-08-14T05:22:19.000+0000",
+      "created": "2015-07-24T13:12:31.000+0000",
+      "description": "There is a code committed condition for Fisheye plugin but it is only for Fisheye commits. It will be helpful to also have a similar status transition condition for DVCS Connector.",
+      "summary": "A code commit condition for status transitions"
+    }
+  },
+  {
+    "key": "JSWSERVER-14386",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-05-29T05:07:03.000+0000",
+      "created": "2015-05-25T03:31:29.000+0000",
+      "description": "Currently Stash and Bitbucket is supported for creating branches from JIRA on Dev Panel.\r\n\r\nIt would be great if you added support for Github Enterprise.\r\n\r\nhttps://confluence.atlassian.com/display/Cloud/Streamlining+your+development+with+JIRA\r\nhttps://answers.atlassian.com/questions/13414159/create-github-enterprise-branch-from-jira-issue\r\n\r\n-Dorian",
+      "summary": "Ability to create a branch inside JIRA for Github Enterprise"
+    }
+  },
+  {
+    "key": "JSWSERVER-14385",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2019-08-09T08:08:44.000+0000",
+      "created": "2016-04-26T15:23:34.000+0000",
+      "description": "As developer, I want to see which branch is a commit on in development panel. When viewing, commits linked to an issue, it would be great to have the information on which branch the commits are on.",
+      "summary": "As developer, I want to see which branch is a commit on in development panel"
+    }
+  },
+  {
+    "key": "JSWSERVER-14384",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-11-20T10:57:59.000+0000",
+      "created": "2013-11-19T20:42:08.000+0000",
+      "description": "In a github smart commit, if #time is reported along with #comment, the #comment content should be posted to the work log entry's comment as well. Makes sense, or no?",
+      "summary": "Comments from Github smart commits should be on work log comments if #time is added"
+    }
+  }
+]

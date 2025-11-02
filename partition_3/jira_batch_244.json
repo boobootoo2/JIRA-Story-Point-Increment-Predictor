@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "JSWSERVER-7317",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-11T02:06:56.000+0000",
+      "created": "2013-01-29T09:39:20.000+0000",
+      "description": "h3. Summary of bug\r\n\r\nIf the feedback module is disabled, then when the user creates an issue in the planning mode of the board, there will be an error\r\n\r\nh3. Steps to reproduce\r\n\r\n# Disable the feedback module of GreenHopper\r\n# Access a Scrum board, and use the Plan mode\r\n# Create an issue\r\n# Issue will be created, but with the following error message :\r\n\r\n!feedback bug.png|thumbnail!\r\n\r\nh3. Additional Findings\r\n\r\n* Problem does not occur when in Work or Report mode\r\n* Problem does not occur when creating issues in JIRA\r\n* Problem does not occur if the Feedback module is enabled\r\n",
+      "summary": "Error when creating issue in plan mode when Feedback is disabled"
+    }
+  },
+  {
+    "key": "JSWSERVER-7314",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-12T21:59:20.000+0000",
+      "created": "2013-01-29T06:46:15.000+0000",
+      "description": "All of the values below will need to be grouped by instance:\r\n\r\n- how many instances are actually activated (measurement: for every instance with GH enabled, make sure we store first visit to an instance - most likely to be /secure/Dashboard.jspa, which is in JIRA) \r\n\r\n- of these instances, how many find Rapid Boards (measurement: first visit to /secure/RapidStart.jspa in an instance) + how many of the ones without GH at first had them (this necessary to have the numbers right for the following points)\r\n -- Event is \"gh.welcome.show\"\r\n\r\n- how many attempt to create a project? (measurement: opening of the dialogue to create a project)\r\n -- Event: \"gh.welcome.create.project.start\" with type in \"label\" field\r\n\r\n- how many create a project + how many create a project of each type (scrum, kanban, diy) + how many create sample/non-sample projects? (measurement: store project_created as an event, with type associated to it, as well as if it was a sample project).\r\n\u00a0-- Event: \"gh.welcome.create.project.sampleData\" with type in \"label\" field preceding the next event in case of simple data is used\r\n\u00a0-- Event: \"gh.welcome.create.project.complete\" with type in \"label\" field\r\n\r\n- how many non-sample projects create a single issue (measurement: store issue_created event)\r\n -- Event: \"gh.issue.created\" with keys array stringified in \"keys\" field\r\n\r\n- of scrum non-sample users, how many create a sprint (measurement: sprint_created event)\r\n -- Event: \"gh.rapidboard.sprint.backlog.addmarker\"\r\n\r\n- of scrum non-sample users, how many start a sprint (measurement: sprint_started event)\r\n -- Event: \"gh.start.sprint.dialog.change.start\" when attempt to start the sprint\r\n -- Event: \"gh.start.sprint.dialog.change.complete\" when they actually start it\r\n\r\n+\r\n\r\n- how many users use rapid boards exclusively, how many use a mix, how many use classic exclusively - the first and last is what we cannot determine at the moment (measurement: store requests to RapidBoard.jspa vs the other two classic boards, then count these per week grouping by instance). Note that this is actual usage grouped instance, as opposed to usage overall (so larger instances having more influence) or binary on/off \"has ever used a classic/rapid board\"\r\n -- Event: \"gh.rapidboard.show\" on view of rapid board\r\n -- Event: \"gh.classic.show\" on view of classic board\r\n\r\n\r\nFrom Jay:\r\n\r\n- How many epics appear on a board\r\n -- Event \"gh.rapidboard.epics\" with \"value\" field as count\r\n\r\n- How many versions appear on a board\r\n -- TBD\r\n\r\n(!) Development Notes (!)\r\n\r\nQ: What if 1 action triggers more than 1 event?\r\nA: (/) It could and probably will - its up to the post-processing to effectively filter, order & group the events.",
+      "summary": "Add Atlassian Analytics events to GH"
+    }
+  },
+  {
+    "key": "JSWSERVER-7313",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2017-12-06T13:33:55.000+0000",
+      "created": "2013-01-29T06:18:01.000+0000",
+      "description": "h3. Steps to replicate:\r\n\r\n# Go to the plan mode of a board\r\n# Enable two quick filters (such as 'Only My Issues' and 'Recently Updated')\r\n# Create an issue\r\n# Click into the first of the two issues so that it shows in the preview plane\r\n# Click the cog on the issue and select more actions\r\n# Enter 'convert to sub-task'\r\n# Go through the wizard and convert the issue to a sub-task and finally hit finish.\r\n\r\nh3. Result: \r\n\r\nThe URI will become 'https://instance.com/secure/RapidBoard.jspa?rapidView=2&view=planning&quickFilter=3&quickFilter=3' and only one of the QuickFilters will be selected\r\n\r\nIf you have three filters selected then the quickfilter parameter will repeat 3 times. If you go tick the quickfilters again and then convert another issue to a sub-task then you'll end up with even more quickfilters in the URI. Eventually this will cause an error as the number of filters will cause the URI to become too long and the page will not load.\r\n\r\nh3. Expected result:\r\n\r\nThe URI should read 'https://instance.com/secure/RapidBoard.jspa?rapidView=2&view=planning&quickFilter=3&quickFilter=4' and both of the quick filters will be selected.\r\n\r\nh3. Workaround:\r\n\r\nYou will need to click on the quick filter that is repeated enough times to stop the repeating.",
+      "summary": "quickFilter repeats in URI when leaving and returning to board when multiple filters are selected"
+    }
+  },
+  {
+    "key": "JSWSERVER-7311",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-10T23:28:02.000+0000",
+      "created": "2013-01-28T23:34:40.000+0000",
+      "description": null,
+      "summary": "document that existing fields are now configurable in the Issue Detail View"
+    }
+  },
+  {
+    "key": "JSWSERVER-7310",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-10T23:27:16.000+0000",
+      "created": "2013-01-28T23:31:43.000+0000",
+      "description": null,
+      "summary": "document : see an Epic's stories in JIRA View Issue"
+    }
+  },
+  {
+    "key": "JSWSERVER-7309",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-29T02:32:44.000+0000",
+      "created": "2013-01-28T22:52:19.000+0000",
+      "description": null,
+      "summary": "Right-click on issue key on Plan Mode should not trigger GH context menu"
+    }
+  },
+  {
+    "key": "JSWSERVER-7308",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2017-09-07T11:04:27.000+0000",
+      "created": "2013-01-28T17:22:51.000+0000",
+      "description": "As a Scrum Master, I'd like to be able to store Sprint information in a custom field, a label or a tag. It would be independent of the work being done on the Issues, and only linked to the Sprint as a whole. I would also like to add attachments to Sprints.\r\n\r\n+*Use case example:+*\r\n- Defining a Spring goal.\r\n- Sprint status is determined by the team based on business circumstances. E.g. a planned Sprint can be awaiting approval and ready for development, and one in progress can be progressing or being interrupted. It would be handy to have that information visible on the Board.\r\n- Mockups for Sprint goals need to be attached on a Sprint level.\r\n\r\n\r\n//\r\n\r\nIncorporates the duplicated issue GHS-5396 {{As a Scrum user I can set a sprint goal so that I am reminded of the sprint's intention throughout}}",
+      "summary": "Ability to save Sprint goal and/or other properties in a separate field or tag "
+    }
+  },
+  {
+    "key": "JSWSERVER-7307",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-01T01:03:40.000+0000",
+      "created": "2013-01-28T10:23:54.000+0000",
+      "description": "h3. Summary of Bug\r\n\r\nWhen a Story that was in some closed sprints (or active sprint) is cloned, the cloned story would retain the values of the Sprint field (even for the closed sprints).\r\n\r\nh3. Steps to Reproduce\r\n\r\n# Create a Story in a Scrum Board\r\n# Place the story in a sprint\r\n# Complete the sprint\r\n# Clone the Story\r\n# The cloned story will still retain the values of the Sprint field\r\n\r\nh3. Additional Findings\r\n\r\n* The cloned story will retain all the values of the Sprint field of the parent issue, including closed sprints and any active sprint",
+      "summary": "Cloned Stories retain values of Sprint field from parent issue"
+    }
+  },
+  {
+    "key": "JSWSERVER-7306",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:57.000+0000",
+      "created": "2013-01-28T09:48:57.000+0000",
+      "description": "It would be great that the user in the planning mode can view the following estimations:\r\n# Story points for Stories and another metric, namely\r\n# Remaining estimates for technical tasks and bugs.",
+      "summary": "Overview for Story Point and Remaining estimates types of estimation measurement can show in Rapid Board"
+    }
+  },
+  {
+    "key": "JSWSERVER-7303",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-11-07T03:00:42.000+0000",
+      "created": "2013-01-28T08:25:03.000+0000",
+      "description": "Why is it not possible to show time on a KanBan card but it is possible on a Agile card? Please could you transfer the possibility from the Agile cards to the Kanban Cards. There is plenty of room for this and it gives vital infomation to the developers (for example; I have an hour to do some extra work, we have about 40 issues wich one should I take? The developer now has to open every card to show what time is involved which could take up to 15 minutes to find one that could be handled. Now he loses 15 minutes of his precious time!)",
+      "summary": "Time in cards on KanBan board"
+    }
+  },
+  {
+    "key": "JSWSERVER-7302",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-01T02:00:28.000+0000",
+      "created": "2013-01-27T00:40:05.000+0000",
+      "description": "It would be a great addition to have the Issue View screen to include a panel (similar to sub-tasks) which can show all the connected stories while viewing an Epic.",
+      "summary": "As a User I would like to See All The Stories In an Epic"
+    }
+  },
+  {
+    "key": "JSWSERVER-7301",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:54.000+0000",
+      "created": "2013-01-26T20:41:10.000+0000",
+      "description": null,
+      "summary": "As a developer I want the story to change to in progress if I move the 1st task so that I don't have to remember to do this."
+    }
+  },
+  {
+    "key": "JSWSERVER-7300",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-04-03T04:35:00.000+0000",
+      "created": "2013-01-26T20:31:42.000+0000",
+      "description": "Currently we have multiple teams working on multiple backlogs but we all share the same sprints, so I would like to add a sprint and have that sprint pushed to various rapid boards. This means that sprints that have not started yet will be available on other boards for teams to plan. \r\n\r\nCurrently we have to have 1 board for sprint planning and use filters to show the various teams work. Its ok and it works but we found it was better on the classic view when a sprint was created for everyone. ",
+      "summary": "As a scrummaster I would like to add sprints on 1 or more rapid boards so that teams can share a sprint"
+    }
+  },
+  {
+    "key": "JSWSERVER-7299",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-02-21T22:46:19.000+0000",
+      "created": "2013-01-26T17:06:05.000+0000",
+      "description": "As a user, looking at a scrum board, I would like a quick filter to show me all stories and all sub-tasks thereof IF I am assigned to either the story or ANY of the sub-tasks.\r\n\r\nThis would show more than just \"my Issues\". All that shows me is what I'm assigned to. Helpful sometimes, but it doesn't give me a context.\r\nFor example, if my testing sub-task depends on a developer finishing another sub-task, I want to see both my testing sub-task and his coding sub-task so I see its status and know if I can start testing.",
+      "summary": "As a user I would like a quick filter to show me all assigned cards with context."
+    }
+  },
+  {
+    "key": "JSWSERVER-7298",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-11-07T02:49:39.000+0000",
+      "created": "2013-01-25T14:44:29.000+0000",
+      "description": "As a scrum master I would like to be able to create a fixed set of subtasks that I can upload for a certain story, so that I can speed up the process of populating the scrum board when starting a sprint.",
+      "summary": "Sprint Template"
+    }
+  },
+  {
+    "key": "JSWSERVER-7297",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-05-07T06:06:04.000+0000",
+      "created": "2013-01-25T12:49:17.000+0000",
+      "description": "The times for how long an issue has spent in each column (hover info) on the control chart (kanban rapid board) are sometimes wrong.\r\n\r\nLooking at the plotted cycle time (dots) and cycle time summary (below chart), everything seems ok, but for some issues the times spent in each column does not make sense.\r\n\r\nWe are experiencing this a lot in our own project, using simplified workflow.\r\nAttached two screenshots from your own GHS project, so you can perhaps reproduce this quite easy.\r\n\r\nh3. Workaround\r\n\r\nReport on all columns - hiding them will cause this problem.",
+      "summary": "Weird time-in-column sums in hover detail of issues in control chart"
+    }
+  },
+  {
+    "key": "JSWSERVER-7296",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-30T05:28:19.000+0000",
+      "created": "2013-01-25T04:26:20.000+0000",
+      "description": "Use Guava objects to implement a proper cache.",
+      "summary": "Refactor the cache in SprintManager"
+    }
+  },
+  {
+    "key": "JSWSERVER-7295",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-29T00:26:15.000+0000",
+      "created": "2013-01-25T01:15:22.000+0000",
+      "description": "We hide other content when GH is expired (e.g. Agile menu options, Browse Project tab panel). We should do this here as well.",
+      "summary": "Agile Issue Panel shows up even when GH license is expired"
+    }
+  },
+  {
+    "key": "JSWSERVER-7288",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:03:16.000+0000",
+      "created": "2013-01-24T20:04:19.000+0000",
+      "description": "A full view for Epics would make it easier to sort Epics. The limited view on the left side of the screen doesn't give enough space to rank quickly. Other tools to help rank Epics like Move to Top would help as well.",
+      "summary": "Epic ranking tools"
+    }
+  },
+  {
+    "key": "JSWSERVER-7287",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-01-24T18:00:36.000+0000",
+      "description": "I think it would be a great addition if you made the Epic Tags found in a Story (et al) Detail View and in Backlog/Sprint lists hot.\r\n\r\nSo clicking on it will bring you to the Epic and it's list of Epic Stories.\r\n\r\nThanks!\r\nRick",
+      "summary": "Request Epic Tags (Titles) should be hot."
+    }
+  },
+  {
+    "key": "JSWSERVER-7286",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-01T01:00:30.000+0000",
+      "created": "2013-01-24T17:56:30.000+0000",
+      "description": "Epic tags not showing up in Rapid Plan board (scrum) if Epic not member of Project\r\n\r\nSteps to reproduce:\r\n\r\nCreate Epic belonging to one project.\r\nCreate Story belonging to second project.\r\n\r\nCreate Scrum Planning board which included both projects.\r\nCreate two more planning boards which only contains one project each.\r\n\r\nIn the planning board with both projects, drag and drop Story belonging to second project into Epic belonging to first project.\r\n\r\nSee Epic tag in Backlog of Multi project board (as expected).\r\n\r\nDo not see Story in Backlog of Project with Epic (this is not the bug but (IMHO) to be expected).\r\n\r\nYou do see the Story in the Backlot of Project which the story belongs to (also as expected), but you do not see the Epic Tag showing you the Epic Title.\r\nIn the screenshot you can see the tag shown in the Detail View, but not in the Backlog column.\r\n\r\nThanks!\r\nRick\r\n",
+      "summary": "Epic tags not showing up in Rapid Plan board (backlog) (SCRUM/Kanban) if Epic not member of Project"
+    }
+  },
+  {
+    "key": "JSWSERVER-7285",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-02-10T02:37:56.000+0000",
+      "created": "2013-01-24T16:06:34.000+0000",
+      "description": "h5. Current Status\r\n\r\nAn user will only be able to \"Release\" a GH Sprint if he has the Administration permission over the project.\r\n\r\nh5. Expected Behaviour\r\n\r\nThere are a lot of cases which users should be able to Release a sprint without being project Administrator.\r\n\r\nh5. Note\r\n\r\nNote that the person can already do a bulk update to accomplish the same thing, so it's hard to justify why the user can't release the sprint without being a project admin.",
+      "summary": "As an user, I would like to be able to Release a Sprint without being a Project Administrator"
+    }
+  },
+  {
+    "key": "JSWSERVER-7284",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-11T04:25:49.000+0000",
+      "created": "2013-01-24T15:27:20.000+0000",
+      "description": "This is quite easy to reproduce:\r\n# Create 5 cards in rapid board work mode\r\n# Drag and drop the 5 cards one by one from one column to another\r\n# After average 5-7 trials, at least one card should be stuck in wrong column\r\n# The problematic card can not be moved to any column\r\n(!) sometime it reproducible after 1-2 trials\r\n\r\n!rp.png|thumbnail!\r\n\r\n|\r\nSomehow the card is fix after the following:\r\n- Re-Index JIRA manually\r\n- Move other card (for example AT-6 from the screenshot above) to In-Progress column\r\n\r\n",
+      "summary": "Card is stuck in wrong column and cannot be moved"
+    }
+  },
+  {
+    "key": "JSWSERVER-7283",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-01T00:55:36.000+0000",
+      "created": "2013-01-24T15:13:49.000+0000",
+      "description": "Steps to reproduce:\r\n\r\n* Create a board including at least 2 projects (PROJECT A, PROJECT B)\r\n* Create a sprint and add issues from both projects to it\r\n* Make a copy of the board (the sprint will be copied too)\r\n* Create a new filter to exclude PROJECT A from the new board \r\n* Create a new filter to exclude PROJECT B from the original board \r\n* Try to complete the sprint on one of the boards, you will notice the sprint on the other board is also completed. Sprints should behave independently.",
+      "summary": "Closing a Sprint on a board that was copied from another causes the original Sprint to be closed as well"
+    }
+  },
+  {
+    "key": "JSWSERVER-7281",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-12-30T04:13:37.000+0000",
+      "created": "2013-01-24T05:17:06.000+0000",
+      "description": "In GreenHopper Issue Detail View, it would be nice to be able to switch between Detail, Comments, Attachments, and Sub-Tasks using just keyboard shortcuts.",
+      "summary": "As a User I would like to be able to switch between tabs in Issue Detail View using the Keyboard"
+    }
+  },
+  {
+    "key": "JSWSERVER-7280",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-06T04:00:48.000+0000",
+      "created": "2013-01-24T05:00:47.000+0000",
+      "description": "h3. Steps to Reproduce:\r\n# Install GreenHopper on to a JIRA instance with existing issues\r\n# Create a board and try to access it. It will fail with the error \"Scrum boards are currently unavailable. An administrator must perform a re-index before you can use Scrum board functionality\" which is expected\r\n# Perform a background re-index\r\n\r\nh3. Expected Results:\r\n# GreenHopper starts working normal.\r\n\r\nh3. Actual Results:\r\n# GreenHopper continues to give the same above error.\r\n\r\nh3. Workaround\r\n# Do a full re-index (which will lock  JIRA during indexing)",
+      "summary": "GreenHopper Requires Full Re-Index After Installation"
+    }
+  },
+  {
+    "key": "JSWSERVER-7278",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-31T00:30:13.000+0000",
+      "created": "2013-01-24T00:55:04.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Software Server*. Using *JIRA Software Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JSWCLOUD-7278].\n  {panel}\n\nThis used to work until we introduced the right click menu. We should disable it for that link only.",
+      "summary": "As a user, I want to be able to see default browser menu when I right click on an issue link"
+    }
+  },
+  {
+    "key": "JSWSERVER-7277",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-01T00:51:55.000+0000",
+      "created": "2013-01-22T10:19:27.000+0000",
+      "description": "robots.txt does not disallow RankBottom/RankTop URLs and causes Google Search Engine Robot to perform GET Request\r\n\r\nQuoted from a customer:\r\n\r\nOur site is being indexed by an internal Google Search Appliance to allow for corporate wide searching of data on a Google like web site. This works fine. However we have discovered a bug in Jira.\r\n\r\nThe robot will eventually crawl the URL /secure/RankBottom.jspa?issueId=731327  (take any issueId) and will perform a GET request. We can clearly see this in the web log:\r\n\r\n{noformat}\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /browse/CR-2301 HTTP/1.0\" 302 - \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /robots.txt HTTP/1.0\" 200 457 \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /robots.txt HTTP/1.0\" 200 457 \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /robots.txt HTTP/1.0\" 200 457 \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /browse/CR-2301 HTTP/1.0\" 302 - \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /robots.txt HTTP/1.0\" 200 457 \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n10.110.10.45 - - [22/Jan/2013:01:59:59 +0100] \"GET /browse/CR-77242 HTTP/1.0\" 200 65150 \"-\" \"Mozilla%2F5.0%20%28Macintosh%3B%20U%3B%20Linux%20i686%3B%20en-US%3B%20rv%3A1.8%29%20Gecko%2F20051111%20Firefox%2F1.5%20GSA%2F1 (Enterprise; T3-KT3WUATTQWSQY; ken.ramey@ptn.advantest.com)\"\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /secure/IssueNavigator.jspa?reset=true&mode=hide&jqlQuery=project+%3D+TEST72+AND+fixVersion+%3D+%227.2.0.1-FV2i%22+AND+resolution+in+(Fixed%2C+%22Will+not+fix%22%2C+Duplicate%2C+%22Cannot+Reproduce%22%2C+%22User+%2F+Usage+Error%22%2C+%22Fixed+-+no+code+change%22%2C+Done%2C+%22Device+issue+%2F+Test+Case+issue%22%2C+%22Fixed+by+other+CR%22%2C+Incomplete) HTTP/1.0\" 200 29221 \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n10.16.43.21 - - [22/Jan/2013:02:00:00 +0100] \"GET /secure/RankBottom.jspa?issueId=665852 HTTP/1.0\" 404 3272 \"-\" \"Mozilla%2F5.0%20%28Macintosh%3B%20U%3B%20Linux%20i686%3B%20en-US%3B%20rv%3A1.8%29%20Gecko%2F20051111%20Firefox%2F1.5%20GSA%2F1 (Enterprise; T2-FYN8SNNZFNWJB; ken.ramey@non.verigy.com)\"\r\n10.16.43.21 - - [22/Jan/2013:02:00:00 +0100] \"GET /secure/RankTop.jspa?issueId=632961 HTTP/1.0\" 404 3269 \"-\" \"Mozilla%2F5.0%20%28Macintosh%3B%20U%3B%20Linux%20i686%3B%20en-US%3B%20rv%3A1.8%29%20Gecko%2F20051111%20Firefox%2F1.5%20GSA%2F1 (Enterprise; T2-FYN8SNNZFNWJB; ken.ramey@non.verigy.com)\"\r\n10.16.44.43 - - [22/Jan/2013:02:00:00 +0100] \"GET /secure HTTP/1.0\" 302 - \"-\" \"gsa-crawler (Enterprise; T3-DU2NDCX3QWWQG; scott.morrell@non.verigy.com,ken.ramey@non.verigy.com,jim.osborne@non.verigy.com)\"\r\n{noformat}\r\n\r\nHowever the robots.txt file delivered with Jira does not \"Disallow\" the RankBottom / RankTop URLs. This has lead to issue corruption in one of our projects as the Google Searcher tried to \"click\" rank up / down.\r\n\r\nThis violates the HTTP standard. AFAIK the standard says that GET requests may not alter data.\r\n\r\nBelow is the robots.txt included with Jira:\r\n\r\n{noformat}\r\n# robots.txt for JIRA\r\n# You may specify URLs in this file that will not be crawled by search engines (Google, MSN, etc)\r\n#\r\n# By default, all SearchRequestViews in the IssueNavigator (e.g.: Word, XML, RSS, etc) and all IssueViews\r\n# (XML, Printable and Word) are excluded by the /sr/ and /si/ directives below.\r\n\r\nUser-agent: *\r\nDisallow: /sr/\r\nDisallow: /si/\r\nDisallow: /charts\r\nDisallow: /secure/ConfigureReport.jspa\r\nDisallow: /secure/ConfigureReport!default.jspa\r\n{noformat}\r\n",
+      "summary": "RankBottom/RankTop should be POSTs not GETs"
+    }
+  },
+  {
+    "key": "JSWSERVER-7275",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-05-22T03:18:52.000+0000",
+      "created": "2013-01-23T23:24:35.000+0000",
+      "description": null,
+      "summary": "Investigate velocity template auto-escaping impact on GH"
+    }
+  },
+  {
+    "key": "JSWSERVER-7274",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-23T22:23:15.000+0000",
+      "created": "2013-01-23T22:21:12.000+0000",
+      "description": "scope of 'this' incorrect",
+      "summary": "getSeriesStatisticName JS error"
+    }
+  },
+  {
+    "key": "JSWSERVER-7273",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-24T02:38:31.000+0000",
+      "created": "2013-01-23T18:27:26.000+0000",
+      "description": "every time I try to enable the plugin it fails\r\n\r\nFailed to enable plugin Atlassian GreenHopper (com.pyxis.greenhopper.jira)\r\n\r\nJIRA Streams Inline Actions Plugin - 5.2.0 \r\nPlugin byAtlassian Software Systems Pty Ltd\r\n\r\n\r\n2013-01-23 13:59:57,515 http-bio-8080-exec-2 INFO admin 839x260x1 1ov2ksh 192.168.10.1 /secure/admin/ViewLogging!markLogs.jspa [jira.util.log.LogMarker] \r\n2013-01-23 14:00:17,843 http-bio-8080-exec-5 ERROR admin 840x447x1 1ov2ksh 192.168.10.1 /rest/plugins/1.0/com.pyxis.greenhopper.jira-key [plugin.osgi.factory.OsgiPlugin] Detected an error (BundleException) enabling the plugin 'com.pyxis.greenhopper.jira' : Unresolved constraint in bundle com.pyxis.greenhopper.jira [105]: Unable to resolve 105.0: missing requirement [105.0] package; (&(package=com.atlassian.core.action)(version>=5.0.0)(!(version>=7.0.0))).  This error usually occurs when your plugin imports a package from another bundle with a specific version constraint and either the bundle providing that package doesn't meet those version constraints, or there is no bundle available that provides the specified package. For more details on how to fix this, see http://confluence.atlassian.com/x/1xy6D\r\n2013-01-23 14:00:17,843 http-bio-8080-exec-5 WARN admin 840x447x1 1ov2ksh 192.168.10.1 /rest/plugins/1.0/com.pyxis.greenhopper.jira-key [plugin.osgi.factory.OsgiPlugin] Unable to enable plugin 'com.pyxis.greenhopper.jira'\r\ncom.atlassian.plugin.osgi.container.OsgiContainerException: Cannot start plugin: com.pyxis.greenhopper.jira\r\n\tat com.atlassian.plugin.osgi.factory.OsgiPlugin.enableInternal(OsgiPlugin.java:445)\r\n\tat com.atlassian.plugin.impl.AbstractPlugin.enable(AbstractPlugin.java:237)\r\n\tat com.atlassian.plugin.manager.PluginEnabler.actualEnable(PluginEnabler.java:114)\r\n\tat com.atlassian.plugin.manager.PluginEnabler.enable(PluginEnabler.java:99)\r\n\tat com.atlassian.plugin.manager.PluginEnabler.enableAllRecursively(PluginEnabler.java:66)\r\n\tat com.atlassian.plugin.manager.DefaultPluginManager.enablePlugins(DefaultPluginManager.java:1181)\r\n\tat com.atlassian.jira.plugin.JiraPluginManager.enablePlugins(JiraPluginManager.java:66)  <+3> (NativeMethodAccessorImpl.java:39) (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat com.atlassian.plugin.osgi.hostcomponents.impl.DefaultComponentRegistrar$ContextClassLoaderSettingInvocationHandler.invoke(DefaultComponentRegistrar.java:129)\r\n\tat $Proxy486.enablePlugins(Unknown Source)  <+3> (NativeMethodAccessorImpl.java:39) (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.doInvoke(ServiceInvoker.java:58)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.invoke(ServiceInvoker.java:62)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invokeUnprivileged(ServiceTCCLInterceptor.java:56)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invoke(ServiceTCCLInterceptor.java:39)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.importer.support.LocalBundleContextAdvice.invoke(LocalBundleContextAdvice.java:59)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n\tat $Proxy902.enablePlugins(Unknown Source)\r\n\tat com.atlassian.upm.PluginAccessorAndControllerImpl$4.doInTransaction(PluginAccessorAndControllerImpl.java:357)\r\n\tat com.atlassian.upm.PluginAccessorAndControllerImpl$4.doInTransaction(PluginAccessorAndControllerImpl.java:351)\r\n\tat com.atlassian.sal.core.transaction.HostContextTransactionTemplate$1.doInTransaction(HostContextTransactionTemplate.java:25)\r\n\tat com.atlassian.jira.DefaultHostContextAccessor.doInTransaction(DefaultHostContextAccessor.java:34)  <+2> (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat com.atlassian.plugin.osgi.hostcomponents.impl.DefaultComponentRegistrar$ContextClassLoaderSettingInvocationHandler.invoke(DefaultComponentRegistrar.java:129)\r\n\tat $Proxy412.doInTransaction(Unknown Source)  <+2> (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat com.atlassian.plugin.osgi.bridge.external.HostComponentFactoryBean$DynamicServiceInvocationHandler.invoke(HostComponentFactoryBean.java:154)\r\n\tat $Proxy412.doInTransaction(Unknown Source)\r\n\tat com.atlassian.sal.core.transaction.HostContextTransactionTemplate.execute(HostContextTransactionTemplate.java:21)  <+2> (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.doInvoke(ServiceInvoker.java:58)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.invoke(ServiceInvoker.java:62)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invokeUnprivileged(ServiceTCCLInterceptor.java:56)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invoke(ServiceTCCLInterceptor.java:39)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.importer.support.LocalBundleContextAdvice.invoke(LocalBundleContextAdvice.java:59)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n\tat $Proxy1147.execute(Unknown Source)\r\n\tat com.atlassian.upm.PluginAccessorAndControllerImpl.enablePlugin(PluginAccessorAndControllerImpl.java:350)\r\n\tat com.atlassian.upm.rest.resources.PluginResource.put(PluginResource.java:125)  <+3> (NativeMethodAccessorImpl.java:39) (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)  <+18> (DispatchProviderHelper.java:234) (DispatchProviderHelper.java:100) (DefaultMethodInvocation.java:61) (ExpandInterceptor.java:38) (DefaultMethodInvocation.java:61) (DispatchProviderHelper.java:132) (DispatchProviderHelper.java:230) (ResourceJavaMethodDispatcher.java:75) (HttpMethodRule.java:288) (ResourceClassRule.java:108) (RightHandPathRule.java:147) (RootResourceClassesRule.java:84) (WebApplicationImpl.java:1469) (WebApplicationImpl.java:1400) (WebApplicationImpl.java:1349) (WebApplicationImpl.java:1339) (WebComponent.java:416) (ServletContainer.java:537)\r\n\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter$JerseyOsgiServletContainer.doFilter(RestDelegatingServletFilter.java:178)  <+1> (ServletContainer.java:795)\r\n\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter.doFilter(RestDelegatingServletFilter.java:73)  <+16> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66) (RestServletUtilsUpdaterFilter.java:26) (RestServletUtilsUpdaterFilter.java:40) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66) (ContextFilter.java:25) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.mywork.client.filter.ServingRequestsFilter.doFilter(ServingRequestsFilter.java:37)  <+15> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AccessLogFilter.java:103) (AccessLogFilter.java:87) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (XsrfTokenAdditionRequestFilter.java:54) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (IteratingFilterChain.java:46) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugin.remotable.plugin.module.permission.ApiScopingFilter.doFilter(ApiScopingFilter.java:59)  <+22> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (SecurityFilter.java:234) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (TrustedApplicationsFilter.java:98) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (BaseLoginFilter.java:169) (JiraLoginFilter.java:70) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (IteratingFilterChain.java:46) (DelegatingPluginFilter.java:66) (OAuthFilter.java:55) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugins.rest.module.servlet.RestSeraphFilter.doFilter(RestSeraphFilter.java:40)  <+18> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AbstractJohnsonFilter.java:71) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (UrlRewriteFilter.java:738) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (GzipFilter.java:74) (GzipFilter.java:51) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (IteratingFilterChain.java:46) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugin.remotable.plugin.module.oauth.OAuth2LOFilter.doFilter(OAuth2LOFilter.java:72)  <+3> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugin.remotable.plugin.util.http.bigpipe.RequestIdSettingFilter.doFilter(RequestIdSettingFilter.java:22)  <+40> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66) (JWDSendRedirectFilter.java:25) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (ChainedFilterStepRunner.java:78) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AbstractCachingFilter.java:33) (AbstractHttpFilter.java:31) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AbstractEncodingFilter.java:41) (AbstractHttpFilter.java:31) (PathMatchingEncodingFilter.java:45) (AbstractHttpFilter.java:31) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (JiraStartupChecklistFilter.java:74) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (ChainedFilterStepRunner.java:78) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (StandardWrapperValve.java:225) (StandardContextValve.java:123) (AuthenticatorBase.java:472) (StandardHostValve.java:168) (ErrorReportValve.java:98) (StandardEngineValve.java:118) (AccessLogValve.java:927) (CoyoteAdapter.java:407) (AbstractHttp11Processor.java:1001) (AbstractProtocol.java:585) (JIoEndpoint.java:312)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)\r\n\tat java.lang.Thread.run(Thread.java:662)\r\nCaused by: org.osgi.framework.BundleException: Unresolved constraint in bundle com.pyxis.greenhopper.jira [105]: Unable to resolve 105.0: missing requirement [105.0] package; (&(package=com.atlassian.core.action)(version>=5.0.0)(!(version>=7.0.0)))\r\n\tat org.apache.felix.framework.Felix.resolveBundle(Felix.java:3409)\r\n\tat org.apache.felix.framework.Felix.startBundle(Felix.java:1709)\r\n\tat org.apache.felix.framework.BundleImpl.start(BundleImpl.java:905)\r\n\tat org.apache.felix.framework.BundleImpl.start(BundleImpl.java:892)\r\n\tat com.atlassian.plugin.osgi.factory.OsgiPlugin.enableInternal(OsgiPlugin.java:417)\r\n2013-01-23 14:00:17,843 http-bio-8080-exec-5 ERROR admin 840x447x1 1ov2ksh 192.168.10.1 /rest/plugins/1.0/com.pyxis.greenhopper.jira-key [atlassian.plugin.manager.PluginEnabler] Unable to enable plugin com.pyxis.greenhopper.jira\r\ncom.atlassian.plugin.osgi.container.OsgiContainerException: Cannot start plugin: com.pyxis.greenhopper.jira\r\n\tat com.atlassian.plugin.osgi.factory.OsgiPlugin.enableInternal(OsgiPlugin.java:445)\r\n\tat com.atlassian.plugin.impl.AbstractPlugin.enable(AbstractPlugin.java:237)\r\n\tat com.atlassian.plugin.manager.PluginEnabler.actualEnable(PluginEnabler.java:114)\r\n\tat com.atlassian.plugin.manager.PluginEnabler.enable(PluginEnabler.java:99)\r\n\tat com.atlassian.plugin.manager.PluginEnabler.enableAllRecursively(PluginEnabler.java:66)\r\n\tat com.atlassian.plugin.manager.DefaultPluginManager.enablePlugins(DefaultPluginManager.java:1181)\r\n\tat com.atlassian.jira.plugin.JiraPluginManager.enablePlugins(JiraPluginManager.java:66)  <+3> (NativeMethodAccessorImpl.java:39) (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat com.atlassian.plugin.osgi.hostcomponents.impl.DefaultComponentRegistrar$ContextClassLoaderSettingInvocationHandler.invoke(DefaultComponentRegistrar.java:129)\r\n\tat $Proxy486.enablePlugins(Unknown Source)  <+3> (NativeMethodAccessorImpl.java:39) (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.doInvoke(ServiceInvoker.java:58)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.invoke(ServiceInvoker.java:62)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invokeUnprivileged(ServiceTCCLInterceptor.java:56)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invoke(ServiceTCCLInterceptor.java:39)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.importer.support.LocalBundleContextAdvice.invoke(LocalBundleContextAdvice.java:59)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n\tat $Proxy902.enablePlugins(Unknown Source)\r\n\tat com.atlassian.upm.PluginAccessorAndControllerImpl$4.doInTransaction(PluginAccessorAndControllerImpl.java:357)\r\n\tat com.atlassian.upm.PluginAccessorAndControllerImpl$4.doInTransaction(PluginAccessorAndControllerImpl.java:351)\r\n\tat com.atlassian.sal.core.transaction.HostContextTransactionTemplate$1.doInTransaction(HostContextTransactionTemplate.java:25)\r\n\tat com.atlassian.jira.DefaultHostContextAccessor.doInTransaction(DefaultHostContextAccessor.java:34)  <+2> (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat com.atlassian.plugin.osgi.hostcomponents.impl.DefaultComponentRegistrar$ContextClassLoaderSettingInvocationHandler.invoke(DefaultComponentRegistrar.java:129)\r\n\tat $Proxy412.doInTransaction(Unknown Source)  <+2> (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat com.atlassian.plugin.osgi.bridge.external.HostComponentFactoryBean$DynamicServiceInvocationHandler.invoke(HostComponentFactoryBean.java:154)\r\n\tat $Proxy412.doInTransaction(Unknown Source)\r\n\tat com.atlassian.sal.core.transaction.HostContextTransactionTemplate.execute(HostContextTransactionTemplate.java:21)  <+2> (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)\r\n\tat org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.doInvoke(ServiceInvoker.java:58)\r\n\tat org.springframework.osgi.service.importer.support.internal.aop.ServiceInvoker.invoke(ServiceInvoker.java:62)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invokeUnprivileged(ServiceTCCLInterceptor.java:56)\r\n\tat org.springframework.osgi.service.util.internal.aop.ServiceTCCLInterceptor.invoke(ServiceTCCLInterceptor.java:39)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.osgi.service.importer.support.LocalBundleContextAdvice.invoke(LocalBundleContextAdvice.java:59)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.doProceed(DelegatingIntroductionInterceptor.java:131)\r\n\tat org.springframework.aop.support.DelegatingIntroductionInterceptor.invoke(DelegatingIntroductionInterceptor.java:119)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n\tat org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n\tat $Proxy1147.execute(Unknown Source)\r\n\tat com.atlassian.upm.PluginAccessorAndControllerImpl.enablePlugin(PluginAccessorAndControllerImpl.java:350)\r\n\tat com.atlassian.upm.rest.resources.PluginResource.put(PluginResource.java:125)  <+3> (NativeMethodAccessorImpl.java:39) (DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:597)  <+18> (DispatchProviderHelper.java:234) (DispatchProviderHelper.java:100) (DefaultMethodInvocation.java:61) (ExpandInterceptor.java:38) (DefaultMethodInvocation.java:61) (DispatchProviderHelper.java:132) (DispatchProviderHelper.java:230) (ResourceJavaMethodDispatcher.java:75) (HttpMethodRule.java:288) (ResourceClassRule.java:108) (RightHandPathRule.java:147) (RootResourceClassesRule.java:84) (WebApplicationImpl.java:1469) (WebApplicationImpl.java:1400) (WebApplicationImpl.java:1349) (WebApplicationImpl.java:1339) (WebComponent.java:416) (ServletContainer.java:537)\r\n\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter$JerseyOsgiServletContainer.doFilter(RestDelegatingServletFilter.java:178)  <+1> (ServletContainer.java:795)\r\n\tat com.atlassian.plugins.rest.module.RestDelegatingServletFilter.doFilter(RestDelegatingServletFilter.java:73)  <+16> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66) (RestServletUtilsUpdaterFilter.java:26) (RestServletUtilsUpdaterFilter.java:40) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66) (ContextFilter.java:25) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.mywork.client.filter.ServingRequestsFilter.doFilter(ServingRequestsFilter.java:37)  <+15> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AccessLogFilter.java:103) (AccessLogFilter.java:87) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (XsrfTokenAdditionRequestFilter.java:54) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (IteratingFilterChain.java:46) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugin.remotable.plugin.module.permission.ApiScopingFilter.doFilter(ApiScopingFilter.java:59)  <+22> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (SecurityFilter.java:234) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (TrustedApplicationsFilter.java:98) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (BaseLoginFilter.java:169) (JiraLoginFilter.java:70) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (IteratingFilterChain.java:46) (DelegatingPluginFilter.java:66) (OAuthFilter.java:55) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugins.rest.module.servlet.RestSeraphFilter.doFilter(RestSeraphFilter.java:40)  <+18> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AbstractJohnsonFilter.java:71) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (UrlRewriteFilter.java:738) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (GzipFilter.java:74) (GzipFilter.java:51) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (IteratingFilterChain.java:46) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugin.remotable.plugin.module.oauth.OAuth2LOFilter.doFilter(OAuth2LOFilter.java:72)  <+3> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.plugin.remotable.plugin.util.http.bigpipe.RequestIdSettingFilter.doFilter(RequestIdSettingFilter.java:22)  <+40> (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (DelegatingPluginFilter.java:66) (JWDSendRedirectFilter.java:25) (DelegatingPluginFilter.java:74) (IteratingFilterChain.java:42) (ServletFilterModuleContainerFilter.java:77) (ServletFilterModuleContainerFilter.java:63) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (ChainedFilterStepRunner.java:78) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AbstractCachingFilter.java:33) (AbstractHttpFilter.java:31) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (AbstractEncodingFilter.java:41) (AbstractHttpFilter.java:31) (PathMatchingEncodingFilter.java:45) (AbstractHttpFilter.java:31) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (JiraStartupChecklistFilter.java:74) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (ChainedFilterStepRunner.java:78) (ApplicationFilterChain.java:243) (ApplicationFilterChain.java:210) (StandardWrapperValve.java:225) (StandardContextValve.java:123) (AuthenticatorBase.java:472) (StandardHostValve.java:168) (ErrorReportValve.java:98) (StandardEngineValve.java:118) (AccessLogValve.java:927) (CoyoteAdapter.java:407) (AbstractHttp11Processor.java:1001) (AbstractProtocol.java:585) (JIoEndpoint.java:312)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)\r\n\tat java.lang.Thread.run(Thread.java:662)\r\nCaused by: org.osgi.framework.BundleException: Unresolved constraint in bundle com.pyxis.greenhopper.jira [105]: Unable to resolve 105.0: missing requirement [105.0] package; (&(package=com.atlassian.core.action)(version>=5.0.0)(!(version>=7.0.0)))\r\n\tat org.apache.felix.framework.Felix.resolveBundle(Felix.java:3409)\r\n\tat org.apache.felix.framework.Felix.startBundle(Felix.java:1709)\r\n\tat org.apache.felix.framework.BundleImpl.start(BundleImpl.java:905)\r\n\tat org.apache.felix.framework.BundleImpl.start(BundleImpl.java:892)\r\n\tat com.atlassian.plugin.osgi.factory.OsgiPlugin.enableInternal(OsgiPlugin.java:417)\r\n2013-01-23 14:00:28,000 http-bio-8080-exec-24 INFO admin 840x450x1 1ov2ksh 192.168.10.1 /secure/admin/ViewLogging!markLogs.jspa [jira.util.log.LogMarker] \r\n",
+      "summary": "Plugin Wont Enable"
+    }
+  },
+  {
+    "key": "JSWSERVER-7272",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-08-08T08:42:11.000+0000",
+      "created": "2013-01-23T16:30:04.000+0000",
+      "description": null,
+      "summary": "As a user I'd like to be able to re-open sprints so I can continue work in it if the sprint was accidentally closed"
+    }
+  },
+  {
+    "key": "JSWSERVER-7271",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-23T23:35:13.000+0000",
+      "created": "2013-01-23T09:58:12.000+0000",
+      "description": "As an admin, I'd like GH Rapid Boards (Scrum and Kanban) to support multiple workflows in the board's columns configuration mapping",
+      "summary": "support multiple workflows in the board's columns configuration mapping"
+    }
+  },
+  {
+    "key": "JSWSERVER-7269",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-03-11T06:18:58.000+0000",
+      "created": "2013-01-23T04:10:40.000+0000",
+      "description": "- Rapid Board owner needs to be lower case\n- Check classic mode, especially Assignee Board & Contexts (private + shared)\n\nTest Brainstorming Notes\n\n-rapid board owner\n-Issue lists = assignee swimlanes, reports that show assignee (none i think)\n-wherever we go to lucene\n\nClassic\n-user prefs and settings\n-property sets\n-version board + assignee context\n-version board persistence\n-assignee editing\n-drag and drop onto assignee\n-assignee box statistics\n-contexts\n-configuration of shared contexts\n-All tabs in manage context dialog\n",
+      "summary": "Update GreenHopper to correctly work with JIRA 6.0 rename feature"
+    }
+  },
+  {
+    "key": "JSWSERVER-7268",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-08-15T08:11:30.000+0000",
+      "created": "2012-09-14T20:45:42.000+0000",
+      "description": "A request for a feature to allow multiple owners for Rapid Boards.\r\n\r\n*Workaround*\r\n\r\nCreate a shared jira user for each project team. This user's credentials are shared within the team, and then we create GH boards and jira filters with these shared users. If anyone wants to update a jira filter or GH board, they just login with the shared user and change it.",
+      "summary": "Multiple Owners for Rapid Boards"
+    }
+  },
+  {
+    "key": "JSWSERVER-7267",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-24T05:28:11.000+0000",
+      "created": "2013-01-23T01:29:36.000+0000",
+      "description": null,
+      "summary": "Update Epic Report screenshot on View Available Reports page"
+    }
+  },
+  {
+    "key": "JSWSERVER-7266",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-23T01:03:20.000+0000",
+      "created": "2013-01-22T14:27:50.000+0000",
+      "description": "*Introduction:*\r\nWe are filtering our backlogs across projects using a customfield called sprint team. Our filters for each board filter for a single team only. Therefore if you change the sprint team for an issue, it disappears from the backlog. Unfortunately it also disappears from all reports!\r\n\r\n*Example:*\r\nTeam Rocket has issue ABC-123 in their active sprint. Halfway through the sprint, they realize that they need help from another team and remove ABC-123 from their active sprint. The report shows correctly that ABC-123 was removed from the sprint's scope. After \"assigning\" ABC-123 to team Balloon, it disappears from their backlog but also from all of team Rocket's reports.\r\n\r\n*Expected behavior:*\r\nThe issue has to show up in team Rocket's sprint report even though it is no longer in their backlog. Otherwise it is impossible to see that it was removed from the scope halfway through their sprint.",
+      "summary": "Issue disappears from all reports"
+    }
+  },
+  {
+    "key": "JSWSERVER-7265",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-01-22T13:44:32.000+0000",
+      "description": "As of now, Kanban boards don't display Issue estimates on cards. It would be expected, though, that users can:\r\n- display a selected estimate field on the Board (be it Time Estimates, Story Points or any other available);\r\n- log time and see estimated and remaining time if they're using Time Estimates.\r\n\r\n+Use case:+ prioritization of work on the fly; better overview of work in progress.",
+      "summary": "As a user, I want to make estimates visible on cards in Kanban board"
+    }
+  },
+  {
+    "key": "JSWSERVER-7263",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:43.000+0000",
+      "created": "2013-01-22T04:16:13.000+0000",
+      "description": "When inserting new issues into the kanban board, they automatically move to the bottom of the board. It would be nice to be able to insert issues above or below another issue rather than having to insert it and then move it. This functionality previously existed in the classic planning and task board.",
+      "summary": "Insert new issue in kanban board based on rank of another issue"
+    }
+  },
+  {
+    "key": "JSWSERVER-7262",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-23T02:08:38.000+0000",
+      "created": "2013-01-22T03:40:25.000+0000",
+      "description": "This issue is originally created in JIRA (JRA) project and moved to GreenHopper (GHS). Any request to https://jira.atlassian.com/browse/JRA-31392 will lead that automatically to https://jira.atlassian.com/browse/GHS-7262",
+      "summary": "Test Issue To Demonstrate Issue Move"
+    }
+  },
+  {
+    "key": "JSWSERVER-7261",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-01-21T23:07:34.000+0000",
+      "description": "Currently, you have to go to Configure for the board to switch the swimlane option to assignee, query, story on non swimlane option. It would be great if we can have a feature on the Work view of the new Rapid Boards to easily switch back and forth between the different swimlane options.\r\n\r\nI don't want to create another board to switch between two swimlane types. I want to be able to switch in the work view on one board; otherwise, it will force me to create quick filters for what I want to do like for all assignees and then have the swimlane use the query option. ",
+      "summary": "As a user I want to be able to easily switch between swimlanes within the Work Board View"
+    }
+  },
+  {
+    "key": "JSWSERVER-7260",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T03:21:54.000+0000",
+      "created": "2013-01-21T14:13:18.000+0000",
+      "description": "As a team lead, I would like to enter the total team capacity for a sprint (the number of hours they have in total to work during the course of the sprint) and then see a line on the burndown that shows REMAINING TEAM CAPACITY based on total original time minus time logged on issues.\r\n\r\nIt's great that I can see the how much WORK is left, but I need to be able to compare it to how much TIME the team still has available to them.",
+      "summary": "Capacity line in burndown"
+    }
+  },
+  {
+    "key": "JSWSERVER-7259",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T03:26:09.000+0000",
+      "created": "2013-01-21T13:33:49.000+0000",
+      "description": "For some customer that has more than 300 issues in the backlog, it would be hard to deal with all the issues where you have to scroll down to no ends. It would be really great if we can configure the maximum of issues per page on the backlog or not to have the page at all. This would be a great improvement to the current Rapid board, as you might know, this paging feature has been introduced in Classic board yet it seems not being implemented in the new Rapid board. Certain customer uses this feature and expect this to be available in the new Rapid board as well.\r\n\r\nThe page numbering should be put on top and bottom of the backlog for easier access of handling all the issues in the backlog. As an example, the following\r\n!page3.PNG!\r\n",
+      "summary": "As a Rapid board user, paging feature on backlog should be implemented"
+    }
+  },
+  {
+    "key": "JSWSERVER-7258",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T03:16:54.000+0000",
+      "created": "2013-01-21T12:57:14.000+0000",
+      "description": "Hi there,\r\n\r\nWe organise our work items into JIRA projects then setup EPIC/STORY/TASK issues as required. \r\n\r\nIn the GH planning view we get a full list of all the EPICS that are created across all the projects that are of interest to us.  We can then click on an epic and filter the backlog accordingly.  We then decide what project(s) we are to work on in the active sprint and move stories to it.\r\n\r\nWhat is missing is a simple (and human readable) way of identifying which project a particular epic belongs too. One solution is to mandate that each epic has to include in its name the JIRA project ID - not ideal.\r\n\r\nAny chance of an extension to the EPIC side panel that aggregates epics into a collapsible list of projects?  Then we can expand/show/hode only projects that are of interest in that time box and plan the applicable stories?\r\n\r\nThanks ",
+      "summary": "In GH scrum planning view, show the project in the epic list"
+    }
+  },
+  {
+    "key": "JSWSERVER-7257",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T03:14:38.000+0000",
+      "created": "2013-01-21T12:54:58.000+0000",
+      "description": "Hi.\r\n\r\nI've been using Tempo plugin for some time now. Tempo has the ability to define non-working days. \r\n\r\nI just don't want to define non-working days in several places. Are there some plans or ways to remedy this?",
+      "summary": "As a Tempo user I don't want to manage non-working days on several places"
+    }
+  },
+  {
+    "key": "JSWSERVER-7256",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-23T22:38:57.000+0000",
+      "created": "2013-01-21T06:20:12.000+0000",
+      "description": "timebox: half-day\n",
+      "summary": "Release Planning Prototype for User testing"
+    }
+  },
+  {
+    "key": "JSWSERVER-7255",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-05-06T23:55:34.000+0000",
+      "created": "2012-12-05T15:45:53.000+0000",
+      "description": "# When trying to select Sprint field in Basic Search (see image attached), user gets \"Sprint is not applicable for the current project and/or issue type\". On the other hand, user *can* search for issues by Sprint through Advanced Search.\r\n# If the project is selected in the Issue Navigator, it allows to select Sprint field in 'More Criteria' but the drop down is empty (Second attachment)",
+      "summary": "Ability to select Sprint in Basic Search"
+    }
+  },
+  {
+    "key": "JSWSERVER-7254",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-02-08T04:03:09.000+0000",
+      "created": "2013-01-20T23:30:52.000+0000",
+      "description": "The sub-task panel has a 'Create' button to create sub-tasks quickly for an issue. It would be good to have a similar mechanism when viewing an epic, so that you can create issues for the epic.\r\n\r\n(!) Development Notes (!)\r\n\r\nQ: How does this overwrite the current project and issuetype selection of the create issue dialog?\r\nA: (/) No overriding is done for the create issue dialog. It behaves identical to the normal dialog. \r\n\r\nQ: What happens if you open the create issue for epic and create issue dialogs one after the other?\r\nA: (/) Multiple issue creation is supported. After all issues are created and dialog is closed, then the created issues are associated with the epic\r\n\r\nQ: What if the epic is closed?\r\nA: (/) Issues will still be able to be associated to the epic.\r\n\r\nQ: What if the epic doesn't exist anymore?\r\nA: (/) An error message is shown saying the issue does not exist\r\n\r\nQ: What if the epic has been changed to another issuetype?\r\nA: (/) If the user is on the epic's view issue page and the epic's type is changed on another page, then creating issues in the epic work, but the association will fail with an error message saying the Issue should be of type Epic\r\n\r\nQ: What if you have inline edits open in jira before clicking the button?\r\nA: (/) They are closed before the dialog opens",
+      "summary": "As a user, I would like to create an issue inside an epic when viewing an epic in JIRA"
+    }
+  },
+  {
+    "key": "JSWSERVER-7253",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-01-20T23:21:40.000+0000",
+      "description": "The value displayed within the estimate field is different in Plan and Work mode . This is confusing, as one would expect to see the same information in this field, regardless of the mode. \r\nEither allow both Original and Remaining to be visible on the card, or always use/show the Remaining estimate.\r\n\r\nCurrently, you see Original Estimate in Plan Mode, but Remaining Estimate in Work mode when you have Time Tracking (Remaining Estimate and Time Spent) configured for estimation in the board configuration. ",
+      "summary": "Inconsistent use of the Estimate field"
+    }
+  },
+  {
+    "key": "JSWSERVER-7252",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-01-20T22:52:21.000+0000",
+      "description": "While planning a new sprint I am able to see how much work is planned for the sprint in the summary row (section) below the sprint backlog. In this section I can see the amount of remaining work (estimate). This is essential for the proper planning of the sprint. We combine this with a Quick filters by Assignee in order to allow proper planning of the individual tasks.\r\n\r\nHowever, once the sprint is is started, if you go to the Plan mode, you are not able to see the estimates summary row (section) below the sprint anymore. This is inconvenient as this it is hard to tell how much work is remaining - if you want to slice the work by some other criteria (besides status - statistic for which is available in the top-right corner of the sprint). \r\nWhat is needed is one of the following:\r\n# Keep the estimates summary row (Section) below the sprint - for the started and for the not yet started sprints - the estimates summary should reflect the applied Quick Filters (as for the not started sprints), or\r\n# Update the sprint estimate statistics (on the top-right) corner according to the selected Quick Filters. \r\n\r\n ",
+      "summary": "As a user I would like to be able to see the remaining estimate summary in Plan mode for the started Sprint"
+    }
+  },
+  {
+    "key": "JSWSERVER-7251",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-22T04:20:06.000+0000",
+      "created": "2013-01-20T22:41:54.000+0000",
+      "description": null,
+      "summary": "Incorporate pull request from UPM 2.8"
+    }
+  },
+  {
+    "key": "JSWSERVER-7250",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-24T02:27:36.000+0000",
+      "created": "2013-01-20T18:27:05.000+0000",
+      "description": "As mentioned here:\r\nhttps://confluence.atlassian.com/display/GH/Viewing+the+Velocity+Chart?focusedCommentId=317948993#comment-317948993\r\nthe problem appears also in case of our instance, in a board with default, consecutive sprint names (Sprint 76, Sprint 77 etc).\r\nThe suggested workaround:\r\nhttps://confluence.atlassian.com/display/GH/Viewing+the+Velocity+Chart?focusedCommentId=317950207#comment-317950207\r\nhelped just once but seems not to work anymore.",
+      "summary": "Error \"No issues present in sprint to generate scope change model\" when viewing the Velocity Chart"
+    }
+  },
+  {
+    "key": "JSWSERVER-7249",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-04-04T03:49:25.000+0000",
+      "created": "2013-01-19T00:44:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Server*. Using *JIRA Software Cloud*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWCLOUD-7249].\n  {panel}\n\n!Screenshot.png!",
+      "summary": "drop zone heights borked when swimlane is 1 issue high"
+    }
+  },
+  {
+    "key": "JSWSERVER-7248",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T03:15:46.000+0000",
+      "created": "2013-01-18T22:36:59.000+0000",
+      "description": "Feature Request:\r\nI'd like to be able to more easily track work hour estimates and logged work based on individual assignees. Currently we track hour estimates on sub-tasks within stories while stories are estimated with story points. Two related enhancements to the Agile Planning Board would make it easier to determine which team members have their time fully spoken for when planning the upcoming sprint. I know not all teams track hours, so the vissibility of these displays might need to be configurable.\r\n\r\n1) On the Issue Details section (when an Issue is selected on the planning view of the Agile Board) show something similar to the \"Time Tracking\" section of the JIRA Issue page except broken out by sub-task assignee. This would show you at a glance who needs to work on this issue and how much work needs to be done by each person (because not all stories require the whole team).\r\n\r\n2) For each Sprint (and the area above the Sprint Marker before starting a new one) show an aggregate \"Time Tracking\" section that breaks down hour estimates/logged for each assignee. This would show you at a glance how much each person has committed to for the sprint.",
+      "summary": "Add Time Tracking to the Agile Board Sprint Plan View"
+    }
+  },
+  {
+    "key": "JSWSERVER-7247",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-01-16T02:47:59.000+0000",
+      "created": "2013-01-18T18:58:29.000+0000",
+      "description": "This issue occurs when users make use of browser zoom tool in Google Chrome.\r\n\r\n When zooming, the text on labels are resized, but after 2 levels the text is switched for dots. This behavior doesn't happen with other browsers, such as Firefox (tested on Mac and Linux). \r\n\r\nPlease see the attached screenshot.\r\n\r\n",
+      "summary": "Greenhopper Epic labels on the planning board turn into '...' when zoom size is increased/decreased in Chrome"
+    }
+  },
+  {
+    "key": "JSWSERVER-7246",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-30T01:35:59.000+0000",
+      "created": "2013-01-18T15:42:26.000+0000",
+      "description": "On UPM 2.8 *'JIRA Administrators'* can no longer install or update plugins on JIRA only users with *'JIRA System Administrators'* Global permission.\r\n\r\nPlease update the page below:\r\n\r\n* [GreenHopper Installation and Upgrade Guide|https://confluence.atlassian.com/display/GH/GreenHopper+Installation+and+Upgrade+Guide]\r\n\r\nUnder the sections:\r\n\r\n1- [Before you begin|https://confluence.atlassian.com/display/GH/GreenHopper+Installation+and+Upgrade+Guide#GreenHopperInstallationandUpgradeGuide-Beforeyoubegin]\r\n!Connie Page.png|thumbnail!\r\n\r\n2- [Installing GreenHopper|https://confluence.atlassian.com/display/GH/GreenHopper+Installation+and+Upgrade+Guide#GreenHopperInstallationandUpgradeGuide-InstallingGreenHopper]\r\n!Connie Page 2.png|thumbnail!\r\n\r\n3- [Upgrading GreenHopper|https://confluence.atlassian.com/display/GH/GreenHopper+Installation+and+Upgrade+Guide#GreenHopperInstallationandUpgradeGuide-UpgradingGreenHopper]\r\n!Connie Page 3.png|thumbnail!\r\n\r\nBelow you can see in details the *'JIRA System Administrators'* and *'JIRA Administrators'* view;\r\n\r\n*'JIRA System Administrators'* view:\r\n!Plugins-1.png|thumbnail!\r\n\r\n*'JIRA Administrators'* view:\r\n!Plugins-2.png|thumbnail!\r\n\r\nUPM version:\r\n!UPM version.png|thumbnail!\r\n",
+      "summary": "Documentation update"
+    }
+  },
+  {
+    "key": "JSWSERVER-7245",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T03:05:39.000+0000",
+      "created": "2013-01-18T14:57:46.000+0000",
+      "description": "At the moment, we are only able to configure card colors in GreenHopper based on the following fields:\r\n- Issue Types\r\n- Priorities\r\n- Assignees\r\n- Queries\r\n\r\nThis is as per outlined in the documentation on [Configuring Card Colours|https://confluence.atlassian.com/display/GH/Configuring+Card+Colours].\r\n\r\nHowever, it will be great if we are able to configure the card colors based on the issue status as well. ",
+      "summary": "Add the ability to set card colors based on the issue status"
+    }
+  },
+  {
+    "key": "JSWSERVER-7244",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-23T00:57:44.000+0000",
+      "created": "2013-01-18T14:52:15.000+0000",
+      "description": "When ranking an issue to top via the *Rank To Top* button in Issue Screen, if the issue is in the backlog and there is an Inactive Sprint created, the issue will be automatically placed into the Inactive Sprint. It will not be moved to the top of the backlog as it should be. If there are multiple inactive sprints, then it will be placed into the top-most inactive sprint.\r\n\r\nSteps to reproduce:\r\n# Create a new Sprint. Don't start it.\r\n# Go to any Jira issue that is currently not at the top of the backlog.\r\n# Press \"More Actions\" -> \"Rank to Top\"\r\n# Go to a Scrum-Board. Press \"Plan\" and you see that the Task went right into the topmost inactive sprint.",
+      "summary": "Rank To Top button via Issue Screen causes issue to automatically be moved from backlog into inactive sprint"
+    }
+  },
+  {
+    "key": "JSWSERVER-7243",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-05-01T04:19:20.000+0000",
+      "created": "2013-01-18T14:34:21.000+0000",
+      "description": "The GreenHopper Classic feature allowed for using contexts, to filter down pretty much everything. While the new Agile Boards come with the quick filter concept, these are unfortunately limited to the plan and work modes, but not the reports.\r\n\r\nWhat our users need are reports (esp. the burn down chart), which can be filtered down on individual team member level, in order to leverage work load, track progress and identify road blocks. Ideally, all reports carry a configuration option like the control chart with following options:\r\n- Filter on 1 to many team members\r\n- Filter on 1 to many quick filters\r\n",
+      "summary": "As a Agile Board user, I want to be able to see the reports filtered on individual team member level or based on quick filters"
+    }
+  },
+  {
+    "key": "JSWSERVER-7242",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-04-17T00:18:12.000+0000",
+      "created": "2013-01-18T14:26:31.000+0000",
+      "description": "\"no issues present in sprint to generate scope change model\" message appears when trying to open 'Velocity chart' report on the specific project. All other projects work fine. As [comment|https://confluence.atlassian.com/display/GH/Viewing+the+Velocity+Chart?focusedCommentId=317948993#comment-317948993] suggests, it might happen due to the duplicate sprint name. I didn't have chance to check whether it is true or not.",
+      "summary": "Velocity chart cannot be displayed for specific project"
+    }
+  },
+  {
+    "key": "JSWSERVER-7241",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-02-21T22:33:58.000+0000",
+      "created": "2013-01-18T08:44:49.000+0000",
+      "description": "Steps to reproduce:\r\n# install GreenHopper 6.1.x\r\n# use \"Original Estimate\" for estimation the Scrum \r\n# create issues with Subtask. Eg: Parent Issue TST-1, Subtask: TST-2 , TST-3.\r\n# assigned TST-1 and TST-2 to same user. Eg: user1\r\n# assigned TST-3 to different user.Eg: user2\r\n# create Quick Filter in Scrum, Plan mode by Assignee\r\n# Remaining Estimate will include the Subtask not assigned to user1.\r\n\r\n",
+      "summary": "Subtask Not Included Sprint But Calculated In Remaining Estimate"
+    }
+  },
+  {
+    "key": "JSWSERVER-7240",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-30T03:16:11.000+0000",
+      "created": "2013-01-18T04:16:36.000+0000",
+      "description": "Outcome is a service to query fixVersion history or reasons why it can't be done with JIRA data and possible alternatives.",
+      "summary": "implement history data service for the fixVersion data field"
+    }
+  },
+  {
+    "key": "JSWSERVER-7239",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-11-28T02:45:29.000+0000",
+      "created": "2013-01-17T18:20:24.000+0000",
+      "description": "According to your documentation drag and drop ranking is only allowed if a single ORDER BY of Rank is used in your scrum planning board filter.\r\n\r\nWould like to sort by Epic Colour as well:\r\n\r\n- ...  ORDER BY \"Epic Colour\" ASC, Rank ASC\r\n\r\nand this sorting works (yeah!).  But of course, this breaks the Drag and Drop ranking ability:\r\n\r\n- \"Ranking is disabled, as the Filter Query for this board is not ordered by Rank. Please check your filter configuration.\"\r\n\r\nYes - I understand that only one ORDER BY is currently supported:\r\nhttps://confluence.atlassian.com/x/GhPzE\r\n\r\nBut I am requesting ability to use multiple ORDER BYs in Scrum Planning filter view, if Rank is still last.\r\n\r\nThanks!\r\nRick",
+      "summary": "Request ability to use multiple ORDER BYs in Scrum Planning filter view, if Rank is still last."
+    }
+  },
+  {
+    "key": "JSWSERVER-7238",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-01-17T17:34:02.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\r\n*NOTE:* This bug report is for *JIRA Software Server*. Using *JIRA Software Cloud*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWCLOUD-7238].\r\n{panel}\r\nh3. Summary\r\n\r\nJIRA Software/JIRA Agile does not use the ISO8601 formatting for its date pickers.\r\nh3. Environment\r\n\r\nJIRA with JIRA Agile/Software.\r\nh3. Steps to Reproduce\r\n # Setup a JIRA instance with Agile/Software installed;\r\n # Navigate to *Administration > System > Look and Feel* and set JIRA to use ISO8601 formatting for date pickers;\r\n # Navigate to an existing or create a new Agile Scrum board;\r\n # Create a version using the sidebar under *Backlog* view or edit an existing sprint.\r\n # Observe that the date pickers will not respect the ISO8601 setting from JIRA;\r\n\r\nh3. Expected Results\r\n\r\nJIRA Software should consistently use the ISO8601 setting if it has been configured in JIRA.\r\nh3. Actual Results\r\n\r\nJIRA Agile does not apply this setting, as a result the date pickers behave in an inconsistent manner.\r\n (i) This is not affecting the date pickers in the *Releases* page (version 8.12.3)\r\nh3. Notes\r\n\r\nThe original report included the following information:\r\n{quote}This can be seen in two different places:\r\n Administration -> Greenhopper Configuration -> Non Working Days.\r\n Configure Board -> Non Working Days -> Add Date Button\r\n{quote}\r\nh3. Workaround\r\n\r\n(/) The following workaround has been shown to work for customers on 8.13.x versions, but may not work on all versions of JIRA.\r\n{panel:bgColor=#fffae6}\r\n(!)\u00a0We recommend performing these changes in a lower environment before attempting them in your production environment.\r\n{panel}\r\n # Choose\u00a0*Administration*\u00a0(\u00a0 !https://confluence.atlassian.com/adminjiraserver/files/951394526/951394527/1/1527598493234/cog_icon.png|width=18! \u00a0)\u00a0*>*\u00a0*System*.\u00a0\r\n # Select\u00a0*User Interface > Announcement banner*\u00a0in the System panel below.\r\n # Add the following code snippet into the Announcement field:\r\n{code:javascript}\r\n<script>\r\n(function() {\r\n    if (Calendar) {\r\n        Calendar._setup = Calendar.setup;       \r\n        Calendar.setup = function(arguments) {\r\n            arguments = arguments || {};\r\n            arguments.useISO8601WeekNumbers =true;\r\n            Calendar._setup(arguments); \r\n        };\r\n    }\r\n})();\r\n</script> \r\n{code}\r\n# Select the required\u00a0*Visibility Level*\u00a0for the banner.\r\n# Click the\u00a0*Set Banner*\u00a0button.",
+      "summary": "JIRA Agile/Software does not respect JIRA's ISO8601 setting"
+    }
+  },
+  {
+    "key": "JSWSERVER-7237",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-29T06:58:27.000+0000",
+      "created": "2013-01-17T16:20:17.000+0000",
+      "description": "When updating the Greenhopper plugin from the Jira universal plugin manager, when the update is complete, Jira redirects to the URL /software/greenhopper/whatsnew\r\n\r\nThis redirect results in HTTP 404 Not Found.\r\n\r\nThis has happened the last 2 times I have updated Greenhopper.",
+      "summary": "After Greenhopper plugin update, Jira redirects to a non-existent URL (404)"
+    }
+  },
+  {
+    "key": "JSWSERVER-7236",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-07-30T00:29:47.000+0000",
+      "created": "2013-01-17T14:03:07.000+0000",
+      "description": "As you can see from the attached unite-greenhopper.jpg image, we've filtered all issues belonging to a certain project component (Connectivity) and like to associate these issues to selected project versions. We need a display screen that contains project versions so that we can drag&drop issues one by one to those project versions.\r\n\r\nIn this special project each component is assigned to a project manager and each of'em needs to be able to plan his/her component from the planning board easily. Otherwise they won't be able to associate components with versions easily in Greenhopper.\r\n\r\nBest Regards\r\n\r\nOnur",
+      "summary": "we'd like to drag and drop issues that belong to a  single component to versions selectively from the planning board"
+    }
+  },
+  {
+    "key": "JSWSERVER-7235",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T03:04:48.000+0000",
+      "created": "2013-01-17T13:19:22.000+0000",
+      "description": "Currently, GH 6 only default Kanban mode to used the Advanced search query.\r\n\r\nAs a user it would be great to have this feature for Scrum as well.",
+      "summary": "Allow Scrum to be selected in Advanced Tab when creating a board."
+    }
+  },
+  {
+    "key": "JSWSERVER-7234",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T23:46:35.000+0000",
+      "created": "2013-01-17T13:14:29.000+0000",
+      "description": "When a user have set the quick filter in Work Mode, the user will continue to have the quick filter being clicked/used even if the user have navigate to other page in JIRA. However, when a user open an issue which is currently in an Active Sprint and click on the _View On Board_ link under the Agile tab in the Issue View page, all the guick filter that has been clicked/used will gets reset.\r\n\r\nh3. Steps to Reproduce\r\n# Create Sprint and Start Sprint\r\n# Go to the Work Mode\r\n# Click/use on the quick filter\r\n# Click on the Issuekey to go to the Issue View page\r\n# In the Issue View page, under the Agile tab, click on the View On Board link",
+      "summary": "Quick filter gets reset when clicking on View On Board link in the Issue View"
+    }
+  },
+  {
+    "key": "JSWSERVER-7233",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:03:26.000+0000",
+      "created": "2013-01-17T12:05:05.000+0000",
+      "description": "Adding Time Spent and Time remaining would help with planning further sprints",
+      "summary": "As a manager I would like to see time spent and time remaining in the epic column in plan view"
+    }
+  },
+  {
+    "key": "JSWSERVER-7232",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-08-03T19:29:37.000+0000",
+      "created": "2013-01-17T11:14:39.000+0000",
+      "description": "When Sub-tasks use a separate Workflow, and their final Status ID is different from that of the main tasks, JIRA Agile will not allow the user to complete the Sprint unless the sub-tasks are included in the Board filter. The cause is that it's looking only for Status IDs included in the Done column.\r\n\r\nSteps to reproduce:\r\n# create a Sprint on a Board with a filter that doesn't include Sub-tasks;\r\n# finish all tasks on the board as well as the sub-tasks;\r\n# try to complete the Sprint: Agile will complain about Sub-tasks not being finished.\r\n\r\nWorkaround: modify the Board filter so that the Sub-task final status is included in the Done column.  Make sure the resolved status for your sub-tasks is placed in the green column.",
+      "summary": "Unable to complete a sprint if sub-task status is not included in the Done column"
+    }
+  },
+  {
+    "key": "JSWSERVER-7231",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-11-06T07:11:17.000+0000",
+      "created": "2013-01-17T08:11:47.000+0000",
+      "description": "h3. Steps to Reproduce:\r\n# Create a board with some stories\r\n# Click on one story in the Plan view so that the issue detail screen is displayed\r\n# Keeping pressing the 't' button to hide/unhide the detail view\r\n\r\nh3. Expected Results:\r\n# The issue detail view should keep getting hidden/shown on every keystroke\r\n\r\nh3. Actual Results:\r\n# The error in the attachment pops up",
+      "summary": "Exception While Hiding Issue Detail Using Keyboard Shortcut"
+    }
+  },
+  {
+    "key": "JSWSERVER-7230",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:44.000+0000",
+      "created": "2013-01-17T08:08:02.000+0000",
+      "description": "A new keyboard shortcut to be defined to show/hide Epic panel.",
+      "summary": "As I User I Would Like to Hide The Epic and/or Version Panel using Keyboard Shortcuts"
+    }
+  },
+  {
+    "key": "JSWSERVER-7229",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-12-30T04:11:01.000+0000",
+      "created": "2013-01-17T08:02:27.000+0000",
+      "description": "The title says it all.",
+      "summary": "As a User I would Like To Sort The Attachments in the Issue Detail View"
+    }
+  },
+  {
+    "key": "JSWSERVER-7228",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-29T03:46:02.000+0000",
+      "created": "2013-01-17T05:02:04.000+0000",
+      "description": "Given that I have no issues in the backlog because all are assigned to sprints, when I select an issue and choose \"send to bottom of backlog\" it is sent to the end of the current sprint.\r\n\r\nIt should go into the backlog and out of the sprint.\r\n",
+      "summary": "Send to bottom keyboard shortcut of backlog does not remove from a future sprint"
+    }
+  },
+  {
+    "key": "JSWSERVER-7227",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2015-11-06T07:10:14.000+0000",
+      "created": "2013-01-17T03:38:26.000+0000",
+      "description": "When a context menu is visible for an issue and the user then selects another issue using the keyboard shortcuts, the context menu stays visible. The context menu actions still apply to the issues for which the menu was shown. This can be confusing to the user",
+      "summary": "Select next/previous issue with keyboard shortcuts doesnt hide context menu"
+    }
+  },
+  {
+    "key": "JSWSERVER-7226",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T03:49:18.000+0000",
+      "created": "2013-01-17T03:37:42.000+0000",
+      "description": null,
+      "summary": "The mouseover targets are off by some pixels - no tooltip for point right on top of it."
+    }
+  },
+  {
+    "key": "JSWSERVER-7225",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T05:12:50.000+0000",
+      "created": "2013-01-17T03:36:54.000+0000",
+      "description": "This is a strange one. Have not tried to repro on other browsers yet -- but definitely does not happen in Chrome.\n\n# Select the \"issues without epics\" filter\n# Select two issues\n# Do a few right-click context actions that do not refresh the board - i.e. just simple ranking operations\n# Eventually the right click menu will not appear near the issues any more, but in the top left",
+      "summary": "IE8 - context menu appears in top left corner in some cases"
+    }
+  },
+  {
+    "key": "JSWSERVER-7224",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T02:55:04.000+0000",
+      "created": "2013-01-17T03:35:03.000+0000",
+      "description": "Either at the Top of the Backlog or Future Sprints\r\n\r\n*Note:* \r\n* This action is available in Work Mode - the rank calculation must be done server-side",
+      "summary": "As Patrick, I want issues that I remove from a sprint to be ranked consistently"
+    }
+  },
+  {
+    "key": "JSWSERVER-7223",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-22T06:18:20.000+0000",
+      "created": "2013-01-17T03:31:53.000+0000",
+      "description": null,
+      "summary": "Quickly flipping between plan and report results in a js exception"
+    }
+  },
+  {
+    "key": "JSWSERVER-7222",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-22T02:52:14.000+0000",
+      "created": "2013-01-17T03:28:02.000+0000",
+      "description": null,
+      "summary": "Dragging issues from backlog to active sprint, doesn't update backlog issue count"
+    }
+  },
+  {
+    "key": "JSWSERVER-7221",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-22T06:42:32.000+0000",
+      "created": "2013-01-17T03:23:14.000+0000",
+      "description": "Should be \"Visible issues\" instead of \"Visible issue\". See Michael's comment.",
+      "summary": "Use always visible issues when filtering future sprint."
+    }
+  },
+  {
+    "key": "JSWSERVER-7219",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-11-19T10:24:40.000+0000",
+      "created": "2013-01-17T03:20:03.000+0000",
+      "description": null,
+      "summary": "User cannot drag the future sprint marker above the last issue to leave it outside the sprint."
+    }
+  },
+  {
+    "key": "JSWSERVER-7218",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2016-03-11T03:48:00.000+0000",
+      "created": "2013-01-17T03:19:28.000+0000",
+      "description": "Steps to reproduce:\r\n\r\n# Open Plan Mode\r\n# Close detail view\r\n# Select an issue\r\n# Right click issue\r\n# Press 't', st, sb, j, k\r\n\r\nWe might want to detect when this happens and close any active menus. This may be more evident when Epics Panel also gets a keyboard shortcut.",
+      "summary": "Context menu does not disappear when non-page-refresh keyboard shortcuts are used"
+    }
+  },
+  {
+    "key": "JSWSERVER-7217",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-24T06:03:02.000+0000",
+      "created": "2013-01-17T03:17:32.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Software Server*. Using *JIRA Software Cloud*? [See the corresponding bug report|http://jira.atlassian.com/browse/JSWCLOUD-7217].\n  {panel}\n\n",
+      "summary": "Switching quickly from plan / work / report mode generates an js error"
+    }
+  },
+  {
+    "key": "JSWSERVER-7216",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-21T02:58:03.000+0000",
+      "created": "2013-01-17T03:17:28.000+0000",
+      "description": null,
+      "summary": "Push epic label on right if estimate is issue count."
+    }
+  },
+  {
+    "key": "JSWSERVER-7215",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T05:09:11.000+0000",
+      "created": "2013-01-17T03:16:59.000+0000",
+      "description": "Change \"Completed Issue Count\" to \"Completed issues\"",
+      "summary": "OPINION issues should be Issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-7214",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T04:56:15.000+0000",
+      "created": "2013-01-17T03:15:41.000+0000",
+      "description": "\n\nGiven that I have no issues in the backlog because all are assigned to sprints, when I select an issue and choose \"send to bottom of backlog\" it is sent to the end of the current sprint.\n\nIt should go into the backlog and out of the sprint.\n",
+      "summary": "Send to bottom of backlog does not remove from a sprint"
+    }
+  },
+  {
+    "key": "JSWSERVER-7213",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T04:59:49.000+0000",
+      "created": "2013-01-17T03:14:55.000+0000",
+      "description": null,
+      "summary": "No Non-working days config tab on kanban boards"
+    }
+  },
+  {
+    "key": "JSWSERVER-7212",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T05:32:13.000+0000",
+      "created": "2013-01-17T03:09:48.000+0000",
+      "description": "I added two upcoming sprints, order is reversed\n\nthis might (guess!) be because we don't add the created upcoming sprint to the rank order and the dropdown code falls over it?",
+      "summary": "Dropdown shows upcoming sprints in wrong order"
+    }
+  },
+  {
+    "key": "JSWSERVER-7211",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-22T23:07:04.000+0000",
+      "created": "2013-01-17T03:08:37.000+0000",
+      "description": "We should add validation in the custom field type on creation so that Epic Name is not a string full of spaces.",
+      "summary": "Can create epic with \" \" name, but not with such summary. Check both if possible."
+    }
+  },
+  {
+    "key": "JSWSERVER-7209",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-25T03:34:09.000+0000",
+      "created": "2013-01-17T03:04:00.000+0000",
+      "description": "See screenshot",
+      "summary": "Right-hand y-axis label appears underneath epic summary"
+    }
+  },
+  {
+    "key": "JSWSERVER-7208",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-17T05:01:28.000+0000",
+      "created": "2013-01-17T02:59:58.000+0000",
+      "description": null,
+      "summary": "Detail view fields aren't correctly lined up"
+    }
+  },
+  {
+    "key": "JSWSERVER-7207",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2018-03-14T11:02:45.000+0000",
+      "created": "2013-01-17T02:57:26.000+0000",
+      "description": null,
+      "summary": "As a user, I would like to be able to select the time range of viewing for the Epic Report, so I can refine the results I am looking at"
+    }
+  },
+  {
+    "key": "JSWSERVER-7206",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-17T03:33:00.000+0000",
+      "created": "2013-01-17T02:51:21.000+0000",
+      "description": null,
+      "summary": "Browser history 'back' behaviour is broken with Burndown Chart"
+    }
+  },
+  {
+    "key": "JSWSERVER-7205",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2014-07-17T03:43:46.000+0000",
+      "created": "2013-01-16T20:51:37.000+0000",
+      "description": "Add ability to configure email notifications when a column constraint (MAX, in particular) is violated in the Green Hopper Kanban boards.",
+      "summary": "Add ability to configure email notifications when a column constraint (MAX, in particular) is violated in the Green Hopper Kanban boards."
+    }
+  },
+  {
+    "key": "JSWSERVER-7204",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-04-19T01:47:34.000+0000",
+      "created": "2013-01-16T16:25:17.000+0000",
+      "description": "As a Kanban rapid board user, I would like to have the same approach offered by Scrum rapid board - plan view.\r\nBasically, it would be great to be presnted with the same view as plan for scrum (epics on left, backlog center and detail on left) but without sprint/create sprint and so on, maybe replaced with a facility to move to \"in progress\" status topmost backlog issues as we can do when we create a sprint in scrum mode.\r\n",
+      "summary": "Epic in Kanban rapid boards"
+    }
+  },
+  {
+    "key": "JSWSERVER-7203",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-01-16T10:47:19.000+0000",
+      "description": "In current implementation of GreenHopper, a single Epic can support multiple projects as needed. This means that only a single Epic issue type is used for all boards available by default. And due to this configurations, users are not able to create a new Epic issue type, and have different boards to use different Epic. \r\n\r\nIt will be great if GreenHopper allows users to create multiple Epic issue type, and configure the available boards to use specific Epic issue type as required. \r\n\r\nSample use case:\r\n{quote}\r\nIn our (and most likely other users) case we have a combination of hardware and software projects. The two project streams are loosely coupled. For the hardware side, the use of the word \"Epic\" would not feel really natural. Example: 2 Volts power rise within 10 nanoseconds is not an \"Epic\", it is a \"Feature\". On the other hand the software that drives the instrument can use the \"Epic\" terminology. Example: \"Device drivers support power-on sequence and self-test of high-speed power card\".\r\n\r\nTherefore I think it would be great if one could specify per configured board (Kanban or Scrum) which issue type should be considered the \"Top Level Hierarchy\".\r\n{quote}",
+      "summary": "Add the ability to create multiple Epic issue type in JIRA Software"
+    }
+  },
+  {
+    "key": "JSWSERVER-7201",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-01-22T02:54:41.000+0000",
+      "created": "2013-01-16T05:20:44.000+0000",
+      "description": "For example, in the Epic Support epic on JAC:\r\n\r\n* Total issues: 75\r\n* Completed: 43\r\n* Unestimated: 47\r\n\r\nIssues which are Completed AND Unestimated should not be included in Unestimated count.",
+      "summary": "Epic statistics double count unestimated issues"
+    }
+  },
+  {
+    "key": "JSWSERVER-7199",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T02:53:30.000+0000",
+      "created": "2013-01-16T02:55:40.000+0000",
+      "description": "This would be nice to have :)",
+      "summary": "keyboard shortcut \"s > s\" for Send to Sprint"
+    }
+  },
+  {
+    "key": "JSWSERVER-7197",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/12200",
+        "id": "12200",
+        "key": "JSWSERVER",
+        "name": "Jira Software Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=12200&avatarId=105191",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=12200&avatarId=105191",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=12200&avatarId=105191",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=12200&avatarId=105191"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10050",
+          "id": "10050",
+          "description": "",
+          "name": "Atlassian Add-ons"
+        }
+      },
+      "resolutiondate": "2013-10-31T02:53:04.000+0000",
+      "created": "2013-01-16T02:29:50.000+0000",
+      "description": "Sometimes you need to re-organise the order of the sprints in plan view. I seemed to have accidentally done this sometimes but can't figure out how to repeat it. Having an ability to visually organize pending sprints woul dbe very useful (aka just like you can rank stories).",
+      "summary": "Allow sprint planners to organise sprint windows during planning (before the sprint has started)"
+    }
+  }
+]

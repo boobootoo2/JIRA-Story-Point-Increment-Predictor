@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "CWD-2210",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-21T00:40:09.000+0000",
+      "created": "2011-01-24T03:50:57.000+0000",
+      "description": "In Crowd, it is possible to define a collection of groups a newly created user will be a member of, at a per-directory level:\r\n\r\nhttp://confluence.atlassian.com/display/CROWD/Automatically+Assigning+New+Users+to+Groups\r\n\r\nWe would like to offer a similar feature in the common UI plugin, however, we do not need to provide a full-blown group picker. We can just expose a text field that allows the user to enter a comma-delimited list of group names that exist in the directory.\r\n\r\nAlong with the UI work, we'll need to be able to implement the actual logic that performs the auto group add. In Crowd, this is done by an event listener plugin. We can try drop the plugin into JIRA/Confluence and see if it will work - otherwise we will need to pull up the logic in the actual directory implementation.\r\n\r\nThe auto-group-add functionality only needs to be exposed to the UI on:\r\n- Delegated LDAP with auto user add (not when auto user add is disabled)\r\n- Read-write and read-only with local groups (not with read-only)",
+      "summary": "Implement group membership add on first auth"
+    }
+  },
+  {
+    "key": "CWD-2209",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-21T00:40:39.000+0000",
+      "created": "2011-01-24T03:49:53.000+0000",
+      "description": "Currently there is no drop down to select the type of directory you'd like to integrate delegated authentication LDAP with in the Admin UI Plugin:\r\n\r\nhttps://skitch.com/shihabske/rk4gm/configure-ldap-user-directory-jdog-jira-team-dogfood\r\n\r\nCrowd does offer this option, and also pre-populates fields based on the selected directory type:\r\n\r\nhttps://skitch.com/shihabske/rk4gf/configuring-a-delegated-authentication-directory-crowd-2.1-atlassian-documentation-confluence\r\n\r\nThe UI Plugin does implement a similar feature, but only for full LDAP directories. Perhaps we can borrow or share some of that code to implement this.",
+      "summary": "Allow directory type selection in the delegated authentication directory in EMBCWD plugin"
+    }
+  },
+  {
+    "key": "CWD-2208",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-21T00:40:29.000+0000",
+      "created": "2011-01-24T03:49:05.000+0000",
+      "description": "Currently, the Admin UI Plugin allows the creation of delegated authentication directories that simply delegate the authentication to the LDAP server, but do nothing else.\r\n\r\nhttps://skitch.com/shihabske/rk4fu/configure-ldap-user-directory-jdog-jira-team-dogfood\r\n\r\nIn Crowd, delegated authentication directories copy the user on auth. It would be good if the Admin UI Plugin allows an option to copy the user on auth (just a flag - perhaps checkbox or radio button on the UI). This will then set the attribute {{ATTRIBUTE_CREATE_USER_ON_AUTH}} to {{true}}/{{false}}. The underlying logic to perform the actual copy-on-auth is already implemented.\r\n\r\nThe other part of this UI task is to show/hide extra properties required to implement copy-on-auth. In particular, when \"copy on auth\" is first selected, we will need to allow the user to enter in values for the:\r\n- user display name attribute\r\n- user first name attribtue\r\n- .. etc \r\nie. ALL of the User related attributes, NONE of the group related ones\r\n\r\nSee the Crowd documentation for an _idea_ of what attributes we should be displaying: http://confluence.atlassian.com/display/CROWD/Configuring+a+Delegated+Authentication+Directory\r\n\r\nWe can copy the UI elements from the UI Plugin Screen to create a full LDAP directory (so that the UI looks consistent).\r\n\r\nhttps://skitch.com/shihabske/rk4f6/configure-ldap-user-directory-jdog-jira-team-dogfood",
+      "summary": "Allow copy on auth in the delegated authentication directory in EMBCWD plugin"
+    }
+  },
+  {
+    "key": "CWD-2207",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-21T00:41:03.000+0000",
+      "created": "2011-01-24T03:46:22.000+0000",
+      "description": null,
+      "summary": "Embedded UI Plugin needs to support delegated authentication directories properly"
+    }
+  },
+  {
+    "key": "CWD-2206",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-07T00:21:53.000+0000",
+      "created": "2011-01-24T03:41:46.000+0000",
+      "description": "See https://studio.atlassian.com/browse/EMBCWD-696",
+      "summary": "Embedded UI Plugin does not merge existing attributes when updating the directory"
+    }
+  },
+  {
+    "key": "CWD-2205",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-03-03T00:25:26.000+0000",
+      "created": "2011-01-23T23:27:23.000+0000",
+      "description": "- Add an application in Crowd.\r\n- Add a directory to the application\r\n- Go to the Permissions tab\r\n- Click Cancel\r\n\r\n*Expected:* Reload the Permissions tab with the state prior to any edits\r\n\r\n*Actual:* There is no Action mapped for namespace /console/secure/application and action name view (see attachment for full stack trace)\r\n",
+      "summary": "Error when clicking Cancel on the \"Permissions\" tab when adding/updating an application."
+    }
+  },
+  {
+    "key": "CWD-2204",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-31T03:33:06.000+0000",
+      "created": "2011-01-23T22:55:58.000+0000",
+      "description": "Crowd has minor dependencies on Java 6. Fix them to support JDK 1.5 and set up a continuous integration build to catch future regressions.",
+      "summary": "Crowd does not build against JDK 1.5"
+    }
+  },
+  {
+    "key": "CWD-2203",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-23T22:35:18.000+0000",
+      "description": "Currently Crowd allows admins to use the email field as the user name for authentication. However, keeping this same configuration would not allow Admins to edit LDAP User entries, as their LDAP servers still expect a User Name to be added to the User Name Attribute and the Email to be added to the Email Attribute.\r\n\r\nIt would be good to allow Crowd to point to different attributes in different use cases.\r\n\r\nFor this specific example:\r\n\r\n*Authentication*:\r\nCrowd User Name Attribute -> Email LDAP Attribute\r\n\r\n*Add/Edit User*\r\nCrowd User Name Attribute -> User Name LDAP Attribute\r\n",
+      "summary": "Allow LDAP Connectors to use different attributes depending on the use case"
+    }
+  },
+  {
+    "key": "CWD-2201",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-05-21T07:30:47.000+0000",
+      "created": "2011-01-20T12:36:29.000+0000",
+      "description": "During one installation, we recognized that some of the usernames in AD contained unicode characters. After synchronization of the connector directory, Crowd stalled. It was not possible to remove the directory since Crowd was trying to synchronize the directory in the background. I had to remove the directory manually from the DB. We modified the user names and resolved the problem. Although this problem occured due to inappropriate user names and not linked directly to Crowd, It would be nice to add a control for this kind of user names and let Crowd go on working.\r\n\r\nSome more information about the problem:\r\n- Crowd synchronizes for the first time\r\n- Everything seem fine\r\n- But any operation is not possible, each time a user is selected, Crowd tries to resynch and starts raising errors in the log.\r\n- The reason for the log is Crowd tries to re-insert the problematic users to the cwd_users table and UQ constraint is violated.\r\n\r\nYou can see the problem in the attached log on line 386 for example  ",
+      "summary": "Nonstandard user name causes unstabilityin Crowd"
+    }
+  },
+  {
+    "key": "CWD-2200",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-11-20T01:20:37.000+0000",
+      "created": "2011-01-20T12:22:06.000+0000",
+      "description": "The user DN password is persisted to local database without encryption. One of our costomers takes this as a security problem. Is it possible to persist the password with encryption?",
+      "summary": "LDAP directory user DN password "
+    }
+  },
+  {
+    "key": "CWD-2199",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-20T01:34:28.000+0000",
+      "description": "With regards to http://confluence.atlassian.com/display/CROWD/Configuring+a+Delegated+Authentication+Directory, we need to:\r\n* Update the 3 existing screenshots so that the fifth \"Options\" tab is shown\r\n* Link to http://confluence.atlassian.com/display/CROWD/Automatically+Assigning+New+Users+to+Groups - basically describe the auto-membership-adding-on-successful-auth feature.\r\n\r\nWe may need to update screenshots on the other directory connectors too.",
+      "summary": "Update screenshots for Options tab on Directory configuration screens to highlight the auto-membership-add feature"
+    }
+  },
+  {
+    "key": "CWD-2198",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-31T22:03:51.000+0000",
+      "created": "2011-01-20T01:10:29.000+0000",
+      "description": "When ApplicationServiceGeneric tries to remove a User from a Group, it loops over all directories and tries to remove the membership from each directory in turn and swallows any errors along the way, even though it knows the directory the user belongs to.\r\n\r\nRemoving groups from groups has similar issues.",
+      "summary": "ApplicationServiceGeneric swallows errors when removing Users from Groups"
+    }
+  },
+  {
+    "key": "CWD-2197",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-02T04:30:33.000+0000",
+      "created": "2011-01-18T23:33:21.000+0000",
+      "description": "- Add an LDAP directory to Crowd\r\n- Go to the groups tab and add a new Group to the LDAP directory that was just added.\r\n\r\n*Expected:* Group to be created and propagated to LDAP server\r\n*Actual:* Error occurs\r\n\r\nNote: I can add groups directly from applications that use Crowd Server as their directory and that action propagates fine to LDAP server. \r\n\r\n{code}\r\n[LDAP: error code 21 - INVALID_ATTRIBUTE_SYNTAX: failed for Add Request : \r\nClientEntry dn: cn=crowdgroup, ou=groups,ou=system objectClass: groupOfUniqueNames uniqueMember: uid=admin,ou=system cn: crowdgroup description: : \r\nERR_280 Attribute value {0} for attribute {1} is syntactically incorrect]; nested exception is javax.naming.directory.InvalidAttributeValueException: \r\n[LDAP: error code 21 - INVALID_ATTRIBUTE_SYNTAX: failed for Add Request : ClientEntry dn: cn=crowdgroup, ou=groups,ou=system objectClass: groupOfUniqueNames uniqueMember: uid=admin,ou=system cn: crowdgroup description: : ERR_280 Attribute value {0} for attribute {1} is syntactically incorrect]; remaining name 'cn=crowdgroup, ou=groups,ou=system' \r\n{code}",
+      "summary": "Unable to add groups to LDAP directory through crowd UI"
+    }
+  },
+  {
+    "key": "CWD-2195",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-09-06T23:39:06.000+0000",
+      "created": "2011-01-18T09:46:24.000+0000",
+      "description": "Since the UI and the Crowd importers don't check the values for User attributes, the backup feature shouldn't either.\r\n{code}\r\njava.lang.IllegalArgumentException: Adding text to an XML document must not be null\r\n\tat org.dom4j.DocumentFactory.createText(DocumentFactory.java:142)\r\n\tat org.dom4j.tree.AbstractElement.addText(AbstractElement.java:1286)\r\n\tat com.atlassian.crowd.migration.UserMapper.addUserAttributesToXml(UserMapper.java:120)\r\n\tat com.atlassian.crowd.migration.UserMapper.addUserToXml(UserMapper.java:95)\r\n\tat com.atlassian.crowd.migration.UserMapper.exportXml(UserMapper.java:74)\r\n\tat com.atlassian.crowd.migration.XmlMigrator.exportXml(XmlMigrator.java:35)\r\n\tat com.atlassian.crowd.migration.XmlMigrationManagerImpl.exportXml(XmlMigrationManagerImpl.java:97)\r\n\tat com.atlassian.crowd.console.action.admin.Backup.doExport(Backup.java:103)\r\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:592)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:358)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:218)\r\n{code}",
+      "summary": "XML Backup fails if user attributes are empty or NULL"
+    }
+  },
+  {
+    "key": "CWD-2194",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-03T00:31:56.000+0000",
+      "created": "2011-01-18T06:17:11.000+0000",
+      "description": "When adding a new application, the client should be able to tell the REST server to append the current request's remote address to the list of allowed IP addresses. The REST service will then append the remote addresses to the list specified in the body of the request.",
+      "summary": "Application Management REST API should have option to add the address of the current HTTP request"
+    }
+  },
+  {
+    "key": "CWD-2193",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-18T05:10:11.000+0000",
+      "description": "{{ApplicationService.isUserAuthorised(Application application, String username)}} checks if the user belongs to a authenticating group for the application. Extract this functionality from ApplicationService to a separate class/interface.\r\n\r\nClean up includes removing the {{CachingApplicationService}} class, and providing a no-cache implementation of the user authorisation class for JIRA and Confluence to use.\r\nChange will break JIRA and Confluence when they upgrade to the next milestone.",
+      "summary": "Split out User Authorisation code from ApplicationService to a separate class"
+    }
+  },
+  {
+    "key": "CWD-2192",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-18T02:47:02.000+0000",
+      "description": "CWD-2171 has introduced a new page to allow selection of source directories when the import operation is performed on crowdified apps. The page only has been manually tested. It would be better if we can have Selenium of something that tests the UI functionality.\r\n\r\nPlease note that as of the time this issue was created, it is not clear whether the new page will be needed as other Atlassian Apps (Jira, and Conf) do not support multiple internal directories just yet.",
+      "summary": "UI test for import functionality from other Atlassian apps"
+    }
+  },
+  {
+    "key": "CWD-2191",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-07-08T06:06:38.000+0000",
+      "created": "2011-01-17T05:30:30.000+0000",
+      "description": "Similar to [CWD-2175|http://jira.atlassian.com/browse/CWD-2175] except adding UAL to the process as well.\r\n\r\nWe can start work on this issue when Confluence have a milestone that can create a bi-directional link to JIRA (manually).\r\n\r\nWe will need to verify that app link creation is possible in the setup process, after the JAACS link has been established. We only need to verify that the link exists and is present in both the JIRA and Confluence admin screens. We do not need to verify that the app link is useable for transferring data (eg. jira-issues-macro) as that work is Confluence's plate.",
+      "summary": "Verify that it's possible to connect Confluence to JAACS using UAL in Confluence's setup process"
+    }
+  },
+  {
+    "key": "CWD-2190",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-06-08T14:03:07.000+0000",
+      "created": "2011-01-17T03:03:12.000+0000",
+      "description": "{panel:title=Atlassian Update - 8 June 2020|borderStyle=solid|borderColor=#3c78b5|titleBGColor=#3c78b5|bgColor=#e7f4fa}\r\nHello everyone,\r\n\r\nWe have recently reviewed this issue and the overall interest in the problem. As the issue hasn't collect votes, watchers, comments, or support cases from many customers during its lifetime, it's very low on our priority list, and will not be fixed in the foreseeable future. That's why we've decided to resolve it as *Timed Out*.\r\n\r\nAlthough we're aware the issue is still important to those of you who were involved in the conversations around it, we want to be clear in managing your expectations. The Crowd team is focusing on issues that have broad impact and high value, reflected by the number of comments, votes, support cases, and customers interested. Please consult the [Atlassian Bugfix Policy|https://confluence.atlassian.com/support/atlassian-server-bug-fix-policy-201294573.html] for more details.\r\n\r\nWe understand how disappointing this decision may be, but we hope you'll appreciate our transparent approach and communication.\r\n\r\nAtlassian will continue to watch this issue for further updates, so please feel free to share your thoughts in the comments.\r\n\r\nThank you,\r\n\r\nCrowd Team\r\n{panel}\r\n\u00a0\r\n\r\nThis is inefficient, and happens to be causing problems for multi-tenancy in JIRA.  It should be caching the module that it instantiated when enabled() was called, and using that to disable.",
+      "summary": "PasswordEncoderModuleDescriptor.disabled() reinstantiates the password encoder module"
+    }
+  },
+  {
+    "key": "CWD-2189",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-24T00:41:06.000+0000",
+      "created": "2011-01-16T23:22:24.000+0000",
+      "description": "We have an optimisation in our hibernate-backed Directory and Application code where instead of replacing the attributes, we update the existing collection (using {{retainAll}}). This assumes that the collection field is mutable. Since we can't just create a immutable copy of what's passed in {{setAttributes}}, we need to ensure that all usages of {{setAttributes}} are passing in an immutable copy.",
+      "summary": "Hibernate Backed Classes should not have immutable collections passed in"
+    }
+  },
+  {
+    "key": "CWD-2187",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-08-08T00:08:48.000+0000",
+      "created": "2011-01-14T01:36:47.000+0000",
+      "description": "Currently applications need to duplicate code in LdapPermissionOption when setting directories to read only/read only local groups/read write outside of the admin plugin.. i.e. they need to specify the same set of operations. We'd like to move LdapPermissionOption from the embedded crowd admin plugin to the embedded-crowd-api in crowd, after renaming it to PermissionOption. Then application code like:\r\n{code}\r\nldapDirectory.setAllowedOperations(EnumSet.of(OperationType.CREATE_GROUP, OperationType.DELETE_GROUP, OperationType.UPDATE_GROUP, OperationType.UPDATE_GROUP_ATTRIBUTE, OperationType.UPDATE_USER_ATTRIBUTE));\r\n{code}\r\n\r\ncan become:\r\n{code}\r\nldapDirectory.setAllowedOperations(LdapPermissionOption.READ_ONLY_LOCAL_GROUPS.getAllowedOperations());\r\n{code}\r\n\r\nCWD-2187 will only add the class to embedded-crowd-api-2.3.2,\r\nthe rest the work will be performed in https://studio.atlassian.com/browse/EMBCWD-848.",
+      "summary": "Rename and move LdapPermissionOption to embedded-crowd-api"
+    }
+  },
+  {
+    "key": "CWD-2186",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-03-04T04:25:31.000+0000",
+      "created": "2011-01-14T00:00:55.000+0000",
+      "description": "Test syncing with 10 directories, each consisting of 3k users from AD (can be the same OU in AD, just 10 logical directories in Crowd).\r\n\r\nAlso test syncing concurrently with large requests like findAllGroupRelationships.",
+      "summary": "Create a load test for concurrently synchronising multiple directories"
+    }
+  },
+  {
+    "key": "CWD-2185",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-20T00:30:59.000+0000",
+      "created": "2011-01-13T05:50:47.000+0000",
+      "description": "It should be possible to disable nested groups on the RemoteCrowdDirectory, so that queries are faster to execute.\r\n\r\nThis does not mean that the server does not support nested groups, it just means that the client will not perform any nesting resolution and will return empty collections when searching for group members/memberships of a group.\r\n",
+      "summary": "Allow nested groups to be disabled in the RemoteCrowdDirectory"
+    }
+  },
+  {
+    "key": "CWD-2184",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-20T04:48:10.000+0000",
+      "created": "2011-01-13T05:47:18.000+0000",
+      "description": "The REST client accepts certain connection configuration properties such as:\r\n* connection timeouts\r\n* connection pool size\r\n* proxy with optional auth details\r\n\r\nIt should be possible to read these from Directory attributes and pass them through to the underlying CrowdRestClient in the RemoteCrowdDirectory.\r\n\r\nThe intention of this improvement is to allow the proxy/connection details to be configured via the UI in EMBCWD and potential for a Crowd-Crowd connector.",
+      "summary": "Allow RemoteCrowdDirectory to pass in the connection properties for the underlying CrowdRestClient"
+    }
+  },
+  {
+    "key": "CWD-2183",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-08-01T05:03:26.000+0000",
+      "created": "2011-01-12T23:07:21.000+0000",
+      "description": "By looking at Advanced Settings it seems that the following are the default timeouts:\r\n\r\nRead Timeout (seconds): 120s\r\nSearch Timeout (seconds): 60s\r\nConnection Timeout (seconds): 0 (Value of 0 means the TCP network timeout will be used, which may be several minutes.)\r\n\r\nSuch a high connection timeout makes the \"Test Settings\" button on Add directory really annoying if you get your settings wrong.\r\n\r\nI suggest a much lower setting like maybe 5s for each.",
+      "summary": "Default LDAP timeouts are set too high"
+    }
+  },
+  {
+    "key": "CWD-2182",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-13T00:17:41.000+0000",
+      "created": "2011-01-12T22:12:22.000+0000",
+      "description": "The old Crowd integration libraries supported a timeout configuration to avoid hanging request threads in the applications when Crowd didn't respond in a timely fashion.\r\n\r\nThe new REST client should support the normal timeouts: connection and request, either by system properties or through configuration in the UI.\r\n\r\nWe need some kind of decision (either fixed or won't-fix) prior to 2.2, so I'll set the fix-for.",
+      "summary": "Support configuration of HTTP socket and request timeouts in REST client"
+    }
+  },
+  {
+    "key": "CWD-2181",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-12-12T13:38:40.000+0000",
+      "created": "2011-01-12T00:45:21.000+0000",
+      "description": "In {{CachingUserManager.isUser(String userName)}}, the following two statements are not atomic:\r\n{code}getAllUserNamesFromCacheOrServer();                 // makes sure the cache is loaded with all users.\r\nreturn (basicCache.getUser(userName) != null);{code}\r\nIf the cache is flushed after the first statement is executed but before the second statement is executed, this method will return {{false}}.\r\nAs the result of this method is returned by {{CrowdCredentialsProvider}} and {{CrowdProfileProvider}} etc, this causes {{com.opensympony.user.User.getCredentialsProvider()}} and {{com.opensympony.user.User.getPropertySet()}} to return {{null}}, resulting in {{NullPointerException}} being thrown when constructing a new instance of {{com.opensympony.user.User}} or invoking {{getEmail()}} and {{getFullName()}} methods of an existing {{com.opensympony.user.User}} instance.\r\n\r\nAdditionally, in {{CachingUserManager.getAllUserNamesFromCacheOrServer()}}, the following two statements are not atomic either:\r\n{code}loadAllUsers();\r\nuserNames = basicCache.getAllUserNames();{code}\r\nIf the cache is flushed after the first statement is executed but before the second statement is executed, this method will return {{null}}.\r\nSo the first patch I supplied could fail in this scenario.\r\n",
+      "summary": "CachingUserManager's implementation of checking whether a user exists or not given the username is not thread-safe and could return false if the cache is flushed in the meanwhile "
+    }
+  },
+  {
+    "key": "CWD-2180",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-04-30T13:28:53.000+0000",
+      "created": "2011-01-11T17:15:16.000+0000",
+      "description": "A new administrator misconfigured the base dn of a delegated authentication directory (going to MS Active directory LDAP).  This prevented anyone from logging into crowd (or any application attached to crowd) in _any_ directory.  We have an internal directory for users who are crowd admins so that we can always log into crowd if ldap of something in the network fails.  In theory.  \r\n\r\nOnce you are locked out of Crowd you are sorta screwed.  I had to use pgadmin3 and whack the DB to fix the misconfig and restart crowd to restore access.",
+      "summary": "Exception in the delegated authentication directory prevents login to crowd"
+    }
+  },
+  {
+    "key": "CWD-2179",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-11T08:32:26.000+0000",
+      "description": "When i delete an user then the related alias names are not removed. (database table: {{cwd_application_alias}})\r\n\r\nAs workaround i create a crowd plugin with a listener, which cleans up the alias names after removing the user.\r\n\r\n{code}public class RemoveUserAliasListener {\r\n\r\n\tprivate static final Logger logger = Logger.getLogger(RemoveUserAliasListener.class);\r\n\r\n\tprivate AliasManager aliasManager;\r\n\r\n\tprivate GlobalMMSManager globalMMSManager;\r\n\r\n\t@EventListener\r\n\tpublic void removeAlias(UserDeletedEvent event) {\r\n\t\tif (StringUtils.isNotBlank(event.getUsername())) {\r\n\t\t\ttry {\r\n\t\t\t\taliasManager.removeAlias(globalMMSManager.getCrowdCAS(), event.getUsername());\r\n\t\t\t} catch (Exception e) {\r\n\t\t\t\tlogger.warn(e.getMessage());\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\r\n\tpublic void setAliasManager(AliasManager aliasManager) {\r\n\t\tthis.aliasManager = aliasManager;\r\n\t}\r\n\r\n\tpublic void setGlobalMMSManager(GlobalMMSManager globalMMSManager) {\r\n\t\tthis.globalMMSManager = globalMMSManager;\r\n\t}\r\n\r\n}{code}",
+      "summary": "When removing a user then their alias names are not removed from database"
+    }
+  },
+  {
+    "key": "CWD-2178",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-11T02:56:37.000+0000",
+      "description": "It can be quite confusing when this happens (especially if you don't know about the feature to turn nesting on/off) and it would be nice if there could be a warning or info in the logs about it.",
+      "summary": "Notify the admin in some way when nested groups exist in LDAP but won't be synced because nesting is off"
+    }
+  },
+  {
+    "key": "CWD-2177",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-31T04:45:27.000+0000",
+      "created": "2011-01-10T03:15:00.000+0000",
+      "description": "Display the sync status in JIRA/Confluence via the common UI plugin. There is an EMBCWD for this.",
+      "summary": "Add sync \"status\" feedback to common UI plugin"
+    }
+  },
+  {
+    "key": "CWD-2176",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-19T23:22:04.000+0000",
+      "created": "2011-01-10T00:39:38.000+0000",
+      "description": "In Confluence, we get the following exception when trying to modify user information on a POSIX (read-only) LDAP server via Crowd:\r\n\r\n{code}\r\njava.lang.IllegalArgumentException: POSIX support is currently read-only\r\n\tat com.atlassian.crowd.integration.rest.service.RestCrowdClient.handleCommonExceptions(RestCrowdClient.java:1081)\r\n\tat com.atlassian.crowd.integration.rest.service.RestCrowdClient.updateUser(RestCrowdClient.java:128)\r\n\tat com.atlassian.crowd.directory.RemoteCrowdDirectory.updateUser(RemoteCrowdDirectory.java:139)\r\n{code}\r\n\r\nAs I see it, this method should throw OperationFailedException according to the RemoteDirectory and CrowdClient API documentation.\r\n\r\nI think the fundamental problem here is the {{handleCommonExceptions()}} method in RestCrowdClient, which seems to throw IllegalArgumentException in quite a number of cases. None of the methods on the CrowdClient interface are documented as throwing IAE, so this exception therefore bubbles up to the unsuspecting client code and leads to unhandled exceptions.\r\n",
+      "summary": "RemoteCrowdDirectory.updateUser() can throw IllegalArgumentException"
+    }
+  },
+  {
+    "key": "CWD-2175",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-20T02:27:54.000+0000",
+      "created": "2011-01-09T23:18:06.000+0000",
+      "description": "This task will require editing the Confluence setup UI to be configured during the setup process.\r\n\r\nThis is only to validate it's possible, not to create production-ready code. No automated tests.",
+      "summary": "Verify that it's possible to connect Confluence to JAACS in Confluence's setup process"
+    }
+  },
+  {
+    "key": "CWD-2174",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-09T23:14:52.000+0000",
+      "description": "See https://studio.atlassian.com/browse/EMBCWD-749 for details",
+      "summary": "SSO Client Plugin to replace Seraph Config editing"
+    }
+  },
+  {
+    "key": "CWD-2173",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-13T22:07:05.000+0000",
+      "created": "2011-01-07T01:08:48.000+0000",
+      "description": "See https://jdog.atlassian.com/browse/JRADEV-4414\r\n\r\n{quote}\r\n2011-01-07 11:50:09,816 main WARN [org.twdata.pkgscanner.ExportPackageListBuilder] Package Scanner found duplicates for package 'com.atlassian.security.cookie' with different versions. \r\n    Files: atlassian-cookie-tools-2.0.jar and crowd-integration-client-2.2.0-m4.jar\r\n{quote}\r\n",
+      "summary": "crowd-integration-client-2.2.0-m4.jar not shading atlassian-cookie-tools-2.0.jar properly"
+    }
+  },
+  {
+    "key": "CWD-2172",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-06T23:45:34.000+0000",
+      "description": "Although Confluence and Jira do not have UI to manipulate nested groups just yet, we will need to support them eventually.",
+      "summary": "Support nested groups in the Confluence/JIRA Importer"
+    }
+  },
+  {
+    "key": "CWD-2171",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-18T02:53:27.000+0000",
+      "created": "2011-01-06T23:43:45.000+0000",
+      "description": "There can be multiple directories per one installation of crowdified app. It is more sensible to allow users to select the source directory.",
+      "summary": "Allow users to choose source directory when import from crowdified Jira and Confluence"
+    }
+  },
+  {
+    "key": "CWD-2170",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-11T04:03:47.000+0000",
+      "created": "2011-01-06T13:32:21.000+0000",
+      "description": "I use the SOAP call {{findPrincipalWithAttributesByName}} to get an specific user with its attributes. The problem is that i don't receive the attributes.\r\n\r\nI figured already out the cause of this bug.\r\n\r\nThe {{buildApplicationUserWithAttributes}} method of {{TranslatingApplicationService}} wrap the user as UserTemplateWithAttributes to change the name. Here comes the problem.\r\n{code}public UserTemplateWithAttributes(User user)\r\n{\r\n   super(user);\r\n}{code}\r\n\r\nYou this that the constructor just delegate the object to its super class. The specific property {{attributes}} will not changed. So i fixed it with the following additional lines.\r\n\r\n{code}public UserTemplateWithAttributes(User user)\r\n{\r\n   super(user);\r\n\r\n   if (user instanceof UserWithAttributes)\r\n   {\r\n      UserWithAttributes userWithAttributes = (UserWithAttributes) user;\r\n      for (String key : userWithAttributes.getKeys())\r\n      {\r\n         attributes.put(key, userWithAttributes.getValues(key));\r\n      }\r\n   }\r\n}{code}",
+      "summary": "findUserWithAttributesByName of TranslatingApplicationService don't work correctly"
+    }
+  },
+  {
+    "key": "CWD-2168",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-19T22:50:18.000+0000",
+      "created": "2011-01-06T05:30:29.000+0000",
+      "description": "Stacktrace snippet:\r\n{code}\r\norg.springframework.transaction.CannotCreateTransactionException: Could not create DirContext instance for transaction; nested exception is org.springframework.ldap.CommunicationException: crowd-ad1:389; nested exception is javax.naming.CommunicationException: crowd-ad1:389 [Root exception is java.net.ConnectException: Connection refused]\r\nCaused by: org.springframework.ldap.CommunicationException: crowd-ad1:389; nested exception is javax.naming.CommunicationException: crowd-ad1:389 [Root exception is java.net.ConnectException: Connection refused]\r\nCaused by: javax.naming.CommunicationException: crowd-ad1:389 [Root exception is java.net.ConnectException: Connection refused]\r\n\t<snip>\r\n\tat javax.naming.ldap.InitialLdapContext.<init>(InitialLdapContext.java:134)\r\n\tat org.springframework.ldap.core.support.LdapContextSource.getDirContextInstance(LdapContextSource.java:43)\r\n\tat org.springframework.ldap.core.support.AbstractContextSource.createContext(AbstractContextSource.java:254)\r\n\tat org.springframework.ldap.core.support.AbstractContextSource.getContext(AbstractContextSource.java:106)\r\n\tat org.springframework.ldap.core.support.AbstractContextSource.getReadWriteContext(AbstractContextSource.java:138)\r\n\tat org.springframework.ldap.transaction.compensating.manager.ContextSourceTransactionManagerDelegate.getNewHolder(ContextSourceTransactionManagerDelegate.java:86)\r\n\tat org.springframework.transaction.compensating.support.AbstractCompensatingTransactionManagerDelegate.doBegin(AbstractCompensatingTransactionManagerDelegate.java:84)\r\n\tat org.springframework.ldap.transaction.compensating.manager.ContextSourceTransactionManager.doBegin(ContextSourceTransactionManager.java:126)\r\n\tat org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:350)\r\n\tat com.atlassian.crowd.directory.SpringLDAPConnector.pageSearchResults(SpringLDAPConnector.java:283)\r\n\tat com.atlassian.crowd.directory.SpringLDAPConnector.searchEntitiesWithRequestControls(SpringLDAPConnector.java:384)\r\n\tat com.atlassian.crowd.directory.SpringLDAPConnector.searchEntities(SpringLDAPConnector.java:369)\r\n\tat com.atlassian.crowd.directory.SpringLDAPConnector.searchUserObjects(SpringLDAPConnector.java:565)\r\n\tat com.atlassian.crowd.directory.SpringLDAPConnector.findUserWithAttributesByName(SpringLDAPConnector.java:531)\r\n\tat com.atlassian.crowd.directory.SpringLDAPConnector.findUserByName(SpringLDAPConnector.java:518)\r\n\tat com.atlassian.crowd.directory.SpringLDAPConnector.authenticate(SpringLDAPConnector.java:968)\r\n\tat com.atlassian.crowd.directory.DbCachingRemoteDirectory.performAuthenticationAndUpdateAttributes(DbCachingRemoteDirectory.java:131)\r\n\tat com.atlassian.crowd.directory.DbCachingRemoteDirectory.authenticate(DbCachingRemoteDirectory.java:110)\r\n{code}\r\n\r\nThe problem seems to be at line 384 of SpringLDAPConnector.searchEntitiesWithRequestControls() :\r\n{code}\r\nif (ldapPropertiesMapper.isPagedResultsControl())\r\n{\r\n    -->   CollectingNameClassPairCallbackHandler handler = pageSearchResults(baseDN, filter, contextMapper,\r\n                    searchControls, ldapRequestControls, startIndex + maxResults);\r\n     results = handler.getList();\r\n}\r\n{code}\r\n\r\nThe else block has a NamingException catch which converts it to an OperationFailedException but the if block doesn't catch the TransactionException.",
+      "summary": "SpringLDAPConnector doesn't throw OperationFailedException from CommunicationException when LDAP server connection refused"
+    }
+  },
+  {
+    "key": "CWD-2167",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-07-03T04:05:21.000+0000",
+      "created": "2011-01-05T03:54:26.000+0000",
+      "description": "I've defined an i18n configuration file for an application plugin.\r\n\r\n{code:xml}\r\n<resource type=\"i18n\" name=\"i18n\" location=\"DirectorySynchronizeBundle\"/>\r\n{code}\r\n\r\nThe resource bundle key are not working when accessed through the JSP, plugins framework or actions inside of Crowd.\r\n\r\nIt appears the Google Apps plugin has the same problem. All of the resource reference are loaded from {{BaseAction.properties}}",
+      "summary": "specifying an i18n resource file for a plugin does not work"
+    }
+  },
+  {
+    "key": "CWD-2166",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-04T22:57:43.000+0000",
+      "description": "Specially for large LDAP setups, Crowd will not be functional right after a restart if the LDAP data was not yet synched with the database. This will keep the integrated applications unavailable for a long time, waiting the sync to finish.\r\n\r\nTo avoid panic and the impression that the integration is not working, it would be great to have a Crowd [site-wide banner|http://confluence.atlassian.com/display/DOC/Adding+a+Site-Wide+Banner] informing that the sync is not finished and that the LDAP and Apps integrations cannot be tested yet.\r\n\r\nSince this is a background operation that impacts all the system functionality, it deserves better communication for the the Admin. ",
+      "summary": "Improve UI communication regarding LDAP data not yet synched with database cache"
+    }
+  },
+  {
+    "key": "CWD-2165",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2011-01-04T18:51:32.000+0000",
+      "description": "crowd should host avatars, not individual apps",
+      "summary": "crowd should host avatars, not individual apps"
+    }
+  },
+  {
+    "key": "CWD-2164",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-03-05T02:21:52.000+0000",
+      "created": "2011-01-04T05:19:59.000+0000",
+      "description": "We upgraded crowd to 2.1 and changed the custom code as per documentation specified. After doing this we are getting error as \r\n\r\nmessage\r\n\r\ndescription The server encountered an internal error () that prevented it from fulfilling this request.\r\n\r\nexception\r\n\r\njavax.servlet.ServletException: Servlet execution threw an exception\r\n\r\nroot cause\r\n\r\njava.lang.NoSuchMethodError: com.atlassian.crowd.integration.authentication.ApplicationAuthenticationContext.<init>(Ljava/lang/String;Lcom/atlassian/crowd/integration/authentication/PasswordCredential;[Lcom/atlassian/crowd/integration/authentication/ValidationFactor;)V\r\n\tcom.atlassian.crowd.util.SoapObjectTranslator.toSoapApplicationAuthenticationContext(SoapObjectTranslator.java:201)\r\n\tcom.atlassian.crowd.service.soap.client.SecurityServerClientImpl.authenticate(SecurityServerClientImpl.java:234)\r\n\tcom.atlassian.crowd.service.soap.client.SecurityServerClientImpl.getSoapApplicationToken(SecurityServerClientImpl.java:210)\r\n\tcom.atlassian.crowd.service.soap.client.SecurityServerClientImpl.authenticatePrincipalSimple(SecurityServerClientImpl.java:1930)\r\n\r\nat \r\n\tString crowdToken = createToken(userName, request);\r\n\t\t\t\tHttpAuthenticatorFactory.getHttpAuthenticator()\r\n\t\t\t\t\t\t.setPrincipalToken(request, response, crowdToken);\r\n\r\nin eclipse it is compiling properly but on excution it's throwing error. I tried o search all documentations there is no luck.\r\n\r\nCan some can help me to come out of this, this is stopping our commercial crowd and confluence up-gradation.",
+      "summary": "java.lang.NoSuchMethodError: com.atlassian.crowd.integration.authentication.ApplicationAuthenticationContext.<init>(Ljava/lang/String;Lcom/atlassian/crowd/integration/authentication/PasswordCredential;[Lcom/atlassian/crowd/integration/authentication/Valid"
+    }
+  },
+  {
+    "key": "CWD-2163",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-11-18T01:31:54.000+0000",
+      "created": "2011-01-04T01:13:56.000+0000",
+      "description": "When using the *authenticatePrincipal* SOAP API the *PasswordCredential* object allows you to define if the password is already encrypted or not.\r\n\r\nHowever, Crowd never checks the value returned by *PasswordCredential.isEncryptedCredential()* when comparing the user password against the one in the local Crowd database.\r\n\r\nCurrently, only plain text passwords are supported.\r\n\r\n*Workaround:* to [run Crowd with SSL|http://confluence.atlassian.com/display/CROWD/Configuring+Crowd+to+Work+with+SSL] and then use the SOAP APIs through a HTTPS URL. This will ensure that the plain text passwords will be encrypted.",
+      "summary": "Crowd ignores the isEncryptedCredential value when authenticating users"
+    }
+  },
+  {
+    "key": "CWD-2160",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-02-06T13:45:34.000+0000",
+      "created": "2011-01-03T10:39:34.000+0000",
+      "description": "On the following page:\r\nhttp://confluence.atlassian.com/display/CROWDDEV/Crowd+REST+Resources#CrowdRESTResources-UserResource\r\n\r\n/user \r\n/user?username=USERNAME\r\n\r\nreference to Figure 1\r\n\r\nBut using a UserTemplateWithAttributes to perform 'addUser' or 'updateUser', no attributes are added to crowd. An explicit 'storeUserAttributes' is needed.\r\n\r\nEither update the documentation or allow the functions to accept the attributes.",
+      "summary": "REST user actions suggests attribute functionality"
+    }
+  },
+  {
+    "key": "CWD-2159",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-09-26T05:23:32.000+0000",
+      "created": "2011-01-03T08:14:34.000+0000",
+      "description": "In the \"Search Users\" view one always has to choose the desired directory from the drop-down. It'd be quite useful if the default directory for the search could be set for each administrator.",
+      "summary": "Default directory in user search view"
+    }
+  },
+  {
+    "key": "CWD-2158",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-04T02:20:16.000+0000",
+      "created": "2010-12-29T07:18:31.000+0000",
+      "description": "The {{Use memberOf for group membership:}} checkbox is missing when viewing/editing an Active Directory.\r\n\r\nHowever its present when creating the directory.",
+      "summary": "memberOf Option missing from view Active Directory screen"
+    }
+  },
+  {
+    "key": "CWD-2157",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-22T02:48:16.000+0000",
+      "created": "2010-12-29T01:37:21.000+0000",
+      "description": "We need to update \r\n\r\nhttp://confluence.atlassian.com/display/CROWDDEV/Java+Integration+Libraries#JavaIntegrationLibraries-injection\r\n\r\nAnd,\r\n\r\nhttp://confluence.atlassian.com/display/CROWDDEV/Crowd+2.1+Java+Client+Migration+Guide\r\n\r\nAs the classes have changed in Crowd 2.1 and the old 2.0.7 classes don't exist.",
+      "summary": "Update developer docs for Crowd 2.1"
+    }
+  },
+  {
+    "key": "CWD-2156",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-11T02:25:08.000+0000",
+      "created": "2010-12-25T11:08:21.000+0000",
+      "description": "If you click \"Back\" button when you are configuring Crowd you will receive following message on top of the page:\r\n\r\nbq. You have already completed or are not up to this step. Please click <a href='/crowd/console/setup/selectsetupstep.action'>here</a> to go to the correct setup step. \r\n\r\nAs you see link was showed as html code, not as actual link",
+      "summary": "Invalid link"
+    }
+  },
+  {
+    "key": "CWD-2155",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-04-12T01:43:38.000+0000",
+      "created": "2010-12-25T10:33:03.000+0000",
+      "description": "There is empty selection for password encryption field at http://localhost:8095/crowd/console/setup/directoryinternalsetup!update.action\r\n\r\nSo only one way to proceed setup was manually hack source HTML using FireBug",
+      "summary": "Empty password encryption selection"
+    }
+  },
+  {
+    "key": "CWD-2154",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-18T04:50:06.000+0000",
+      "created": "2010-12-23T22:39:51.000+0000",
+      "description": null,
+      "summary": "Update Atlassian importer to handle Confluence 3.5 and JIRA 4.3"
+    }
+  },
+  {
+    "key": "CWD-2153",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-29T00:43:14.000+0000",
+      "created": "2010-12-23T12:56:17.000+0000",
+      "description": "Editing existing Delegated Authentication Directory will show error  \"There was an error in updating the directory. Please check the fields to ensure all entries are valid.\" in the UI\r\n\r\nSteps to replicate the problem:\r\n# Create a *Delegated Authentication directories* in crowd\r\n# Fill in all the information\r\n# Test if Crowd is able to connect LDAP\r\n# Save the directory\r\n# Now edit the directory, you can try editing the URL for example:\r\n{code}\r\nURL: ldap://10.60.1.117:389/\r\n{code}\r\nchange it to \r\n{code}\r\nldap://10.60.1.114:389/\r\n{code}\r\n# Now fill in back the Password and try to save.\r\n\r\n\\\\\r\nThe above will result the following:\r\n!ui_error.png|thumbnail!\r\n\r\nBelow if the http header of submitting the editing information in the Delegated Authentication Directory:\r\n!changing_the_DN.png|thumbnail!\r\n\r\n\r\n\r\nBelow is the http header of submitting the newly created Delegated Authentication Directory information:\r\n!save_connector.png|thumbnail!\r\n\r\n*This does not happens in LDAP connectors*",
+      "summary": "Editing existing Delegated Authentication Directory will throw \"There was an error in updating the directory. Please check the fields to ensure all entries are valid.\""
+    }
+  },
+  {
+    "key": "CWD-2152",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-23T15:23:54.000+0000",
+      "created": "2010-12-23T06:23:45.000+0000",
+      "description": "This issue affects remember-me SSO for JIRA and Confluence integrated with Crowd.\r\n\r\n/rest/usermanagement/1/session?validate-password=false\r\n\r\nThe error message given is:\r\n\"The validated object is null\"",
+      "summary": "Crowd SSO token resource to authenticate user without validating the password does not work"
+    }
+  },
+  {
+    "key": "CWD-2151",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-11-01T08:10:48.000+0000",
+      "created": "2010-12-22T14:16:17.000+0000",
+      "description": "I am trying to log in to the crowd server, started by using 'atlas-run --product crowd --version 2.0.7' and getting a invalid password error. When I check the system output, I found the following:\r\n\r\nINFO talledLocalContainer Caused by: com.atlassian.crowd.integration.exception.InvalidAuthorizationTokenException: The password in the application's crowd.properties file does not match the password in crowd. Application with invalid password: crowd\r\n\r\nThe only relevant material I was able to find is related to changing the password for the crowd console itself. The default database file includes the password, but it's of course encrypted, and I don't see any other user accounts. I have tried copying the admin's encrypted password into the crowd account insert statement and running, but no luck.\r\n\r\nI am basically running this out of the box, so I am tempted to blame windows character encoding. I am a little surprised not to find any other material on this, but perhaps writing crowd plugins is not very popular and everyone uses a mac? I will try on my mac when I get home. I was able to run the tutorial successfully in jira and the refapp, but I can't even get into crowd...\r\n\r\nDon Brown requested that I create a Crowd bug, in response to my forum post, or I would have probably done a support request first.\r\n\r\nhttp://forums.atlassian.com/thread.jspa?threadID=50046&tstart=0\r\n\r\nThanks!",
+      "summary": "Can't login to Crowd in plugin development environment"
+    }
+  },
+  {
+    "key": "CWD-2150",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-24T03:22:47.000+0000",
+      "created": "2010-12-22T03:31:05.000+0000",
+      "description": "If a user in AD has null email address, then the AD sync fails for the user due to this exception;\r\n\r\nbq. 2010-12-20 13:35:02,397 scheduler_Worker-5 ERROR [org.hibernate.util.JDBCExceptionReporter] Column 'email_address' cannot be null\r\n\r\nwe should convert the email_address to an empty string and store it in the DB.",
+      "summary": "Convert and store null email values as empty string in the database during AD synchronisation"
+    }
+  },
+  {
+    "key": "CWD-2149",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-18T18:49:34.000+0000",
+      "created": "2010-12-21T23:12:57.000+0000",
+      "description": "We are using the Apache-Crowd connector to authenticate users for HTTP content and Subverison. Crowd, SVN and Apache are running on the same Machine with this Apache config:\r\n\r\n    ProxyPass         /crowd        http://localhost:8095/crowd\r\n    ProxyPassReverse  /crowd        http://localhost:8095/crowd\r\n\r\n    Alias /tools X:/Tools\r\n    <Location /tools>\r\n        Options Indexes\r\n        AuthName crowd\r\n        AuthType Basic\r\n        PerlAuthenHandler Apache::CrowdAuth  \r\n        PerlSetVar CrowdAppName tools\r\n        PerlSetVar CrowdAppPassword tools\r\n        PerlSetVar CrowdSOAPURL http://localhost:8095/crowd/services/SecurityServer  \r\n        PerlAuthzHandler Apache::CrowdAuthz\r\n        PerlSetVar CrowdAllowedGroups tools-users:r\r\n        Require valid-user\r\n    </Location>     \r\n\r\n\r\nWhen somebody (accidently?) set the environment variable HTTP_PROXY on this machine, access to /tools was no longer possible. In the Apache logs, an error says that Perl/site/lib/Atlassian/Crowd.pm fails in line 60. This is where the SOAP request if given to the SOAP::LITE Perl Library. The SOAP Library checks for the environment variable HTTP_PROXY and sends the request to the HTTP Proxy - which cannot handle \"http://localhost:8095/crowd/services/SecurityServer\"\r\nand so it return an error. As a result, the authentication for /tools will fail.\r\n\r\nThere are several ways to fix this. Atlassian could extend the auth plugin to analyze the parameter CrowdSOAPURL in details. Then make SOAP::LITE not use any proxy setting for requests to \"http://127.0.0.1:12345/...\" or \"http://loclahost:12345/...\". But I assume SOAP::LITE has no such configuration options. \r\n\r\nThus it may come down to extending/fixing Perl's SOAP::LITE to handle this properly. Or use another SOAP library that can handle this. \r\n\r\nI have solved this for now by removing HTTP_PROXY from the environment variables and telling everybody never ever to do this again. \r\n\r\n",
+      "summary": "localhost and HTTP_PROXY environment variable "
+    }
+  },
+  {
+    "key": "CWD-2148",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-08-01T03:26:46.000+0000",
+      "created": "2010-12-21T01:04:43.000+0000",
+      "description": "If you change the username of an LDAP/AD user and re-sync the cache the new username is not picked up. \r\n\r\nOne needs to disable/enable caching or change the username in the databse.",
+      "summary": "AD caching mis-behaving if the username case is changed/renamed"
+    }
+  },
+  {
+    "key": "CWD-2147",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-20T05:59:59.000+0000",
+      "description": "Sorting out every possible error message is a large amount of work, but lets at least distinguish between a misconfiguration (eg SSO domain or IP address set incorrectly) and an invalid username/password combination.",
+      "summary": "Distinguish between invalid login details and a misconfigured application when logging into Crowd console"
+    }
+  },
+  {
+    "key": "CWD-2146",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-20T00:49:35.000+0000",
+      "description": "TrustedProxyManager uses a PropertyManager to store the addresses of trusted proxies. However, a PropertyManager should only be used to store simple values.\r\n\r\nA new DAO should be created to store the trusted proxies.",
+      "summary": "TrustedProxyManager should store addresses in its own DAO"
+    }
+  },
+  {
+    "key": "CWD-2145",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-19T20:14:37.000+0000",
+      "created": "2010-12-17T20:24:14.000+0000",
+      "description": "Customer reported a broken link on [Crowd SOAP API Documentation|http://confluence.atlassian.com/display/CROWD012/SOAP+API]. Broken link reported: http://docs.atlassian.com/crowd/current/com/atlassian/crowd/integration/service/soap/server/SecurityServer.html\r\n\r\nTried other versions of the same documentation, the link is the same. ",
+      "summary": "Broken link on Crowd SOAP API Documentation"
+    }
+  },
+  {
+    "key": "CWD-2144",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-17T16:41:30.000+0000",
+      "description": "Might be nice if Atlassian considered enhancing Crowd's concept of a user (assuming that is what is responsible for the default user schema via embedded Crowd in Confluence 3.5+ and other Atlassian apps? It might just be a wrapper, but still...) or enhance Confluence such that via API a plugin could register certain things as being something that might be appropriate to display publicly/privately on the user's profile page, such as a score (gamification of wiki contributions) based on ratings of content they authored, provide badges for number of pages created or use of macros, etc.\r\n\r\nI know the \"badges\" and \"gamification\" thing is not new and this has probably been considered before, and the profile area in any Atlassian app is not well traversed by many, but this request for employee recognition is probably particularly popular these days (as an alternative/addition to financial compensation), so it might help draw more people to Atlassian's apps?\r\n\r\n(See related request in Confluence forum [here|http://forums.atlassian.com/thread.jspa?messageID=257362327].)",
+      "summary": "Consider adding ability to register badges, score, etc. with Profile in Atlassian apps (gamification)"
+    }
+  },
+  {
+    "key": "CWD-2143",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-30T04:18:02.000+0000",
+      "created": "2010-12-17T09:41:06.000+0000",
+      "description": "CROWD 2.1.0 is NOT java 1.5 compatible! This bug only occures when SSO is configured.\r\n\r\nI decompiled the crowd-intergration-client-common-2.1.0.jar which constains the CrowdHttpTokenHelperImpl.buildCookie(CrowdHttpTokenHelperImpl.java:194)\r\n\r\nSee below:\r\n\r\n  private Cookie buildCookie(String token, String tokenCookieKey, CookieConfiguration cookieConfig)\r\n\r\n  {\r\n\r\n    String domain = cookieConfig.getDomain();\r\n\r\n    boolean isSecure = cookieConfig.isSecure();\r\n\r\n    Cookie tokenCookie = new Cookie(tokenCookieKey, token);\r\n\r\n \r\n\r\n    tokenCookie.setPath(\"/\");\r\n\r\n \r\n\r\n    if ((domain != null) && (!domain.isEmpty()) && (!\"localhost\".equals(domain)))\r\n\r\n    {\r\n\r\n      tokenCookie.setDomain(domain);\r\n\r\n    }\r\n\r\n \r\n\r\n    tokenCookie.setSecure(isSecure);\r\n\r\n \r\n\r\n    return tokenCookie;\r\n\r\n  }\r\n\r\n \r\n\r\nString.isEmpty() cause the problem, this is Java 1.6 specific!\r\n\r\nisEmpty\r\n\r\npublic boolean isEmpty()\r\nReturns true if, and only if, length() is 0.\r\nReturns:\r\ntrue if length() is 0, otherwise false\r\nSince:\r\n1.6\r\n\r\nIf you look at the CROWD supported platforms page, it states that CROWD is compatible with JDK 1.5 (http://confluence.atlassian.com/display/CROWD/Supported+Platforms).\r\n",
+      "summary": "JDK 1.5 incompatibility"
+    }
+  },
+  {
+    "key": "CWD-2142",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-17T05:19:25.000+0000",
+      "description": "A user should be able to authenticate themselves as an admin user and perform application management tasks.\r\n\r\nWhile [CWD-2169|https://jira.atlassian.com/browse/CWD-2169] implemented the minimal required for applications to connect to JAACS, it's still missing features such as reordering directory mappings, setting directory mapping permissions, and search.\r\n\r\nThe functionality in {{com.atlassian.crowd.manager.application.ApplicationManager}} should be covered.",
+      "summary": "Application Management REST API"
+    }
+  },
+  {
+    "key": "CWD-2141",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-20T04:35:08.000+0000",
+      "created": "2010-12-17T01:21:12.000+0000",
+      "description": "Dont' allow users to enter empty Trusted Proxies",
+      "summary": "Don't allow empty Trusted Proxies"
+    }
+  },
+  {
+    "key": "CWD-2140",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-07-13T08:03:42.000+0000",
+      "created": "2010-12-17T00:52:43.000+0000",
+      "description": "We have not tested Crowd integration with Active Directory Application Mode (ADAM). However, ADAM and Active Directory share the same code base, LDAP interface and API. So ADAM should work with Crowd, following the same integration instructions as above. If you try it, we'd be interested to hear of your experiences.\r\n\r\nhttp://confluence.atlassian.com/display/CROWD/Microsoft+Active+Directory",
+      "summary": "Tracking Feedback for ADAM integration"
+    }
+  },
+  {
+    "key": "CWD-2139",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-17T00:13:16.000+0000",
+      "description": "SpringComponentModuleDescriptor, instead of relying on normal lifecycle of spring beans as managed by plugin framework, does manipulate its own spring context file.\r\n\r\nOne possible rationale behind would be that in crowd we want to explicitly control beans lifecycle. Although, that could be useful sometimes, it can pose later problems since it's not the standard way as expected from the plugin framework's perspective. If there is no obvious benefit out of the ability to control bean lifecycle, I suggest we should refrain from this pattern.\r\n\r\nDon suggested that this might have been done in order to support certain plugin-1 plugins which might no longer be relevant.",
+      "summary": "Investigate the reason why SpringComponentModuleDescriptor needs to dynamically manipulate spring context file"
+    }
+  },
+  {
+    "key": "CWD-2138",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-21T05:09:20.000+0000",
+      "created": "2010-12-16T01:11:50.000+0000",
+      "description": "The current implementation caches whether a particular proxy server address is trusted in the form of a single element in the cache as a HashMap. This issue will refactor the trusted proxy code to store the result of whether a proxy server address is trusted as separate elements - making the solution more thread-safe.",
+      "summary": "Refactor TrustedProxyManager to store allowed proxies in a separate cache"
+    }
+  },
+  {
+    "key": "CWD-2137",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-15T16:37:56.000+0000",
+      "description": "We are rapidly deploying Crowd integrations across our enterprise and our stymied by the fact that each client must be provided with a unique Crowd application and password. Since we're restricting clients based on IP it would be desirable to be able to encrypt the password in the client crowd.properties setup or even have the option of a token/crumb style client authentication:\r\n\r\n# Crowd server generates unique seed for each application created\r\n# Crowd interface generates a unique token for a specific client based on that seed and the remote IP address\r\n\r\nSo now instead of providing an application name and password to the remote client, we just give them a token. If the remote IP is removed from Crowd the token becomes invalid. \r\n\r\nThis abstraction is really critical for us in truly deploying Crowd in our very much locked down enterprise environment. Our enterprise information security guys would not like to see us making \"passwords\" available to our clients and it doesn't seem to be the right \"fit\" to be creating a unique application for every remote client when they're running the same \"app\" but they're all unique consumers.\r\n",
+      "summary": "Support authentication with API tokens for Crowd applications"
+    }
+  },
+  {
+    "key": "CWD-2135",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-21T00:55:30.000+0000",
+      "created": "2010-12-14T04:08:16.000+0000",
+      "description": "[As documented in the Crowd 2.1 Upgrade Notes|http://confluence.atlassian.com/display/CROWD/Crowd+2.1+Upgrade+Notes#Crowd2.1UpgradeNotes-ChangedAuthorisationBehaviourwhenMultipleDirectoriesareMappedtoanApplication], the username and group memberships for the user are always obtained from the same directory. Therefore the group memberships are not aggregated across directories any more.\r\n\r\nWould be very useful to have this functionality back, through an UI option that would allow group memberships to be aggregated across directories.",
+      "summary": "Add option that would allow group memberships to be aggregated across directories again"
+    }
+  },
+  {
+    "key": "CWD-2134",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-02T04:33:17.000+0000",
+      "created": "2010-12-14T00:35:01.000+0000",
+      "description": "https://extranet.atlassian.com/display/INTEGRATION/Integration+Platform+2.9\r\n\r\nUpgrades:\r\n * Plugin Framework 2.7\r\n * SAL 2.4\r\n * REST 2.3\r\n * UPM 1.2 (x)\r\n * OAUTH 1.2\r\n * Trusted Apps 2.2\r\n * APL 3.1 (x)",
+      "summary": "Upgrade to Integration Platform 2.9"
+    }
+  },
+  {
+    "key": "CWD-2133",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-21T22:18:12.000+0000",
+      "created": "2010-12-14T00:27:22.000+0000",
+      "description": "https://extranet.atlassian.com/display/INTEGRATION/Integration+Platform+2.8\r\n\r\nUpgrades:\r\n * AUI 3.2",
+      "summary": "Upgrade to Integration Platform 2.8"
+    }
+  },
+  {
+    "key": "CWD-2132",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-21T22:18:31.000+0000",
+      "created": "2010-12-14T00:24:22.000+0000",
+      "description": "https://extranet.atlassian.com/display/INTEGRATION/Integration+Platform+2.7\r\n\r\nUpgrades:\r\n * Plugins 2.6\r\n * SAL 2.2\r\n * REST 2.2\r\n * AUI 3.1\r\n * Template Renderer 1.2",
+      "summary": "Upgrade to Integration Platform 2.7"
+    }
+  },
+  {
+    "key": "CWD-2131",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-02-01T04:21:18.000+0000",
+      "created": "2010-12-13T20:42:21.000+0000",
+      "description": "On a machine with multiple IP address, Crowd does not necessarily use the IP address on which it is listening in order to make a connection to the database. It appears to choose the first IP address given to it by the Java network API.",
+      "summary": "Incorrect IP address used to make connection to database"
+    }
+  },
+  {
+    "key": "CWD-2130",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-31T04:54:36.000+0000",
+      "created": "2010-12-13T17:04:47.000+0000",
+      "description": "Pre-upgrade had a single trusted proxy server (127.0.0.1) defined.  After performing an in-place upgrade to 2.1, an additional entry with a null address is created (see screenshot).  This results in the following errors in catalina.out\r\n{code}\r\n2010-12-11 19:07:49,403 http-8095-2 ERROR [codehaus.xfire.handler.DefaultFaultHandler] Fault occurred!\r\njava.lang.IllegalArgumentException: You cannot create a remote address with null address\r\n        at org.apache.commons.lang.Validate.notEmpty(Validate.java:363)\r\n        at com.atlassian.crowd.model.application.RemoteAddress.<init>(RemoteAddress.java:38)\r\n        at com.atlassian.crowd.manager.proxy.TrustedProxyManagerImpl.getRemoteAddressFromCache(TrustedProxyManagerImpl.java:225)\r\n        at com.atlassian.crowd.manager.proxy.TrustedProxyManagerImpl.isTrusted(TrustedProxyManagerImpl.java:43)\r\n        at com.atlassian.crowd.manager.token.factory.TokenKeyGeneratorImpl.isTrustedProxy(TokenKeyGeneratorImpl.java:173)\r\n        at com.atlassian.crowd.manager.token.factory.TokenKeyGeneratorImpl.addValidationFactors(TokenKeyGeneratorImpl.java:110)\r\n        at com.atlassian.crowd.manager.token.factory.TokenKeyGeneratorImpl.constructMessage(TokenKeyGeneratorImpl.java:56)\r\n        at com.atlassian.crowd.manager.token.factory.TokenKeyGeneratorImpl.generateKey(TokenKeyGeneratorImpl.java:45)\r\n        at com.atlassian.crowd.manager.token.factory.TokenFactoryImpl.create(TokenFactoryImpl.java:37)\r\n        at com.atlassian.crowd.manager.token.factory.TokenFactoryImpl.create(TokenFactoryImpl.java:32)\r\n        at com.atlassian.crowd.manager.authentication.TokenAuthenticationManagerImpl.generateUserToken(TokenAuthenticationManagerImpl.java:353)\r\n        at com.atlassian.crowd.manager.authentication.TokenAuthenticationManagerImpl.authenticateUser(TokenAuthenticationManagerImpl.java:205)\r\n        at com.atlassian.crowd.manager.authentication.TokenAuthenticationManagerImpl.authenticateUser(TokenAuthenticationManagerImpl.java:258)\r\n        at com.atlassian.crowd.manager.authentication.AliasingAwareTokenAuthenticationManager.authenticateUser(AliasingAwareTokenAuthenticationManager.java:46)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)\r\n        at com.atlassian.spring.interceptors.SpringProfilingInterceptor.invoke(SpringProfilingInterceptor.java:20)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n        at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:106)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n        at $Proxy14.authenticateUser(Unknown Source)\r\n        at com.atlassian.crowd.service.soap.server.SecurityServerGeneric.authenticatePrincipal(SecurityServerGeneric.java:211)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)\r\n        at com.atlassian.spring.interceptors.SpringProfilingInterceptor.invoke(SpringProfilingInterceptor.java:20)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n        at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:106)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n        at $Proxy14.authenticateUser(Unknown Source)\r\n        at com.atlassian.crowd.service.soap.server.SecurityServerGeneric.authenticatePrincipal(SecurityServerGeneric.java:211)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)\r\n        at com.atlassian.spring.interceptors.SpringProfilingInterceptor.invoke(SpringProfilingInterceptor.java:20)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n        at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:106)\r\n        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)\r\n        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)\r\n        at $Proxy98.authenticatePrincipal(Unknown Source)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)\r\n        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:198)\r\n        at $Proxy98.authenticatePrincipal(Unknown Source)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.codehaus.xfire.service.invoker.AbstractInvoker.invoke(AbstractInvoker.java:59)\r\n        at org.codehaus.xfire.service.binding.ServiceInvocationHandler.sendMessage(ServiceInvocationHandler.java:320)\r\n        at org.codehaus.xfire.service.binding.ServiceInvocationHandler$1.run(ServiceInvocationHandler.java:86)\r\n        at org.codehaus.xfire.service.binding.ServiceInvocationHandler.execute(ServiceInvocationHandler.java:134)\r\n        at org.codehaus.xfire.service.binding.ServiceInvocationHandler.invoke(ServiceInvocationHandler.java:109)\r\n        at org.codehaus.xfire.handler.HandlerPipeline.invoke(HandlerPipeline.java:131)\r\n        at org.codehaus.xfire.transport.DefaultEndpoint.onReceive(DefaultEndpoint.java:64)\r\n        at org.codehaus.xfire.transport.AbstractChannel.receive(AbstractChannel.java:38)\r\n        at org.codehaus.xfire.transport.http.XFireServletController.invoke(XFireServletController.java:304)\r\n        at org.codehaus.xfire.transport.http.XFireServletController.doService(XFireServletController.java:129)\r\n        at org.codehaus.xfire.spring.remoting.XFireServletControllerAdapter.handleRequest(XFireServletControllerAdapter.java:67)\r\n        at org.codehaus.xfire.spring.remoting.XFireExporter.handleRequest(XFireExporter.java:48)\r\n        at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:48)\r\n        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:875)\r\n        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:807)\r\n        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:571)\r\n        at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:511)\r\n        at javax.servlet.http.HttpServlet.service(HttpServlet.java:637)\r\n        at javax.servlet.http.HttpServlet.service(HttpServlet.java:717)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at com.atlassian.johnson.filters.AbstractJohnsonFilter.doFilter(AbstractJohnsonFilter.java:71)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:198)\r\n        at com.atlassian.crowd.console.filter.CrowdOpenSessionInViewFilter.doFilterInternal(CrowdOpenSessionInViewFilter.java:26)\r\n        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at com.atlassian.gzipfilter.GzipFilter.doFilterInternal(GzipFilter.java:75)\r\n        at com.atlassian.gzipfilter.GzipFilter.doFilter(GzipFilter.java:51)\r\n        at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:236)\r\n        at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)\r\n        at com.atlassian.crowd.console.filter.CrowdDelegatingFilterProxy.doFilter(CrowdDelegatingFilterProxy.java:38)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)\r\n        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)\r\n        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)\r\n        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127)\r\n        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)\r\n        at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:555)\r\n        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)\r\n        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:298)\r\n        at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:852)\r\n        at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:588)\r\n        at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:489)\r\n        at java.lang.Thread.run(Thread.java:619)\r\n\r\nThe spurious entry can be deleted manually which resolves the problem.",
+      "summary": "Crowd upgrade creates null trusted proxy entry"
+    }
+  },
+  {
+    "key": "CWD-2129",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-13T02:01:39.000+0000",
+      "created": "2010-12-10T13:38:47.000+0000",
+      "description": "XmlValidator is causing a dependency on Xalan for Apps using Crowd Embedded.\r\nWe would like to avoid this dependency.",
+      "summary": "Remove dependency on Xalan from Crowd Embedded."
+    }
+  },
+  {
+    "key": "CWD-2128",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-19T22:50:24.000+0000",
+      "created": "2010-12-10T13:36:06.000+0000",
+      "description": null,
+      "summary": "Add unit tests for the Pony2 directory"
+    }
+  },
+  {
+    "key": "CWD-2127",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-10T13:29:40.000+0000",
+      "description": "Getting the active directories for an Application object happens a lot. There should be a convenience method on the Application interface and it can be cached where appropriate.",
+      "summary": "Application should provide convenience method and cache the active Directories"
+    }
+  },
+  {
+    "key": "CWD-2126",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-06T02:53:33.000+0000",
+      "created": "2010-12-10T13:26:16.000+0000",
+      "description": "Replace {{ObjectNotFoundException}} usages that represent Application not found with a proper {{ApplicationNotFoundException}}.",
+      "summary": "Introduce ApplicationNotFoundException"
+    }
+  },
+  {
+    "key": "CWD-2125",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-07T00:29:42.000+0000",
+      "created": "2010-12-10T13:22:48.000+0000",
+      "description": "User|Group|Membership|ApplicationNotFoundException exception should all subclass ObjectNotFoundException.\r\n\r\nThough not strictly part of this work, ObjectNotFoundException should store the entity class and the identifier passed in, in the constructor. At the moment these parameters are only used to create the exception message.",
+      "summary": "*NotFoundException should subclass ObjectNotFoundException"
+    }
+  },
+  {
+    "key": "CWD-2124",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-31T01:06:58.000+0000",
+      "created": "2010-12-10T13:11:39.000+0000",
+      "description": "Currently if a directory sync fails, the failure is logged, but there is no indication of a failed sync in the UI.\r\n\r\nThis can be quite confusing so we should display an error message if a sync has failed.\r\n\r\nPossible scenarios for sync failing:\r\n* Incorrect configuration (eg. typo in baseDN, bad username/password)\r\n* LDAP server is down\r\n* Timeout exceeded for long trees. ",
+      "summary": "Give some sort of feedback in UI if sync fails"
+    }
+  },
+  {
+    "key": "CWD-2123",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-21T05:19:54.000+0000",
+      "created": "2010-12-10T13:08:43.000+0000",
+      "description": "JIRA 4.3 will roll with Seraph 2.4.\r\n\r\nSince Seraph 2.4 is not binary compatible with Seraph 2.3, we will need to roll a v24 package for our authenticators (and create a new module).\r\n\r\nOnce this is done, we will want to create build that tests SSO with JIRA 4.3 milestone and Crowd trunk.",
+      "summary": "Get Crowd SSO working with JIRA 4.3"
+    }
+  },
+  {
+    "key": "CWD-2122",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-21T06:01:29.000+0000",
+      "created": "2010-12-10T13:03:59.000+0000",
+      "description": "Currently the remote API layers (SOAP, REST) check for valid group memberships through the {{TokenAuthenticationManager}}.\r\n\r\nThe logic should be moved from {{TokenAuthenticationManagerImpl}}. The distinction between authentication and authorisation should be maintained in ApplicationService.\r\n\r\nQuestions:\r\n  * Should the ApplicationService be performing caching of the group membership checks?",
+      "summary": "Add ability in ApplicationService to check if a user is authorised to authenticate with an application"
+    }
+  },
+  {
+    "key": "CWD-2121",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-22T03:53:44.000+0000",
+      "created": "2010-12-10T13:00:32.000+0000",
+      "description": "A bit worried about the LDAP connection pool code (in CrowdAdminServiceImpl):\r\n\r\n* Firstly it seems that getSystemConnectionPoolProperties() could be called before the System Properties are initialised by getApplication().\r\n* Secondly CrowdAdminServiceImpl.getApplication() lazily initialises the system properties but CrowdServiceImpl.getApplication() does not.\r\n\r\nWas there a reason not to just eagerly initialise the SystemConnectionPoolProperties in the constructor?\r\nWhy are we setting System properties rather than just reading and merging with DB properties?\r\n(Can this sometimes fail? eg with security settings)\r\n",
+      "summary": "Review the initialisation of LDAP Connection Pool settings in the system properties"
+    }
+  },
+  {
+    "key": "CWD-2120",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-14T21:23:36.000+0000",
+      "created": "2010-12-10T10:33:32.000+0000",
+      "description": "Add ability to disable users using the REST API.",
+      "summary": "Add ability to disable users using the REST API"
+    }
+  },
+  {
+    "key": "CWD-2119",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-11-05T04:17:42.000+0000",
+      "created": "2010-12-10T10:32:00.000+0000",
+      "description": "I`m using the RestClientCrowd for retrieving User details but the directoryId is never fetched, please add this to the user details. The User objects has the getDirectoryId() method this suggests that this should work.",
+      "summary": "REST User.getDirectoryId() always returns 0"
+    }
+  },
+  {
+    "key": "CWD-2118",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-20T05:08:46.000+0000",
+      "created": "2010-12-10T08:06:48.000+0000",
+      "description": "Currently, our \"LDAP read-only\" configuration sets the UPDATE_USER permission on the Directory it creates. This is a serious bug -- it permits the LDAP read-only configuration to update users on the remote LDAP server, which is not correct. However, it is currently required so that attributes can be updated when using an LDAP read-only configuration in Confluence or JIRA.\r\n\r\nTo fix this, we need a new permission UPDATE_USER_ATTRIBUTE and UPDATE_GROUP_ATTRIBUTE so that the LDAP read-only configuration supports setting attributes on groups and users (which are always stored locally), but doesn't allow the users on the remote system to be modified.\r\n\r\nFrom the CrowdService perspective, the following methods must check the new UPDATE_USER_ATTRIBUTE permissions instead of UPDATE_USER:\r\n\r\n* setUserAttribute(User, String, String)\r\n* setUserAttribute(User, String, Set<String>)\r\n* removeUserAttribute(User, String)\r\n* removeAllUserAttributes(User)\r\n\r\nAnd the following methods must check the new UPDATE_GROUP_ATTRIBUTE permission instead of UPDATE_GROUP:\r\n\r\n* setGroupAttribute(Group, String, String)\r\n* setGroupAttribute(Group, String, Set<String>)\r\n* removeGroupAttribute(Group, String)\r\n* removeAllGroupAttributes(Group)\r\n\r\n(One clarification needed - are RemoteCrowdDirectory attributes stored locally or remotely? Does this affect the permission checking for this method?)\r\n",
+      "summary": "Read-only LDAP isn't - need separate permissions UPDATE_USER_ATTRIBUTE, UPDATE_GROUP_ATTRIBUTE for setUserAttribute, setGroupAttribute and friends"
+    }
+  },
+  {
+    "key": "CWD-2117",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-21T05:19:43.000+0000",
+      "created": "2010-12-10T08:02:22.000+0000",
+      "description": "{code}\r\npublic boolean removeUserFromGroup(User user, Group group) throws GroupNotFoundException, UserNotFoundException, OperationNotPermittedException, MembershipNotFoundException, OperationFailedException\r\n{code}\r\n\r\nand\r\n\r\n{code}\r\npublic boolean removeGroupFromGroup(Group childGroup, Group parentGroup) throws GroupNotFoundException, OperationNotPermittedException, MembershipNotFoundException, OperationFailedException\r\n{code}\r\n\r\nnever returns false.\r\n\r\nIt should map MembershipNotFoundException to false, and never throw that exception.",
+      "summary": "CrowdService membership removal should not throw MembershipNotFoundException"
+    }
+  },
+  {
+    "key": "CWD-2116",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-04T02:13:06.000+0000",
+      "created": "2010-12-10T07:58:58.000+0000",
+      "description": "Need to create a new module specifically containing a new custom remote directory. The module will only be used during testing to attempt to load a custom remote directory.",
+      "summary": "Create integration test for custom remote directories"
+    }
+  },
+  {
+    "key": "CWD-2115",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-10T15:19:48.000+0000",
+      "created": "2010-12-10T07:51:36.000+0000",
+      "description": "Authentication failures produce error messages that don't make sense:\r\n{noformat}com.atlassian.crowd.exception.InvalidAuthenticationException: Account with name <Unauthorized> failed to authenticate\r\n        at com.atlassian.crowd.integration.rest.service.RestExecutor$MethodExecutor.throwError(RestExecutor.java:385)\r\n        at com.atlassian.crowd.integration.rest.service.RestExecutor$MethodExecutor.andReceive(RestExecutor.java:264)\r\n        at com.atlassian.crowd.integration.rest.service.RestCrowdClient.searchUsers(RestCrowdClient.java:268)\r\n        at com.atlassian.crowd.directory.RemoteCrowdDirectory.searchUsers(RemoteCrowdDirectory.java:143)\r\n        at com.atlassian.crowd.directory.ldap.cache.RemoteDirectoryCacheRefresher.findAllRemoteUsers(RemoteDirectoryCacheRefresher.java:48)\r\n        at com.atlassian.crowd.directory.ldap.cache.RemoteDirectoryCacheRefresher.synchroniseAllUsers(RemoteDirectoryCacheRefresher.java:67)\r\n        at com.atlassian.crowd.directory.ldap.cache.AbstractCacheRefresher.synchroniseAll(AbstractCacheRefresher.java:34)\r\n        at com.atlassian.crowd.directory.DbCachingRemoteDirectory.synchroniseCache(DbCachingRemoteDirectory.java:528)\r\n        at com.atlassian.crowd.manager.directory.DirectorySynchroniserHelperImpl.synchronise(DirectorySynchroniserHelperImpl.java:74){noformat}",
+      "summary": "Http status code 401 not handled correctly in Crowd rest client"
+    }
+  },
+  {
+    "key": "CWD-2114",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-13T23:00:45.000+0000",
+      "created": "2010-12-10T07:46:58.000+0000",
+      "description": "Currently ConnectionPoolProperties, SystemConnectionPoolProperties and DefaultConnectionPoolProperties live in the embedded-crowd module.\r\n\r\nMove them to crowd-ldap as conneciton pool properites are ldap specific, not embcwd specific.",
+      "summary": "Move ConnectionPoolProperties stuff into crowd-ldap as it is not embcwd specific"
+    }
+  },
+  {
+    "key": "CWD-2113",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-20T05:16:56.000+0000",
+      "created": "2010-12-10T07:43:53.000+0000",
+      "description": "Package up the REST functional tests for JIRA.  Should ideally just be a JAR that JIRA will run to perform their REST functional tests.",
+      "summary": "Package the REST functional tests for JIRA"
+    }
+  },
+  {
+    "key": "CWD-2112",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-03-01T23:40:22.000+0000",
+      "created": "2010-12-10T07:41:07.000+0000",
+      "description": "This is one of our exit criteria for JIRA as a Crowd server.\r\n\r\nThe test will bring up an instance of Confluence (latest 3.5 milestone), configure a RemoteCrowdDirectory pointing to JIRA. Confluence should now be able to use JIRA's user-base.",
+      "summary": "Functional test with Confluence pointing RemoteCrowdDirectory at JIRA"
+    }
+  },
+  {
+    "key": "CWD-2111",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-05-25T07:03:30.000+0000",
+      "created": "2010-12-09T09:03:11.000+0000",
+      "description": "The issue is much like CONF-15163\r\n\r\nFrom JDK 1.5 this class is inluded in the JDK, so there is no need to ship that class anymore with Crowd. The real problem here is that you can configure certain app servers like WebLogic to prefer loading classes from the web application, which is a good thing, but leads to the app server loading other classes in the javax.xml.namespace package using the app server class loader and only the QName class using the web app class loader. This gives you a LinkageError because the app server class loader doesn't allow classes for that package to be loaded from a different class loader.\r\n\r\nThe problems are in the files\r\n * stax-api-1.0.1.jar\r\n * xml-apis-1.3.03.jar\r\n * xbean-2.2.0.jar\r\n\r\nFor there libraries are new versions available without the javax.xml.* packages.\r\n\r\nI ran into this problem because I wanted to connect to a SOAP webservice (via wsdl2java) in my Crowd Plugin I'm developing.\r\n\r\n ",
+      "summary": "Crowd ships with a javax.xml.namespace.QName class"
+    }
+  },
+  {
+    "key": "CWD-2110",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-09T06:00:32.000+0000",
+      "description": "Since removing a user after the user has created a content in Confluence is not supported (in Confluence).\r\n\r\nI think it's worth to create a warning in Crowd's documentation for such operation for Confluence: http://confluence.atlassian.com/display/CROWD/Deleting+or+Deactivating+a+User",
+      "summary": "Add warning in Crowd documentation for removing user "
+    }
+  },
+  {
+    "key": "CWD-2109",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2010-12-09T04:56:16.000+0000",
+      "description": "Not only Crowd and the Subversion/Apache connector but all the Atlassian products could have files available in a *yum* repository.\r\n\r\nThis would make the upgrade easier and faster.",
+      "summary": "Allow Crowd to be upgraded through yum"
+    }
+  },
+  {
+    "key": "CWD-2107",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-19T14:14:28.000+0000",
+      "created": "2010-12-09T01:59:46.000+0000",
+      "description": "The Crowd REST plugin depends on crowd-server.\r\n\r\nWe need to work out what services the REST plugin depend on and split that out into a separate, lighter module that JIRA can depend on.\r\n\r\nThe following services require a No-op implementation for JIRA:\r\n  * TokenAuthenticationManager\r\n  * PropertyManager\r\n  * ClientProperties\r\n  * ForgottenLoginManager",
+      "summary": "Split crowd-server module so that the crowd-rest plugin can be dropped into JIRA"
+    }
+  },
+  {
+    "key": "CWD-2106",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-09-01T05:44:59.000+0000",
+      "created": "2010-12-08T23:02:03.000+0000",
+      "description": "Building Crowd with Maven 3 fails at crowd-integration-saml for default-copy-bundled-dependencies.\r\n\r\nWhile this doesn't affect the official build, other developers may be using the latest version and we should help migration.\r\n",
+      "summary": "Let Crowd build with Maven 3"
+    }
+  },
+  {
+    "key": "CWD-2105",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-07-09T07:13:47.000+0000",
+      "created": "2010-12-08T06:30:05.000+0000",
+      "description": "The CrowdService bean that will be exposed in JIRA and Confluence should be exposed in Crowd so that it's easier for plugin developers to write cross-product user-management plugins.",
+      "summary": "Expose the CrowdService in Crowd"
+    }
+  },
+  {
+    "key": "CWD-2104",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-13T01:37:02.000+0000",
+      "created": "2010-12-08T04:07:42.000+0000",
+      "description": "Go through 'Add Application' and enter a connection URL with an IPv6 literal (e.g., http://[::1]:8080/). 'Resolve IP Address' fails to extract the address from the URL.\r\n\r\nAs a workaround, use a domain name that resolves to the same IP address.",
+      "summary": "Add Application's 'Resolve IP Address' fails with IPv6 literals"
+    }
+  },
+  {
+    "key": "CWD-2103",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-01-06T00:12:43.000+0000",
+      "created": "2010-12-06T23:23:04.000+0000",
+      "description": "Crowd performs case-insensitive comparisons of user/group name by:\r\n1) String.toLowerCase and comparing the lowercase values\r\n2) String.compareToIgnoreCase\r\n\r\nThis is inconsistent and produces an ordering/equality based on the system locale.\r\n\r\nWe should to using a single form of normalising user/group names for case-insensitive comparison, for a specific locale:\r\n\r\n{code}\r\nString.toLowerCase(FIXED_LOCALE)\r\n{code}\r\n\r\nThis method should be available on a util class. The FIXED_LOCALE should default to Locale.ENGLISH.\r\n\r\nThis affects equals, hashcode, compareTo and comparators for domain objects with case-insensitive/case-preserving name schemes.\r\n\r\nIf Crowd 2.1 users are on a system locale that's not compatible with Locale.ENGLISH, then:\r\n1) They would be able to export their data to XML and re-import it, so the normalisation process happens in Locale.ENGLISH for Crowd 2.2\r\n2) We could allow them to specify an override for the FIXED_LOCALE via a system property\r\n",
+      "summary": "Case-insensitive String comparison is not tied to a locale"
+    }
+  }
+]

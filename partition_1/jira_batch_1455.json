@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "CWD-316",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-10T02:06:21.000+0000",
+      "created": "2007-05-09T15:42:56.000+0000",
+      "description": "We have found that users can signin with a blank password. The configuration is a Crowd application with an Active Directory directory. Testing against a Crowd Internal directory does not yield the same results.\r\n\r\nUsing the Config Test tab the following work as expected:\r\n - valid user with valid password succeeds\r\n - valid user with invalid password fails\r\n - invalid user fails\r\n\r\nBut \"valid user with no password succeeds\" and this does not work when going direct using an LDAP client..\r\n\r\nThe following is a log of invoking the application 'Config Test' with no password:\r\n\r\n==================================================================\r\n\r\n16:00:40,298 DEBUG org.springframework.ldap.support.LdapContextSource: AuthenticationSource not set - using default implementation\r\n16:00:40,298 DEBUG org.springframework.ldap.support.LdapContextSource: Using LDAP pooling.\r\n16:00:40,298 DEBUG org.springframework.ldap.support.LdapContextSource: Trying provider Urls: ldap://mite.intsec.amnesty.org:389\r\n16:00:40,300  INFO crowd.integration.directory.connector.SpringLDAPConnector: Performing group search: baseDN = OU=Groups,OU=Intsec,DC=intsec,DC=amnesty,DC=org - filter = (objectclass=group)\r\n16:00:40,300 DEBUG org.springframework.ldap.support.LdapContextSource: Principal: 'CN=Ldap User,OU=Service Accounts,OU=Security Objects,OU=INTSEC,DC=intsec,DC=amnesty,DC=org'\r\n16:00:40,300 DEBUG org.springframework.ldap.support.LdapContextSource: Got Ldap context on server 'ldap://mite.intsec.amnesty.org:389'\r\n16:00:40,370 DEBUG atlassian.crowd.manager.directory.DirectoryManagerGeneric: authenticate: user alordan\r\n16:00:40,378 DEBUG org.springframework.ldap.support.LdapContextSource: AuthenticationSource not set - using default implementation\r\n16:00:40,378 DEBUG org.springframework.ldap.support.LdapContextSource: Using LDAP pooling.\r\n16:00:40,378 DEBUG org.springframework.ldap.support.LdapContextSource: Trying provider Urls: ldap://mite.intsec.amnesty.org:389\r\n16:00:40,380  INFO crowd.integration.directory.connector.SpringLDAPConnector: Performing search: baseDN = OU=Intsec,DC=intsec,DC=amnesty,DC=org - filter = (&(samAccountName=alordan)(memberOf=CN=jira-users,OU=Groups,OU=Intsec,DC=intsec,DC=amnesty,DC=org))\r\n16:00:40,381 DEBUG org.springframework.ldap.support.LdapContextSource: Principal: 'CN=Ldap User,OU=Service Accounts,OU=Security Objects,OU=INTSEC,DC=intsec,DC=amnesty,DC=org'\r\n16:00:40,381 DEBUG org.springframework.ldap.support.LdapContextSource: Got Ldap context on server 'ldap://mite.intsec.amnesty.org:389'\r\n16:00:40,384 DEBUG org.springframework.ldap.support.LdapContextSource: AuthenticationSource not set - using default implementation\r\n16:00:40,384  WARN org.springframework.ldap.support.LdapContextSource: Property 'password' not set - blank password will be used\r\n16:00:40,385 DEBUG org.springframework.ldap.support.LdapContextSource: Not using LDAP pooling\r\n16:00:40,385 DEBUG org.springframework.ldap.support.LdapContextSource: Trying provider Urls: ldap://mite.intsec.amnesty.org:389\r\n16:00:40,385 DEBUG org.springframework.ldap.support.LdapContextSource: Principal: 'cn=Anna Lordan, ou=Users, ou=Intsec, dc=intsec, dc=amnesty, dc=org'\r\n16:00:40,476 DEBUG org.springframework.ldap.support.LdapContextSource: Got Ldap context on server 'ldap://mite.intsec.amnesty.org:389'\r\n16:00:40,476  INFO crowd.integration.directory.connector.SpringLDAPConnector: Performing principal search: baseDN = OU=Intsec,DC=intsec,DC=amnesty,DC=org - filter = (&(samAccountName=alordan)(memberOf=CN=jira-users,OU=Groups,OU=Intsec,DC=intsec,DC=amnesty,DC=org))\r\n16:00:40,476 DEBUG org.springframework.ldap.support.LdapContextSource: Principal: 'CN=Ldap User,OU=Service Accounts,OU=Security Objects,OU=INTSEC,DC=intsec,DC=amnesty,DC=org'\r\n16:00:40,476 DEBUG org.springframework.ldap.support.LdapContextSource: Got Ldap context on server 'ldap://mite.intsec.amnesty.org:389'\r\n16:00:40,480 DEBUG com.atlassian.crowd.manager.GenericManager: generateToken: user alordan\r\n16:00:40,484 DEBUG com.atlassian.crowd.manager.GenericManager: no existing token found in db\r\n16:00:40,484 DEBUG com.atlassian.crowd.manager.GenericManager: adding token MLpTxg26p8+9abvhSdHdPw== for name alordan\r\n16:00:40,484 DEBUG atlassian.crowd.manager.directory.DirectoryManagerGeneric: user has access to the application jira\r\n16:00:40,500 DEBUG integration.service.soap.client.GenericClient: Connection URL: http://localhost:8095/crowd/services/SecurityServer\r\n16:00:40,500 DEBUG integration.service.soap.client.GenericClient: Using existing token: YmPV7EUv0UCOTjpDQI4xVA==\r\n16:00:40,503 DEBUG integration.service.soap.xfire.XFireInLoggingMethodHandler: SOAP service method: isValidPrincipalToken\r\n\tcom.atlassian.crowd.integration.authentication.AuthenticatedToken@a7b7ff[name=crowd,token=YmPV7EUv0UCOTjpDQI4xVA==]\r\n\tTy0YgdDNDbGeHl3+H+qTnQ==\r\n\tcom.atlassian.crowd.integration.authentication.ValidationFactor@120f0be[name=User-Agent,value=Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20061201 Firefox/2.0.0.3 (Ubuntu-feisty)]\r\n\tcom.atlassian.crowd.integration.authentication.ValidationFactor@19d4a86[name=remote_address,value=128.1.34.254]\r\n\r\n================================================================== \r\n\r\nIs anyone else seeing this also?\r\n",
+      "summary": "Active Directory principals can signin with a blank password"
+    }
+  },
+  {
+    "key": "CWD-315",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-02-26T03:33:04.000+0000",
+      "created": "2007-05-09T10:09:16.000+0000",
+      "description": "Every now and then, principal authentication fails with Confluence.  \r\n\r\nThe setup is using Seraph SSO, and when typing credentials to Confluence login page, the login might fail. If redone, goes in ok. \r\n\r\nLog: \r\n\r\n2007-05-09 15:02:34,027 FATAL [TP-Processor6] [service.soap.client.SecurityServerClient] authenticatePrincipal Unable to connect to the crowd server: null :Could not invoke service.. Nested exception is org.codehaus.xfire.fault.XFireFault: Unexpected EOF in prolog\r\n at [row,col {unknown-source}]: [1,0]\r\norg.codehaus.xfire.XFireRuntimeException: Could not invoke service.. Nested exception is org.codehaus.xfire.fault.XFireFault: Unexpected EOF in prolog\r\n at [row,col {unknown-source}]: [1,0]\r\norg.codehaus.xfire.fault.XFireFault: Unexpected EOF in prolog\r\n at [row,col {unknown-source}]: [1,0]\r\n        at org.codehaus.xfire.fault.XFireFault.createFault(XFireFault.java:89)\r\n        at org.codehaus.xfire.client.Client.onReceive(Client.java:386)\r\n        at org.codehaus.xfire.transport.http.HttpChannel.sendViaClient(HttpChannel.java:139)\r\n        at org.codehaus.xfire.transport.http.HttpChannel.send(HttpChannel.java:48)\r\n        at org.codehaus.xfire.handler.OutMessageSender.invoke(OutMessageSender.java:26)\r\n        at org.codehaus.xfire.handler.HandlerPipeline.invoke(HandlerPipeline.java:131)\r\n        at org.codehaus.xfire.client.Invocation.invoke(Invocation.java:75)\r\n        at org.codehaus.xfire.client.Client.invoke(Client.java:335)\r\n        at org.codehaus.xfire.client.XFireProxy.handleRequest(XFireProxy.java:77)\r\n        at org.codehaus.xfire.client.XFireProxy.invoke(XFireProxy.java:57)\r\n        at $Proxy42.authenticatePrincipal(Unknown Source)\r\n        at com.atlassian.crowd.integration.service.soap.client.SecurityServerClient.authenticatePrincipal(SecurityServerClient.java:23)\r\n        at com.atlassian.crowd.integration.http.HttpAuthenticator.authenticate(HttpAuthenticator.java:165)\r\n        at com.atlassian.crowd.integration.seraph.CrowdAuthenticator.login(CrowdAuthenticator.java:53)\r\n        at com.atlassian.seraph.filter.LoginFilter.doFilter(LoginFilter.java:127)\r\n",
+      "summary": "Authentication fails every now and then"
+    }
+  },
+  {
+    "key": "CWD-314",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-08-29T04:27:35.000+0000",
+      "created": "2007-05-09T03:33:25.000+0000",
+      "description": "Spotted this problem while using the \"jiraissues\" macro in Confluence, to grab issues out from a JIRA which is integrated with Crowd. \r\n\r\nIt's found that the response doesn't contain any issues, i.e. {{<item/>}} elements, eventhough {{os_username}} and {{os_password}} parameters are provided. (See the line {{in = method.getResponseBodyAsStream()}} in {{com.atlassian.confluence.extra.jira.JiraIssuesMacro}} or access the URL via a browser with caching turned off)\r\n\r\nThis is what you'll see in JIRA:\r\n\r\n{noformat}\r\nklsupport@atlantis:/opt/atlassian-jira/3.7.3-ent_klsupport/bin$ 2007-05-09 11:21:20,735 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticato\r\nr] Logging off from Crowd\r\n2007-05-09 11:21:20,736 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,736 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,756 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Invalidating user in Crowd-Seraph specific session variables\r\n2007-05-09 11:21:20,756 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Invalidating user in Seraph specific session variables\r\n2007-05-09 11:21:20,757 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Authenticating user with Crowd\r\n2007-05-09 11:21:20,757 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,758 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,781 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,781 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,874 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,874 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,901 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Updating user session for Seraph\r\n2007-05-09 11:21:20,902 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Request is not authenticated\r\n2007-05-09 11:21:20,735 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Logging off from Crowd\r\n2007-05-09 11:21:20,736 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,736 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,756 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Invalidating user in Crowd-Seraph specific session variables\r\n2007-05-09 11:21:20,756 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Invalidating user in Seraph specific session variables\r\n2007-05-09 11:21:20,757 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Authenticating user with Crowd\r\n2007-05-09 11:21:20,757 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,758 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,781 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,781 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,874 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Connection URL: http://localhost:11002/crowd/services/SecurityServer\r\n2007-05-09 11:21:20,874 http-11001-Processor24 DEBUG [service.soap.client.GenericClient] Using existing token: BbUHDf7FiMvcvi9b+H+Tew==\r\n2007-05-09 11:21:20,901 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Updating user session for Seraph\r\n2007-05-09 11:21:20,902 http-11001-Processor24 DEBUG [crowd.integration.seraph.CrowdAuthenticator] Request is not authenticated\r\n{noformat}\r\n\r\nIt looks like it has something to do with the {{com.atlassian.crowd.integration.seraph.CrowdAuthenticator}}.",
+      "summary": "Not able to Retrieve Issues (RSS) if JIRA is Integrated with Crowd"
+    }
+  },
+  {
+    "key": "CWD-313",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-31T04:18:05.000+0000",
+      "created": "2007-05-08T01:24:08.000+0000",
+      "description": "Currently the Apache module has no caching implemented, we will need to investigate the implementation of some form of caching, possibly (http://perl-cache.sourceforge.net/) to help improve the performance of Apache and Subversion integration.\r\n\r\nThis will be a blocker for a lot of people looking at using Subversion with TortoiseSVN as their 'viewer', since TortoiseSVN makes many queries against SVN, and thus LDAP.\r\n",
+      "summary": "The Apache module needs some kind of cache implemented similar to our other 'clients', to help improve performance around apache integration"
+    }
+  },
+  {
+    "key": "CWD-311",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-12T09:40:13.000+0000",
+      "created": "2007-05-06T23:28:15.000+0000",
+      "description": "If I create a new group in my OpenLDAP directory using the Crowd console, the group is always creates without the description.\r\n\r\nLooking at the LDAP server, the description attribute in the group object is missing. If I add the description attribute manually directly in OpenLDAP, then the description is displayed in Crowd as well.\r\n\r\nI checked the catalina.out log, no error shows up.",
+      "summary": "Create Group - description attribute missing in OpenLDAP"
+    }
+  },
+  {
+    "key": "CWD-310",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-05-11T06:16:11.000+0000",
+      "created": "2007-05-06T22:52:54.000+0000",
+      "description": "When i try to update the mail template with a slightly longer version i get a java exception:\r\n\r\n00:34:58,164 ERROR 500ErrorPage: Exception caught in 500 page Hibernate operation: could not update: [com.atlassian.crowd.model.property.Property#15]; uncategorized SQLException for SQL [update [SERVERPROPERTY] set [NAME]=?, [VALUE]=? where [ID]=?]; SQL state [01004]; error code [0]; Data truncation; nested exception is java.sql.DataTruncation: Data truncation\r\norg.springframework.jdbc.UncategorizedSQLException: Hibernate operation: could not update: [com.atlassian.crowd.model.property.Property#15]; uncategorized SQLException for SQL [update [SERVERPROPERTY] set [NAME]=?, [VALUE]=? where [ID]=?]; SQL state [01004]; error code [0]; Data truncation; nested exception is java.sql.DataTruncation: Data truncation\r\njava.sql.DataTruncation: Data truncation\r\n...\r\n\r\nI looked at the SERVERPROPERTY table, and the column VALUE is set to varchar(255), and my template is longer than 255 chars.\r\n255 chars  is a harsh limit for a e-mail template.\r\n\r\nCould you please increase the varchar size to something more usable?",
+      "summary": "Mail Template size is limited to 255 characters"
+    }
+  },
+  {
+    "key": "CWD-309",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-03-03T23:20:21.000+0000",
+      "created": "2007-05-04T14:07:44.000+0000",
+      "description": "Taken from the user forums:\r\n\r\nthere seems to be an important bug in Sun One DS connector (I'm using Crowd v1.0.6).\r\n\r\nI want to authenticate and provision my JIRA users on an LDAP directory. I have done all the integration between Jira and Crowd and it works very well when using openLDAP as the repository for JIRA users (both LDAP authentication and Single Sign-On).\r\n\r\nIt does not work on Sun One Directory Server because the connector always uses the password of the technical account that is configured in the console instead of using the password that is provided by the user. For instance, let's say you have configured the connector with \"cn=Directory Manager\" and \"adminpassword\" as the password for this user. If a user like \"cn=bruno, dc=mycompany\" owns a password different than \"adminpassword\" he won't be able to log in. If you don't indicate any technical account in the configuration panel, the connector always performs an anonymous bind when you try to login. It should first perform an anonymous bind to search the DN of the user trying to log in and then bind with this very DN and the provided password...",
+      "summary": "The SunOne LDAP connector is not correctly authenticating users"
+    }
+  },
+  {
+    "key": "CWD-308",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-05-13T07:57:08.000+0000",
+      "created": "2007-05-04T05:17:25.000+0000",
+      "description": "When viewing the groups and roles of a user a hyper linked 'e' appears on the bottom of the table. The hyperlink is the same as is used to remove the attribute. above.\r\n\r\nThis is an IE specific issue and looks to be directly related to the stylesheet.\r\n\r\nThere is an attached HTML file that currently replicates this issue.",
+      "summary": "Stylesheet / CSS error in IE6.0 when viewing Principal Groups and Roles"
+    }
+  },
+  {
+    "key": "CWD-307",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-03-19T03:16:55.000+0000",
+      "created": "2007-05-03T23:53:32.000+0000",
+      "description": "In the principals screen there seems to be a fixed set of fields that can be displayed. In the Directory configuration view you can set for example the User configuration, but there also it seems to be a fixed set of field. In my case this is somewhat of an issue as sAMAaccountName is a cryptic login ID, and name contains the more common full name I would like to show.\r\n\r\nCan you guys make a solution where I can select the columns that are going to show up in the Principals' view in sort of a grid with checkbox like paradigm, and then allow me to fill in the AD attributes I want Crowd to retrieve for those fields? Also add a check function here to make sure that no erroneous AD attribute can be selected!\r\n\r\nThis input would then drive the display of principal information (in columns) (hopefully in some kind of Ajax grid like nitobi?) in the Principals view screen.\r\n\r\nThis allows me to configure the data and the display more dynamically without Atlassian having to choose the most common denominator and having to keep adding more code to accommodate all our whim's out here.\r\n\r\nAs you can imagine, I'd also like the same for the Roles and the Groups :-)\r\n\r\nLet me know if I need to make some example screens of what I mean with the various above paradigms.",
+      "summary": "LDAP field selection shown in Principals view"
+    }
+  },
+  {
+    "key": "CWD-306",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-03-17T01:00:44.000+0000",
+      "created": "2007-05-03T23:34:48.000+0000",
+      "description": "We need to provide users [1] that are using Crowd the ability for them to view their personal details, see what applications they are associated with and be able to reset their password.\r\n\r\nSince some applications (like JIRA) don't allow you the ability to do this we need to provide the functionality directly via Crowd.\r\n\r\n",
+      "summary": "Allow users to manage their accounts and view thier details in a 'self service' console."
+    }
+  },
+  {
+    "key": "CWD-305",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-16T05:20:56.000+0000",
+      "created": "2007-05-03T02:56:21.000+0000",
+      "description": "http://xfire.codehaus.org/GZip+Support\r\n\r\n- Only support GZip on the service if the client request it.\r\n\r\n- Adjust client (SecurityServerClient) code to get a service handle with gzip compression enabled.",
+      "summary": "Add optional GZIP compression support for XFire SOAP services and client."
+    }
+  },
+  {
+    "key": "CWD-304",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-30T07:03:02.000+0000",
+      "created": "2007-05-01T06:50:11.000+0000",
+      "description": null,
+      "summary": "Auto configure openid server as part of the setup process."
+    }
+  },
+  {
+    "key": "CWD-303",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-05-10T02:48:07.000+0000",
+      "created": "2007-05-01T04:39:18.000+0000",
+      "description": "When exporting from a Crowd MySQL database to Oracle, the following exception occurs:\r\n\r\n{noformat}\r\norg.springframework.orm.hibernate3.HibernateSystemException: not-null property references a null or transient value: com.atlassian.crowd.model.directory.Directory.conception; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value: com.atlassian.crowd.model.directory.Directory.conception\r\norg.hibernate.PropertyValueException: not-null property references a null or transient value: com.atlassian.crowd.model.directory.Directory.conception\r\nat org.hibernate.engine.Nullability.checkNullability(Nullability.java:72)\r\nat org.hibernate.event.def.DefaultFlushEntityEventListener.scheduleUpdate(DefaultFlushEntityEventListener.java:263)\r\nat org.hibernate.event.def.DefaultFlushEntityEventListener.onFlushEntity(DefaultFlushEntityEventListener.java:121)\r\nat org.hibernate.event.def.AbstractFlushingEventListener.flushEntities(AbstractFlushingEventListener.java:196)\r\nat org.hibernate.event.def.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:76)\r\nat org.hibernate.event.def.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:26)\r\nat org.hibernate.impl.SessionImpl.flush(SessionImpl.java:1000)\r\nat org.hibernate.impl.SessionImpl.managedFlush(SessionImpl.java:338)\r\nat org.hibernate.transaction.JDBCTransaction.commit(JDBCTransaction.java:106)\r\nat org.springframework.orm.hibernate3.HibernateTransactionManager.doCommit(HibernateTransactionManager.java:584)\r\nat org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:500)\r\nat org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:473)\r\nat com.atlassian.xwork.interceptors.XWorkTransactionInterceptor$1.beforeResult(XWorkTransactionInterceptor.java:89)\r\nat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:200)\r\nat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\nat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\nat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\nat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\nat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\nat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\nat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\nat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\nat com.atlassian.xwork.interceptors.XWorkTransactionInterceptor.intercept(XWorkTransactionInterceptor.java:98)\r\nat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\nat com.opensymphony.xwork.DefaultActionProxy.execute(DefaultActionProxy.java:113)\r\nat com.opensymphony.webwork.dispatcher.DispatcherUtils.serviceAction(DispatcherUtils.java:225)\r\nat com.opensymphony.webwork.dispatcher.FilterDispatcher.doFilter(FilterDispatcher.java:202)\r\nat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\nat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\nat com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:118)\r\nat com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:52)\r\nat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\nat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\nat com.opensymphony.webwork.dispatcher.ActionContextCleanUp.doFilter(ActionContextCleanUp.java:88)\r\nat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\nat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\nat com.atlassian.crowd.integration.http.VerifyTokenFilter.doFilter(VerifyTokenFilter.java:131)\r\nat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\nat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\nat org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:174)\r\nat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:77)\r\nat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\nat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\nat com.atlassian.core.filters.AbstractEncodingFilter.doFilter(AbstractEncodingFilter.java:37)\r\nat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\nat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\nat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)\r\nat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)\r\nat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)\r\nat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)\r\nat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)\r\nat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)\r\nat org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)\r\nat org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)\r\nat org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)\r\nat org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)\r\nat org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)\r\nat java.lang.Thread.run(Thread.java:619)\r\n{noformat}",
+      "summary": "Exporting from MySQL and then importing to Oracle fails."
+    }
+  },
+  {
+    "key": "CWD-302",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-01T06:58:37.000+0000",
+      "created": "2007-04-30T06:27:27.000+0000",
+      "description": "Skin the new server with a 2-level navigation system (side panel + top panel).",
+      "summary": "Skin the OpenID Server"
+    }
+  },
+  {
+    "key": "CWD-301",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-13T07:55:06.000+0000",
+      "created": "2007-04-30T05:51:48.000+0000",
+      "description": "Allow users authenticate via the \"dummy mode\", ie. without the client establishing a prior association with the server.",
+      "summary": "OpenID Client - Dummy Mode"
+    }
+  },
+  {
+    "key": "CWD-300",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-13T07:55:11.000+0000",
+      "created": "2007-04-30T05:50:15.000+0000",
+      "description": "Allow RPs to authenticate without establishing prior authentications.\r\n\r\nThis will mean a separate \"verify\" method will need to be implemented on the server.",
+      "summary": "OpenID Server - dummy mode"
+    }
+  },
+  {
+    "key": "CWD-299",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-13T07:55:04.000+0000",
+      "created": "2007-04-30T05:47:48.000+0000",
+      "description": "Implement the check immediate feature on the client application to allow users to authenticate immediately.\r\n\r\nWhen requesting authentication, the Relying Party MAY request that the OP not interact with the end user. In this case the OP MUST respond immediately with either an assertion that authentication is successful, or a response indicating that the request cannot be completed without further user interaction. This is accomplished by an authentication request with \"openid.mode\" set to \"checkid_immediate\".",
+      "summary": "OpenID Client - Check Immediate"
+    }
+  },
+  {
+    "key": "CWD-298",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-13T07:55:08.000+0000",
+      "created": "2007-04-30T05:44:21.000+0000",
+      "description": "Implement the check immediate feature on the server:\r\n\r\nWhen requesting authentication, the Relying Party MAY request that the OP not interact with the end user. In this case the OP MUST respond immediately with either an assertion that authentication is successful, or a response indicating that the request cannot be completed without further user interaction. This is accomplished by an authentication request with \"openid.mode\" set to \"checkid_immediate\".",
+      "summary": "OpenID Server - Check Immediate"
+    }
+  },
+  {
+    "key": "CWD-297",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-08-30T06:33:16.000+0000",
+      "created": "2007-04-30T00:50:48.000+0000",
+      "description": "{quote}\r\nThe exception is one big group jira-users which has 600. It is this one that takes a long time to reload it seems. When the cache expires all of these are grabbed and this is particularly noticeable on a user picker like the reporter user picker.\r\n\r\nLooking at the crowd logs there seems to be a separate LDAP call for each user and for each group in the whole directory. We get a bunch of entries like the following:\r\n11:14:04,984 INFO integration.directory.connector.spring.GenericAttributesMapper: Looking for group member: baseDN = CN=A User,OU=Users,OU=MyComp,DC=mycomp,DC=nonprofit,DC=org - filter = (memberOf=CN=jira-users,OU=Groups,OU=MyComp,DC=mycomp,DC=nonprofit,DC=org)\r\n{quote}\r\n\r\nHere is the original forum post: http://forums.atlassian.com/thread.jspa?threadID=17292&tstart=0",
+      "summary": "JIRA performance improvements"
+    }
+  },
+  {
+    "key": "CWD-296",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-08T07:51:27.000+0000",
+      "created": "2007-04-30T00:36:10.000+0000",
+      "description": "Currently the SpringLDAP connector password is not implemented:\r\n\r\n{code}\r\n    public void updatePrincipalCredential(String name, PasswordCredential credential) throws RemoteException, ObjectNotFoundException, InvalidCredentialException\r\n    {\r\n    }\r\n{code}\r\n\r\nThis method should be updated to implement updating the principal's password. A new abstract method will need to be declared on the {{SpringLDAP}} object that implementations {{MicrosoftActiveDirectory, OpenLDAP}} will need to implement. This abstract method can then be called to convert the password to the LDAP server format.",
+      "summary": "LDAP update password implementation."
+    }
+  },
+  {
+    "key": "CWD-294",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-06T00:22:38.000+0000",
+      "created": "2007-04-26T06:30:51.000+0000",
+      "description": "Test the form redirection feature of authentication requests for OpenID 2.0 compatible providers.",
+      "summary": "Test OpenIDClient Form Redirection"
+    }
+  },
+  {
+    "key": "CWD-293",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-03-14T08:42:26.000+0000",
+      "created": "2007-04-26T06:27:47.000+0000",
+      "description": "Generate an XRDS document for each user and link it to their landing page.",
+      "summary": "YADIS XRDS document generation"
+    }
+  },
+  {
+    "key": "CWD-292",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-31T04:11:03.000+0000",
+      "created": "2007-04-26T06:24:48.000+0000",
+      "description": "Implement a configurable OpenID server:\r\n# Abstract out methods into CrowdProvider interface\r\n# Implement association\r\n# Implement authentication request (redirect to stubbed allow/disallow authentication page)\r\n# Implement authentication response (implement authentication check and attribute exchange)\r\n# Implement verify authentication (dumb mode)\r\n# Implement immediate authentication verification\r\n# Springify provider\r\n# Implement relevant request/response message objects\r\n# Implement servlet to handle incoming requests\r\n",
+      "summary": "OpenID Server Implementation"
+    }
+  },
+  {
+    "key": "CWD-291",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-01T06:51:30.000+0000",
+      "created": "2007-04-24T02:50:26.000+0000",
+      "description": null,
+      "summary": "Auto configure openid server as part of the setup process."
+    }
+  },
+  {
+    "key": "CWD-290",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-08-29T06:08:48.000+0000",
+      "created": "2007-04-20T06:38:26.000+0000",
+      "description": "This is the final release for Webwork, this also has a fix for that terrible result null 404 error. WW-1445\r\n\r\n",
+      "summary": "Upgrade webwork from 2.2.4 to 2.2.5"
+    }
+  },
+  {
+    "key": "CWD-289",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T06:16:39.000+0000",
+      "created": "2007-04-19T01:52:53.000+0000",
+      "description": "When viewing the groups list in the \"View Application\" section, the group list does not come back in an alpha-numeric sort order which can make it extremely difficult to find groups in large listings.  While it is possible to configure filters and pare the list down, it would be awfully convenient if the list could be sorted. \r\n\r\nThis behavior is evident in the image found at: http://confluence.atlassian.com/display/CROWD/3.4+Specifying+which+Groups+can+access+an+Application",
+      "summary": "Sort groups by name when selecting groups that can access an application"
+    }
+  },
+  {
+    "key": "CWD-288",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-14T07:59:11.000+0000",
+      "created": "2007-04-18T02:52:15.000+0000",
+      "description": "The titles should not be linked to the footer application name:\r\n\r\nfooter = Atlassian Crowd\r\n\r\nheader title \r\n* Atlassian Crowd Server\r\n* Atlassian Crowd Demo\r\n* Atlassian Crowd OpenID Server\r\n* Atlassian Crowd OpenID Client\r\n",
+      "summary": "Change application titles - not footers"
+    }
+  },
+  {
+    "key": "CWD-287",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-19T04:05:55.000+0000",
+      "created": "2007-04-18T00:43:09.000+0000",
+      "description": null,
+      "summary": "Reset password option for the Console"
+    }
+  },
+  {
+    "key": "CWD-286",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-29T05:24:35.000+0000",
+      "created": "2007-04-17T07:22:02.000+0000",
+      "description": null,
+      "summary": "Skin Demo RP application"
+    }
+  },
+  {
+    "key": "CWD-285",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-26T06:18:48.000+0000",
+      "created": "2007-04-17T07:21:36.000+0000",
+      "description": null,
+      "summary": "Display attributes in the demo application upon login (store in session for display)"
+    }
+  },
+  {
+    "key": "CWD-284",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-26T06:17:30.000+0000",
+      "created": "2007-04-17T07:21:03.000+0000",
+      "description": null,
+      "summary": "Login and Logoff for OpenID demo relying party application."
+    }
+  },
+  {
+    "key": "CWD-283",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-26T06:18:12.000+0000",
+      "created": "2007-04-17T07:20:29.000+0000",
+      "description": null,
+      "summary": "Configure request attributes for demo app"
+    }
+  },
+  {
+    "key": "CWD-282",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-01T02:54:16.000+0000",
+      "created": "2007-04-17T07:17:30.000+0000",
+      "description": null,
+      "summary": "OpenID Protocol checker"
+    }
+  },
+  {
+    "key": "CWD-281",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-28T23:05:09.000+0000",
+      "created": "2007-04-17T07:16:50.000+0000",
+      "description": "* deploy client jars during build process to maven server\r\n* auto update server\r\n** JAC\r\n** SAC\r\n** WAC\r\n** Javadoc\r\n** Freshmeat.net",
+      "summary": "Build script improvements"
+    }
+  },
+  {
+    "key": "CWD-280",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-14T08:00:54.000+0000",
+      "created": "2007-04-17T07:15:23.000+0000",
+      "description": null,
+      "summary": "Document OpenID server configuration"
+    }
+  },
+  {
+    "key": "CWD-279",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-06T00:22:16.000+0000",
+      "created": "2007-04-17T07:14:43.000+0000",
+      "description": null,
+      "summary": "Attribute/Profile Management"
+    }
+  },
+  {
+    "key": "CWD-278",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-30T07:08:37.000+0000",
+      "created": "2007-04-17T07:14:16.000+0000",
+      "description": null,
+      "summary": "Authentication redirect from relying party."
+    }
+  },
+  {
+    "key": "CWD-277",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-29T05:24:40.000+0000",
+      "created": "2007-04-17T07:13:48.000+0000",
+      "description": null,
+      "summary": "Skin Server"
+    }
+  },
+  {
+    "key": "CWD-276",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-31T04:09:13.000+0000",
+      "created": "2007-04-17T07:13:26.000+0000",
+      "description": null,
+      "summary": "Profile authentication history"
+    }
+  },
+  {
+    "key": "CWD-275",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-06T02:33:49.000+0000",
+      "created": "2007-04-17T07:12:36.000+0000",
+      "description": null,
+      "summary": "Enable/disable localhost relying parties."
+    }
+  },
+  {
+    "key": "CWD-274",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-06T00:21:58.000+0000",
+      "created": "2007-04-17T07:11:57.000+0000",
+      "description": null,
+      "summary": "Whitelist and Blacklist Editor"
+    }
+  },
+  {
+    "key": "CWD-273",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-18T00:14:24.000+0000",
+      "created": "2007-04-17T07:09:55.000+0000",
+      "description": null,
+      "summary": "Force Association"
+    }
+  },
+  {
+    "key": "CWD-272",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-31T04:08:32.000+0000",
+      "created": "2007-04-17T07:08:16.000+0000",
+      "description": null,
+      "summary": "Reset password option."
+    }
+  },
+  {
+    "key": "CWD-271",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-01T06:52:13.000+0000",
+      "created": "2007-04-17T07:07:46.000+0000",
+      "description": null,
+      "summary": "Login and Logoff for OpenID Server application."
+    }
+  },
+  {
+    "key": "CWD-270",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-04-21T03:50:25.000+0000",
+      "created": "2007-04-17T05:26:30.000+0000",
+      "description": "http://forums.atlassian.com/post!reply.jspa?messageID=257246154",
+      "summary": "Console application password recovery utility"
+    }
+  },
+  {
+    "key": "CWD-269",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-27T01:07:17.000+0000",
+      "created": "2007-04-17T02:46:03.000+0000",
+      "description": "Are any doc updates required?",
+      "summary": "document the management of the Crowd domain during setup and in the Console"
+    }
+  },
+  {
+    "key": "CWD-266",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-10-31T09:03:06.000+0000",
+      "created": "2007-04-16T08:40:16.000+0000",
+      "description": "{panel:title=Atlassian Update - 18 August 2017|borderStyle=solid|borderColor=#3c78b5|titleBGColor=#3c78b5|bgColor=#e7f4fa}\r\nHi everyone,\r\n\r\nThanks for all your votes and comments on this suggestion. Your voice means a lot to us.\r\n\r\nWe're excited to announce that from now on clustering is officially supported and available for everyone in [Crowd Data Center|https://www.atlassian.com/software/crowd/enterprise/data-center].\r\n\r\nThis is the newest addition to Atlassian's Data Center family, which brings you high availability and uninterrupted access as well as all the features of Crowd Server.\r\n\r\nCrowd DC is also great at scaling \u2013 you can easily expand your DC with extra nodes that will pull all the necessary configuration from the shared file system, and join the cluster without any extra setup.\r\n\r\nCrowd Data Center is delivered in the [Crowd 3.0 release|https://confluence.atlassian.com/crowd/crowd-3-0-release-notes-934719586.html] together with support for Microsoft Azure Active Directory.\r\n\r\nWe highly recommend you to upgrade your current Crowd version to the latest one. In case if you will require any help or assistance in setting up Crowd Data Center or have further questions please don't hesitate to get in touch with me directly at [mailto:mradochonski@atlassian.com]\r\n\r\nPlease read the [upgrade notes|https://confluence.atlassian.com/crowd/crowd-3-0-upgrade-notes-905088628.html] for important information about this release before installing the newest version.\r\n\r\nTo learn more about Crowd Data Center, check out our [technical documentation|https://confluence.atlassian.com/enterprise/crowd-data-center-933084126.html], [technical FAQ|https://confluence.atlassian.com/enterprise/crowd-data-center-faq-933092399.html], and [licensing FAQ|https://www.atlassian.com/licensing/crowd].\r\n\r\nYou can download Crowd 3.0 from [here|https://www.atlassian.com/software/crowd/download?_ga=2.208081878.591644698.1502852955-2041459945.1501489427].\r\n\r\nIf you are ready to get started then [get a Crowd Data Center license|https://www.atlassian.com/purchase/product/crowd.data-center], or [try it out for free|https://my.atlassian.com/license/evaluation].\r\n\r\nThanks,\r\n\r\nMarek Radochonski\r\n\r\nSenior Product Manager, Crowd\r\n\r\n[mailto:mradochonski@atlassian.com]\r\n{panel}\r\n\r\n\r\n\r\n\r\n{panel:title=Atlassian Status as of 27 April 2011|borderStyle=solid|borderColor=#3c78b5|titleBGColor=#3c78b5|bgColor=#e7f4fa}\r\nHi folks,\r\n\r\nThanks for your feedback and continued support. We wanted to give you an update on the status of this issue.\r\n\r\nOver the medium term, the direction we're taking with Crowd is to focus on scalability, reliability and performance. Exciting development has occurred and is going to continue within this space. This feature is a strong candidate for a future release. We can't promise a specific release, but we'll update the issue when we have more concrete information.\r\n\r\nRegards,\r\nEugene Mak\r\nAtlassian Product Management\r\n{panel}",
+      "summary": "Clusterable Crowd Documentation"
+    }
+  },
+  {
+    "key": "CWD-265",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-16T08:01:47.000+0000",
+      "created": "2007-04-16T08:01:06.000+0000",
+      "description": "When viewing the user profile the email address field in Confluence displays the user Full Name.",
+      "summary": "Confluence displays the users fullname instead of email when integrated with Crowd"
+    }
+  },
+  {
+    "key": "CWD-264",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-30T00:58:09.000+0000",
+      "created": "2007-04-16T05:58:54.000+0000",
+      "description": "\"The JIRA user import was sccessful!\"\r\n\r\n'nuff said.",
+      "summary": "Typo in Jira import"
+    }
+  },
+  {
+    "key": "CWD-263",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-16T05:59:00.000+0000",
+      "created": "2007-04-16T05:55:01.000+0000",
+      "description": "The Demo application fails with the following exception when executing a search for either a group, role or principal:\r\n\r\n{noformat}\r\n15:48:33,369 FATAL integration.service.soap.client.SecurityServerClient: Unable to connect to the crowd server: null :Could not invoke service.. Nested exception is org.codehaus.xfire.fault.XFireFault: Write operations are not allowed in read-only mode (FlushMode.NEVER) - turn your Session into FlushMode.AUTO or remove 'readOnly' marker from transaction definition\r\norg.codehaus.xfire.XFireRuntimeException: Could not invoke service.. Nested exception is org.codehaus.xfire.fault.XFireFault: Write operations are not allowed in read-only mode (FlushMode.NEVER) - turn your Session into FlushMode.AUTO or remove 'readOnly' marker from transaction definition\r\norg.codehaus.xfire.fault.XFireFault: Write operations are not allowed in read-only mode (FlushMode.NEVER) - turn your Session into FlushMode.AUTO or remove 'readOnly' marker from transaction definition\r\n\tat org.codehaus.xfire.fault.Soap11FaultSerializer.readMessage(Soap11FaultSerializer.java:31)\r\n{noformat}",
+      "summary": "Fails with exception on Search"
+    }
+  },
+  {
+    "key": "CWD-262",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-16T05:24:13.000+0000",
+      "created": "2007-04-16T01:57:25.000+0000",
+      "description": "The aim is to remove the setting of the domain during the setup process and default to the request for the setting of the domain for the token cookie.\r\n\r\nAlso in the console allow the domain to be blank, thus using the domain from the browser in the cookie.\r\n\r\nAlso, improve the documentation around this element so the user is aware just 'what' they are doing and editing.",
+      "summary": "Improve the management of the Crowd domain during setup and in the Console."
+    }
+  },
+  {
+    "key": "CWD-261",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-13T01:25:32.000+0000",
+      "created": "2007-04-12T23:26:36.000+0000",
+      "description": "I just did a really generic quick install, added a group, then added a second group forgetting to select a directory.\r\n\r\nI'm marking this as critical because it dumped in my first 15 seconds of use after the install.\r\n\r\ncopy/paste from the screen\r\n\r\n\r\n\r\n A system error has occured please contact your administrator.\r\nIf this problem continues to occur please contact Atlassian by opening a support request with the following information:\r\n- A description of your problem and what you were doing at the time it occurred\r\n- Cut & paste the error and system information found below\r\n- Attach the application server log file (if possible).\r\n\r\nCause :\r\norg.springframework.transaction.UnexpectedRollbackException: Transaction has been rolled back because it has been marked as rollback-only\r\n\r\nStack Trace :\r\n\r\norg.springframework.transaction.UnexpectedRollbackException: Transaction has been rolled back because it has been marked as rollback-only\r\n\tat org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:469)\r\n\tat com.atlassian.xwork.interceptors.XWorkTransactionInterceptor$1.beforeResult(XWorkTransactionInterceptor.java:89)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:200)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.atlassian.xwork.interceptors.XWorkTransactionInterceptor.intercept(XWorkTransactionInterceptor.java:98)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.DefaultActionProxy.execute(DefaultActionProxy.java:113)\r\n\tat com.opensymphony.webwork.dispatcher.DispatcherUtils.serviceAction(DispatcherUtils.java:225)\r\n\tat com.opensymphony.webwork.dispatcher.FilterDispatcher.doFilter(FilterDispatcher.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:118)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:52)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat com.opensymphony.webwork.dispatcher.ActionContextCleanUp.doFilter(ActionContextCleanUp.java:88)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat com.atlassian.crowd.integration.http.VerifyTokenFilter.doFilter(VerifyTokenFilter.java:131)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:174)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:77)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)\r\n\tat org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)\r\n\tat org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)\r\n\tat org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)\r\n\tat org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)\r\n\tat org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)\r\n\tat java.lang.Thread.run(Thread.java:595)\r\n\r\nReferer : http://localhost:8095/crowd/console/secure/group/addgroup!default.action\r\n\r\nBuild Information :\r\nVersion : 1.0.4 (Build:#105 - Mar 29, 2007)\r\n\r\nMemory Information :\r\nTotal Memory : 254 MB\r\nFree Memory : 220 MB\r\nUsed Memory : 33 MB\r\n\r\nRequest Information :\r\n- Request URL : http://localhost:8095/crowd/console/500.jsp\r\n- Scheme : http\r\n- Server : localhost\r\n- Port : 8095\r\n- URI : /crowd/console/500.jsp\r\n- Context Path : /crowd\r\n- - Servlet Path : /console/500.jsp\r\n- - Path Info : null\r\n- - Query String :\r\n\r\nRequest Attributes :\r\n- javax.servlet.forward.request_uri : /crowd/console/secure/group/addgroup!update.action\r\n- javax.servlet.forward.context_path : /crowd\r\n- javax.servlet.forward.servlet_path : /console/secure/group/addgroup!update.action\r\n- javax.servlet.forward.path_info : /console/500.jsp\r\n- javax.servlet.error.servlet_name : default\r\n- javax.servlet.error.message :\r\n- javax.servlet.error.exception : org.springframework.transaction.UnexpectedRollbackException: Transaction has been rolled back because it has been marked as rollback-only\r\n- webwork.valueStack : com.opensymphony.xwork.util.OgnlValueStack@1272332\r\n- __sitemesh__using_stream : false\r\n- javax.servlet.error.request_uri : /crowd/console/secure/group/addgroup!update.action\r\n- javax.servlet.jsp.jspException : org.springframework.transaction.UnexpectedRollbackException: Transaction has been rolled back because it has been marked as rollback-only\r\n- __cleanup_counter : 0\r\n- javax.servlet.error.status_code : 500\r\n- __sitemesh__filterapplied : true\r\n- sessioninview.FILTERED : true",
+      "summary": "adding a group without selecting directory caused stack trace"
+    }
+  },
+  {
+    "key": "CWD-259",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-12T00:32:24.000+0000",
+      "created": "2007-04-12T00:28:46.000+0000",
+      "description": "With the most recent releases of Confluence, the username is not loaded for the initial landing page in Confluence resulting in the fullname of the user returning an empty string.",
+      "summary": "Username is not displayed in Confluence (2.4.X) when first logging in."
+    }
+  },
+  {
+    "key": "CWD-258",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-12T00:27:31.000+0000",
+      "created": "2007-04-12T00:25:14.000+0000",
+      "description": "There is a logic error when setting the cookie for multi-home SSO where the cookie domain (.mycompany) is not being set.",
+      "summary": "Domain for multihost single sign-on is not setting the cookie correctly."
+    }
+  },
+  {
+    "key": "CWD-257",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-10T02:09:29.000+0000",
+      "created": "2007-04-10T02:06:23.000+0000",
+      "description": null,
+      "summary": "VerifyTokenFilter missing from the Demo application."
+    }
+  },
+  {
+    "key": "CWD-256",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-10T02:50:27.000+0000",
+      "created": "2007-04-10T00:15:58.000+0000",
+      "description": "This has been taken from a support case:\r\n\r\nOn importing users from confluence and using an incorrect URL, the user is taken to the success page and has the message: \"The Confluence user import was successful!\" and below this the IOException is displayed.\r\n\r\nThe message should be more in-tune with the exception.\r\n\r\n",
+      "summary": "Importer success screens display success even on an exception."
+    }
+  },
+  {
+    "key": "CWD-255",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-01T03:24:02.000+0000",
+      "created": "2007-04-05T07:01:32.000+0000",
+      "description": null,
+      "summary": "Download access control list information from Crowd as one large piece and cache for long period of time"
+    }
+  },
+  {
+    "key": "CWD-254",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-11T01:53:21.000+0000",
+      "created": "2007-04-05T06:48:32.000+0000",
+      "description": null,
+      "summary": "review Installation documentation"
+    }
+  },
+  {
+    "key": "CWD-253",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-19T04:43:17.000+0000",
+      "created": "2007-04-04T01:32:05.000+0000",
+      "description": null,
+      "summary": "Redirect authentication servlet for applications that do not support SOAP"
+    }
+  },
+  {
+    "key": "CWD-252",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-03T04:07:29.000+0000",
+      "created": "2007-04-03T04:06:08.000+0000",
+      "description": "Change the default filter to be:\r\n\r\n{noformat}\r\n(&(objectCategory=Person)(sAMAccountName=*))\r\n{noformat}",
+      "summary": "Active Directory filter does not exclude accounts which are no sAMAccountName type."
+    }
+  },
+  {
+    "key": "CWD-250",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-05-06T22:11:52.000+0000",
+      "created": "2007-04-03T01:24:50.000+0000",
+      "description": "document automated backup (when this feature exists)",
+      "summary": "document automated backup"
+    }
+  },
+  {
+    "key": "CWD-249",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-12T01:12:47.000+0000",
+      "created": "2007-04-02T06:29:05.000+0000",
+      "description": null,
+      "summary": "Adjust build process to publish maven2 client poms."
+    }
+  },
+  {
+    "key": "CWD-248",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-02T04:28:42.000+0000",
+      "created": "2007-04-02T04:09:41.000+0000",
+      "description": "Clean up the mapping configs in the web.xml to not be as blanket as they are now. This should hopefully improve performance a little bit as well.\r\n\r\n",
+      "summary": "CLONE -The Sitemesh and Webwork cleanup filters are being wrapped around the XFire requests."
+    }
+  },
+  {
+    "key": "CWD-246",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-20T00:18:52.000+0000",
+      "created": "2007-04-02T02:08:06.000+0000",
+      "description": null,
+      "summary": "Update documentation with new information about installing connector for 5.5.X version of JIVE."
+    }
+  },
+  {
+    "key": "CWD-245",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-16T05:46:16.000+0000",
+      "created": "2007-04-02T01:58:56.000+0000",
+      "description": "Jive recently released version 5.5. The current libraries we have are not functional with this version.\r\n\r\nhttp://forums.atlassian.com/thread.jspa?threadID=16823&tstart=0",
+      "summary": "Jive Forums 5.5 Support"
+    }
+  },
+  {
+    "key": "CWD-244",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-10T03:05:26.000+0000",
+      "created": "2007-04-02T00:23:03.000+0000",
+      "description": "Apply the setting  -target and -source attributes when building all future versions of the application so that the application is compiled with the 1.4 JDK object versions. \r\n\r\nExamples for hard coding the build settings in the maven file.\r\n\r\nhttp://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html",
+      "summary": "Set compile flags with maven build scripts to be vs. 1.4"
+    }
+  },
+  {
+    "key": "CWD-243",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-03T02:53:18.000+0000",
+      "created": "2007-03-30T05:08:25.000+0000",
+      "description": null,
+      "summary": "Document how you can not delete the Crowd console."
+    }
+  },
+  {
+    "key": "CWD-242",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-03T02:47:14.000+0000",
+      "created": "2007-03-30T05:07:18.000+0000",
+      "description": "When you try to delete the 'crowd' application, the console should display an error message about how you can not delete the 'crowd' console.",
+      "summary": "You can delete the integrated Crowd application"
+    }
+  },
+  {
+    "key": "CWD-241",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-08-27T01:34:29.000+0000",
+      "created": "2007-03-30T04:05:37.000+0000",
+      "description": "See the forum: http://forums.atlassian.com/post!reply.jspa?messageID=257245215",
+      "summary": "OS X Directory Server Connector"
+    }
+  },
+  {
+    "key": "CWD-239",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-06-06T00:50:43.000+0000",
+      "created": "2007-03-30T00:24:13.000+0000",
+      "description": "{quote}\r\n1) Importing users must allow the existing password to continue being used. This point cannot be stressed strongly enough. It is absolutely crucial in a stabilized environment that plugging Crowd in behind-the-scenes must not be immediately noticable. This can be accomplished in a variety of ways. Please see http://forums.atlassian.com/thread.jspa?messageID=257245102 for some background on this feature.\r\n{quote}",
+      "summary": "Confluence and JIRA backwards password compatibility"
+    }
+  },
+  {
+    "key": "CWD-238",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-03T10:43:26.000+0000",
+      "created": "2007-03-29T23:51:51.000+0000",
+      "description": "{quote}\r\n2) Applications that are Crowd-enabled should not be required to disable user-management features. This includes allowing a new user to signup, change their password, reset their password, or other management features. It is possible that the application could forward the user to to Crowd-versions of these requests, but would be better to allow the application to use Crowd behind-the-scenes to do this.\r\n{quote}\r\n\r\nThe way I imagine this is that a plugin is available. Through an administration screen or as a file the administrator can select which groups other than 'confluence-users' the user can automatically be created in. Additionally, the fn, ln and email address are not being passed to Crowd when a user is created if external user management is disabled.",
+      "summary": "Confluence plugin that creates Crowd users with fn, ln, email and specifies groups principal should be added to other than confluence-users."
+    }
+  },
+  {
+    "key": "CWD-237",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-29T23:49:42.000+0000",
+      "created": "2007-03-29T23:06:40.000+0000",
+      "description": "One nice feature of Zimbra is that groups can be defined in terms of other groups.  If I have user Justen I can add him to 'crowd-support', and then create a group 'support' that includes 'crowd-support', 'jira-support' and 'confluence-support'.  It would be nice to be able to do this in Crowd rather than having to manually maintain this hierarchy.\r\n\r\nAn additional related feature of Zimbra is the ability to 'drill-up' into these groups; when you view the user's group membership you see two lots; a \"Member of\" pane (which would show 'crowd-support''), and an \"Indirect Member of\" pane (which would show 'support').",
+      "summary": "Aggregate/hierarchical groups"
+    }
+  },
+  {
+    "key": "CWD-236",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-30T00:25:42.000+0000",
+      "created": "2007-03-29T20:08:22.000+0000",
+      "description": "There are currently only two features that prevent Crowd from being plugged in behind-the-scenes to automagically manage logins.\r\n\r\n1) Importing users must allow the existing password to continue being used.  This point cannot be stressed strongly enough.  It is absolutely crucial in a stabilized environment that plugging Crowd in behind-the-scenes must not be immediately noticable.  This can be accomplished in a variety of ways.  Please see http://forums.atlassian.com/thread.jspa?messageID=257245102 for some background on this feature.\r\n\r\n2) Applications that are Crowd-enabled should not be required to disable user-management features.  This includes allowing a new user to signup, change their password, reset their password, or other management features.  It is possible that the application could forward the user to to Crowd-versions of these requests, but would be better to allow the application to use Crowd behind-the-scenes to do this.\r\n\r\nWithout these two requests, Crowd can only be used in a well-controlled environment, or one that doesn't have much history.  Consider this:  Would you want to back Atlassian's many JIRA instances and Confluence applications by Crowd as it currently stands (ignoring the side-issue of merging disparate userbases)?   I suspect the current answer is no, as it would involve requiring all users to update their passwords, and cause many user-support headaches regarding how to setup a new user or change their password.",
+      "summary": "Enable Truly Seamless Crowd Integration"
+    }
+  },
+  {
+    "key": "CWD-235",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-10T03:09:10.000+0000",
+      "created": "2007-03-29T12:45:01.000+0000",
+      "description": "When a group is added, and one forgets to select a directory, a \"system error\" page is shown (oops an error has occured)\r\n\r\nI would expect a message saying \" select a directory\".\r\n\r\n Cause :\r\norg.springframework.transaction.UnexpectedRollbackException: Transaction has been rolled back because it has been marked as rollback-only\r\n\r\nStack Trace :\r\n\r\norg.springframework.transaction.UnexpectedRollbackException: Transaction has been rolled back because it has been marked as rollback-only\r\n\tat org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:469)\r\n\tat com.atlassian.xwork.interceptors.XWorkTransactionInterceptor$1.beforeResult(XWorkTransactionInterceptor.java:89)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:200)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.atlassian.xwork.interceptors.XWorkTransactionInterceptor.intercept(XWorkTransactionInterceptor.java:98)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n\tat com.opensymphony.xwork.DefaultActionProxy.execute(DefaultActionProxy.java:113)\r\n\tat com.opensymphony.webwork.dispatcher.DispatcherUtils.serviceAction(DispatcherUtils.java:225)\r\n\tat com.opensymphony.webwork.dispatcher.FilterDispatcher.doFilter(FilterDispatcher.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:118)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:52)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat com.opensymphony.webwork.dispatcher.ActionContextCleanUp.doFilter(ActionContextCleanUp.java:88)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat com.atlassian.crowd.integration.http.VerifyTokenFilter.doFilter(VerifyTokenFilter.java:131)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:174)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:77)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)\r\n\tat org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)\r\n\tat org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)\r\n\tat org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)\r\n\tat org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)\r\n\tat org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)\r\n\tat java.lang.Thread.run(Thread.java:619)\r\n",
+      "summary": "System error when no directory is selected when adding a group"
+    }
+  },
+  {
+    "key": "CWD-234",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-10T03:02:13.000+0000",
+      "created": "2007-03-29T07:25:25.000+0000",
+      "description": "Documentation needs to be added about upgrading libraries for the Crowd client and server to work when integrating with older version of Websphere.\r\n\r\nHere are two forum threads about solving the issue:\r\n\r\n* http://forums.atlassian.com/thread.jspa?threadID=16457&tstart=0\r\n* http://forums.atlassian.com/thread.jspa?threadID=16715&tstart=0",
+      "summary": "Add Websphere installation notes for Crowd."
+    }
+  },
+  {
+    "key": "CWD-233",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-02T03:01:50.000+0000",
+      "created": "2007-03-29T06:30:51.000+0000",
+      "description": null,
+      "summary": "javadoc SecurityServer"
+    }
+  },
+  {
+    "key": "CWD-232",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-05-29T06:01:17.000+0000",
+      "created": "2007-03-29T06:11:20.000+0000",
+      "description": null,
+      "summary": "add 'SecurityServerClient'"
+    }
+  },
+  {
+    "key": "CWD-231",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-01-20T04:46:24.000+0000",
+      "created": "2007-03-29T06:08:57.000+0000",
+      "description": null,
+      "summary": "add '2.2.3 Modifying your Application: Best Practices'"
+    }
+  },
+  {
+    "key": "CWD-230",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-02-05T04:59:28.000+0000",
+      "created": "2007-03-29T03:53:26.000+0000",
+      "description": "Many apps that Crowd integrates with do not provide a recover/change password.  Further more users have no method of updating their details, therefore requiring assistance from an admin.  A simple user-interface for updating basic user information and resetting passwords would be useful.",
+      "summary": "Crowd needs a user frontend"
+    }
+  },
+  {
+    "key": "CWD-229",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-10T02:45:11.000+0000",
+      "created": "2007-03-28T22:17:53.000+0000",
+      "description": "We need to look into moving away from the transaction interceptor in XWork and using Springs transaction managment completley.\r\n\r\nThe transactions are rolling back fine, but the user is being sent to a 500 page since the transaction is trying to be rolled back again.",
+      "summary": "Transactions wrapping transactions. The transaction manager is not aware about the wrapping transaction."
+    }
+  },
+  {
+    "key": "CWD-228",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-01T03:22:39.000+0000",
+      "created": "2007-03-27T15:10:13.000+0000",
+      "description": "With following *jdbc.properties* configuration \r\n\r\n{code}\r\n#Tue Mar 27 08:40:40 EDT 2007\r\nhibernate.max_fetch_depth=1\r\nhibernate.dialect=org.hibernate.dialect.Oracle9Dialect\r\nhibernate.show_sql=false\r\nhibernate.jdbc.batch_size=0\r\nhibernate.format_sql=true\r\nhibernate.connection.datasource=java\\:comp/env/jdbc/CrowdDS\r\nhibernate.transaction.factory_class=org.hibernate.transaction.JBossTransactionManagerLookup\r\n{code}\r\n\r\n\r\nfor transaction management I get a FATAL error:\r\n\r\n{code}\r\n11:05:01,798 INFO  [STDOUT] 11:05:01,798 INFO  [SettingsFactory] RDBMS: Oracle, version: Oracle Database 10g Enterprise Edition Release 10.2.0.3.0 - 64bit Production\r\nWith the Partitioning, OLAP and Data Mining options\r\n11:05:01,798 INFO  [STDOUT] 11:05:01,798 INFO  [SettingsFactory] JDBC driver: Oracle JDBC driver, version: 10.2.0.2.0\r\n11:05:01,860 INFO  [STDOUT] 11:05:01,860 INFO  [Dialect] Using dialect: org.hibernate.dialect.Oracle9Dialect\r\n11:05:01,876 INFO  [STDOUT] 11:05:01,876 INFO  [TransactionFactoryFactory] Transaction strategy: org.hibernate.transaction.JBossTransactionManagerLookup\r\n11:05:01,891 INFO  [STDOUT] 11:05:01,891 INFO  [DefaultListableBeanFactory] Destroying singletons in factory {org.springframework.beans.factory.support.DefaultListableBeanFactory defining beans [\r\npropertyConfigurer,dataSource,bootstrapManager,schemaHelper,transactionManager,sessionFactory,crowdLicenseManager,hibernateConfiguration]; root of BeanFactory hierarchy}\r\n11:05:01,907 INFO  [STDOUT] 11:05:01,891 FATAL [BootstrapLoaderListener] An error was encountered while bootstrapping Crowd (see below):\r\nError creating bean with name 'schemaHelper' defined in class path resource [applicationContextBootstrap.xml]: Cannot resolve reference to bean 'hibernateConfiguration' while setting bean propert\r\ny 'configuration'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [applicationContextBo\r\notstrap.xml]: Initialization of bean failed; nested exception is java.lang.ClassCastException: org.hibernate.transaction.JBossTransactionManagerLookup cannot be cast to org.hibernate.transaction.\r\nTransactionFactory\r\norg.springframework.beans.factory.BeanCreationException: Error creating bean with name 'schemaHelper' defined in class path resource [applicationContextBootstrap.xml]: Cannot resolve reference to\r\n bean 'hibernateConfiguration' while setting bean property 'configuration'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFact\r\nory' defined in class path resource [applicationContextBootstrap.xml]: Initialization of bean failed; nested exception is java.lang.ClassCastException: org.hibernate.transaction.JBossTransactionM\r\nanagerLookup cannot be cast to org.hibernate.transaction.TransactionFactory\r\norg.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [applicationContextBootstrap.xml]: Initialization of bean fa\r\niled; nested exception is java.lang.ClassCastException: org.hibernate.transaction.JBossTransactionManagerLookup cannot be cast to org.hibernate.transaction.TransactionFactory\r\njava.lang.ClassCastException: org.hibernate.transaction.JBossTransactionManagerLookup cannot be cast to org.hibernate.transaction.TransactionFactory\r\n        at org.hibernate.transaction.TransactionFactoryFactory.buildTransactionFactory(TransactionFactoryFactory.java:37)\r\n        at org.hibernate.cfg.SettingsFactory.createTransactionFactory(SettingsFactory.java:414)\r\n        at org.hibernate.cfg.SettingsFactory.buildSettings(SettingsFactory.java:138)\r\n        at org.hibernate.cfg.Configuration.buildSettings(Configuration.java:2009)\r\n        at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1292)\r\n        at org.springframework.orm.hibernate3.LocalSessionFactoryBean.newSessionFactory(LocalSessionFactoryBean.java:825)\r\n        at org.springframework.orm.hibernate3.LocalSessionFactoryBean.afterPropertiesSet(LocalSessionFactoryBean.java:751)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1091)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:396)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:233)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:145)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:530)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:354)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:233)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:145)\r\n        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:186)\r\n        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:106)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1046)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:857)\r\n        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:378)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:233)\r\n        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:145)\r\n        at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:283)\r\n        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:313)\r\n        at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:87)\r\n        at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:72)\r\n        at com.atlassian.crowd.setup.BootstrapLoaderListener.contextInitialized(BootstrapLoaderListener.java:39)\r\n        at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:3763)\r\n        at org.apache.catalina.core.StandardContext.start(StandardContext.java:4211)\r\n        at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:759)\r\n        at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:739)\r\n        at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:524)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.apache.commons.modeler.BaseModelMBean.invoke(BaseModelMBean.java:503)\r\n        at org.jboss.mx.server.RawDynamicInvoker.invoke(RawDynamicInvoker.java:164)\r\n        at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:659)\r\n        at org.apache.catalina.core.StandardContext.init(StandardContext.java:5052)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.apache.commons.modeler.BaseModelMBean.invoke(BaseModelMBean.java:503)\r\n        at org.jboss.mx.server.RawDynamicInvoker.invoke(RawDynamicInvoker.java:164)\r\n        at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:659)\r\n        at org.jboss.web.tomcat.tc5.TomcatDeployer.performDeployInternal(TomcatDeployer.java:297)\r\n        at org.jboss.web.tomcat.tc5.TomcatDeployer.performDeploy(TomcatDeployer.java:103)\r\n        at org.jboss.web.AbstractWebDeployer.start(AbstractWebDeployer.java:371)\r\n        at org.jboss.web.WebModule.startModule(WebModule.java:83)\r\n        at org.jboss.web.WebModule.startService(WebModule.java:61)\r\n        at org.jboss.system.ServiceMBeanSupport.jbossInternalStart(ServiceMBeanSupport.java:289)\r\n        at org.jboss.system.ServiceMBeanSupport.jbossInternalLifecycle(ServiceMBeanSupport.java:245)\r\n        at sun.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.jboss.mx.interceptor.ReflectedDispatcher.invoke(ReflectedDispatcher.java:155)\r\n        at org.jboss.mx.server.Invocation.dispatch(Invocation.java:94)\r\n        at org.jboss.mx.server.Invocation.invoke(Invocation.java:86)\r\n        at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:264)\r\n        at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:659)\r\n        at org.jboss.system.ServiceController$ServiceProxy.invoke(ServiceController.java:978)\r\n        at $Proxy0.start(Unknown Source)\r\n        at org.jboss.system.ServiceController.start(ServiceController.java:417)\r\n        at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at org.jboss.mx.interceptor.ReflectedDispatc\r\n{code}",
+      "summary": "Fatal error while trying to use JBossTransactionManagerLookup"
+    }
+  },
+  {
+    "key": "CWD-226",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-05T01:26:40.000+0000",
+      "created": "2007-03-27T02:07:01.000+0000",
+      "description": "Currently, the browser window title says 'View Directory' when it should say 'View Application' (please see screenshot)",
+      "summary": "browser window title should say 'View Application'"
+    }
+  },
+  {
+    "key": "CWD-225",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-29T03:59:13.000+0000",
+      "created": "2007-03-27T01:56:11.000+0000",
+      "description": null,
+      "summary": "Import and export of Crowd fails when the database is Oracle"
+    }
+  },
+  {
+    "key": "CWD-224",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-06-24T04:07:43.000+0000",
+      "created": "2007-03-27T01:32:24.000+0000",
+      "description": "The user active flag is not exposed or controllable via the soap interface.  This restricts the ability to mass-update users.\r\n",
+      "summary": "Control of user 'active' flag not exposed via soap interface"
+    }
+  },
+  {
+    "key": "CWD-222",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-04-01T23:55:33.000+0000",
+      "created": "2007-03-22T14:54:22.000+0000",
+      "description": "Please take a look at the attached screenshot.",
+      "summary": "Crowd is not handling latin1 characters correctly"
+    }
+  },
+  {
+    "key": "CWD-221",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-27T03:56:12.000+0000",
+      "created": "2007-03-22T01:51:20.000+0000",
+      "description": "Update documentation and marketing to reflect Apache Directory Server.",
+      "summary": "Add documentation (marketing) section for Apache Directory Server"
+    }
+  },
+  {
+    "key": "CWD-220",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-28T07:43:26.000+0000",
+      "created": "2007-03-21T23:25:23.000+0000",
+      "description": "Currently the updatePrincipal method for the SpringLDAPConnector is not implemented:\r\n\r\n{code}\r\n/**\r\n     * This method is currently not supported by the Crowd LDAP connectors.\r\n     *\r\n     * @see com.atlassian.crowd.integration.directory.RemoteDirectory#updatePrincipal(com.atlassian.crowd.integration.model.RemotePrincipal)\r\n     * @param principal The principal to update.\r\n     * @return The populated principal.\r\n     * @throws RemoteException         An unknown remote exception occured.\r\n     * @throws ObjectNotFoundException The role does not exist.\r\n     */\r\n    public RemotePrincipal updatePrincipal(RemotePrincipal principal) throws RemoteException, ObjectNotFoundException\r\n    {\r\n        return findPrincipalByName(principal.getName());\r\n    }\r\n{code}\r\n\r\nThis method needs to be improved to support modifying the known attribute types of the {{inetOrgPerson}} object that match the {{RemotePrincipal}} attributes.\r\n\r\nThe {{addPrincipal}} method will also need to be modified to support setting these attributes.",
+      "summary": "Implement RemoteDirectory updatePrincipal(RemotePrincipal) method for LDAP servers using InetOrgPerson as the Principal object."
+    }
+  },
+  {
+    "key": "CWD-218",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-21T03:35:57.000+0000",
+      "created": "2007-03-21T03:34:15.000+0000",
+      "description": "This error is caused by the DirectoryManangerGeneric adding to RemoteGroup.members when it is looking for unique groups for all Directories.\r\n\r\n",
+      "summary": "When an application is searching for its members from an LDAP repo AND an Internal Directory a HibernateException is thrown around trying to persist elements in a RemoteGroup.members"
+    }
+  },
+  {
+    "key": "CWD-217",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-05-10T04:21:39.000+0000",
+      "created": "2007-03-21T02:27:35.000+0000",
+      "description": "Crowd throws obscure exception when attampting to add a principle to a non-existent group (below).  This should probably be replaced with something more useful.\r\n\r\n     [java] 2007-03-21 13:08:16,263 main FATAL [service.soap.client.SecurityServerClient] Unable to connect to the crowd server: null :Could not invoke service.. Nested exception is org.codehaus.xfire.fault.XFireFault: Could not receive fault.. Nested exception is org.codehaus.xfire.fault.XFireFault: No write method for property {http://rmi.java}cause in class java.rmi.RemoteException\r\n     [java] org.codehaus.xfire.XFireRuntimeException: Could not invoke service.. Nested exception is org.codehaus.xfire.fault.XFireFault: Could not receive fault.. Nested exception is org.codehaus.xfire.fault.XFireFault: No write method for property {http://rmi.java}cause in class java.rmi.RemoteException\r\n     [java] org.codehaus.xfire.fault.XFireFault: Could not receive fault.. Nested exception is org.codehaus.xfire.fault.XFireFault: No write method for property {http://rmi.java}cause in class java.rmi.RemoteException\r\n     [java]     at org.codehaus.xfire.fault.XFireFault.createFault(XFireFault.java:89)\r\n     [java]     at org.codehaus.xfire.client.Invocation.invoke(Invocation.java:79)\r\n     [java]     at org.codehaus.xfire.client.Client.invoke(Client.java:335)\r\n     [java]     at org.codehaus.xfire.client.XFireProxy.handleRequest(XFireProxy.java:77)\r\n     [java]     at org.codehaus.xfire.client.XFireProxy.invoke(XFireProxy.java:57)\r\n     [java]     at $Proxy0.addPrincipalToGroup(Unknown Source)\r\n     [java]     at com.atlassian.crowd.integration.service.soap.client.SecurityServerClient.addPrincipalToGroup(SecurityServerClient.java:308)\r\n     [java]     at com.atlassian.sysadmin.crowd.user.UserInject.injectUser(UserInject.java:92)\r\n     [java]     at com.atlassian.sysadmin.crowd.user.UserInject.<init>(UserInject.java:34)\r\n     [java]     at com.atlassian.sysadmin.crowd.user.UserInject.main(UserInject.java:103)\r\n     [java] Caused by: org.codehaus.xfire.XFireRuntimeException: Could not receive fault.. Nested exception is org.codehaus.xfire.fault.XFireFault: No write method for property {http://rmi.java}cause in class java.rmi.RemoteException\r\n     [java]     at org.codehaus.xfire.client.Client.onReceive(Client.java:407)\r\n     [java]     at org.codehaus.xfire.transport.http.HttpChannel.sendViaClient(HttpChannel.java:139)\r\n     [java]     at org.codehaus.xfire.transport.http.HttpChannel.send(HttpChannel.java:48)\r\n     [java]     at org.codehaus.xfire.handler.OutMessageSender.invoke(OutMessageSender.java:26)\r\n     [java]     at org.codehaus.xfire.handler.HandlerPipeline.invoke(HandlerPipeline.java:131)\r\n     [java]     at org.codehaus.xfire.client.Invocation.invoke(Invocation.java:75)\r\n     [java]     ... 8 more\r\n     [java] Caused by: org.codehaus.xfire.fault.XFireFault: No write method for property {http://rmi.java}cause in class java.rmi.RemoteException\r\n     [java]     at org.codehaus.xfire.aegis.type.basic.BeanType.writeProperty(BeanType.java:304)\r\n     [java]     at org.codehaus.xfire.aegis.type.basic.BeanType.readObject(BeanType.java:188)\r\n     [java]     at org.codehaus.xfire.aegis.AegisBindingProvider.readParameter(AegisBindingProvider.java:155)\r\n     [java]     at org.codehaus.xfire.client.ClientFaultConverter.processFaultDetail(ClientFaultConverter.java:51)\r\n     [java]     at org.codehaus.xfire.client.ClientFaultConverter.invoke(ClientFaultConverter.java:32)\r\n     [java]     at org.codehaus.xfire.handler.HandlerPipeline.invoke(HandlerPipeline.java:131)\r\n     [java]     at org.codehaus.xfire.client.Client.onReceive(Client.java:400)\r\n     [java]     ... 13 more\r\n",
+      "summary": "Crowd throws obscure exception when attempting to add a principal to a non-existent group"
+    }
+  },
+  {
+    "key": "CWD-216",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-22T02:05:39.000+0000",
+      "created": "2007-03-21T01:00:17.000+0000",
+      "description": "The validation factors currently generate tokens based on machine specific attributes, such as remote host, user-agent, etc.\r\n\r\nIf a user on a machine had multiple identities, then the token generated would be the same (as the machine attributes are the same).\r\n\r\nIt would be nice if this token was unique based on the current validation factors as well as the username of the principal and the directory which the principal belongs to (uniquely identifying the principal).",
+      "summary": "Crowd session token should be unique for each user, directory, machine"
+    }
+  },
+  {
+    "key": "CWD-215",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-02-19T04:06:16.000+0000",
+      "created": "2007-03-21T00:55:26.000+0000",
+      "description": "Currently we are using the main txReadWrite proxy for this interception, even though this works fine, from a sanity point of view we should probably pull this out since it is not need for anything else but the SOAP service.\r\n\r\nThe webwork actions have their own filter for managing the Hibernate session .",
+      "summary": "Create a seperate Spring proxy for the SecurityServer so we can intercept the calls and wrap a HibernateInterceptor around them."
+    }
+  },
+  {
+    "key": "CWD-214",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-21T01:39:56.000+0000",
+      "created": "2007-03-21T00:54:24.000+0000",
+      "description": "This ensures everything about the previous authentication is cleared up.",
+      "summary": "Login should logout any previous logged in users before a new login"
+    }
+  },
+  {
+    "key": "CWD-213",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-28T03:18:55.000+0000",
+      "created": "2007-03-21T00:29:35.000+0000",
+      "description": "Clean up the mapping configs in the web.xml to not be as blanket as they are now. This should hopefully improve performance a little bit as well.\r\n\r\n",
+      "summary": "The Sitemesh and Webwork cleanup filters are being wrapped around the XFire requests."
+    }
+  },
+  {
+    "key": "CWD-211",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-11-18T02:05:19.000+0000",
+      "created": "2007-03-19T23:35:32.000+0000",
+      "description": "Create a technical specification for the remember me functionality in Crowd.\r\n\r\nThis needs to detail the internal requirements, security considerations and API changes.",
+      "summary": "Tech Spec for Remember Me"
+    }
+  },
+  {
+    "key": "CWD-210",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-03-18T14:22:27.000+0000",
+      "created": "2007-03-19T23:32:35.000+0000",
+      "description": "{panel:title=Atlassian Update \u2013 18th March 2019|borderStyle=solid|borderColor=#ebf2f9|titleBGColor=#ebf2f9|bgColor=#ffffff}\r\nHi,\r\n\r\nI wanted to let you know that we have released cross-domain Single Sign-On in [Crowd Data Center 3.4|https://confluence.atlassian.com/crowd/crowd-3-4-release-notes-966041084.html] that includes Remember me functionality.\r\n\r\nYou can download Crowd Data Center from here: https://www.atlassian.com/software/crowd/download/data-center\r\n\r\nPlease note that in order to use cross-domain Single Sign-On in Crowd with Remember me functionality you will need Crowd Data Center license.\r\n\r\nYou can create your evaluation license for Crowd Data Center here https://my.atlassian.com/license/evaluation\r\n\r\nIf you need any assistance with the Crowd Data Center installation you can follow our Getting started guide https://confluence.atlassian.com/crowd/installing-crowd-data-center-935369773.html\r\n\r\nWe hope that you will enjoy it as much as we do!\r\n\r\nPlease reply directly to my email to share your feedback or just add your comments in this ticket. We'd love to hear your thoughts!\r\n\r\nBest regards,\r\n\r\nMarek Radochonski\r\nSenior Product Manager, Crowd\r\nmradochonski@atlassian.com\r\n \r\n{panel}\r\n\r\n\r\nCurrently, \"remember me\" / \"auto login\"  has to be handled on the client side.\r\n\r\nIt would be nice is this was a feature of the server so that all clients (applications) can make use of the functionality, eg. clients could have a \"remember me\" checkbox on their login page - this parameter would passed to Crowd and the Crowd server can handle the auto login.\r\n\r\nClients should be able use this feature via SOAP and as a convenience method in the Java HttpAuthenticator.",
+      "summary": "Implement RememberMe / AutoLogin as a service call in the Crowd Server"
+    }
+  },
+  {
+    "key": "CWD-209",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-28T23:27:50.000+0000",
+      "created": "2007-03-18T23:33:40.000+0000",
+      "description": null,
+      "summary": "Maven 2 repository for Crowd client components."
+    }
+  },
+  {
+    "key": "CWD-208",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-02-01T07:08:15.000+0000",
+      "created": "2007-03-18T23:26:34.000+0000",
+      "description": "Add the support for the option to have only external authentication, and then store the user's group and role relationships inside of Crowd.\r\n\r\nSee the forums comments here: http://forums.atlassian.com/thread.jspa?forumID=104&threadID=15480",
+      "summary": "Mixed authentication and authorization support for external directory connectors."
+    }
+  },
+  {
+    "key": "CWD-206",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-03-28T04:23:55.000+0000",
+      "created": "2007-03-15T21:36:40.000+0000",
+      "description": "All users seem to be imported, but no groups are shown when clicking the 'Groups' tab on any individual principal.  Also, when importing, the following error is printed on the console:\r\n\r\n17:20:15,857 ERROR crowd.console.action.dataimport.ImportJIRA: Table 'jiradb_38.MEMBERSHIPBASE' doesn't exist\r\njava.sql.SQLException: Table 'jiradb_38.MEMBERSHIPBASE' doesn't exist\r\n        at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:2928)\r\n        at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1571)\r\n        at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:1666)\r\n        at com.mysql.jdbc.Connection.execSQL(Connection.java:2994)\r\n        at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:936)\r\n        at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:1030)\r\n        at com.atlassian.crowd.console.action.dataimport.ImportJIRA.doUpdate(ImportJIRA.java:96)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:364)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:216)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:190)\r\n        at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n        at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n        at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n        at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:31)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n        at com.atlassian.xwork.interceptors.XWorkTransactionInterceptor.intercept(XWorkTransactionInterceptor.java:98)\r\n        at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:188)\r\n        at com.opensymphony.xwork.DefaultActionProxy.execute(DefaultActionProxy.java:113)\r\n        at com.opensymphony.webwork.dispatcher.DispatcherUtils.serviceAction(DispatcherUtils.java:225)\r\n        at com.opensymphony.webwork.dispatcher.FilterDispatcher.doFilter(FilterDispatcher.java:202)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n        at com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:118)\r\n        at com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:52)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n        at com.opensymphony.webwork.dispatcher.ActionContextCleanUp.doFilter(ActionContextCleanUp.java:88)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n        at com.atlassian.crowd.integration.http.VerifyTokenFilter.doFilter(VerifyTokenFilter.java:131)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n        at org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:174)\r\n        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:77)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:202)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)\r\n        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)\r\n        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)\r\n        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)\r\n        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)\r\n        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)\r\n        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)\r\n        at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:869)\r\n        at org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:664)\r\n        at org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:527)\r\n        at org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:80)\r\n        at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)\r\n        at java.lang.Thread.run(Thread.java:619)\r\n\r\n",
+      "summary": "JIRA User Import Doesn't Set Groups on Principals"
+    }
+  },
+  {
+    "key": "CWD-204",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-01-23T03:27:26.000+0000",
+      "created": "2007-03-15T00:00:24.000+0000",
+      "description": "The soap interface is not appropriate for scripting of tasks; it requires the generation of proxy-objects which must be instansiated and populated for even simple requests.  It would be nice to have a simplified interface (SOAP, XML-RPC or both) that accepts base-types as arguments.  I'd like to be able to do something like this (Python code, based on the confluence xmlrpc interface):\r\n\r\n{noformat}\r\n    srv = xmlrpclib.ServerProxy(crowdurl)\r\n    token = srv.crowd1.login(user, pass)\r\n\r\n    srv.crowd1.addUser(token, uname, passwd)\r\n    srv.crowd1.addUserAttrib(token, uname, \"email\", email) \r\n    srv.crowd1.addUserToGroup(token, uname, group)\r\n{noformat}\r\n",
+      "summary": "XML-RPC/Simplified soap interface please"
+    }
+  },
+  {
+    "key": "CWD-203",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11291",
+        "id": "11291",
+        "key": "CWD",
+        "name": "Crowd",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11291&avatarId=105192",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11291&avatarId=105192",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11291&avatarId=105192",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11291&avatarId=105192"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-05-08T05:38:47.000+0000",
+      "created": "2007-03-14T03:53:23.000+0000",
+      "description": "When you start an import, then cancel it (see screenshot 1), you get a screen with blank data fields (see screenshot 2).",
+      "summary": "Cancelling the User Importer returns a screen with no data"
+    }
+  }
+]

@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "BCLOUD-14726",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-28T07:23:35.000+0000",
+      "created": "2017-08-25T13:27:09.000+0000",
+      "description": "h3. Summary\nPipelines&#x27; Services feature unable to authenticate and pull ECR images if the main build image not using ECR images.\n\nError received while performing the build:\\\\\n*unauthorized: authentication required*\n\nContent of *bitbucket-pipelines.yml*:\n\n{code}\n#!python\n\nimage: maven:latest\n\npipelines:\n  default:\n    - step:\n        script:\n          - echo \"Hello Pipelines\"\n        services:\n          - mysql\n      \ndefinitions:\n  services:\n    mysql:\n      image:\n        name:  <aws_account_id>.dkr.ecr.<region>.amazonaws.com/test/mysql:latest\n        aws:\n          access-key: $AWS_ACCESS_KEY_ID\n          secret-key: $AWS_SECRET_ACCESS_KEY\n{code}\n\n###Workaround\\\\\nUse AWS ECR image as the main build image so that the Build will first authenticate then allow the services to pull with the authenticated access.\n\nSample bitbucket-pipelines.yml:\n\n{code}\n#!python\n\nimage: \nname:  <aws_account_id>.dkr.ecr.<region>.amazonaws.com/test/mysql:latest\n        aws:\n          access-key: $AWS_ACCESS_KEY_ID\n          secret-key: $AWS_SECRET_ACCESS_KEY\n\npipelines:\n  default:\n    - step:\n        script:\n          - echo \"Hello Pipelines\"\n        services:\n          - mysql\n      \ndefinitions:\n  services:\n    mysql:\n      image:\n        name:  <aws_account_id>.dkr.ecr.<region>.amazonaws.com/test/mysql:latest\n{code}",
+      "summary": "Pipelines: Services unable to authenticate and pull AWS ECR image"
+    }
+  },
+  {
+    "key": "BCLOUD-14725",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T17:11:09.000+0000",
+      "created": "2017-08-25T13:24:47.000+0000",
+      "description": "WYSIWYG is a disaster: I can&#x27;t write meaningful descriptions to pull requests or comments to commits. I can&#x27;t paste code in code blocks - text is pasted _after_ the block, it seems cant work with two or code blocks - the first one is not formatted a expected (code block), etc. I can&#x27;t paste texts without automatic (and odd) formatting.\n\nWYSIWYG might be a good thing for non-programmers, but Bitbucket is not Wikipedia.\n\nAlso see the attachment.",
+      "summary": "Please allow disabling WYSIWYG editor"
+    }
+  },
+  {
+    "key": "BCLOUD-14724",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T17:01:29.000+0000",
+      "created": "2017-08-25T12:48:57.000+0000",
+      "description": "Hi,\\\\\nfor &#x27;/rest/default-reviewers/1.0/projects/{projectKey}/condition&#x27; and POST I need to add a reviewer&#x27;s ID and not name/slug.\\\\\nSo:\\\\\ndata = {sourceaMatcher:{}, targetMatcher:{}, reviewers:[{id:3448}]...} is OK,\\\\\nwhile\\\\\ndata = {sourceaMatcher:{}, targetMatcher:{}, reviewers:[{name:<user_name>}]...} fails.\\\\\nI do not think it&#x27;s by design as I was able to user user names for other endpoints.\n\n* BitBucket Server v 5.2.2\n* error: Java NullPoiner (in server logs) and\\\\\n&#x27;{\"errors\":[{\"context\":null,\"message\":\"An error occurred while processing the request. Check the server logs for more information.\",\"exceptionName\":null}]}&#x27; in REST response.\n\nRegards,\\\\\nLukasz",
+      "summary": "REST: cannot add a reviewer using name/slug"
+    }
+  },
+  {
+    "key": "BCLOUD-14723",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-09-01T01:22:00.000+0000",
+      "created": "2017-08-25T11:50:44.000+0000",
+      "description": "After Pipelines trigger a scheduled build, the Repo overview page shows the scheduled build was built by a user with the username *null* (https://bitbucket.org/null)\n\nOn Repo Overview Page:\\\\\n!3776657507-Pipelines%20repo%20overview%201.PNG|thumbnail!\n\nBitbucket User with the username - *null*\\\\\n!3640615162-Pipelines%20repo%20overview%20user-null.PNG|thumbnail!\n\nh3. Expected Outcome\nThe build show should either the build built by the user who schedules the build or by \"Scheduled\"\n\nh3. Notes\nInformation is show correctly on the Pipelines page\\\\\n!1027893323-Pipelines%20repo%20overview%202.PNG|thumbnail!",
+      "summary": "Pipelines: Repo Overview shows scheduled build built by bitbucket.org/null user"
+    }
+  },
+  {
+    "key": "BCLOUD-14722",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-31T16:55:00.000+0000",
+      "created": "2017-08-25T09:28:42.000+0000",
+      "description": "Go to https://bitbucket.org/<org>/<project>/branches/?status=active\\\\\nand swap to &#x27;merged&#x27; filter, and back to &#x27;active&#x27;.\n\nNow click on &#x27;Create Branch&#x27; and notice the form is broken, with duplicate dropdowns.\\\\\n(See attachment)",
+      "summary": "Creating a new branch - duplicate/broken form"
+    }
+  },
+  {
+    "key": "BCLOUD-14721",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-04T20:47:40.000+0000",
+      "created": "2017-08-25T07:21:33.000+0000",
+      "description": "When trying to download an artifact directly, like so: wget -v --http-user=abc --http-password=pwd -O /tmp/t.txt https://git.myserver.aa/projects/ABC/repos/repo1/raw/something.key?at=refs%2Fheads%2Fmaster, I only get the html for the form logon page. If I add the switch --auth-no-challenge to wget it works fine. It seems the problem is that Bitbucket never sends the authentication challenge to the client, leaving the client unaware that the server supports Basic Authentication. It is a major problem because some software don&#x27;t support the --auth-no-challenge feature. I believe Bitbucket should respond with the following header: WWW-Authenticate\\\\\nWe&#x27;re running v5.3.1.\\\\\nRegards,\\\\\nMads",
+      "summary": "Digest authentication not working for direct file downloads"
+    }
+  },
+  {
+    "key": "BCLOUD-14720",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T06:58:27.000+0000",
+      "created": "2017-08-25T06:56:54.000+0000",
+      "description": "Hi.\n\nI am having an issue with the scheduled pipelines (I know it&#x27;s an alpha feature, but still...).\n\nI am creating a new schedule by selecting a branch and the custom pipeline that I have defined. I select \"hourly\" in the drop-down (why is there no choice of \"how many hours between runs\") and then click create. And nothing happens. The GUI simply looks like I have not created a schedule and nothing runs.",
+      "summary": "Pipelines schedules"
+    }
+  },
+  {
+    "key": "BCLOUD-14719",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-02-04T03:54:11.000+0000",
+      "created": "2017-08-25T06:04:04.000+0000",
+      "description": "Currently, when setting {{depth: full}} in bitbucket-pipelines.yml file, only commits in the ancestry of the current branch are cloned. Instead, pipelines should clone all refs (from all branches)",
+      "summary": "Setting the clone depth to full should clone all refs"
+    }
+  },
+  {
+    "key": "BCLOUD-14718",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-27T23:05:13.000+0000",
+      "created": "2017-08-25T03:15:48.000+0000",
+      "description": "JIRA Issue link on Bitbucket Cloud redirects to https://<URL>.atlassian.net/browse/%7Bmatch.1%7D instead of the JIRA issue.\\\\\nAfter clicking the Issue link, it redirects to a page mentioned \"We couldn&#x27;t connect to that issue\"\n\n!2561282787-JIRA%20links.PNG|thumbnail!\\\\\n!58289312-JIRA%20links2.PNG|thumbnail!",
+      "summary": "JIRA issue link redirection doesn't work correctly"
+    }
+  },
+  {
+    "key": "BCLOUD-14717",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-09T03:44:19.000+0000",
+      "created": "2017-08-24T18:26:32.000+0000",
+      "description": "Hi there,\n\nWe are currently utilizing Pipelines for our various environment builds (develop, test, prod). When a specific chunk of logic in our pipeline&#x27;s custom scripts fails, we fallback to rollback logic that reverts the repository back to HEAD~1 and pushing those changes to the repo, effectively undoing the merged branch.\n\nUnfortunately, when we rollback develop, test, or prod, we are re-committing back into the branch we just rolled back from. We can certainly early out in the newly triggered pipelines build, but we are forced to either show failure or success.\n\nIt would be nice to have some way to add a custom script that runs before pipelines kicks off, allowing one you early out and not even show pipelines in the portal.",
+      "summary": "Pre-Pipelines Script Hook"
+    }
+  },
+  {
+    "key": "BCLOUD-14716",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T14:40:16.000+0000",
+      "created": "2017-08-24T17:53:48.000+0000",
+      "description": "We have a pipeline that downloads an file (zip file ~200MB) from an external website and then does some manipulation with it within the current repository.\n\nWhen I first setup the pipeline over a month ago, it would download this file within 20 seconds,  however lately, within the past two weeks, I have noticed the download speed reduce drastically to only ~140KB/s thus resulting in our pipeline taking 10+minutes to complete this download step.\n\nI&#x27;ve double checked and I&#x27;m able to download the file manually via an AWS image myself and it is very speedy. So I can confirm that the the problem isn&#x27;t the upload speed of the external website.\n\nWhat gives? Is Atlassian throttling download speeds within the containers?",
+      "summary": "Poor download speeds within pipeline"
+    }
+  },
+  {
+    "key": "BCLOUD-14715",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-24T13:09:21.000+0000",
+      "created": "2017-08-24T11:56:20.000+0000",
+      "description": "Hi everyone,\n\nWe  have 2 instances on AWS:\\\\\n1 - Testing environment\\\\\n2 - Production\n\nWe use BitBucket for repos and Pipeline for deploys.\\\\\nOur bitbucket-pipelines.yml  looks like this:\n\nimage: ruby:2.3.0\\\\\npipelines:\\\\\ncustom:\\\\\ndeployment-to-int:\\\\\n- step:\\\\\nscript:\\\\\n- gem install bundler\\\\\n- bundle install\\\\\n- eval {{ssh-agent -s}}\\\\\n- ssh-add /opt/atlassian/pipelines/agent/data/id_rsa\\\\\n- bundle exec cap int deploy\\\\\ndeployment-to-prod:\\\\\n- step:\\\\\nscript:\\\\\n- gem install bundler\\\\\n- bundle install\\\\\n- eval {{ssh-agent -s}}\\\\\n- ssh-add /opt/atlassian/pipelines/agent/data/id_rsa\\\\\n- bundle exec cap production deploy\n\nWith this configuration we can choose the Env we want to deploy to.\n\nIn bitBucket we have 2 main branches:\\\\\nMaster & Development\n\nWe have 2 teams:\\\\\n&#x27;New Features&#x27; team & &#x27;HotFixes/Bugs&#x27; team\n\nSteps to Deploy HotFixes on Production\\\\\n&#x27;HotFixes/Bugs local branch > commit to BitBucket\\\\\nCommit &#x27;HotFixes/Bugs local branch > merge with Master\\\\\nDeploy Master to Production env.\\\\\nALL GOOD !!! No prob.\n\nThe issue starts when we don&#x27;t want mix Deployment branch with Master Branch.\n\nSteps to Deploy &#x27;New Feature&#x27; on Test env\n\n* &#x27;New Feature&#x27; local branch > commit to BitBucket\n* Commit &#x27;New Feature&#x27; local branch > merge with Development branch\\\\\n--- ISSUE HERE:::: Deploy Development branch to Test env without having to merge with Master\n\nWhen we finish the deploy, Pipeline says &#x27;Successful&#x27; but the files are not on the Test env.\\\\\nThe only way to see files on the Test env is to:\n\n* Merge Dev branch with Master branch\n* Deploy MAster to test\n\nBy doing the above, if the HotFix team needs to release something, they will push live the New feature.\\\\\nI&#x27;m trying to understand how I can STOP this from happening.\n\nAny help is more than welcome.\\\\\nThanks in advance.\\\\\nMatt",
+      "summary": "Trying to deploy Dev branch to Test env without having to merge with Master"
+    }
+  },
+  {
+    "key": "BCLOUD-14714",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-09-11T23:48:58.000+0000",
+      "created": "2017-08-24T09:20:46.000+0000",
+      "description": "I&#x27;m trying to create new schedule, but after i select branch, Custom Pipeline, schedule (weekly) and click {{Create}}, it just disappears from the list of scheduled pipelines.",
+      "summary": "When creating new Pipelines schedule, it just disappears right after saving it"
+    }
+  },
+  {
+    "key": "BCLOUD-14713",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-28T03:37:52.000+0000",
+      "created": "2017-08-24T08:34:56.000+0000",
+      "description": "How to reproduce:\n\n# It assumes you already have a current schedule for daily run starting in between 7-8AM\n# Delete the schedule from previous step\n# Create a new one with same branch/pipeline but targeted at 6-7AM\n# Click on create. Popup window disappears but when you click on the schedules button it is not there.\\\\\nProject url: https://bitbucket.org/tripmarket/tmn-adapter-amadeus/addon/pipelines\n\nThanks",
+      "summary": "Pipelines Alpha: after deleting old schedule a newly created schedule is not saved"
+    }
+  },
+  {
+    "key": "BCLOUD-14712",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-24T21:25:56.000+0000",
+      "created": "2017-08-24T07:50:39.000+0000",
+      "description": "The \"This is a private repository\" checkbox is disabled, and even if I enable it using \"Firebug\" and submit the form, the value still does not get saved.\\\\\nThis happens on a repository that I own (not a fork) and I was able to switch it from private to public before.\\\\\nFor info, I&#x27;m running Chrome 60.0.3112.101 on Windows 10, 64bit.",
+      "summary": "Cannot switch repository from private to public"
+    }
+  },
+  {
+    "key": "BCLOUD-14711",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-24T04:22:49.000+0000",
+      "created": "2017-08-24T02:38:22.000+0000",
+      "description": "As a user I want to be able to kick off custom pipeline steps from a branch rather than having to be on a specific commit.",
+      "summary": "Allow pipeline custom step to be executed on a branch rather than a commit"
+    }
+  },
+  {
+    "key": "BCLOUD-14710",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:40.000+0000",
+      "created": "2017-08-24T01:20:00.000+0000",
+      "description": "Hi atlassian,\\\\\nas a Bitbucket user i think it will be way helpful if i could open a single file diff of PR by opening it in a new tab/page alone (without loading other files diff) .  so i can easily loop through large PR files diff, since scrolling through the PR files  within big PR is too annoying.\\\\\ni think if we could have the single file diff in a new browser page/tab,  that loads that specific file diff only will be way faster and productive somehow.\\\\\nthe main issue is in big PRs (prs with lots of files ,and changes), some time i feel that browser is about to crash and it get frozen, and then scrolling behavior be not responsive / \"not sleek/ intuitive\"  and annoying in most cases.\\\\\nthank you in advance.\\\\\nRegards,\\\\\nMoath Omar",
+      "summary": "suggestion: PullRequest -> open single file diff in a separate page"
+    }
+  },
+  {
+    "key": "BCLOUD-14709",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-01-22T02:29:56.000+0000",
+      "created": "2017-08-24T00:51:35.000+0000",
+      "description": "Reported in this tweet: https://twitter.com/CalinLeafshade/status/900495780938747904\n\nInvestigation by @markadams-atl :\n\nbq. It&#x27;s because the JS checks an expiration timestamp in the auth token to see if it should renew. It creates an infinite loop of renewals\n\n\nSuggestion from @evzijst :\n\nbq. Could we embed server time in the page and derive clock drift on page load to compensate?",
+      "summary": "Pipelines doesn't load if your system clock is set incorrectly"
+    }
+  },
+  {
+    "key": "BCLOUD-14708",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-09-01T01:27:13.000+0000",
+      "created": "2017-08-24T00:21:40.000+0000",
+      "description": "I have a pipeline that creates artifacts and posts them as additional build statuses. As such, I often find myself needing to navigate from the Pipelines log page to the build statuses for the commit, via the commit page.\n\nThe extra click is annoying, because in my head the extra statuses are strongly related to the pipeline, so ideally I&#x27;d like a way to view all build statuses from the log page.",
+      "summary": "Provide a way for builds to link to artifacts created"
+    }
+  },
+  {
+    "key": "BCLOUD-14707",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T17:05:38.000+0000",
+      "created": "2017-08-23T23:57:53.000+0000",
+      "description": "My email en atlassian not is equal to bitbucket account. I have same email for both account please.\n\nThanks",
+      "summary": "Bitbucket account distinct with atlasian account"
+    }
+  },
+  {
+    "key": "BCLOUD-14705",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-05-29T17:14:38.000+0000",
+      "created": "2017-08-23T12:21:47.000+0000",
+      "description": "Hello,\n\nI try import repository from HG mercurial and In response I see :\\\\\n\"No repository exists at that URL.\"",
+      "summary": "Cannot import repository from hg mercirual"
+    }
+  },
+  {
+    "key": "BCLOUD-14704",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T17:06:38.000+0000",
+      "created": "2017-08-23T09:36:46.000+0000",
+      "description": "Hello Team,\n\nI&#x27;m trying to transfer the ownership of some repositories to another account but it is not working. Neither I&#x27;m getting a confirmation email to new account nor repositories current owner changing.\n\nI&#x27;m trying to transfer https://bitbucket.org/scio_hans/scio_api/admin to ankur@grappus.com",
+      "summary": "Repository transfer is not working"
+    }
+  },
+  {
+    "key": "BCLOUD-14703",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-11-04T23:58:52.000+0000",
+      "created": "2017-08-23T08:55:42.000+0000",
+      "description": "I was struggling to find the profile section in the header. After a few minutes I found out it is next to the question mark icon on the right when I accidentally hovered my mouse over it. I suspect it is because I have no profile picture set. Please see the attachment for more details.",
+      "summary": "Profile section not visible in the header on bitbucket.com"
+    }
+  },
+  {
+    "key": "BCLOUD-14702",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-23T19:37:54.000+0000",
+      "created": "2017-08-23T05:06:55.000+0000",
+      "description": "\u0421an not configure permissions for versions.\\\\\nThere are errors in the console. The changes are not saved.\n\n!1927494463-Bit.jpg|thumbnail!",
+      "summary": "\u0421an not configure permissions for versions."
+    }
+  },
+  {
+    "key": "BCLOUD-14701",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-10-19T18:19:13.000+0000",
+      "created": "2017-08-22T23:31:03.000+0000",
+      "description": "Currently a user can view any active session & inactive session their Bitbucket Account.\n\nIt would be useful if there&#x27;s a button available for user to be able to clear any active sessions they may have open.",
+      "summary": "Button to Clear Active Sessions"
+    }
+  },
+  {
+    "key": "BCLOUD-14700",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T17:14:29.000+0000",
+      "created": "2017-08-22T14:23:07.000+0000",
+      "description": "Clicking into https://bitbucket.org/account/user/abascloud/projects/FTS yields HTTP 404 \"That link has no power here\" if I am not logged in. However - this page clearly exists, no need to reply with \"404 Not Found\" and clearly misleading.\n\nDepending on your type of authentication the server may answer 401, 403 or whatever is appropriate and enable logging in.",
+      "summary": "HTTP error code 404 wrong and misleading"
+    }
+  },
+  {
+    "key": "BCLOUD-14699",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-28T05:23:49.000+0000",
+      "created": "2017-08-22T11:52:13.000+0000",
+      "description": "h3. Summary\nWhen creating a Pipelines schedule, the list of &#x27;Custom Pipeline&#x27; is empty for branches that contain a slash / in their name.\n\nh3. Steps to Reproduce\n# Create a repo in Bitbucket with two branches, &#x27;master&#x27; and &#x27;test/pipelines&#x27;\n# Use the following .yml file for master branch\n\n{code}\n#!python\n\npipelines:\n  custom:\n    test1:\n      - step:\n          script:\n            - echo \"Test 1\"\n    test2:\n      - step:\n          script:\n            - echo \"Test 2\"\n{code}\n\n# Use the following .yml file for test/pippelines branch\n\n{code}\n#!python\n\npipelines:\n  custom:\n    test3:\n      - step:\n          script:\n            - echo \"Test 3\"\n    test4:\n      - step:\n          script:\n            - echo \"Test 4\"\n{code}\n\n# Go to the Pipelines page of the repo >> Schedules >> New Schedule\n# In the &#x27;Create a schedule dialog&#x27;, select test/pipelines branch\n# Select the dropdown for &#x27;Custom Pipeline&#x27;\n\nh3. Expected Results\nThe list loads custom pipelines test3 and test4.\n\nh3. Actual Results\nThe list is empty.\n\nh3. Notes\nAdditionally, if you select master branch in the above dialog, you will see in &#x27;Custom pipeline&#x27; dropdown test1 and test2 as expected. If you switch back to test/pipelines branch, the &#x27;Custom pipeline&#x27; field continues to show test1 and test2",
+      "summary": "When creating a Pipelines schedule, the list of 'Custom Pipeline' is empty for branches that contain a slash / in their name"
+    }
+  },
+  {
+    "key": "BCLOUD-14698",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-10-26T03:56:37.000+0000",
+      "created": "2017-08-22T01:24:03.000+0000",
+      "description": "Currently usage of pipelines build minutes can be viewed in terms of overall usage within the account.\n\nIt would be useful for users to be able to display a list of repositories using pipelines build minutes ordered in an descending order.\n\nWith this, user will be able to identify which repository is using more build minutes especially when there are many repositories within an account.",
+      "summary": "Display list of Build Minutes usage ordered by repository."
+    }
+  },
+  {
+    "key": "BCLOUD-14696",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-09-15T23:19:50.000+0000",
+      "created": "2017-08-21T09:59:07.000+0000",
+      "description": "A couple of ReST pages of my (private) wiki are not rendering, their raw text is displayed instead, interestingly it&#x27;s displayed in the style of a code example.  I have no feedback on why these two pages are not rendering, whilst all others are - presumably there&#x27;s some sort of parse error, but who knows as _nothing is reported back to the user_.\n\nIf I hit &#x27;Edit&#x27; and then &#x27;Preview&#x27;, it continues to display in this raw text style - no dialogue appears complaining of an issue.\n\n{{restview}} renders the pages without complaint, so I&#x27;m a little lost here.",
+      "summary": "Report parse errors"
+    }
+  },
+  {
+    "key": "BCLOUD-14695",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-21T08:32:21.000+0000",
+      "description": "history rewrites are a very destructive step and by Bitbucket&#x27;s own admission, they are irreversible.\\\\\nThis can be blocked by setting up branch permissions that prevent history rewrites.\n\nFor convenience and for safety reasons, this should be the default - rather than having open set of permissions and then not being able to recover.\n\nif users want to rewrite history, then they can obviously delete the default permissions and open it up - but it will be a very conscious decision.",
+      "summary": "Default branch permissions for a new repo should prevent history rewrites"
+    }
+  },
+  {
+    "key": "BCLOUD-14694",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:41.000+0000",
+      "created": "2017-08-21T04:40:27.000+0000",
+      "description": "Hi,\\\\\nI would like to add watchers to issues I create, right now, the other people in my team need to add themselves to watch an issue. Can I add watchers also, when I create issues ?\\\\\nThanks, Usha",
+      "summary": "Add watchers to an issue"
+    }
+  },
+  {
+    "key": "BCLOUD-14693",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-10-19T19:11:36.000+0000",
+      "created": "2017-08-21T02:45:09.000+0000",
+      "description": "When a user is added to a user group in a Team Account, they will be able to view all projects owned by this account in the projects tab, regardless of having access to those repositories within the projects or not.\n\nIt would be useful to be able to give permission for usergroups that who are not required to view other projects owned by an account. They should only be able to view projects that own repositories which the particular user group has access to.",
+      "summary": "Set permission for projects in Bitbucket Cloud"
+    }
+  },
+  {
+    "key": "BCLOUD-14692",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-21T02:28:25.000+0000",
+      "description": "Scenarios where a build is triggered even though it might have already been built.\n\n* Creating a branch in Bitbucket&#x27;s UI\n* Scheduling a pipeline for a branch (branch has not changed)",
+      "summary": "Provide option to not re-run build if build exists for commit + pipeline"
+    }
+  },
+  {
+    "key": "BCLOUD-14691",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-11T05:03:57.000+0000",
+      "created": "2017-08-21T00:03:06.000+0000",
+      "description": "On https://bitbucket.org/account/user/<mygroup>/groups/\n\nWhen I click Add member, enter the member&#x27;s details, and click add on the modal, the screen doesn&#x27;t progress and I get the following error in the console;\n\n!1230570648-bitbucket_bug.png|thumbnail!\n\nthank you",
+      "summary": "Add new member to group not working"
+    }
+  },
+  {
+    "key": "BCLOUD-14690",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-09-01T22:18:59.000+0000",
+      "created": "2017-08-19T11:44:43.000+0000",
+      "description": "The \"Boards\" page brings a simple functional overview for projects",
+      "summary": "Add \"Boards\" as landing page option in project settings"
+    }
+  },
+  {
+    "key": "BCLOUD-14689",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-18T20:49:41.000+0000",
+      "description": "The older optional features (wiki and issue tracker for example) don&#x27;t show icons on the left side nav when they are disabled, but the newer one missed that feature.  I have Pipelines disabled on my projects, but the icon shows anyway.\n\nSome of the users find this confusing.",
+      "summary": "Hide Pipelines icon when disabled."
+    }
+  },
+  {
+    "key": "BCLOUD-14688",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-11-04T23:58:51.000+0000",
+      "created": "2017-08-18T19:13:29.000+0000",
+      "description": "Let&#x27;s say we have a user named \"Gabriel Marcolino\" with username gmarcolino:\n\n# Make a PR, with the following description: \"Hey @ gmarcolino\".\n# You will see that once it&#x27;s done it says \"Hey @gmarcolino\"\n# Press Edit in the PR description and save.\n# Notice that the mention is now \"Hey Gabriel Marcolino\".\n# If we press DONE, the mention will be to @gabriel, which may be a different user.",
+      "summary": "Pull Request mention functionality glinch"
+    }
+  },
+  {
+    "key": "BCLOUD-14687",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-10-10T16:45:29.000+0000",
+      "created": "2017-08-18T19:02:06.000+0000",
+      "description": "We created a new team for adding repos. But we decided that the team name was not correct enough for us and we created another team with a different name. We deleted our previous team with all the repos. However the team with the repos is still visible. When we try to access either the repo page or the team page, we receive a 404 error.",
+      "summary": "Deleted team still visible in the list of teams"
+    }
+  },
+  {
+    "key": "BCLOUD-14686",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-08T18:23:19.000+0000",
+      "created": "2017-08-18T13:11:26.000+0000",
+      "description": "I have a problem merging one of our pull requests into master branch using BitBucket&#x27;s Merge button. I click the button, \"Merge pull request\" dialog with commit message appears, I click Merge, a loader (circular loading indicator) appears, but nothing happens.\\\\\nMeanwhile we observed javascript errors in browser logs. (see attached screenshot)\n\nThe issue was confirmed on several machines. It is not a conflict. So far it occurred on one branch only.",
+      "summary": "Cannot merge branch"
+    }
+  },
+  {
+    "key": "BCLOUD-14685",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:41.000+0000",
+      "created": "2017-08-18T07:39:24.000+0000",
+      "description": "Hello,\n\nCurrently, we can add User or create group of users and assign it to a given repository. It would be nice to have ability to assign a user or a group to a project.\n\nBy example, I have the user group \"My Great Project - Developers\", it could be nice to assign it with \"write\" access to a given project (including all repository of this project) rather thant assign manually by editing settings of each repository. Mostly when a project contains 30 - 40 repository.",
+      "summary": "Add project based user / usergroup ACL"
+    }
+  },
+  {
+    "key": "BCLOUD-14684",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-21T11:06:23.000+0000",
+      "created": "2017-08-18T07:05:27.000+0000",
+      "description": "Hello,\n\nIs it possible to upgrade the docker used in the Pipeline to it newest version ? In our company, we are using the {{HEALTHCHECK}} instruction with the flag {{--start-period}} into our Dockerfile (cause our container take time to get ready).\n\nIt seems Bitbucket using an outdated version of docker (Version: 1.12.6 / API version: 1.24). It would be nice if you can upgrade to the current docker version: 17.06.1 (or at least the version 17.05.0 who introduce the flag {{--start-period}})\n\n*Pipelines output*\n\n{code}\nRemoving intermediate container 62462bb4788e\nStep 4 : HEALTHCHECK --start-period=25s --interval=5s --timeout=2s --retries=1 CMD wget -q -O /dev/null -T 2 http://127.0.0.1:9000 || exit 1\nUnknown flag: start-period\n{code}",
+      "summary": "Upgrade docker to newest version"
+    }
+  },
+  {
+    "key": "BCLOUD-14683",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-17T19:26:37.000+0000",
+      "description": "It would be a nice feature to have a secret token that will be sent when a webhook is triggered. This would be optional when setting up a webhook and it would be sent in the post request.\\\\\n!4232218752-Capture2.PNG|thumbnail!",
+      "summary": "Add webhook secret"
+    }
+  },
+  {
+    "key": "BCLOUD-14682",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-04-29T06:26:17.000+0000",
+      "created": "2017-08-17T17:31:00.000+0000",
+      "description": "Hello,\n\nI can&#x27;t integrate my repositories with hipchat after change the team name. (All repositories were created after the change).\n\nWhen I try to integrate, these erros are showed:\n\n!1701504128-error.png|thumbnail!\n\nThe name of repository showed in the error is the old name of team.\n\nRegards.",
+      "summary": "Cannot integrate to hipchat after change team name"
+    }
+  },
+  {
+    "key": "BCLOUD-14681",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-25T15:15:06.000+0000",
+      "created": "2017-08-17T17:16:50.000+0000",
+      "description": "Please update this feature to have\\\\\nRequire issue keys in commit messages EXCEPT with merge commits, have those as exceptions. Because when a developer uses a  push the merge commit it fails due to the requirement .",
+      "summary": "Exempt merge commits from \"Require issue keys in commit messages\" feature"
+    }
+  },
+  {
+    "key": "BCLOUD-14680",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-11T05:04:21.000+0000",
+      "created": "2017-08-17T09:28:07.000+0000",
+      "description": "Hello,\n\nWe have been using *Link* feature in bitbucket to enforce JIRA issue IDs in commit messages and it normally works fine except one scenario and its kind of blocker for us to use this feature effectively.\n\nIssue -\n\nLets say  i have feature branch created from develop\n\nI am working on it and by the time, i have completed my feature few other features got merged in develop branch. So my local branch i behind develop and need to be updated.\n\nSo, to update my local feature branch i take a pull from develop which eventually merges develop branch code to my local branch ( it creates a commit ID without the pattern we want in commit message )\n\nSo when a developer tries to push his/her changes, it complaints about missing JIRA IDs in commits.\n\nLogs for reference - File attached",
+      "summary": "Need a way to escape to check on commit message done by ( git pull origin <branch> )"
+    }
+  },
+  {
+    "key": "BCLOUD-14679",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-04T20:48:43.000+0000",
+      "created": "2017-08-17T07:31:32.000+0000",
+      "description": "I very often get following error while pushing code using SourceTree\n\ngit -c diff.mnemonicprefix=false -c core.quotepath=false push -v origin develop:develop\\\\\nfatal: unable to access &#x27;https://bitbucket.org/siximex/swissexchange_development/&#x27;: Received HTTP code 407 from proxy after CONNECT\\\\\nPushing to https://bitbucket.org/siximex/swissexchange_development\\\\\nCompleted with errors.\n\nThe problem gets resolved if I login to Bitbucket (https://bitbucket.org/siximex/swissexchange_development) separately using a internet browser and then PUSH using Source Tree.",
+      "summary": "Bitbucket Push from Source Tree"
+    }
+  },
+  {
+    "key": "BCLOUD-14678",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-03-19T11:54:27.000+0000",
+      "created": "2017-08-17T00:41:23.000+0000",
+      "description": "I can configure JIRA issue linking, but it does not link in Pipelines.",
+      "summary": "JIRA issue linking"
+    }
+  },
+  {
+    "key": "BCLOUD-14677",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-28T20:02:44.000+0000",
+      "created": "2017-08-17T00:34:51.000+0000",
+      "description": "As a workaround for now, use the [git revert|https://www.atlassian.com/git/tutorials/undoing-changes] command to revert the commit locally. A typical process for this would be:\n\n# Fetch the latest from your repository\n# Check out the branch that the commit was merged into\n# Create a new branch for your revert {{git branch revert-1}}\n# Run {{git revert {SHA1}}}\n# Push up your new branch with the revert\n# Create a Pull request to the original destination branch\n\nSome users may wish to simply revert in place on the branch and push it up. But the process above follows the revert button&#x27;s intended use case.",
+      "summary": "Pull requests closed via squash cannot be reverted"
+    }
+  },
+  {
+    "key": "BCLOUD-14676",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-08T17:52:28.000+0000",
+      "created": "2017-08-16T18:46:12.000+0000",
+      "description": "I created a new account today https://bitbucket.org/elirenato but after I logout I was not able to login anymore, I always redirected to signup",
+      "summary": "Bitbucket redirecting to signup even after login with an existent profile/account"
+    }
+  },
+  {
+    "key": "BCLOUD-14675",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-11-04T23:58:52.000+0000",
+      "created": "2017-08-16T15:54:08.000+0000",
+      "description": "While using the new UI, when we are on a pull request and someone makes comments. It appears an \"avatar bubble\". The action to click on this buble does not go to the \"new info\" instead.  It moves the pages but did not go to the new comment.",
+      "summary": "In new UI comments did act as expected"
+    }
+  },
+  {
+    "key": "BCLOUD-14674",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2020-08-12T22:49:44.000+0000",
+      "created": "2017-08-16T14:34:53.000+0000",
+      "description": "h3. Summary\nsrc endpoint(API 2.0) returns an error 404 while making a request with a branch name contains a slash symbol\n\nExample:\\\\\n*Branch name: try/slash*\\\\\ncurl -u <username>:<password> https://api.bitbucket.org/2.0/repositories/<username>/<repo-name>/src/try/slash/\\\\\nReturned Status Code: 404 {\t\"type\": \"error\",\t\"error\": {\"message\": \"Changeset not found.\"\t} }\n\n*Branch name: master*\\\\\ncurl -u <username>:<password> https://api.bitbucket.org/2.0/repositories/<username>/<repo-name>/src/master/\\\\\nReturned Status Code: 200 OK",
+      "summary": "src endpoint(API 2.0) doesn't support branch name contains a slash symbol"
+    }
+  },
+  {
+    "key": "BCLOUD-14673",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-17T13:36:10.000+0000",
+      "created": "2017-08-16T09:25:32.000+0000",
+      "description": "Hi. I am unable to see settings button to access my repository settings.\n\nI need it to create a webhook for my Jenkins CI tool",
+      "summary": "Cannot see Repository Settings button"
+    }
+  },
+  {
+    "key": "BCLOUD-14672",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-16T08:58:55.000+0000",
+      "description": "h3. Summary\nIf you open in your browser a repository *owned by your user*, and you add &#x27;.git&#x27; at the end of the URL, you get a 404 error. E.g.:\n\n* https://bitbucket.org/username/repo-slug.git\n\nThe repo can be accessed if you omit the &#x27;.git&#x27; extension from the URL.\n\nh3. Notes\nThe issue does *not* affect accessing repos of other users or of a team.",
+      "summary": "Accessing a repo owned by your user from browser gives a 404 if the '.git' extension is added at the end of the URL"
+    }
+  },
+  {
+    "key": "BCLOUD-14671",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-16T15:45:27.000+0000",
+      "created": "2017-08-16T00:27:38.000+0000",
+      "description": "Currently, Jira Cloud & Confluence Cloud can have the same user group shared between these instances.\n\nIt would be useful if we can have the same user group be shared with Bitbucket Cloud as well.\n\nThe reason for this is to be able to administer user groups from one instance instead of multiple.",
+      "summary": "User groups used in Jira & Confluence to be shared with Bitbucket as well"
+    }
+  },
+  {
+    "key": "BCLOUD-14670",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-01T23:57:42.000+0000",
+      "created": "2017-08-15T23:15:10.000+0000",
+      "description": "The new interface has many unlabeled buttons and items that screen readers cannot activate. Dispite the ability to use keyboard shortcuts, navigation and labeling is definitely a regression in the new version of the interface.\n\nHome screen: Three menu buttons are present they all have the word \"unlabeled\" at their beginning. One ends in 0, one in 1, and the final one in 2. Screen readers cannot click the graphic to get help. When the keyboard only user types ? to open the keyboard shortcut dialog, screen reader users cannot read the keyboard sortcuts in the dialog, and the screen reader is thrown into application mode. If the user is not savy, they may think  they are stuck in the dialog and can&#x27;t get out.",
+      "summary": "New Interface Much Less Accessible For Screen Readers"
+    }
+  },
+  {
+    "key": "BCLOUD-14669",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:41.000+0000",
+      "created": "2017-08-15T20:35:50.000+0000",
+      "description": "Once you like a comment on a pull request, the owner of the comment does not get any notification. It would be good to get some notification on a popup or email, in order to use the \"Like\" as an easiest way to say \"What you say makes sense. Go ahead/approve/.....\".",
+      "summary": "Comment \"like\" notifications"
+    }
+  },
+  {
+    "key": "BCLOUD-14668",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-15T19:02:17.000+0000",
+      "created": "2017-08-15T19:01:15.000+0000",
+      "description": "We&#x27;re trying to configure a glob to run on all our release-x.x.x branches, except release-0.0.0.\n\nThis is the glob:\\\\\nhttp://www.globtester.com/#p=eJwrSs1JTSxO1VXUMNADQk0ALSEEbQ%3D%3D&r=eJyzScksU0jOSSwutlVSsitKzUlNLE7VNdADQht9oJydDZKC3MSS5AyEKkM9IMSpyqa4IDFPobikMifVVik5Pye%2FyEqhKD1Jw8JIR8HQwgJIWFpoWiuk5eeV6BZnVqVaAQX0jAoqrFEsMADZADLJziapyA5iGQBnWjiR&\n\nThe tester works as expected, however pipelines does not run on any release branches when we use it.",
+      "summary": "glob not working as expected"
+    }
+  },
+  {
+    "key": "BCLOUD-14667",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-09-15T23:20:27.000+0000",
+      "created": "2017-08-15T12:24:31.000+0000",
+      "description": "I&#x27;m trying to implement links (both external and internal) in source code blocks in reStructuredText, but they are just rendered verbatim:\n\n{code}\n#!rst\n\n.. sourcecode:: c++\n\n    bool hello(`argtype <argtype_>`_ arg) const\n{code}\n\nBut it just renders like this:\n\n{code}\n#!\n\nbool hello(`argtype <argtype_>`_ arg) const\n{code}\n\nI&#x27;d be happy to forgo the syntax highlighting, just to have a shaded box the text goes in, how can I do that?",
+      "summary": "Cannot have links inside sourcecode sections"
+    }
+  },
+  {
+    "key": "BCLOUD-14666",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-09-21T04:38:37.000+0000",
+      "created": "2017-08-15T06:21:36.000+0000",
+      "description": "When Docker is enabled for a Pipelines build, it wrongfully results in 1GB of memory reservation (out of the total 4 GB of memory allocated to each build).\n\nHaving Docker enabled should not result in any memory reservation.",
+      "summary": "Enabling Docker for Pipelines wrongfully reserves 1 GB of memory"
+    }
+  },
+  {
+    "key": "BCLOUD-14665",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-18T01:07:43.000+0000",
+      "created": "2017-08-14T22:59:56.000+0000",
+      "description": "Hello,\n\nI need to delete in pipeline the manually build from repo vitta-admin-server.\n\nthanks and regads,\\\\\nJean",
+      "summary": "Delete manually pipeline builds"
+    }
+  },
+  {
+    "key": "BCLOUD-14664",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-14T21:19:21.000+0000",
+      "description": "When creating a Pull request (with Merge to close the source branch ) into a branch that was already merged or there is an existing PR request for it, we should show a UI message indicating that the target branch is either merged,  set up to be  merged by another PR or the branch was deleted. We should Disable the Merge button on that PR.\n\nExample:\\\\\nhave\\\\\nmaster branch\\\\\nbranch 1\\\\\nbranch 2\\\\\ncreate a PR 1: branch 2 -> Master\\\\\ncreate a PR 2: branch 1 -> branch 2\\\\\nthis should be giving a warning that branch 2 is either merged already,  is scheduled to be merged or was deleted",
+      "summary": "PR into a branch that was already merged into something else should have a warning"
+    }
+  },
+  {
+    "key": "BCLOUD-14663",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-14T20:55:50.000+0000",
+      "description": "Hopefully to disallow users who have not set a proper .gitconfig file that matches their primary Bitbucket e-mail address.",
+      "summary": "Create flag to prevent \"Unknown\" committers from pushing to repository."
+    }
+  },
+  {
+    "key": "BCLOUD-14662",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-08-29T16:21:35.000+0000",
+      "created": "2017-08-14T15:55:37.000+0000",
+      "description": null,
+      "summary": "Sometimes diffs do not expand to include context comments like they should"
+    }
+  },
+  {
+    "key": "BCLOUD-14661",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-09-20T18:42:05.000+0000",
+      "created": "2017-08-14T15:39:29.000+0000",
+      "description": "Whilst reviewing a pull request, it used to be possible to click the avatar of a user who had just made a comment, and the UI would scroll to the comment.\n\nThis has stopped working, and it&#x27;s really annoying!  It makes reviewing/responding to comments much more laborious.\n\nPlease fix it! (The icon/gravatar still updates with comment count, but clicking it doesn&#x27;t do anything!)\n\nBrowser: chrome 60 / win10",
+      "summary": "Clicking on the avatar of a user who's made a comment has stopped navigating to the comment"
+    }
+  },
+  {
+    "key": "BCLOUD-14660",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-16T16:12:59.000+0000",
+      "created": "2017-08-14T15:36:39.000+0000",
+      "description": "h3. Summary\nWhile trying to transfer a repository to a new user using user&#x27;s email address, there&#x27;s no indication mentioned that user is not allowed to transfer ownership using user&#x27;s email address.\\\\\nHence, it causes confusion whether the transfer request is being sent to the owner.\n\nh3. Suggestion\n# Show error when customer uses non-username to proceed\n# Allow user to transfer ownership using new owner&#x27;s email address",
+      "summary": "Unable to Transfer repository with User's email address"
+    }
+  },
+  {
+    "key": "BCLOUD-14659",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-01-09T02:49:35.000+0000",
+      "created": "2017-08-14T15:22:36.000+0000",
+      "description": "Pipelines Error message suggest \"Validate your bitbucket-pipelines.yml\" with *Validator for bitbucket-pipelines.yml* when detects invalid cache name.\\\\\n!364165874-Validator1.PNG|thumbnail!\n\nBut the Validator yet to be able to detect it.\\\\\n!473160084-Validator2.PNG|thumbnail!",
+      "summary": "Support cache names checking on Pipelines Validator"
+    }
+  },
+  {
+    "key": "BCLOUD-14658",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-11T05:05:09.000+0000",
+      "created": "2017-08-13T03:27:24.000+0000",
+      "description": "This has been brought up by several people running different OSes.\n\nIt would be super helpful to publish some documentation on this. For myself and others, we&#x27;re able to push to a new repository with a password. For myself, I went so far as to explicitly log out of Bitbucket, quit Chrome completely, and walk away for 10 minutes. After that, I was still able to push.\n\nIt is a litter creepy. I have the feeling it is a feature not a bug, but some explanation rather than just closing the tickets of various folks would go a long way for others like me that Googled the issue and find older tickets from this year like BCLOUD-7493",
+      "summary": "Able to magically Push without a Password"
+    }
+  },
+  {
+    "key": "BCLOUD-14657",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-13T18:37:38.000+0000",
+      "created": "2017-08-12T20:30:23.000+0000",
+      "description": "Didn&#x27;t find anything about this in help, so i can&#x27;t solve this and i create this issue",
+      "summary": "Repo url not changing if i change team and project name"
+    }
+  },
+  {
+    "key": "BCLOUD-14656",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-30T21:18:27.000+0000",
+      "created": "2017-08-12T04:55:11.000+0000",
+      "description": "Hi have the following markdown in my project: https://bitbucket.org/elhoutico/spring-boot-ionic-docker-gradle-starter\n\nbut the website doesn&#x27;t show the items prefixed with \"+,- or *\" as items and keeps them inline. it might have something to do with CRLF LF... could you confirm the bug and/or provide a way to fix it. thank you",
+      "summary": "Markdown list not rendered"
+    }
+  },
+  {
+    "key": "BCLOUD-14655",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-01-31T01:22:10.000+0000",
+      "created": "2017-08-11T18:58:38.000+0000",
+      "description": "Certain pull requests when hitting the \"Revert\" button will not revert and throw:\n\n\"The pull request could not be reverted for the following reasons:\\\\\nAn unknown error occurred. Contact Bitbucket Support and provide the code XXXXXXX\"\n\nThere seems to be a conflict issue/bug that prevents the revert",
+      "summary": "Unable to revert pull requests"
+    }
+  },
+  {
+    "key": "BCLOUD-14654",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-11T14:49:38.000+0000",
+      "created": "2017-08-11T00:31:43.000+0000",
+      "description": "As a user of Bitbucket cloud for personal projects, projects from my organization, and collaborations with other organizations, I am a member of a number of different teams.\n\nOften, the work done in these teams is directly related to a specific organization that I have an email address from. I would like to receive notifications to my work email for repo events associated with my work team, and notifications to my personal email for events in non-affiliated repos. For example, I don&#x27;t usually have my personal email open when I&#x27;m at work, but anything work-related in Bitbucket will still be sent only to the email address being used for the Atlassian ID that owns my Bitbucket username.\n\nI could create a separate bitbucket account using my work email atlassian ID, but this would defeat the purpose of having multiple team membership, and just end up being messy. Bitbucket cloud is both a social coding platform and a tool for work, and greater flexibility with email notifications would help it accomplish both of those goals.",
+      "summary": "Allow choosing a notification destination email per team and/or per repo"
+    }
+  },
+  {
+    "key": "BCLOUD-14653",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-16T16:23:13.000+0000",
+      "created": "2017-08-10T16:53:33.000+0000",
+      "description": "Added to Bitbucket\\shared\\bitbucket.properties:\\\\\n\"syntax.highlighter.text/javascript.extensions=abc\"\\\\\nand restarted BitBucket service.\n\nExpected: my file test.abc in my BitBucket repo with js code is syntax highlighted.\\\\\nActual: no syntax highlighting\n\nThe bitbucket.properties is working for the database configuration, but syntax  highlighting seems to be ignored. What can I do?\\\\\nI am using BitBucket server 5.2.2.\n\nBest regards,\\\\\nPeter Bruch",
+      "summary": "BitBucket server: configuration of syntax highlighting for file extensions not working"
+    }
+  },
+  {
+    "key": "BCLOUD-14652",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-10T13:26:56.000+0000",
+      "description": "Team admins would like to be able to see (and also retrieve via API) SSH keys of their team members.\n\nCustomers have mentioned this would be useful for the following reasons:\n\n* Users could then authenticate on their ssh servers using the key fetched from Bitbucket, this would help a lot with the integration.\n* In some companies users may have to strictly follow some security standard on their SSH key. Admins would like to verify that the company-specific key is used by their team members.",
+      "summary": "As an admin I would like to be able to retrieve the public SSH key of my team members"
+    }
+  },
+  {
+    "key": "BCLOUD-14651",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-05-09T02:32:31.000+0000",
+      "created": "2017-08-10T12:45:21.000+0000",
+      "description": "When about to merge a pullrequest, bitbucket attempted to render the diffs, however, it breaks and reloads in an infinite loop. This may be related to this line of the code:\n\n<!-- <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script> -->as this was the only change in the pullrequest.\\\\\nSo it&#x27;s impossible to merge.\n\nWorkaround: just remove the line instead of commenting it out. I verily believe the <!-- broke your rendering of diff and thus created an infinite loop.\\\\\nHope this helps.",
+      "summary": "Pull request diff bug"
+    }
+  },
+  {
+    "key": "BCLOUD-14650",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-11-24T18:47:49.000+0000",
+      "created": "2017-08-10T10:34:28.000+0000",
+      "description": "$ curl -v bitbucket.org\n\n* Rebuilt URL to: bitbucket.org/\n* Hostname was NOT found in DNS cache\n* Trying 104.192.143.2...\n* Trying 2401:1d80:1010::150...\n* connect to 2401:1d80:1010::150 port 80 failed: Network is unreachable\n* Failed to connect to bitbucket.org port 80: Network is unreachable\n* Closing connection 0\\\\\ncurl: (7) Failed to connect to bitbucket.org port 80: Network is unreachable",
+      "summary": "Failed to connect to bitbucket.org port 80: Network is unreachable"
+    }
+  },
+  {
+    "key": "BCLOUD-14649",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-30T03:07:49.000+0000",
+      "created": "2017-08-10T06:51:10.000+0000",
+      "description": "Being in the Dashboard or repository&#x27;s Pull Request subpage, would be great to see if there is a conflict in a pull-request.\n\nSmall badge showing the info would be very helpful.\n\nSomething like this:\\\\\n!2435383560-Screen%20Shot%202017-07-20%20at%2009.27.27.png|thumbnail!",
+      "summary": "Show conflict badge in PR list"
+    }
+  },
+  {
+    "key": "BCLOUD-14648",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-10T01:44:42.000+0000",
+      "description": "Currently Bitbucket Cloud invitation are only valid for 7 days as it will expire.\n\nIt would useful feature to allow users to customize the expiry limit or disable the expiry. The reason for this is because some users would only open the invitation much later and the invitation would expire by then.",
+      "summary": "Configure expiry time of Bitbucket Invitation Emails"
+    }
+  },
+  {
+    "key": "BCLOUD-14647",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:40.000+0000",
+      "created": "2017-08-10T00:35:29.000+0000",
+      "description": "Currently, each time a user login into Bitbucket, they would be required to enter 2FA Code.\n\nIt would be useful feature whereby, user&#x27;s will have the option to set the machine/device as trusted. This would allow customers to not go through the 2FA process each time they access it for a certain time frame such as a week or a month.",
+      "summary": "Trust a machine/device to not ask for 2FA on a machine for a week/month."
+    }
+  },
+  {
+    "key": "BCLOUD-14646",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-12-13T20:16:51.000+0000",
+      "created": "2017-08-09T23:55:50.000+0000",
+      "description": "Even though Firefox does not support U2F by default, there&#x27;s a [working U2F plugin|https://addons.mozilla.org/en-US/firefox/addon/u2f-support-add-on/?src=api] that works well (tested with Github and Google), but Bitbucket won&#x27;t even allow the use of U2F *if it does not see Google Chrome*, and prints this message instead:\n\n\"Your browser doesn\u2019t support the FIDO U2F standard yet. Get the latest version of [Google Chrome|https://www.google.com/chrome/browser/desktop/] if you want to use a security key device\"\n\nIt&#x27;s a shame this is based *merely on User Agent* and not the actual capability of browser, which can obviously be extended with a plugin.\n\nAttached are two screenshots: one from Chromium demonstrating correct behavior; and one from Firefox showing the error.",
+      "summary": "U2F administratively disabled based on User Agent despite functioning plugin"
+    }
+  },
+  {
+    "key": "BCLOUD-14645",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-31T01:09:11.000+0000",
+      "created": "2017-08-09T23:42:27.000+0000",
+      "description": "I am building a CI solution for Salesforce code. In Salesforce, there are no atomic deploys, so you must manually delete files that have been renamed or removed. Yea.\n\nMy solution to this was to track the commit the pipeline runs on so that I can generate a list of all deleted files from the previous pipeline run with {{git diff <previous sha>..<current sha>}}.\n\nThe problem is that even with {{clone: depth: full}} enabled in the pipeline.yml, git throws an error because the previous commit doesn&#x27;t seem to exist. I verified this is an issue by recreating the pipeline in a Docker container. When I use my normally cloned repo on my local machine, the {{git diff}} command works fine. When I clone the repo the way the pipeline does via {{git clone --branch=\"staging\" <url>}}, then the command fails and returns a {{fatal: bad object <sha>}} error.\n\nMy pipeline:\n\n{code}\n\nimage: node:latest\n\nclone:\n  depth: full\n\ndefinitions:\n  caches:\n    sfdx: ~/.sfdx\n    sfdx-libs: ~/.local/share/sfdx\n    yarn: ~/.yarn\npipelines:\n\n  branches:\n    staging:\n        - step:\n            caches:\n              - node\n              - sfdx\n              - sfdx-libs\n            script:\n              - git show $BITBUCKET_COMMIT\n              - echo $BITBUCKET_COMMIT > ~/.sfdx/current-build\n              - tasks/build $BITBUCKET_BRANCH\n              - tasks/deploy $BITBUCKET_BRANCH\n              - echo $BITBUCKET_COMMIT > ~/.sfdx/previous-build\n{code}",
+      "summary": "Git: Fatal Error running `git diff`"
+    }
+  },
+  {
+    "key": "BCLOUD-14644",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-07-14T18:04:57.000+0000",
+      "created": "2017-08-09T23:08:11.000+0000",
+      "description": "Hello,\n\nin the process of importing a Git repository from GitHub to BitBucket, it happened to me that some of our users have commits with an email address like:\\\\\n\"USERNAME@users.noreply.github.com\"\n\nIn order to map their commits to BitBucket accounts, one has to create an email alias.\\\\\nThis includes to confirm the email address, which is obviously not possible here.\n\nFeature request: automatically confirm email addresses ending with \"@users.noreply.github.com\".\n\nIf that is not possible due to BitBucket politics, please forward the confirmation email to the public address of that user visible on GitHub, see:\\\\\nhttps://github.com/USERNAME\n\nThanks and best greetings.",
+      "summary": "Need to confirm unconfirmalbe email address"
+    }
+  },
+  {
+    "key": "BCLOUD-14643",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:40.000+0000",
+      "created": "2017-08-09T15:46:50.000+0000",
+      "description": "Hello, I have been working on a Java library, but I really want to be able to include my Javadoc in BitBucket. I was thinking a good way to go at this is adding another board on the side. When you create a Java repository, it would ask you if you would like to have a Javadoc spot, just like the wiki. If you choose not to import it, you can still do it later. Then you could just upload the html/etc. files for your Javadoc, and, voila, you have a Javadoc on the side that people can view. If you need more information, feel free to contact me.\n\nThanks",
+      "summary": "Javadoc Support"
+    }
+  },
+  {
+    "key": "BCLOUD-14642",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-11-24T18:47:36.000+0000",
+      "created": "2017-08-09T11:35:40.000+0000",
+      "description": "I had tried, for a few days, to transfer some repositories from another user to myself (Bitbucket Cloud).  However, I used my e-mail address for the transfer when referring to \"repository owner\", which seems reasonable given e-mail is the only method to respond to a repository transfer.\n\nWhen hitting transfer, nothing happened (no feedback, \"can&#x27;t find user\").  I thought that maybe it was just taking the e-mail a while to send from Atlassian.  I read through the documentation, and had not realized that it was user name and not e-mail address alias that should be used.  After a few days I figured it out.  However, there should really be an account lookup feature similar to user management under roles for the repository equally applicable to repository transfers.\n\nPossibly related to BCLOUD-13938 (BBCDEV-4909).",
+      "summary": "Transfer Repository UI user validation"
+    }
+  },
+  {
+    "key": "BCLOUD-14641",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2017-08-09T11:19:46.000+0000",
+      "description": "Hey dear developers!\n\nWe would like to ask you to implement the new button, for saving time of many programmers. When we are doing Pull Request now, while it&#x27;s not rebased yet to the top of the target branch, we are doing rebase manually every time and push changes again:\n\ncommand for example:\\\\\n{{git rebase master}}\\\\\n{{git push ..}}\n\nBut better would be, if your service had such button on the website. Could you implement it? You have of course \"Sync now\", but it&#x27;s doing some mess with merging but not a rebasing..\n\nPlease provide second more suitable option \"Rebase to top of target branch\" that could be applied before merging.\n\nHope for understanding! Thank you for attention.",
+      "summary": "Rebase option to synchronize pull request"
+    }
+  },
+  {
+    "key": "BCLOUD-14640",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-11-24T18:47:12.000+0000",
+      "created": "2017-08-09T07:47:24.000+0000",
+      "description": "On certain files, tab indentations become misaligns in diff view.",
+      "summary": "Tab indentation not rendered correctly in diff view"
+    }
+  },
+  {
+    "key": "BCLOUD-14639",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:41.000+0000",
+      "created": "2017-08-08T20:18:55.000+0000",
+      "description": "We currently do a little highlighting if you use .JS syntax, but it does not cover everything.",
+      "summary": "Include *.JSX syntax highlighting"
+    }
+  },
+  {
+    "key": "BCLOUD-14638",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-11-04T20:02:58.000+0000",
+      "created": "2017-08-08T16:56:59.000+0000",
+      "description": "I really like the \"edit online\" feature for minor changes. But when I was using it recently, I made a very small change but noticed that it changed _other_ parts of the file, parts I did not modify directly.\n\nReproduction steps:\n\n* Create a file with UTF-8 character \"\u00b1\" (hex 0xC2B1) outside of Bitbucket&#x27;s online editor.\n* Edit it online in Bitbucket and make a change elsewhere in the file.\n* Save it, and the character will be re-encoded as hex 0xB1 which is invalid UTF-8. I assume Bitbucket is treating the file as being in some other encoding. UTF-8 is not an exotic or rare encoding -- everywhere I&#x27;ve worked it has been the default, so I would expect Bitbucket to handle it properly.\n\nI have a public repository where I reproduced the bug. Here is the commit where the unwanted change happened:\n\nhttps://bitbucket.org/stephenrosenthal/online-edit-special-characters-test/commits/304ddb158965a489f6675865ca2bff32c3de6d65\n\nThanks!",
+      "summary": "Online editor re-encodes file, mangling special characters"
+    }
+  },
+  {
+    "key": "BCLOUD-14637",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-11T05:07:04.000+0000",
+      "created": "2017-08-08T14:51:27.000+0000",
+      "description": "Some admins would like to enable \"Require linked issue keys in commits\" only for specific branches.",
+      "summary": "As an admin I would like to enable \"Require linked issue keys in commits\" only for specific branches"
+    }
+  },
+  {
+    "key": "BCLOUD-14636",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-16T17:13:13.000+0000",
+      "created": "2017-08-08T14:47:52.000+0000",
+      "description": "I&#x27;m using Bitbucket for work and own projects. I think it is more useful to configure email for notifications per team. So notifications for private projects can be sent to my private email and notifications from a team project can be sent to a different email.",
+      "summary": "Different email address for Team"
+    }
+  },
+  {
+    "key": "BCLOUD-14635",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-11T05:07:26.000+0000",
+      "created": "2017-08-08T10:32:45.000+0000",
+      "description": "After clicking build badge refers to 404 page cause wrong link.",
+      "summary": "Build link refers to 404 page"
+    }
+  },
+  {
+    "key": "BCLOUD-14634",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-08T10:31:26.000+0000",
+      "created": "2017-08-08T10:25:49.000+0000",
+      "description": "I am trying to quote terminal output as-is, meaning i do not want the issue editor to render any quotes or other special characters in any special way -  just raw text.\n\nThere is no documentation on how to do that. I tried:\n\nUsing backticks around the whole block\n\nUsing backticks for each line\n\nUsing backticks for each line with newlines in between\n\nUsing backslashes before any special character\n\nWrapping any special character in curly braces\n\nUsing double backslashes before any special character\n\nWrapping any special character in backticks\n\nUsing triple single quotes around the whole block\n\nUsing triple tildes around the whole block\n\nIt all doesn&#x27;t work. Either this is a bug or this is not supported or not well documented. Please advise.",
+      "summary": "No documentation on how to quote block of text without any formatting"
+    }
+  },
+  {
+    "key": "BCLOUD-14633",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-11T05:56:06.000+0000",
+      "created": "2017-08-08T08:01:35.000+0000",
+      "description": "We&#x27;re getting following error at the end of the pipelines build: *System Error, /opt/atlassian/pipelines/agent/build/.meteor/local/dev_bundle does not exist* . When I run the same cmd sequence in the docker container on my local laptop it runs well. Only difference I have noticed is the build path: */opt/atlassian/bitbucketci/agent/build/* however the message says */opt/atlassian/pipelines/agent/build*\n\nIt has been working fine but since 8/7/2017 it is broken.",
+      "summary": "System Error: /opt/atlassian/pipelines/agent/build/.meteor/local/dev_bundle does not exist"
+    }
+  },
+  {
+    "key": "BCLOUD-14632",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-08-02T00:04:41.000+0000",
+      "created": "2017-08-08T02:56:50.000+0000",
+      "description": "Currently versions are sorted alphabetically. However, it&#x27;s much better to use natural sort order. This is the same sort order you see in Windows Explorer or Mac&#x27;s Finder. [Jeff Atwood on Natural Sort Order|https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/].\n\nSo instead of [1.10, 1.11, 1.8, 1.9, 2.0] the desired output is [1.8, 1.9, 1.10, 1.11, 2.0].\n\nMoreover, most important versions are the last ones. So it would be great to have an option to reverse the version list: [2.0, 1.11, 1.10, 1.9, 1.8]\n\nI&#x27;ve attached a screenshot with the current behavior.",
+      "summary": "Use reverse natural sort for versions"
+    }
+  },
+  {
+    "key": "BCLOUD-14631",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-24T21:57:01.000+0000",
+      "created": "2017-08-07T21:24:51.000+0000",
+      "description": "For accounts that have grandfathered bonus users, they will get the \"Over your account limit\" pop-up, if they are one user over their current limit. It seems we do not factor the bonus users on this limit, and instead just give them the error message.",
+      "summary": "Fix \"over account limit\" message for accounts with bonus users (BBCDEV-8927)"
+    }
+  },
+  {
+    "key": "BCLOUD-14630",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-10-20T14:08:16.000+0000",
+      "created": "2017-08-07T13:50:17.000+0000",
+      "description": "At the moment there is a column called &#x27;Date&#x27;. However it doesn&#x27;t actually contain a date for recent commits, but instead something like &#x27;13 minutes ago&#x27;.\n\nFor my daily work, this is unhelpful compared to displaying the actual date/time of the commit.\n\nYou can hover over the &#x27;date&#x27; to see the actual date/time but this is extremely unwieldy when you are trying to, for example, locate the first commit after 11am yesterday in a busy repository.\n\nThis is the same request as BCLOUD-6982 which has in my opinion incorrectly been marked as a duplicate of BCLOUD-6921 -- this second ticket has indeed been resolved but to the letter of the request rather than having given due consideration to when the relative/absolute times are more useful (my feeling: only absolute times are ever useful).\n\nBCLOUD-6947 and BCLOUD-6974 are more or less the same request, but BCLOUD-6982 I believe has the most voices asking for the option to always have absolute date/times, perhaps as an opt-in setting.",
+      "summary": "Show date/time of each commit in 'Commits' view"
+    }
+  },
+  {
+    "key": "BCLOUD-14629",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-07-03T04:59:49.000+0000",
+      "created": "2017-08-07T09:43:58.000+0000",
+      "description": "I&#x27;m not able to do any git pull from linux system.",
+      "summary": "Failed connect to bitbucket.org:443; Connection timed out."
+    }
+  },
+  {
+    "key": "BCLOUD-14628",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-08T17:42:33.000+0000",
+      "created": "2017-08-05T19:03:40.000+0000",
+      "description": "When a user first creates a bitbucket account and their first repo, there is a helpful screen that apppears that says:\n\nPut some bits in your bucket\\\\\nAdd some code or content and start bringing your ideas to life. Learn how\n\nThe \"Learn How\" is hyperlinked, but goes to the support page:\\\\\nhttps://confluence.atlassian.com/display/BITBUCKET/Get+started+with+Bitbucket+Cloud\n\nWhich simply says:\\\\\nPage Deleted\\\\\nA page with this title has been deleted. Contact your space administrator if you would like it restored.",
+      "summary": "First tutorial help page deleted"
+    }
+  },
+  {
+    "key": "BCLOUD-14627",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-11T05:07:45.000+0000",
+      "created": "2017-08-05T11:54:52.000+0000",
+      "description": "I lost connectivity during a push and now I cannot push any more:\n\n{code}\n$ hg push\npushing to ssh://hg@bitbucket.org/factorchain/factorchain\nsearching for changes\nabort: stream ended unexpectedly (got 0 bytes, expected 4)\nremote: abort: abandoned transaction found!\nremote: (run &#x27;hg recover&#x27; to clean up transaction)\n{code}\n\nRunning \"hg recover\" tells me there is nothing wrong:\n\n{code}\n$ hg recover\nno interrupted transaction available\n{code}\n\nAnd yet when I try to push again, I get the same error.\n\nI even re-cloned everything and tried a new push, getting the same error.\n\nAt this point no-one in the company is able to push any changes, which is severely impacting us.",
+      "summary": "\"abandoned transaction found\" - Cannot push any more"
+    }
+  },
+  {
+    "key": "BCLOUD-14626",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-08T17:53:08.000+0000",
+      "created": "2017-08-04T20:15:02.000+0000",
+      "description": "I have commits and the button does not become enable for me. I asked co-workers to try exactly the same thing, and it works for them.",
+      "summary": "Create Pull Request button on Pull Request page stays disabled press"
+    }
+  },
+  {
+    "key": "BCLOUD-14625",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/20310",
+        "id": "20310",
+        "key": "BCLOUD",
+        "name": "Bitbucket Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=20310&avatarId=631786",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=20310&avatarId=631786",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=20310&avatarId=631786",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=20310&avatarId=631786"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-08-15T14:21:24.000+0000",
+      "created": "2017-08-04T14:48:07.000+0000",
+      "description": "Hi There,\n\nI was surprised to find out that pipelines clones the repo to {{/opt/atlassian/pipelines/agent/build}} and does not allow customization of this path.\\\\\nPipelines allows us to use custom docker images (which is awesome BTW) which could contain all kinds of different environments, so why would there be an assumption that the user wants to clone the repo to the above location?\n\nIn my particular case, I am trying to replicate a developers machine where the repo is typically cloned somewhere in their home directory with the folder named the same as the repo (as opposed to {{build}}).\n\nIn the short term, I was able to work around this using a symlink:\\\\\n{{ln -s \"$PWD\" /desired/path}}\n\nI&#x27;ve come across a few other posts of people desiring this functionality as well [[1]|https://community.atlassian.com/t5/Bitbucket-questions/how-to-change-bitbucket-pipeline-default-clone-directory/qaq-p/578000],  [[2]|https://community.atlassian.com/t5/Answers-Developer-Questions/Can-t-set-build-clone-directory-in-bitbucket-pipelines/qaq-p/471701]",
+      "summary": "Allow the clone dir path to be configurable"
+    }
+  }
+]

@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "CONFSERVER-12998",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-23T12:25:29.000+0000",
+      "created": "2008-09-10T01:20:32.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12998].\n  {panel}\n\nWhen using an incompatible plugin, Confluence will report an exception without an accompanying stack trace - for example the NullPointerException below:\r\n{noformat}\r\n2008-08-10 08:40:36,609 ERROR [http-8080-Processor6] [atlassian.plugin.web.DefaultWebInterfaceManager] filterFragmentsByCondition Could not evaluate condition: java.lang.NullPointerException\r\n -- url: /display/sample/Home | userName: ogawa | action: viewpage | page: 589828\r\n{noformat}\r\n\r\nIt is impossible to know which plugin is failing based on the exception above.\r\n\r\nThis can be improved by including the stack trace of the error so we know where the problem actually lives.\r\n\r\nPlease include the following in method {{filterFragmentsByCondition}} :\r\n{code}\r\n            catch (Throwable t)\r\n            {\r\n                if (log.isDebugEnabled())\r\n                    log.debug(\"Could not evaluate condition for descriptor: \" + descriptor, t);\r\n                else\r\n                    log.warn(\"Could not evaluate condition for descriptor: \" + descriptor + \", with throwable: \" + t);\r\n                iterator.remove();\r\n            }\r\n{code}",
+      "summary": "Add extra logging in DefaultWebInterfaceManager class"
+    }
+  },
+  {
+    "key": "CONFSERVER-12997",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:26:38.000+0000",
+      "created": "2008-09-10T00:59:40.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12997].\n  {panel}\n\nI wonder if your team has planned to provide Number of Pages to the page tree node to display\r\nthe page count of each category.\r\nFor instance.\r\n   Root--NodeA(50)\r\n         |       |-- SubNodeA(30)\r\n         |       |-- SubNodeB(20) \r\n         |\r\n         |--NodeB(20)  \r\n\r\n",
+      "summary": "If Page Tree can display the number of children nodes on each node?"
+    }
+  },
+  {
+    "key": "CONFSERVER-12995",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-05-26T06:51:58.000+0000",
+      "created": "2008-09-09T19:47:23.000+0000",
+      "description": "We are using MS SQL database and I switch isolation level of database to Snapshot isolation (also I add into confluence.cfg.xml following params - <property name=\"hibernate.connection.isolation\">4096</property>, in addition I replace jtds-1.2.jar on jtds-1.2.2.jar (to work correctly with snapshot isolation)).\r\n\r\nDatabase Connection Transaction Isolation level is not displaying at all and Database Driver Version is 1.2 although it should be 1.2.2",
+      "summary": "View System Information page >> Database Connection Transaction Isolation level is not displaying at all"
+    }
+  },
+  {
+    "key": "CONFSERVER-12994",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-12-24T03:03:15.000+0000",
+      "created": "2008-09-09T18:52:49.000+0000",
+      "description": "I really need to add other people as watchers to a page in confluence.  I can do this in jira (add others as watchers) and it's very very helpful.  Hopefully you will allow this in confluence.\r\n\r\nThanks.",
+      "summary": "Allow Anyone to Add a Watcher to a Page"
+    }
+  },
+  {
+    "key": "CONFSERVER-12993",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-01-05T04:24:47.000+0000",
+      "created": "2008-09-09T15:49:30.000+0000",
+      "description": "When Confluence is available over HTTPS and clients try to access it with Firefox, the reponse time is very long (7 to 9 seconds instead of 1-2 seconds) because by default Firefox uses no caching mechanism with HTTPS.\r\nA manual configuration involving the \"browser.cache.disk_cache_ssl\" parameter of Firefox is necessary for people to restore a correct response time. The point is that after this customization ALL web sites using HTTPS are cached, including the sentitive web sites such as bank sites...\r\n\r\nAs described on the following web site http://blogs.gnome.org/jamesh/2008/05/01/firefox-ssl/ this could be avoided by making Confluence server send the \"Cache-Control: public\" response header, thus making the server say that a resource can be stored in the disk cache",
+      "summary": "Enhance response time when using HTTPS with Firefox"
+    }
+  },
+  {
+    "key": "CONFSERVER-12992",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:21:35.000+0000",
+      "created": "2008-09-09T15:38:01.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12992].\n  {panel}\n\nWe've noticed that in version 2.9, the lines in a line chart are a good bit thicker than they were in v2.8.1. For some of our metrics charts, this thickness is presenting a problem in reading the chart. I've attached examples of the same chart under the different versions.\r\n\r\nIn some of the line charts, the thicker lines look good and improves the appearance of the chart, so we would like to be able to control the thickness of the lines. Please add or inform a means of controlling the line thickness in a chart.",
+      "summary": "Control line thickness in line charts"
+    }
+  },
+  {
+    "key": "CONFSERVER-12991",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-05-26T06:51:39.000+0000",
+      "created": "2008-09-09T13:45:51.000+0000",
+      "description": "Am I placing the plugin in the wrong directory for it to be scanned and uploaded?\r\nWe upgraded to 2.7.3 from 2.2.10. I placed 3 plugins in plugin-cache.\r\ncalendar-plugin-2.6.1.jar  \r\nImageMapPlugin_v1_0_5.jar  \r\ntoc-plugin-2[1].3.2.jar\r\n\r\nAfter a restart, there were only 2 (ImageMapPlugin_v1_0_5.jar , toc-plugin-2.3.2.jar)\r\n\r\nWe are running a QA instance that should be identical to our production instance. No problems there- restart does not remove any of the plugins.\r\n\r\nThe word \"cache\" in the directory name makes me suspect I am not putting  the plugin in the most permanent location.\r\nI could not find any documentation on where to place plugins when we are not putting them in WEB-INF/lib.\r\n\r\nPlease advise\r\n\r\n",
+      "summary": "Calendar plugin installed in plugin-cache disappears with restart"
+    }
+  },
+  {
+    "key": "CONFSERVER-12990",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-01-21T02:11:10.000+0000",
+      "created": "2008-09-09T10:03:59.000+0000",
+      "description": "When pages are long it is very annoying that editor jumps to the beginning of the page after switching from edit to preview mode and then back. You have to scroll down every time. It would be useful (at least as optional feature in the editor) if cursor and scrollbar will jump to exactly the same location in the editor.\r\n",
+      "summary": "Switching to or from previewing mode in editor should jump to the last cursor position"
+    }
+  },
+  {
+    "key": "CONFSERVER-12989",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-27T07:27:53.000+0000",
+      "created": "2008-08-14T23:17:02.000+0000",
+      "description": "* Installed Confluence 2.9\r\n* Loaded a full backup\r\n* Managed to install the Metadata plugin\r\n* When I tried to install the Approvals Workflow Plugin got the exception.\r\n\r\nAfter restarting the server, the plugin loaded without any problem... \r\n\r\n{noformat}\r\norg.springframework.beans.factory.BeanCreationException: Error creating bean with name 'workflowsInitializer': Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] to required type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] for property 'workflowConfigurationManager'; nested exception is java.lang.IllegalArgumentException: Cannot convert value of type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] to required type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] for property 'workflowConfigurationManager': no matching editors or conversion strategy found\r\nCaused by: org.springframework.beans.TypeMismatchException: Failed to convert property value of type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] to required type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] for property 'workflowConfigurationManager'; nested exception is java.lang.IllegalArgumentException: Cannot convert value of type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] to required type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] for property 'workflowConfigurationManager': no matching editors or conversion strategy found\r\nCaused by: java.lang.IllegalArgumentException: Cannot convert value of type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] to required type [com.comalatech.confluence.workflow.WorkflowConfigurationManager] for property 'workflowConfigurationManager': no matching editors or conversion strategy found\r\n\tat org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:231)\r\n\tat org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:138)\r\n\tat org.springframework.beans.BeanWrapperImpl.convertForProperty(BeanWrapperImpl.java:380)\r\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1106)\r\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:862)\r\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:423)\r\n\tat org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:249)\r\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:155)\r\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:246)\r\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:160)\r\n\tat com.atlassian.confluence.plugin.descriptor.ComponentModuleDescriptor.enabled(ComponentModuleDescriptor.java:84)\r\n\tat com.atlassian.plugin.DefaultPluginManager.enablePluginModules(DefaultPluginManager.java:697)\r\n\tat com.atlassian.plugin.DefaultPluginManager.addPlugin(DefaultPluginManager.java:314)\r\n\tat com.atlassian.plugin.DefaultPluginManager.scanForNewPlugins(DefaultPluginManager.java:181)\r\n\tat com.atlassian.plugin.DefaultPluginManager.installPlugin(DefaultPluginManager.java:126)\r\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n\tat java.lang.reflect.Method.invoke(Method.java:585)\r\n\tat org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:304)\r\n\tat org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)\r\n{noformat}\r\n\r\nThe offending module is a {{component}}:\r\n{noformat}\r\npublic class WorkflowsInitializer implements StateAware {\r\n...\r\n{noformat}",
+      "summary": "BeanCreationException / TypeMismatchException when loading plugin right after installing Confluence 2.9 and loading a full backup"
+    }
+  },
+  {
+    "key": "CONFSERVER-12988",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-10-13T22:40:26.000+0000",
+      "created": "2008-09-09T08:23:09.000+0000",
+      "description": "When creating panels like shown in the User guide:\r\n\r\n{code}\r\nPanel-Example from Users-Guide:\r\n\r\n{panel:title=My Title|borderStyle=dashed|borderColor=#ccc|titleBGColor=#F7D6C1|bgColor=#FFFFCE}\r\nA formatted panel\r\n{panel}\r\n{panel}\r\nDefault Panel.\r\n{panel}\r\n\r\n{tip}\r\nBut the Tip works\\! {tip}\r\n{code}\r\n\r\none gets the panels without color in Internet Explorer 6 (see attached Screenshot).\r\n\r\nAs a work-around we surround the panels with a \"section\":\r\n\r\n{code}\r\nPanel-Example from Users-Guide:\r\n{section}\r\n{panel:title=My Title|borderStyle=dashed|borderColor=#ccc|titleBGColor=#F7D6C1|bgColor=#FFFFCE}\r\nA formatted panel\r\n{panel}\r\n{panel}\r\nDefault Panel.\r\n{panel}\r\n{section}\r\n{tip}\r\nBut the Tip works\\! {tip}\r\n{code}\r\n\r\nWith this the colors get shown correctly, but one can't always use this work-around.",
+      "summary": "Panels not shown correctly in Internet Explorer 6"
+    }
+  },
+  {
+    "key": "CONFSERVER-12987",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-11-07T05:12:13.000+0000",
+      "created": "2008-09-09T06:39:13.000+0000",
+      "description": "When editing data in a template, the preview tab does not work.  Click templates, click create page from template.  Give the page a new name and click save.  Now you can edit or enter data into the page.  This preview button does not work.",
+      "summary": "Templates - the preview button does not work when editing a template"
+    }
+  },
+  {
+    "key": "CONFSERVER-12986",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-24T05:59:55.000+0000",
+      "created": "2008-09-09T03:17:30.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFCLOUD-12986].\n  {panel}\n\nThis news post:\r\n\r\nhttp://extranet.atlassian.com/display/SYSADMIN/2008/09/09/WANdisco+and+other+network+updates\r\n\r\nNever appeared on the internal blog page or the RSS feed:\r\n\r\nhttp://extranet.atlassian.com/display/STAFF/Internal+Blog",
+      "summary": "News post in staff space didn't appear on internal aggregation/rss"
+    }
+  },
+  {
+    "key": "CONFSERVER-12985",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-27T07:27:58.000+0000",
+      "created": "2008-09-09T03:13:24.000+0000",
+      "description": "When Confluence is configured to use the Classic Theme, both fonts display are different when viewing in \"Rich Text\" editor mode and \"View\" mode. Attached, {{Classic_View_WYSIWYG.jpeg}} is the result seen.",
+      "summary": "Fonts in \"Rich Text\" editor mode is different over \"View\" mode when Confluence is configured to use Classic Theme"
+    }
+  },
+  {
+    "key": "CONFSERVER-12984",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-09-10T00:07:01.000+0000",
+      "created": "2008-09-09T01:45:55.000+0000",
+      "description": "1. The default crop box size should be 48x48\r\n2. Images smaller than 48x48 (so 30x120 for example) should go to the crop screen, currently it is just added to the profile picture list.\r\n3. The Save button down the bottom is too close to the crop area. In any case, not necessary for such a small screen, could we remove it please?",
+      "summary": "Profile photo cropping should be 48x48 by default, and allow the editing of pictures smaller than 48x48"
+    }
+  },
+  {
+    "key": "CONFSERVER-12983",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-05-10T11:44:29.000+0000",
+      "created": "2008-09-09T01:38:36.000+0000",
+      "description": "Currently the profile picture avatars are in a column of three which in small screens means that the delete and set profile picture buttons can be off the the bottom of the screens. No need for this. Let's use the space to the side so that many pictures are shown, and that the upload section text also extends to the right. See screen.",
+      "summary": "Edit my Profile Picture page should be wider"
+    }
+  },
+  {
+    "key": "CONFSERVER-12982",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-09-10T00:07:01.000+0000",
+      "created": "2008-09-09T01:19:19.000+0000",
+      "description": "An addition to the URL like '&didyoumean=confluence' will allow tools to track the most common misspelt words and let tools monitor the use of this feature.",
+      "summary": "Allow tracking of how much Did you mean is used (and most mispelt words)"
+    }
+  },
+  {
+    "key": "CONFSERVER-12981",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-09T06:56:07.000+0000",
+      "created": "2008-09-09T00:08:33.000+0000",
+      "description": "Currently we're just autowiring plugin modules in the new-style plugins. However, I noticed in the MacroModuleDescriptor that the old-style plugins expect the full lifecycle to happen by calling AutowireCapableBeanFactory.configureBean() on the macro object.\r\n\r\nWe should make sure that all Plugins 2.0 modules are getting the full lifecycle applied, if this happened with the previous version.\r\n",
+      "summary": "Plugin 2.0 modules need to have proper Spring lifecycle methods calls"
+    }
+  },
+  {
+    "key": "CONFSERVER-12980",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-02-03T23:15:22.000+0000",
+      "created": "2008-09-08T23:57:00.000+0000",
+      "description": "For example, select panel from the format list and then start typing. You'll notice that the cursor is not in the panel but above it where it was before the format was selected. \r\n\r\n",
+      "summary": "Selecting a Confluence format in the RTE then typing doesn't put the cursor in the right place"
+    }
+  },
+  {
+    "key": "CONFSERVER-12979",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-27T23:05:58.000+0000",
+      "created": "2008-09-08T23:56:00.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFCLOUD-12979].\n  {panel}\n\nOn Dashboards the german/french translation for \"Spaces\" and \"Recently Updated\" is missing and just shows up in English instead.\r\nThis only seems to affect Confluence 2.9.1",
+      "summary": "On Dashboards the german/french translation for \"Spaces\" and \"Recently Updated\" is missing."
+    }
+  },
+  {
+    "key": "CONFSERVER-12978",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2008-09-08T17:57:03.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12978].\n  {panel}\n\nI have had multiple instances where someone was adding a  large comment on page and lose their comment for whatever reason. Can comments be \"auto-saved\"/drafted like regular pages?",
+      "summary": "Add auto-save/draft feature for comments"
+    }
+  },
+  {
+    "key": "CONFSERVER-12977",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-07-04T06:26:14.000+0000",
+      "created": "2008-09-08T14:39:38.000+0000",
+      "description": "window should be titled and headed \"View Wiki Markup\" as well for consistency",
+      "summary": "\"View Wiki Markup\" option brings up window titled and headed \"View Source\""
+    }
+  },
+  {
+    "key": "CONFSERVER-12976",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-09-27T23:05:02.000+0000",
+      "created": "2008-09-08T13:10:33.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12976].\n  {panel}\n\nPlease let me know if there is a means of evaluating whether an installed plugin is being used or not or if there is a means of gathering usage statistics for a particular plugin.\r\n\r\nTo check what plugins are currently installed on the system, you can go to {{Admin>Plugins}} and see the list of them there. it is difficult to distinguish whether actual plugin is in use. There can be several plugins installed, yet not necessarily used throughout the application. It would be wonderful though to get such info and I'd thus strongly suggest for you to create a new feature request in our jira system. http://jira.atlassian.com - I'd like to leave the credit of this great idea for you - hence am requesting for you to create the ticket (otherwise am happy to do so)\r\n\r\nPotentially, one could write some sort of a plugin that would be querying the DB - {{PLUGIN}} table and {{PLUGIN_DATA}} table and somehow then traversing through the content of all confluence pages and analyse whether a particular plugin is in use or not. Would create extra load on the app, and the dynamic info gathering process may slow down the instance. (_perhaps there is much much better way of doing so_) You may also ask the dev forums {{forums.atlassian.com}}\r\n",
+      "summary": "Evaluate usage/statistics of plugins/macros for Confluence"
+    }
+  },
+  {
+    "key": "CONFSERVER-12975",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-24T06:01:01.000+0000",
+      "created": "2008-09-08T12:45:17.000+0000",
+      "description": "It has been reported that when entering following markup,\r\ntwo digit numbers in a list are not shown correctly on \r\nInternet Explorer 7.\r\n{code}\r\nsection}\r\n{column:width=20%} column{column}\r\n{column} \r\n# aaa\r\n# bbb\r\n# ccc\r\n# ddd\r\n# eee\r\n# fff\r\n# ggg\r\n# hhh\r\n# iii\r\n# jjj\r\n# kkk\r\n# lll\r\n# mmm\r\n# nnn\r\n# ooo\r\n{column} {section}\r\n{code}\r\n\r\nCould you please file this for the improvement?",
+      "summary": "Two digit numbers are not shown correctly in a list on IE7"
+    }
+  },
+  {
+    "key": "CONFSERVER-12974",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-09T03:33:46.000+0000",
+      "created": "2008-09-08T12:00:44.000+0000",
+      "description": "On this page:\r\n\r\n  http://confluence.atlassian.com/pages/diffpages.action?pageId=158631203&originalId=166002717\r\n\r\nThere is no 'see changes between version 18 and version 19' linked.  This is different to how it used to work:\r\n\r\n  http://wiki.opensymphony.com/pages/diffpages.action?pageId=9294&originalId=9311\r\n\r\nSee the two screenshots for examples",
+      "summary": "When viewing diffs between pages, there is no longer the option to page between them"
+    }
+  },
+  {
+    "key": "CONFSERVER-12973",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-05-26T06:51:42.000+0000",
+      "created": "2008-09-08T08:18:53.000+0000",
+      "description": "(This should be for 2.9.1 - this version was not yet available under \"affects versions\" when filing this bug).\r\n\r\nAfter updating from 2.9 to 2.9.1, most of my settings were overwritten by their default values.\r\n\r\n- public signup got enabled\r\n- the language changed back to english (instead of german)\r\n- e-mail addresses were visible again (instead of masked)\r\n- captchas where disabled\r\n- the welcome message was lost\r\n- the site title and url where changed back to the defaults\r\n- daily backups were still enabled, but now including the attachments (which I had excluded)\r\n- etc\r\n\r\n\r\nAlmost all the settings that I had changed using the web interface were changed. However, I noted that the SMTP server settings were still ok, as were the installed plugins and the user macros.\r\nAlso, the settings I had copied (confluence-init.properties and atlassian-user.xml) were fine, too.\r\n\r\nother settings where still ok\r\n- SMTP server\r\n\r\nJust in case this matters, I am using LDAP authentication against an active directory (using atlassian-user.xml).\r\n",
+      "summary": "default config values restored"
+    }
+  },
+  {
+    "key": "CONFSERVER-12972",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-21T23:30:32.000+0000",
+      "created": "2008-09-08T07:58:18.000+0000",
+      "description": "Right now you have to use the #requireResource macro or you need to call WebResourceManager.requireResource() somewhere within the request to make resource includes appear in the head of your HTML.\r\nIf you set the \"global\" attribute of your \"web-resource\" element to \"true\" the contained resources should be included on every page, even if they were not explicitly required.\r\n\r\nExample:\r\n\r\n{noformat}\r\n    <web-resource name=\"Resources\" key=\"resources\" global=\"true\">\r\n        <resource name=\"foo.js\" type=\"download\" location=\"com/atlassian/confluence/extra/bar/foo.js\">\r\n        </resource>\r\n    </web-resource>\r\n{noformat}",
+      "summary": "Allow web resources to be global"
+    }
+  },
+  {
+    "key": "CONFSERVER-12971",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:21:12.000+0000",
+      "created": "2008-09-08T05:56:12.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12971].\n  {panel}\n\nThe people who direct resources in my organisation will want to see what use is being made of the wiki. A range of activity reports - by user, which pages are most popular etc. - would help with this. We currently use the hosted option. I see the installed version of confluence offers this.",
+      "summary": "Make the view space activity feature available to purchasers of the Confluence Hosted."
+    }
+  },
+  {
+    "key": "CONFSERVER-12970",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:21:56.000+0000",
+      "created": "2008-09-08T05:48:09.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12970].\n  {panel}\n\nIt could be useful to have a functionality to be able to verify the following:\r\n* Access permission to daily backup\r\n* Sufficient space left on drive\r\n* Accessibility and existence  (is the directory on a NAS or Virtual Mapped Drive)\r\n\r\nSimple test could run these three tests and provide feedback within the admin screen.\r\n\r\nOne could take it one step further and add a functionality to check the number of backups created in the directory and delete ones that are *X* days old to clear some space for new backups. Or/And move these backups into an archive and store them away on a 'cheap' Hardisk on a slow&old machine. Keep the expensive one for the good stuff :-)",
+      "summary": "Verification of daily backup directory"
+    }
+  },
+  {
+    "key": "CONFSERVER-12968",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-09T00:06:25.000+0000",
+      "created": "2008-09-07T23:43:58.000+0000",
+      "description": "We want to expose certain beans to plugin developers in the new framework:\r\n\r\n- services\r\n- managers\r\n- any other beans required to implement useful plugins.\r\n",
+      "summary": "Expose important Spring beans to plugins 2.0 framework"
+    }
+  },
+  {
+    "key": "CONFSERVER-12967",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-12-02T03:25:34.000+0000",
+      "created": "2008-09-05T23:49:56.000+0000",
+      "description": "Provide a render mode for notifications such as RSS feed items and emails so that plugins can check if they are in that mode and if so render themselves in a way that doesn't include javascript\r\n\r\nexample use case: http://developer.atlassian.com/jira/browse/CONFJIRA-14\r\n\r\nthis will require upgrading renderer\r\n",
+      "summary": "Provide a render mode for notifications"
+    }
+  },
+  {
+    "key": "CONFSERVER-12966",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:26:56.000+0000",
+      "created": "2008-09-05T23:44:16.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12966].\n  {panel}\n\nI have an embedded flash object in a page using the flash macro:\r\n\r\n{flash:file=^flexChart.swf|width=800|height=100}\r\n\r\nIt would be really nice if the wysiwyg editor was able to show the size of this object and allow it to be resized.  As it is now, sizing has to be done trial and error style since all the users sees is the above line when editing.\r\n\r\nIt would be nice to extend the editor to support plugins that cooperate with the editor in a manner similar to an image.   That is, a version of the object is shown with resize handles instead of a cryptic line of text.  The above works 'OK' for developers but is really hard for regular or casual users.  For flash objects, it would be nice to actually show the flash object in the editor as it should adapt nicely to resizing on the fly.\r\n",
+      "summary": "Allow/Add ability to have custom plugin objects be sized and viewed in the wysiwyg editor window like an image."
+    }
+  },
+  {
+    "key": "CONFSERVER-12965",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-01-29T00:59:05.000+0000",
+      "created": "2008-09-05T23:34:00.000+0000",
+      "description": "If I insert a tag as follows for a flash object:\r\n\r\n!flexChart.swf|height=300,width=200!\r\n\r\nThe page displays just fine with a 300x200 flash space.  If I then edit the page in any way the height and width are changed to 32.\r\n\r\nI can then edit the page again and resize and save and all is well.\r\n\r\nBasically, any flash includes on the page have to be resized every time the page is edited.",
+      "summary": "Resized flash object size is lost when a page is edited"
+    }
+  },
+  {
+    "key": "CONFSERVER-12964",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:22:10.000+0000",
+      "created": "2008-09-05T15:21:48.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12964].\n  {panel}\n\nHi all,\r\n\r\nI would like to use the user name and the update/creation date of a page and display it in another page, is there a way to do this?\r\n\r\nExample of use:\r\nThe user A creates:\r\n - a page P1 with the label 'project_01' on 09/03.\r\n - a page P2 with the label 'project_01' on 09/04.\r\n - a page P3 with the label 'project_02' on 09/04.\r\n\r\nThe user B creates another page which list in a table the pages with 'project_01' as label. The first column = page name, the second column = user name and the third column = update date.\r\n\r\nWe should get this:\r\n||Page name||user name||update date||\r\n|P1|A|09/03|\r\n|P2|B|09/04|\r\n\r\nThanks a lot and regards,\r\nStephane\r\n",
+      "summary": "displaying of an user ID from a page to another page"
+    }
+  },
+  {
+    "key": "CONFSERVER-12963",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-07-22T01:28:12.000+0000",
+      "created": "2008-09-05T13:15:35.000+0000",
+      "description": "The generated PDF has a different alignment with the page. For example: the page is using right alignment but the exported page (in PDF) is using left alignment.\r\nThe steps to reproduce:\r\n# Create a page contains the following:\r\n{noformat}\r\n!codepanel.bmp|align=right!\r\n{noformat}\r\n# Export the page as PDF. The image will be aligned to left.\r\n\r\nPlease have a look at the attachment.",
+      "summary": "Aligned images in pages lose their alignment when exported as PDF"
+    }
+  },
+  {
+    "key": "CONFSERVER-12962",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-05-12T23:26:44.000+0000",
+      "created": "2008-09-05T11:01:58.000+0000",
+      "description": "Confluence cuts off a very long code macro. The steps to reproduce:\r\n# Create a new page.\r\n# Fill in the page with code macro containing 2700 lines inside code macro.",
+      "summary": "Confluence cuts off a very long code macro block"
+    }
+  },
+  {
+    "key": "CONFSERVER-12961",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-06-15T01:12:05.000+0000",
+      "created": "2008-09-05T07:13:09.000+0000",
+      "description": "Customer wants to have a feature to encrypt a content in Confluence so that only certain users are allowed to see the content.",
+      "summary": "Feature to encrypt Confluence content"
+    }
+  },
+  {
+    "key": "CONFSERVER-12960",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-11-12T05:04:07.000+0000",
+      "created": "2008-09-05T06:54:40.000+0000",
+      "description": "Clicked save on my document and then was politely informed that Hibernate was in arreas:\r\n\r\n!Collection was evicted.png!",
+      "summary": "Hibernate not paying rent: collection was evicted"
+    }
+  },
+  {
+    "key": "CONFSERVER-12959",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-23T11:35:24.000+0000",
+      "created": "2008-09-05T06:38:05.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12959].\n  {panel}\n\nTyping a username and a user full name into a user search when integrated with Crowd throws a ClassCastException.\r\n\r\nSee CWD-994 for full details. This affects all versions of Confluence.\r\n",
+      "summary": "Crowd fails when doing multi-field user search"
+    }
+  },
+  {
+    "key": "CONFSERVER-12957",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2008-09-05T03:54:02.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12957].\n  {panel}\n\nIt would be very useful if the WYSIWYG editor provided a way to create image-maps. We have various flowcharts/diagrams for describing processes, each step of which is another confluence wiki page. It would be useful if clicking on any step in the process diagram led you to the corresponding page.\r\n\r\nThe current solution we are using is to create image maps in Visio, exporting to HTML, using a perl script we have written to convert the imagemap to the format supported by the image map plugin (http://confluence.atlassian.com/display/CONFEXT/ImageMap+Plugin), and pasting that into confluence.\r\n\r\nObviously this process could be much more streamlined, and would probably useful to many other users of the product if it was nice and easy to use.",
+      "summary": "Create image map's using the WYSIWYG editor"
+    }
+  },
+  {
+    "key": "CONFSERVER-12956",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-04-22T05:40:42.000+0000",
+      "created": "2008-09-05T02:43:02.000+0000",
+      "description": "It may be useful to allow option for creating pages if the page user is trying to access doesn't exist. Of course, this has to be optional and in no way removing/disabling the existing valid functionality of sending back {{404 Page Not Found Error}}\r\n\r\nFor example, one may want to write a XML-RPC client that redirects incoming request from another system to Confluence serving as knowledge repository. However, if the page requested does not exist, having option of actually creating it would be in this case useful. (popping up the {{Add Page}} screen)",
+      "summary": "Allow option for creating a page if doesn't not exist"
+    }
+  },
+  {
+    "key": "CONFSERVER-12955",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-05T03:49:25.000+0000",
+      "created": "2008-09-05T02:38:38.000+0000",
+      "description": "When trying to copy a page:\r\n\r\n{noformat}\r\njava.lang.NullPointerException\r\n at com.atlassian.confluence.pages.actions.AbstractCreatePageAction.transferDraftAttachments(AbstractCreatePageAction.java:175)\r\n at com.atlassian.confluence.pages.actions.AbstractCreatePageAction.doAdd(AbstractCreatePageAction.java:136)\r\n at com.atlassian.confluence.pages.actions.CopyPageAction.doAdd(CopyPageAction.java:58)\r\n at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)\r\n at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n at java.lang.reflect.Method.invoke(Method.java:585)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:302)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:170)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.DefaultWorkflowInterceptor.intercept(DefaultWorkflowInterceptor.java:55)\r\n at com.atlassian.confluence.core.ConfluenceWorkflowInterceptor.intercept(ConfluenceWorkflowInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.security.interceptors.CaptchaInterceptor.intercept(CaptchaInterceptor.java:46)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.util.LoggingContextInterceptor.intercept(LoggingContextInterceptor.java:48)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.core.CancellingInterceptor.intercept(CancellingInterceptor.java:23)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.security.actions.PermissionCheckInterceptor.intercept(PermissionCheckInterceptor.java:54)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.pages.actions.CommentAwareInterceptor.intercept(CommentAwareInterceptor.java:43)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.pages.actions.PageAwareInterceptor.intercept(PageAwareInterceptor.java:135)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.spaces.actions.SpaceAwareInterceptor.intercept(SpaceAwareInterceptor.java:73)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.core.actions.LastModifiedInterceptor.intercept(LastModifiedInterceptor.java:39)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.confluence.core.ConfluenceAutowireInterceptor.intercept(ConfluenceAutowireInterceptor.java:38)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.atlassian.xwork.interceptors.TransactionalInvocation.invokeAndHandleExceptions(TransactionalInvocation.java:72)\r\n at com.atlassian.xwork.interceptors.TransactionalInvocation.invokeInTransaction(TransactionalInvocation.java:59)\r\n at com.atlassian.xwork.interceptors.XWorkTransactionInterceptor.intercept(XWorkTransactionInterceptor.java:56)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n at com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n at com.opensymphony.xwork.DefaultActionProxy.execute(DefaultActionProxy.java:115)\r\n at com.atlassian.confluence.servlet.ConfluenceServletDispatcher.serviceAction(ConfluenceServletDispatcher.java:53)\r\n at com.opensymphony.webwork.dispatcher.ServletDispatcher.service(ServletDispatcher.java:199)\r\n at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:269)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:118)\r\n at com.atlassian.confluence.util.profiling.ProfilingPageFilter.parsePage(ProfilingPageFilter.java:153)\r\n at com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:54)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.confluence.jmx.JmxFilter.doFilter(JmxFilter.java:109)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.core.filters.ServletContextThreadLocalFilter.doFilter(ServletContextThreadLocalFilter.java:21)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.confluence.util.LoggingContextFilter.doFilter(LoggingContextFilter.java:54)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.confluence.util.UserThreadLocalFilter.doFilter(UserThreadLocalFilter.java:44)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.seraph.filter.SecurityFilter.doFilter(SecurityFilter.java:192)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.seraph.filter.TrustedApplicationsFilter.doFilter(TrustedApplicationsFilter.java:120)\r\n at com.atlassian.confluence.util.AbstractBootstrapHotSwappingFilter.doFilter(AbstractBootstrapHotSwappingFilter.java:28)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.seraph.filter.BaseLoginFilter.doFilter(BaseLoginFilter.java:125)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.confluence.util.ClusterHeaderFilter.doFilter(ClusterHeaderFilter.java:35)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.johnson.filters.AbstractJohnsonFilter.doFilter(AbstractJohnsonFilter.java:72)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at org.springframework.orm.hibernate.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:170)\r\n at com.atlassian.spring.filter.FlushingSpringSessionInViewFilter.doFilterInternal(FlushingSpringSessionInViewFilter.java:29)\r\n at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:75)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.util.profiling.filters.ProfilingFilter.doFilter(ProfilingFilter.java:142)\r\n at com.atlassian.core.filters.ProfilingAndErrorFilter.doFilter(ProfilingAndErrorFilter.java:27)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.confluence.core.datetime.RequestTimeThreadLocalFilter.doFilter(RequestTimeThreadLocalFilter.java:34)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.confluence.util.RequestCacheThreadLocalFilter.doFilter(RequestCacheThreadLocalFilter.java:25)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.gzipfilter.GzipFilter.doFilterInternal(GzipFilter.java:88)\r\n at com.atlassian.gzipfilter.GzipFilter.doFilter(GzipFilter.java:64)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at com.atlassian.core.filters.AbstractEncodingFilter.doFilter(AbstractEncodingFilter.java:33)\r\n at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)\r\n at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:174)\r\n at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127)\r\n at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:117)\r\n at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:108)\r\n at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:174)\r\n at org.apache.jk.server.JkCoyoteHandler.invoke(JkCoyoteHandler.java:200)\r\n at org.apache.jk.common.HandlerRequest.invoke(HandlerRequest.java:283)\r\n at org.apache.jk.common.ChannelSocket.invoke(ChannelSocket.java:773)\r\n at org.apache.jk.common.ChannelSocket.processConnection(ChannelSocket.java:703)\r\n at org.apache.jk.common.ChannelSocket$SocketConnection.runIt(ChannelSocket.java:895)\r\n at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:689)\r\n at java.lang.Thread.run(Thread.java:595)\r\n{noformat}\r\n",
+      "summary": "Exception when copying page"
+    }
+  },
+  {
+    "key": "CONFSERVER-12954",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:21:28.000+0000",
+      "created": "2008-09-05T01:59:02.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12954].\n  {panel}\n\nI use the following CSS to ensure that the navigation bar on the left hand side of my pages is not included in printed output (via the print page feature of the browser):\r\n\r\n{style:media=print}\r\n.navbar { display: none }\r\n{style}\r\n\r\nThat aspect works fine.  However, this styling is not picked up by the Export to PDF/Word feature of Confluence, with the result that all such output is unusable (because the navbar takes up half the width of the page).\r\n\r\nAs an aside, I used to use the {hide-if:display=printable} macro to disable the navbar when clicking on the Print link in Confluence.  However, the print link seems to have disappeared after our Confluence instance was upgraded to 2.8.1 and the {hide-if:display=printable} macro no longer appears to have an effect.\r\n\r\nRegards\r\nKevin",
+      "summary": "{style:media=print} not reflected by Export to PDF / Word"
+    }
+  },
+  {
+    "key": "CONFSERVER-12953",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-05-12T12:13:51.000+0000",
+      "created": "2008-09-04T22:09:13.000+0000",
+      "description": "Please sort out the Apache configuration docs. They are all over the show.\r\n\r\nFor example:\r\nhttp://confluence.atlassian.com/display/DOC/Using+Apache+with+mod_jk\r\nhttp://confluence.atlassian.com/display/DOC/Using+Apache+with+mod_proxy\r\nhttp://confluence.atlassian.com/display/DOC/Using+Apache+with+virtual+hosts+and+mod_proxy\r\nhttp://confluence.atlassian.com/display/DOC/Apache+and+Apache+Connector+Tips\r\nhttp://confluence.atlassian.com/display/DOC/General+Apache+Configuration+Notes\r\nhttp://confluence.atlassian.com/display/DOC/Known+Issues+for+Apache+Tomcat\r\nhttp://confluence.atlassian.com/display/DOC/Apache+and+Tomcat+load+balancing\r\nhttp://confluence.atlassian.com/display/DOC/Guide+to+using+Apache+Tomcat%27s+Virtual+Hosts\r\nhttp://confluence.atlassian.com/display/DOC/Running+Confluence+behind+Apache",
+      "summary": "Please sort out the Apache configuration docs"
+    }
+  },
+  {
+    "key": "CONFSERVER-12952",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-09-16T06:33:25.000+0000",
+      "created": "2008-09-04T17:08:01.000+0000",
+      "description": "Provide support for the Chrome browser\r\n\r\n{panel:title=Atlassian Status as of July 7, 2011|borderStyle=solid|borderColor=#3C78B5| titleBGColor=#3C78B5| bgColor=#E7F4FA}\r\nWe are pleased to advise that we have Chrome support planned for the next major release of Confluence, which we hope to release later this year.\r\n{panel}\r\n",
+      "summary": "Support Chrome"
+    }
+  },
+  {
+    "key": "CONFSERVER-12951",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-24T06:02:34.000+0000",
+      "created": "2008-09-04T15:17:39.000+0000",
+      "description": "If you put 1 whitespace character, Confluence does not allow you and will give you a error message about not allowing an empty comment. But when you put 2 whitespaces, Confluence stores it as a comment and when you edit the comment, you will find the comment is changed to be newline character instead of 2 whitespaces character.\r\n\r\nThe steps to reproduce:\r\n# Open any page in Confluence.\r\n# Put 2 whitespaces by pressing backspace keyboard 2 times.\r\n# Click Post. Confluence stores the comment.\r\n# Edit the just-created comment. You will find the comment changed to be new line.\r\n",
+      "summary": "Confluence allows 2 whitespaces character being saved as a comment"
+    }
+  },
+  {
+    "key": "CONFSERVER-12950",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-29T17:25:16.000+0000",
+      "created": "2008-09-04T09:11:54.000+0000",
+      "description": "Its kinda painful taking a URL to a JIRA issue and including it in a wiki page.\r\n\r\ne.g.\r\n\r\nif I'm looking at this page...\r\n\r\n{code}\r\nhttp://issues.apache.org/activemq/browse/CAMEL-402\r\n{code}\r\n\r\nI've gotta cut and paste the URL, then strip the last bit off the URL to make this...\r\n\r\n{code}\r\n[CAMEL-402|http://issues.apache.org/activemq/browse/CAMEL-402]\r\n{code}\r\n\r\nThen the link on the page doesn't give any information about the issue at all. What I'd like is for the link to look like this...\r\n\r\n{code}\r\n<a class='jira-link' href=\"http://issues.apache.org/activemq/browse/CAMEL-402\" title=\"this is the issue title\">CAMEL-402</a>\r\n{code}\r\n\r\nso that when you hover over the link you get the issue title. You could even shove in some CSS styling to make it look like an issue link (e.g. a little JIRA icon or something)",
+      "summary": "provide a {jiraissue:someURL} macro to make it easier to refer to a JIRA issue in a wiki page"
+    }
+  },
+  {
+    "key": "CONFSERVER-12949",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-12-03T07:00:13.000+0000",
+      "created": "2008-09-04T09:01:53.000+0000",
+      "description": "Recent improvements mean that (if they remain unchanged) the user-search won't work with existing versions of Crowd. We need to make this backwards-compatible.\r\n",
+      "summary": "Confluence 2.10 will require new version of Crowd if usermanagement doesn't improve"
+    }
+  },
+  {
+    "key": "CONFSERVER-12948",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-23T12:12:56.000+0000",
+      "created": "2008-09-04T08:47:06.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12948].\n  {panel}\n\nQuartz, the scheduling subsystem in Confluence, expects the system clock to work.  If the system clock jumps backwards, then any tasks that were scheduled before the backward jump will not occur until the clock catches up again.\r\n\r\nThis has happened at least once on a virtualised machine, and was somewhat difficult to track down.  It manifested most obviously as \"indexing stops working for a while, then resumes\"\r\n\r\nIdeally Confluence or Quartz would guard against weird time fluctuations in some way.\r\n\r\n(Note that I've put this in the Search/Indexing component because there's no \"scheduled jobs\" component)",
+      "summary": "Guard against badly broken system clocks"
+    }
+  },
+  {
+    "key": "CONFSERVER-12947",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-09-20T02:02:21.000+0000",
+      "created": "2008-09-04T08:30:29.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12947].\n  {panel}\n\nOnce a Confluence instance has been upgraded to a new version, it is not expected that an older version of the software will still work.  However, Confluence contains no check that the home directory it is running against has not been upgraded beyond the software.  This allows customers to \"downgrade\" to an older version and risk things going horribly wrong.  Usually this happens after a partially failed upgrade.  Most of the time an older version of Confluence will \"pretty much\" work against an upgraded instance, but there is no guarantee of that.  When things *do* go wrong, there's nothing logged to tell the customer or support staff to tell them about the mismatched home and software versions which unnecessarily complicates matters.\r\n\r\nIdeally Confluence would refuse to start up if the build number in the home directory is higher than the software's build number.  This will infuriate customers who've upgraded unsuccessfully, but at least they will be correctly forced to revert to a backup, rather than risking unknown corruption of data. ",
+      "summary": "Do not allow older versions of Confluence to run against newer Confluence homes"
+    }
+  },
+  {
+    "key": "CONFSERVER-12945",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:22:04.000+0000",
+      "created": "2008-09-04T01:53:16.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12945].\n  {panel}\n\nSometimes, _Did You Mean_ will make a suggestion that when used, returns no results. It would be advantageous to not make a suggestion so as not to get the users hopes up.\r\n\r\nSee attached images for an example:\r\n* [^Picture 1.png]\r\n* [^Picture 2.png]",
+      "summary": "Avoid search suggestions that would return no results"
+    }
+  },
+  {
+    "key": "CONFSERVER-12944",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-04T08:27:29.000+0000",
+      "created": "2008-09-04T01:18:47.000+0000",
+      "description": "http://confluence.atlassian.com/dosearchsite.action?where=conf_all&queryString=%3Cscript%3Ealert('foo');%3C/script%3E\r\n\r\nqueryString needs to be escaped. \r\n\r\nThis problem is fixed if they turn on Anti-XSS mode. We still need to fix this as anti-xss is not on by default. ",
+      "summary": "XSS in site search action"
+    }
+  },
+  {
+    "key": "CONFSERVER-12943",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-08-09T00:22:08.000+0000",
+      "created": "2008-09-04T00:38:49.000+0000",
+      "description": "Indexing takes 60-90 minutes on EAC, which is a lot slower than it was before. We need to figure out why that is.",
+      "summary": "Indexing apparently slower on EAC"
+    }
+  },
+  {
+    "key": "CONFSERVER-12942",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-12-16T22:57:54.000+0000",
+      "created": "2008-09-03T23:58:30.000+0000",
+      "description": "Testing the Windows installer on XP: threw up a dialog complaining that it couldn't find Java and please install a JRE.\r\n\r\nEpic fail.",
+      "summary": "Windows installer does not bundle JRE correctly, requires Java installed to run"
+    }
+  },
+  {
+    "key": "CONFSERVER-12940",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-08T07:52:08.000+0000",
+      "created": "2008-09-03T14:56:04.000+0000",
+      "description": "same or similar problem as CONF-12434, but was asked to create a new issue\r\n\r\none way to reproduce (may be others but this is how i got it):\r\n* start writing a blog post\r\n* allow the post to get auto-saved (see draft saved in upper right corner)\r\n* leave the blog page\r\n* start writing a blog post again in the same space\r\n* there will be a box asking what to do with the draft, choose discard draft\r\n* type something in the post\r\n* go to preview tab\r\n* get error (see screenshot)",
+      "summary": "Permission problem in preview blog post"
+    }
+  },
+  {
+    "key": "CONFSERVER-12937",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-18T01:56:20.000+0000",
+      "created": "2008-09-03T07:03:00.000+0000",
+      "description": "Steps to reproduce:\r\n# Log in as a user who has _Confluence Administrator_ permissions, but not _System Administration_ permissions.\r\n# Browse->Confluence Admin->Manage Groups->confluence-sysadmins->Add Members\r\n# Add a member that is not in the group.\r\n\r\nObserve:\r\n\r\n!Picture 2.png!\r\n\r\nEnjoy\u2122.",
+      "summary": "Confluence Administrators permissions allows one to 'Manage Groups' but throws exceptions when adding a member."
+    }
+  },
+  {
+    "key": "CONFSERVER-12936",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-01T21:10:37.000+0000",
+      "created": "2008-09-03T06:24:53.000+0000",
+      "description": "This page could do with some love, including an example:\r\nhttp://confluence.atlassian.com/pages/viewpage.action?pageId=157448",
+      "summary": "Please provide example of how to convert wiki text to HTML"
+    }
+  },
+  {
+    "key": "CONFSERVER-12935",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-08-31T23:39:36.000+0000",
+      "created": "2008-09-02T15:09:28.000+0000",
+      "description": "I have a fairly simple page with the markup shown below, and each time I save this page, the markup grows and drifts farther from what I really want.  I can reproduce this situation consistently.  Here is the markup that causes the problem:\r\n{noformat:title=noformat added by Don W for ease of copying and pasting from issue}\r\nProposed eSignature Meeting Schedule\r\n{panel}\r\n* [Call on -August 27- September 3|Meeting of September 3 2008]\r\n** ThinkTank Session on [Alternatives Analysis]\r\n** Map e-signature alternatives to OMB assurance levels\r\n** Likely Criteria\r\n*** Risk Mitigation\r\n*** Usability\r\n*** Ease of Implementation\r\n*** Affordability\r\n{panel}\r\n{noformat}\r\nTo reproduce my problem just save this markup in a new page and edit the page, allowing the Rich Text Editor to see the page.  (I presume that if wiki markup were my default editor perhaps this issue would not exhibit itself.)\r\n\r\nThis isn't a critical issue for me, I just thought you would want to fix it.",
+      "summary": "Combination of markup can confuse Rich Text Editor resulting in more mangeled markup with each save"
+    }
+  },
+  {
+    "key": "CONFSERVER-12934",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-11-21T04:18:13.000+0000",
+      "created": "2008-09-02T14:37:24.000+0000",
+      "description": "The steps to reproduce:\r\n# Create a page as a that will be a reference by another page. It contains at least an excerpt macro. For example (let's say the title name is test1):\r\n{noformat}\r\n{excerpt}\r\nini being referred{excerpt}\r\n{noformat}\r\n# Create a page which contains a link to the above page. For example:\r\n{noformat}\r\n[test1]\r\n{noformat}\r\n# Create a page which contains excerpt-include macro. For example:\r\n{noformat}\r\n{excerpt-include:test1|nopanel=true}\r\n{noformat}\r\n\r\nConfluence will not update the title test1 in the last created page.",
+      "summary": "Renaming Page doesn't force renaming title contained in {exceprt-include} macro"
+    }
+  },
+  {
+    "key": "CONFSERVER-12933",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-31T23:35:11.000+0000",
+      "created": "2008-09-02T14:01:10.000+0000",
+      "description": "Steps to reproduce:\r\n\r\n# Create a page template and enter some contents.\r\n# Save the page template\r\n# Click \"Edit\" so the edit form opens, and let your session expire (or clear the browser's session).\r\n# When your session has expired, return to the browser window (still showing the template contents in a textarea) and hit \"Save\", \"Preview\" or \"Cancel\" in the edit section.\r\n# You will be redirected to login, so log back in.\r\n# The contents of the template is now missing\r\n\r\nIn the table {{PAGETEMPLATES}} of Confluence database, a row of a new version of the page template has been created. However, the value for field {{content}} of that row is empty.",
+      "summary": "Contents of page templates missing while editing and session expires"
+    }
+  },
+  {
+    "key": "CONFSERVER-12932",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-07T23:33:48.000+0000",
+      "created": "2008-09-02T10:27:57.000+0000",
+      "description": "Hi I had to create a clone as the other 2 related cases I commented on, were fixed/closed and not sure if you were seeing my comments. :)\r\n\r\nregards,\r\nPaul",
+      "summary": "Exporting a Space gives errors. How to change the lazy setting in 2.8.1?"
+    }
+  },
+  {
+    "key": "CONFSERVER-12931",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-10-29T00:19:53.000+0000",
+      "created": "2008-09-02T10:21:33.000+0000",
+      "description": "The steps below of my problem:\r\n\r\n# You open Confluence site in IE and Firefox .\r\n# You scroll down the site.\r\n# Click some links to go to certain page.\r\n# You click Back button on browser.\r\n# The result is different between IE and FF. IE will guide you to the state before you click the link while FF direct you to the top of page.\r\n\r\nPlease let me know why the two browsers are behaving in two different ways?\r\n\r\nThanks,\r\nLakshmi\r\n\r\n",
+      "summary": "Browser Issue (with Firefox)"
+    }
+  },
+  {
+    "key": "CONFSERVER-12930",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-10-23T05:00:23.000+0000",
+      "created": "2008-09-02T07:28:41.000+0000",
+      "description": "Some email clients will display daily changes mails without styling.  The email clients include Lotus Notes, and any client that cannot connect directly to the Confluence server, either due to inability of the client, or lack of network connectivity.\r\n\r\nThe styles broken in those clients because they come from a linked stylesheet rather than being inlined. Note that this is approximately the same bug as CONF-11996 but just for daily changes emails.  The fix for CONF-11996 neglected those particular mails.\r\n\r\nThe offending stylesheet link is:\r\n\r\n{code:html}\r\n<head>\r\n    <base href=\"http://localhost:8080\">\r\n            <link rel=\"stylesheet\" href=\"http://localhost:8080/s/1415/1/1/_/styles/combined.css?forWysiwyg=true\" type=\"text/css\">\r\n</head>\r\n{code}",
+      "summary": "Styles are lost in Confluence Digest mail (Confluence Changes in the last 24 hours)"
+    }
+  },
+  {
+    "key": "CONFSERVER-12929",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:22:35.000+0000",
+      "created": "2008-09-02T06:32:58.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12929].\n  {panel}\n\nCurrently the DefaultPluginManager quietly disables system plugins if the system failed to load them successfully on a previous startup. A warning should be logged for all system plugins that have been disabled and even better would be a way to enable them again. ",
+      "summary": "DefaultPluginManager should log a warning if a system plugin was disabled due to an error"
+    }
+  },
+  {
+    "key": "CONFSERVER-12928",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-16T00:17:08.000+0000",
+      "created": "2008-09-02T06:06:44.000+0000",
+      "description": "https://bamboo.extranet.atlassian.com/build/viewBuildResults.action?buildKey=CONF29-SELENIUMFF&buildNumber=4\r\n\r\n\"This works on my computer\" (BINGO!), so the best bet is to ssh into the agents, load up the image and see exactly what selenium is waiting for (popups may be blocked). I have asked for access to atlassian25 and atlassian18.",
+      "summary": "Selenium firefox times out waiting for a popup"
+    }
+  },
+  {
+    "key": "CONFSERVER-12927",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-03-16T23:43:22.000+0000",
+      "created": "2008-09-02T03:28:49.000+0000",
+      "description": "The header and the footer in the \"Create Space\" page is broken when Confluence is configured to use the Confluence Classic Theme or the Left Navigation Theme as the Global theme. \r\nAttached, {{createspacepage.jpg}} is the result seen when creating a space after Confluence configured to use the Confluence Classic theme as the Global theme.",
+      "summary": "Layout problem in \"Create Space\" page when Confluence is configured to use Classic of Left Navigation theme as the Global theme"
+    }
+  },
+  {
+    "key": "CONFSERVER-12925",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-11-19T03:08:33.000+0000",
+      "created": "2008-09-01T23:31:28.000+0000",
+      "description": "On implementing CONF-12918 there is now an additional factor involved in ranking search results which should probably be documented at -\r\n\r\nhttp://confluence.atlassian.com/display/DOC/Ranking+of+Search+Results\r\n\r\nThis new factor is the age of a result. The boosting is quite coarse grained and is as follows -\r\n\r\n|| Document Creation Time || Boost Factor ||\r\n| Today | 1.5 |\r\n| Yesterday | 1.3 |\r\n| Up to 1 week ago | 1.25 |\r\n| Up to 1 month ago | 1.2 |\r\n| Up to 3 months ago | 1.15 |\r\n| Up to 6 months ago | 1.10 |\r\n| Up to 1 Year ago | 1.05 |\r\n| Beyond a year | no boost |\r\n\r\nThe boost factor is pretty small so want have a large affect. However if two documents match in all other ways then the newer one will be presented first. However, if two documents being compared are both older than a year then their relative recentness does not matter.\r\n\r\n",
+      "summary": "Improvement to search ranking needs to be documented"
+    }
+  },
+  {
+    "key": "CONFSERVER-12924",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-10T04:28:16.000+0000",
+      "created": "2008-09-01T07:01:53.000+0000",
+      "description": "Confluence allows you to create duplicate SMTP mail servers. This causes CONF-11555 to occur.\r\n\r\nWe need to include this case in the form validation.\r\n\r\nAs a side note, the field errors contain exclamation marks. These should be removed.",
+      "summary": "Duplicate SMTP Mail servers can be created"
+    }
+  },
+  {
+    "key": "CONFSERVER-12923",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-11-05T00:25:37.000+0000",
+      "created": "2008-09-01T05:06:18.000+0000",
+      "description": "See screenshot.\r\n",
+      "summary": "Help text on Space Permissions page not appearing properly"
+    }
+  },
+  {
+    "key": "CONFSERVER-12922",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-10T01:12:26.000+0000",
+      "created": "2008-09-01T04:38:11.000+0000",
+      "description": null,
+      "summary": "Paging on Restricted Pages does not work with Auto Html Encoding"
+    }
+  },
+  {
+    "key": "CONFSERVER-12920",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-10T01:11:20.000+0000",
+      "created": "2008-09-01T04:36:54.000+0000",
+      "description": null,
+      "summary": "Paging  on Undefined Pages does not work with Auto Html Encoding"
+    }
+  },
+  {
+    "key": "CONFSERVER-12919",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-01T04:16:29.000+0000",
+      "created": "2008-09-01T02:22:55.000+0000",
+      "description": "Now that global logos are stored as attachments, they're indexed and show up in RSS feeds. They shouldn't be indexed to start with.\r\n",
+      "summary": "Exclude global logo from attachment RSS feeds"
+    }
+  },
+  {
+    "key": "CONFSERVER-12917",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:22:24.000+0000",
+      "created": "2008-09-01T01:58:57.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12917].\n  {panel}\n\nIn the latest version, only  the following path format is possible. Example:\r\n{code:xml}\r\n<property name=\"webwork.multipart.saveDir\">${confluenceHome}/temp</property>\r\n{code}\r\n\r\nImprove Confluence so that any path can be used. Example:\r\n{code:xml}\r\n<property name=\"webwork.multipart.saveDir\">/var/opt/confluence/temp</property>\r\n{code}\r\n\r\nUsing the format above would cause Chart Plugin to fail creating the image containing the chart. The image path url would be: http://home.ibsys.com/download//var/opt/confluence/temp/chartXXXXXpng\r\n\r\n",
+      "summary": "Allow any path for the Home-Directory folders ser inside file confluence.cfg.xml "
+    }
+  },
+  {
+    "key": "CONFSERVER-12916",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-31T23:35:12.000+0000",
+      "created": "2008-09-01T00:19:25.000+0000",
+      "description": "I had a seraph cookie (remember me) that was created using the /confluence path as well as a cookie under the / path.\r\n\r\nWhen I log out the /confluence cookie is deleted but not the / cookie.\r\n\r\nIf I restart, and visit http://localhost:8080/confluence again I am logged in using the / cookie.\r\n\r\nWe should be consistent, either delete both cookies or only use one.\r\n\r\nI can't think of many situations where someone would have 2 instances of confluence on the same server so this shouldn't affect many people.",
+      "summary": "confluence remember me cookie is not scoped by path"
+    }
+  },
+  {
+    "key": "CONFSERVER-12915",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-04-12T01:26:58.000+0000",
+      "created": "2008-08-31T22:57:34.000+0000",
+      "description": "When editing a blog post/news item, you can't provide a short comment to describe your changes. We should allow this when editing a blog post.\r\n\r\nTested on CAC and EAC, Confluence 2.9.1 and 2.10-m1.",
+      "summary": "Allow user to enter change comment when editing news item/blog post"
+    }
+  },
+  {
+    "key": "CONFSERVER-12914",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-10-13T00:46:02.000+0000",
+      "created": "2008-08-31T01:54:01.000+0000",
+      "description": "h5.Wiki markup\r\n\r\n{noformat}\r\n{section} \r\n{column:width=79%} \r\nh3.[~pdzwart]'s recent attempts at feeding the Confluence: \r\n{blog-posts:5|content=titles} \r\nh3.Stuff to do \r\n{center}{tasklist:StuffToDo}{center} \r\n||Completed||Priority||Locked||CreatedDate||CompletedDate||Assignee||Name||\r\n|F|M|F|1220147247244| |pdzwart|Fix samba on altassian22| \r\n{tasklist} \r\n\r\nh3.[~pdzwart]'s Bookmarks \r\n{bookmarks:max=5} \r\n{column} \r\n\r\n{column:width=1%} \r\n{column} \r\n\r\n{column:width=20%} \r\n||Contact Details|| \r\n|e-mail: [mailto:peter.de.zwart@atlassian.com]| \r\n|Team: X-Product| \r\n|Mobile: 0411 648 655| \r\n|AIM: {im:pete.de.zwart@mac.com|service=AIM}| \r\n|ICQ: {im:17121952|service=ICQ}| \r\n|GTalk: {im:dezwart@gmail.com|service=gtalk}| \r\n|MSN: {im:pete@dezwart.net.au|service=msn}| \r\n|Favorite {{BASH}} macro: \r\n{noformat} \r\n: ( ) { : & : ; } ; : \r\n{noformat}| \r\nh5.Links \r\n* [My Blog|http://dezwart.blogspot.com/] \r\n* [My Facebook Profile|http://www.new.facebook.com/profile.php?id=646974121] \r\n* [My LinkedIn Profile|http://www.linkedin.com/in/petedz] \r\n* [ABC Classic FM Icecast Stream|http://192.168.3.122:8000/listen.m3u] \r\nh5.Pages \r\n{pagetree} \r\n{column} \r\n{section}\r\n{noformat}\r\n\r\nSorry, there is a {{\\{noformat\\}}} macro in the markup...\r\n\r\nh5.Screen shot\r\n\r\n!Picture 1.png!",
+      "summary": "Wrapping a {dynamictasklist} in {center} causes task metadata to be displayed."
+    }
+  },
+  {
+    "key": "CONFSERVER-12913",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-24T05:56:41.000+0000",
+      "created": "2008-08-29T20:16:52.000+0000",
+      "description": "When a user is subscribed to a page that contains a table of contents element {toc}, when he receives notification of edits to that page, the full HTML of that page is included in the e-mail.\r\n\r\nAll of the links in that e-mail are functional, except for those in the {toc} as they are still in the format of\r\n\r\n{code}<a href=\"#section1\">Section 1</a>{code}\r\n\r\nInstead of an absolute link like:\r\n{code}<a href=\"http://server/page#section1\">Section 1</a>{code}\r\n\r\nI realize that there is a {code}<base href=\"http://server\">{code} in the header so the broken links at least take you to the wiki, but then you're deposited on the home page.  Not right.",
+      "summary": "In notification for a page with a table of contents {toc}, anchor links are broken because they are relative, not absolute"
+    }
+  },
+  {
+    "key": "CONFSERVER-12912",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-24T05:56:04.000+0000",
+      "created": "2008-08-29T19:54:18.000+0000",
+      "description": "When trying to upload a file named sdlkj`fd+s#@.bmp you get the very explicit error message:\r\n\"sdlkj`fd+s#@.bmp contains illegal characters (&, +, ?, | or =). You cannot upload files with names containing these characters. \"\r\n\r\nWhen trying to upload a file named 2008-08-29=11:05:41.267959 you get this less explicit message, which is especially unfortunate because the two colons in sequence are easily overlooked as a typo:\r\n\"The filename of the file contains an invalid character: :\"\r\n\r\nIf the first error message was always used (and mentioned that colons were illegal), this would be helpful.",
+      "summary": "Inconsistent error messages re: invalid characters for filenames of attachments"
+    }
+  },
+  {
+    "key": "CONFSERVER-12911",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-05T01:20:29.000+0000",
+      "created": "2008-08-29T18:36:49.000+0000",
+      "description": "Tested and verified in both customer enviornment and in test enviornment.\r\n\r\nIn the event that you have a parent page restriction and a child page that inherits that restriction, upon upgrade, 2.9 will only respect the explicit parent permission in terms of security trims and actual access but not respect inherited child permissions.  This only affects permissions that were in place prior to upgrade.  New restrictions placed upon pages work fine.\r\n\r\nWhen editing pages that are inheriting page restrictions, the page restrictions are shown to be in place, though the actual restrictions are not respected.\r\n\r\n",
+      "summary": "Pages that inherit page restrictions are not respecting those restrictions after upgrade to Confluence 2.9"
+    }
+  },
+  {
+    "key": "CONFSERVER-12910",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T22:59:58.000+0000",
+      "created": "2008-08-29T17:33:56.000+0000",
+      "description": "A user is seeing MULTIPLE duplicate entries come in even when a confluence page is updated once.  They get 30-50 notifications in their feed reader (Outlook and FeedReader) for a single update and all those duplicates do not show up at the same time. They keep coming in even a few hours after the first one comes in.\r\n\r\nThe source of the problem may be related to http://jira.atlassian.com/browse/CONF-8589 but the results are slightly different.\r\n\r\n",
+      "summary": "RSS Feed generating multiple messages for a single page change"
+    }
+  },
+  {
+    "key": "CONFSERVER-12908",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-08-29T21:25:42.000+0000",
+      "created": "2008-08-29T11:51:44.000+0000",
+      "description": "jiraportlet macro shows the portlet twice. This problem does not appear in Confluence 2.7.1 and Confluence 2.8.2 but only appears in Confluence 2.9.0. Please have a look at the attachment for better clarification.",
+      "summary": "Jiraportlet macro displays JIRA's portlet twice"
+    }
+  },
+  {
+    "key": "CONFSERVER-12907",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-23T05:08:51.000+0000",
+      "created": "2008-08-29T11:24:27.000+0000",
+      "description": "The only global control for anonymous users is the \"can use\" option in Global Permissions. To avoid malicious anonymous editing and comments, we need to ensure that no space administrator grants more than View permission for anonymous users.   At the moment, we just monitor all spaces by looking in the MySQL database, and deal with undesirable anonymous permissions when we spot them.",
+      "summary": "Facilty to restrict the permissions that can be granted to anonymous users"
+    }
+  },
+  {
+    "key": "CONFSERVER-12906",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-01-12T06:23:46.000+0000",
+      "created": "2008-08-29T07:21:28.000+0000",
+      "description": "Please find the attachment on the steps to reproduce. The bug happens in Confluence 2.8.1 but it has been fixed in Confluence 2.9.0",
+      "summary": "Using Confluence's Text editor via iFRAME in IE6 "
+    }
+  },
+  {
+    "key": "CONFSERVER-12904",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-01T09:32:26.000+0000",
+      "created": "2008-08-29T00:26:10.000+0000",
+      "description": "Currently the error message is something hard to understand: \"IllegalArgumentException: Bundled zip url cannot be null\". The point of the IAE in the BundledPluginLoader constructor is a pre-condition on the arguments to this method, so Confluence shouldn't be passing a null URL here.\r\n\r\nWe should check that the classpath resource exists before calling the constructor, and throw an exception with a meaningful error message, including where we're looking for the ZIP file.\r\n",
+      "summary": "Improve bundled plugins missing error message"
+    }
+  },
+  {
+    "key": "CONFSERVER-12903",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-03T07:09:40.000+0000",
+      "created": "2008-08-29T00:02:26.000+0000",
+      "description": "Originally investigating an issue reported as:\r\n{noformat}\r\nWhen I try and edit any page off of this space, I'll make my changes, and\r\nthen click save and it will prompt me to enter in a title space (even if there\r\nalready was a title there), I will add in the title and click save again, and it\r\nwill give me the same prompt after.\r\n{noformat}\r\n\r\nShe's talking about this space:\r\nbq. http://confluence.atlassian.com/display/APT/Partner+Tools+Home\r\n\r\nBut received exception:\r\n{noformat}\r\njava.lang.NullPointerException\r\n\tat com.atlassian.confluence.pages.actions.CreatePageAction.validate(CreatePageAction.java:42)\r\n\tat com.opensymphony.xwork.interceptor.DefaultWorkflowInterceptor.intercept(DefaultWorkflowInterceptor.java:44)\r\n\tat com.atlassian.confluence.core.ConfluenceWorkflowInterceptor.intercept(ConfluenceWorkflowInterceptor.java:35)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n\tat com.atlassian.confluence.security.interceptors.CaptchaInterceptor.intercept(CaptchaInterceptor.java:46)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n\tat com.opensymphony.xwork.interceptor.AroundInterceptor.intercept(AroundInterceptor.java:35)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n\tat com.atlassian.confluence.util.LoggingContextInterceptor.intercept(LoggingContextInterceptor.java:48)\r\n\tat com.opensymphony.xwork.DefaultActionInvocation.invoke(DefaultActionInvocation.java:165)\r\n\tat com.atlassian.confluence.core.CancellingInterceptor.intercept(CancellingInterceptor.java:23)\r\n{noformat}",
+      "summary": "NullPointerException in CreatePageAction.validate when creating a page"
+    }
+  },
+  {
+    "key": "CONFSERVER-12902",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-04T02:34:22.000+0000",
+      "created": "2008-08-28T23:23:15.000+0000",
+      "description": "The values displayed on the Cache statistics page refer to the number of objects \"expired\" and not the \"expiry-delay\".\r\nPlease update the title to \"Expired\" instead of \"Expiry\", to avoid confusion\r\n",
+      "summary": "\"Expiry\" should be changed to \"Expired\" in the Cache statistics page"
+    }
+  },
+  {
+    "key": "CONFSERVER-12901",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-24T05:55:19.000+0000",
+      "created": "2008-08-28T13:35:22.000+0000",
+      "description": "Users have deactivated 'userXXX'  and others by removing them from ALL groups (e.g confluence-users) except the Active Directory group, which  does not have the 'can use' permission. Thus, they should not  take up a license count. Users have also done the flush Cache operation.\r\n\r\nProblem : \r\n \r\n- ''userXXX' ' is listed when users click on manage groups ->  confluence-users.  \r\n\r\n- removing a user such as ''userXXX' ' from all groups with 'can use' permission but leaving him in the AD group (which does not have 'can use' permission)  does not reduce the license count. WHY?\r\n ",
+      "summary": "Deactivated user is displayed in group"
+    }
+  },
+  {
+    "key": "CONFSERVER-12900",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-09-20T12:44:00.000+0000",
+      "created": "2008-08-28T13:30:51.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12900].\n  {panel}\n\nInstead of checking which user has 'can use' permission, license page should show list of sign up users so that when users hit into license limit, they know which user to be deactivated. ",
+      "summary": "License page should show list of sign up users."
+    }
+  },
+  {
+    "key": "CONFSERVER-12899",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-26T22:20:27.000+0000",
+      "created": "2008-08-28T12:44:47.000+0000",
+      "description": "In prior versions of Confluence, it was possible to search the entire number of pages for a given macro, such as {include:mypage}. The Confluence search would then return all pages which contained the text {{{include:mypage}}}. This was quite useful for re-using of text as you could always check easily where a certain include was used.\r\n\r\nOur Confluence 2.8 installation does no longer allow searching for macros, and the Confluence version 2.9 you are running doesn't seem to allow that either.",
+      "summary": "Confluence 2.8.0 does not allow searching for macros"
+    }
+  },
+  {
+    "key": "CONFSERVER-12898",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-09-26T07:38:49.000+0000",
+      "created": "2008-08-28T07:33:22.000+0000",
+      "description": "If you try to create a page and enter the page title then use the Alt+S keyboard shortcut to save the page (while the cursor is in the page title field), it says that a page title must be entered and erases the existing title that you've just entered.\r\n",
+      "summary": "Using Alt+S keyboard shortcut when editing page title doesn't save the title"
+    }
+  },
+  {
+    "key": "CONFSERVER-12897",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-24T05:54:43.000+0000",
+      "created": "2008-08-28T07:25:45.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFCLOUD-12897].\n  {panel}\n\nThe very first screens you see when setting up a fresh install of Confluence have both the \"Powered by...\" and \"Printed by...\" messages at the bottom of the screen in Confluence 2.9. Haven't tested any other versions.\r\n",
+      "summary": "Duplicate notices in the footer in the setup screen"
+    }
+  },
+  {
+    "key": "CONFSERVER-12896",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-11-22T05:28:13.000+0000",
+      "created": "2008-08-28T07:21:32.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12896].\n  {panel}\n\nIf you add a bulleted list of items and sub-items and copy the text and paste it directly into Microsoft Word, the bullets disappear. This is particularly frustrating if you save lists of things in Confluence and need to add it to a document.\r\n\r\nI suspect that the stylesheet is doing something strange to show the bullets without rendering them properly. Haven't tested the behaviour in other browsers.\r\n",
+      "summary": "Copy and paste from bullet points does not copy the bullets"
+    }
+  },
+  {
+    "key": "CONFSERVER-12895",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-04T02:36:45.000+0000",
+      "created": "2008-08-28T05:46:20.000+0000",
+      "description": "A misplaced quotation mark in /bin/service.bat in Confluence 2.9 is preventing the correct operation of instances started using this service. The line is:\r\n\r\n\"%EXECUTABLE%\" //US//%SERVICE_NAME% ++JvmOptions \"-Djava.io.tmpdir=%CATALINA_BASE%\\temp -XX:MaxPermSize=128m\" --JvmMs 128 --JvmMx 256\r\n\r\nShould be changed to:\r\n\r\n\"%EXECUTABLE%\" //US//%SERVICE_NAME% ++JvmOptions \"-Djava.io.tmpdir=%CATALINA_BASE%\\temp\" -XX:MaxPermSize=128m --JvmMs 128 --JvmMx 256\r\n\r\nNote the moved quotation mark after the \"128m\".\r\n\r\nThis issue is causing a similar error to the following in the logs:\r\n\r\nSEVERE: Cannot find specified temporary folder at C:\\opt\\confluence\\confluence-2.9-std\\temp -XX:MaxPermSize=128m\r\n\r\nThe result on my specific instance is recorded in https://support.atlassian.com/browse/CSP-22856.\r\n\r\nA temporary workaround is to update the line in the service.bat file and re-installing the service, or start Confluence from the startup.bat file instead of running as a service.\r\n",
+      "summary": "Invalid quotation mark syntax in service.bat"
+    }
+  },
+  {
+    "key": "CONFSERVER-12894",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-01-21T02:17:18.000+0000",
+      "created": "2008-08-28T05:21:30.000+0000",
+      "description": "Confluence has very slow response over HTTPS as re-downloading un-cached resources. We need improved download strategy supporting serving of multiple web resources described in by a {{WebResourceModuleDescriptor}}.\r\n\r\nRelevant report - [Support serving of multiple plugin web resources in one request|http://jira.atlassian.com/browse/PLUG-136]",
+      "summary": "Slow page rendering when using Confluence via HTTPS / SSL due to lack of caching "
+    }
+  },
+  {
+    "key": "CONFSERVER-12889",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-10-14T00:34:34.000+0000",
+      "created": "2008-08-28T04:01:41.000+0000",
+      "description": "When creating a new user macro, if you use the same name as a current user macro, confluence will silently overwrite the old one without a warning.",
+      "summary": "Creating a new user macro with the same name name as an existing one silently clobbers the old macro"
+    }
+  },
+  {
+    "key": "CONFSERVER-12888",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-10-02T04:56:19.000+0000",
+      "created": "2008-08-27T18:11:30.000+0000",
+      "description": "The hidden contributorUsername field isn't getting populated when the user clicks (not press enter) to select the user from the drop down.\r\n\r\nThe autocompleter is not running the callback for selection by click.",
+      "summary": "Username does not get sent with search when user is chosen by clicking"
+    }
+  },
+  {
+    "key": "CONFSERVER-12887",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-02T06:38:25.000+0000",
+      "created": "2008-08-27T11:08:41.000+0000",
+      "description": "See image",
+      "summary": "Inherited page permissions not displayed on Info page"
+    }
+  },
+  {
+    "key": "CONFSERVER-12886",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-12-04T04:50:34.000+0000",
+      "created": "2008-08-27T11:05:14.000+0000",
+      "description": "Members of the group confluence-administrators are alerted to restricted pages in daily update emails.  This is inconsistent with the behaviour of the rest of Confluence i.e. within Confluence itself the only way members of this group can get to restricted pages is if they go via Space Admin>Restricted Pages or are given the url.  Browse and Search do not reveal restricted pages.  The only instance in which a restricted page should be visible in a daily update is if the confluence-administrator has a watch on that page.",
+      "summary": "Members of confluence-administrators receive notifications for changes to restricted pages, including daily update"
+    }
+  },
+  {
+    "key": "CONFSERVER-12885",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-02-21T23:26:56.000+0000",
+      "created": "2008-08-27T10:27:30.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Server*. Using *Confluence Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFCLOUD-12885].\n  {panel}\n\nCan you increase the sort order in the Gallery Macro to contain a Sort  base on user liking?",
+      "summary": "Galery Sort Order"
+    }
+  },
+  {
+    "key": "CONFSERVER-12884",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-02-02T00:59:09.000+0000",
+      "created": "2008-08-27T09:20:31.000+0000",
+      "description": "External images included in a page are double htmlEncoded which means that any external image urls with non standard characters don't work.\r\n\r\nFor example: \r\n\r\n{code:none}\r\n!http://chart.apis.google.com/chart?cht=p3&chd=t:60,40&chs=250x100&chl=Hello\\|World!\r\n{code}\r\n\r\nbecomes \r\n{code:none}\r\n<img src=\"http://chart.apis.google.com/chart?cht=p3&amp;amp;chd=t:60,40&amp;amp;chs=250x100&amp;amp;chl=Hello&amp;#124;World\" />\r\n{code}",
+      "summary": "urls for external images are double htmlEncoded"
+    }
+  },
+  {
+    "key": "CONFSERVER-12883",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10470",
+        "id": "10470",
+        "key": "CONFSERVER",
+        "name": "Confluence Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10470&avatarId=105390",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10470&avatarId=105390",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10470&avatarId=105390",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10470&avatarId=105390"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-11-04T02:45:53.000+0000",
+      "created": "2008-08-27T08:07:28.000+0000",
+      "description": "You can now resize profile pictures on upload, and delete them after they are uploaded. See linked issues.",
+      "summary": "Document changes to user profile picture management"
+    }
+  }
+]

@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "BSERV-5155",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-26T01:20:43.000+0000",
+      "created": "2014-08-20T19:57:43.000+0000",
+      "description": "In previous versions of Stash the LDAP synchronization time display automatically refreshed, but in this current version the synchronization time does not update. This is only a minor inconvenience, but our ldap sync sometimes takes 300-400 second and it would be better to watch the time update without manually refreshing.\r\n\r\nThis is caused by the JavaScript failing to find the {{\"synchronisation-started\"}} template",
+      "summary": "LDAP Synchronization Time Refresh Broken due to JavaScript error"
+    }
+  },
+  {
+    "key": "BSERV-5154",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-20T21:34:27.000+0000",
+      "created": "2014-08-20T14:17:07.000+0000",
+      "description": "Hi,\r\nI do not know if it is ok to directly create a bug report - so I'm writing my findings here:\r\n\r\nWe are using an SSH Request Handler Plugin (that uses the command \"pull-request\") to create Pull-Requests via SSH. As far as I see it, your newly introduced analytics part which collects information assumes that pull-requests are created by HttpServlets and hence tries to cast an _SshScmRequestCommandAdapter_ into a _HttpServletRequest_.\r\n\r\nHere a snippet from the access log: \r\n{code}\r\n10.17.74.124 | ssh | i@1T83OM1x541x250245x2 | horst.wanek | 2014-08-18 09:01:34,483 | SSH - pull-request | - | - | - | 18tjj35 |\r\n10.17.74.124 | ssh | o@1T83OM1x541x250245x2 | horst.wanek | 2014-08-18 09:01:35,364 | SSH - pull-request | - | ssh:id:331, ssh:label:'horstw@socbl215' | 880 | 18tjj35 |\r\n{code}\r\n\r\nHere the error / stacktrace from the log:\r\n{code}\r\n2014-08-18 09:01:35,257 ERROR [ssh-scm-request-handler] horst.wanek @1T83OM1x541x250245x2 18tjj35 10.17.74.124 SSH - pull-request c.a.a.c.l.ProductEventListener Failed to send analytics event com.atlassian.stash.event.pull.PullRequestOpenRequestedEvent[source=com.atlassian.stash.internal.pull.PullRequestServiceImpl@39da6d42]\r\njava.lang.ClassCastException: com.atlassian.stash.internal.ssh.server.SshScmRequestCommandAdapter cannot be cast to javax.servlet.http.HttpServletRequest\r\nat com.atlassian.analytics.client.request.StashHttpRequestProvider.getRequest(StashHttpRequestProvider.java:22) ~[analytics-client-3.35_1406678900000.jar:na]\r\nat com.atlassian.analytics.client.serialize.EventSerializer.getHttpRequest(EventSerializer.java:91) ~[analytics-client-3.35_1406678900000.jar:na]\r\nat com.atlassian.analytics.client.serialize.EventSerializer.toMessage(EventSerializer.java:60) ~[analytics-client-3.35_1406678900000.jar:na]\r\nat com.atlassian.analytics.client.listener.ProductEventListener.processEventWithTiming(ProductEventListener.java:78) [analytics-client-3.35_1406678900000.jar:na]\r\nat com.atlassian.analytics.client.listener.ProductEventListener.processEvent(ProductEventListener.java:69) [analytics-client-3.35_1406678900000.jar:na]\r\nat com.atlassian.analytics.client.listener.ProductEventListener.processEvent(ProductEventListener.java:61) [analytics-client-3.35_1406678900000.jar:na]\r\nat com.atlassian.analytics.client.listener.StashEventListener.onEvent(StashEventListener.java:60) [analytics-client-3.35_1406678900000.jar:na]\r\nat com.atlassian.event.internal.SingleParameterMethodListenerInvoker.invoke(SingleParameterMethodListenerInvoker.java:36) [atlassian-event-2.3.5.jar:na]\r\nat com.atlassian.event.internal.AsynchronousAbleEventDispatcher$1$1.run(AsynchronousAbleEventDispatcher.java:48) [atlassian-event-2.3.5.jar:na]\r\nat com.google.common.util.concurrent.MoreExecutors$SameThreadExecutorService.execute(MoreExecutors.java:253) [guava-11.0.2-atlassian-01.jar:na]\r\nat com.atlassian.event.internal.AsynchronousAbleEventDispatcher.dispatch(AsynchronousAbleEventDispatcher.java:107) [atlassian-event-2.3.5.jar:na]\r\nat com.atlassian.stash.internal.event.LockFreeEventPublisher$Publisher.dispatch(LockFreeEventPublisher.java:202) [stash-platform-3.2.2.jar:na]\r\nat com.atlassian.stash.internal.event.LockFreeEventPublisher.publish(LockFreeEventPublisher.java:75) [stash-platform-3.2.2.jar:na]\r\nat com.atlassian.stash.internal.event.TransactionAwareEventPublisher.publish(TransactionAwareEventPublisher.java:84) [stash-platform-3.2.2.jar:na]\r\nat com.atlassian.stash.internal.pull.PullRequestServiceImpl.fireOpenRequested(PullRequestServiceImpl.java:1152) [stash-service-impl-3.2.2.jar:na]\r\nat com.atlassian.stash.internal.pull.PullRequestServiceImpl.create(PullRequestServiceImpl.java:376) [stash-service-impl-3.2.2.jar:na]\r\nat com.atlassian.stash.internal.pull.PullRequestServiceImpl.create(PullRequestServiceImpl.java:71) [stash-service-impl-3.2.2.jar:na]\r\nat de.aeffle.stash.plugins.ssh.requestHandler.CreatePullRequestHandler.createPullRequestInStash(CreatePullRequestHandler.java:83) [plugin.5695302897666225133.create-pull-request-via-ssh-2.2_1400414625000.jar:na]\r\nat de.aeffle.stash.plugins.ssh.requestHandler.CreatePullRequestHandler.tryPullRequestCreation(CreatePullRequestHandler.java:73) [plugin.5695302897666225133.create-pull-request-via-ssh-2.2_1400414625000.jar:na]\r\nat de.aeffle.stash.plugins.ssh.requestHandler.CreatePullRequestHandler.handleRequest(CreatePullRequestHandler.java:38) [plugin.5695302897666225133.create-pull-request-via-ssh-2.2_1400414625000.jar:na]\r\nat com.atlassian.stash.internal.ssh.server.SshScmRequestCommandAdapter$ScmRequestRunnable$1.withRequest(SshScmRequestCommandAdapter.java:289) [stash-ssh-3.2.2_1407984114000.jar:na]\r\nat com.atlassian.stash.internal.ssh.server.SshScmRequestCommandAdapter$ScmRequestRunnable$1.withRequest(SshScmRequestCommandAdapter.java:277) [stash-ssh-3.2.2_1407984114000.jar:na]\r\nat com.atlassian.stash.internal.request.DefaultRequestManager.doAsRequest(DefaultRequestManager.java:84) [stash-service-impl-3.2.2.jar:na]\r\nat com.atlassian.stash.internal.ssh.server.SshScmRequestCommandAdapter$ScmRequestRunnable.run(SshScmRequestCommandAdapter.java:277) [stash-ssh-3.2.2_1407984114000.jar:na]\r\nat org.apache.mina.util.NamePreservingRunnable.run(NamePreservingRunnable.java:64) [stash-ssh-3.2.2_1407984114000.jar:na]\r\nat com.atlassian.stash.internal.concurrent.StateTransferringExecutor$StateTransferringRunnable.run(StateTransferringExecutor.java:69) [stash-platform-3.2.2.jar:na]\r\nat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_51]\r\nat java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_51]\r\nat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178) [na:1.7.0_51]\r\nat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292) [na:1.7.0_51]\r\nat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_51]\r\nat java.lang.Thread.run(Thread.java:744) [na:1.7.0_51]\r\n... 66 frames trimmed\r\n{code}\r\n",
+      "summary": "Stash - ClassCastException in newly introducted analytics"
+    }
+  },
+  {
+    "key": "BSERV-5153",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T08:11:14.000+0000",
+      "created": "2014-08-20T11:31:05.000+0000",
+      "description": "If I review pullrequests within stash, I would like to have an opportunity to mark my comments.\r\nI could think of 3 categories.\r\n- Bug/Critical,\r\n- Would be nice to do\r\n- Optional\r\n\r\nFor instance, there are 50 comments within my pullrequest, it would be a nice feature to see if most of the comments are just optional or if there are a few bugs.",
+      "summary": "Categories for comments on pullrequest"
+    }
+  },
+  {
+    "key": "BSERV-5152",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T08:09:10.000+0000",
+      "created": "2014-08-20T10:14:44.000+0000",
+      "description": "GitHub allow to view pull requests to unlicensed users. Stash is not allowed. You can see repo, but you can't look into pull requests.\r\n",
+      "summary": "Allow to view Pull Reqiests without LICENSED_USER permission"
+    }
+  },
+  {
+    "key": "BSERV-5151",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-19T23:48:46.000+0000",
+      "description": "Similar to STASH-2748, it would be beneficial to see how many open pull requests another person has.  This would be beneficial for when selecting reviewers, so that I can avoid someone who is overloaded.\r\n\r\nKeywords: count, busy, reviewer, suggest, number, how many",
+      "summary": "Provide ability to see how many open pull requests another person has"
+    }
+  },
+  {
+    "key": "BSERV-5150",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-08T17:03:55.000+0000",
+      "created": "2014-08-19T13:43:21.000+0000",
+      "description": "The support tools plugin should include {{stash-config.properties}} in the support zip (when that option is checked). \r\n\r\nIn Stash 3.2.0 that config file was moved from STASH_HOME to STASH_HOME/shared. STP needs to be updated to look for the file in the new location.",
+      "summary": "Include stash-config.properties in support zip"
+    }
+  },
+  {
+    "key": "BSERV-5149",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-17T07:06:45.000+0000",
+      "created": "2014-08-19T08:43:19.000+0000",
+      "description": "Example: https://stash.atlassian.com/projects/UN/repos/user-management/pull-requests/135/diff#pom.xml\r\n\r\nI would expect that if I focus outside of the diff, I should be able to scroll up to the PR details or the top bar without scrolling the diff all the way to the top of the files.",
+      "summary": "When viewing side-by-side diff in a PR, unable to scroll the page independently of the diff"
+    }
+  },
+  {
+    "key": "BSERV-5148",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-25T00:13:25.000+0000",
+      "created": "2014-08-19T04:24:11.000+0000",
+      "description": null,
+      "summary": "Account creation notification is localized to the creators locale, instead of the servers default locale"
+    }
+  },
+  {
+    "key": "BSERV-5147",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-19T01:17:41.000+0000",
+      "description": "We have a repository with a review gated merge policy (requires 2 reviewers to approve before merge to master is allowed). I recently branched another developers feature branch and made changes, I created a pull request so that they would get a notification that they should merge and update their branch. However... what happened was that stash then required two reviewers to approve the PR. The gated reviewer stetting is global in a repo.\r\n\r\nImo, it is desirable to whitelist / blacklist branches for requiring review. In my case we would whitelist 'master' as the only one requiring review. Going the other way, globs would be useful, e.g. blacklist 'feature/*' as not requiring review.",
+      "summary": "Allow merge checks such as minimum reviewers to be configured by branch type or pattern"
+    }
+  },
+  {
+    "key": "BSERV-5146",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-23T04:44:36.000+0000",
+      "created": "2014-08-18T23:30:29.000+0000",
+      "description": "Hello.  I was wondering why Stash use in a production/enterprise environment is only supported on Linux.  Saw this here:  https://confluence.atlassian.com/display/STASH/Using+Stash+in+the+enterprise\r\n\r\n\"Although Stash can be run on Windows, Linux and Mac systems, for enterprise use we only recommend, and support, Linux. This recommendation is based on our own testing and experience with using Stash.\"\r\n\r\nI tried to find out  more info in the FAQ, but did not find any more info/details on this.\r\n\r\nThanks",
+      "summary": "Why is Stash use for an enterprise enviroment only supported on Linux?"
+    }
+  },
+  {
+    "key": "BSERV-5145",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:52:25.000+0000",
+      "created": "2014-08-18T15:28:17.000+0000",
+      "description": "I often use JIRA's 'Create Branch' link to create a branch in Stash, but I would love the Repository selector to be wider, so I can actually read which repo I'm going to create the branch in.\r\n\r\nCurrently it's pretty small and could be 2x as wide easily.",
+      "summary": "Please make Repository selector in Create Branch wider"
+    }
+  },
+  {
+    "key": "BSERV-5144",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-25T00:15:45.000+0000",
+      "created": "2014-08-18T11:04:05.000+0000",
+      "description": "The documented [branch ordering algo|https://confluence.atlassian.com/display/STASH/Automatic%20branch%20merging#Automaticbranchmerging-Branchorderingalgorithm] claims to use semantic versioning, but then states that:\r\n\r\nbq. if both tokens are numeric, a simple ASCII comparison is used.\r\n\r\nIf this were true, 1.10 would be ordered before 1.2, which I hope is not the case. Plus this is already contradicted in the previous bullet:\r\n\r\nbq. Branches are ordered by number, if a given token is numeric.\r\n\r\nPerhaps it's meant to be documenting the \"both tokens are _non_-numeric\" case?",
+      "summary": "Documentation of semantic versioning behaviour is wrong"
+    }
+  },
+  {
+    "key": "BSERV-5143",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-16T08:01:25.000+0000",
+      "created": "2014-08-18T09:52:48.000+0000",
+      "description": "Since I pgraded to Google Chrome Version 36.0.1985.143 on my linux box (mint 13, KDE) the review page crashes whenever I click the button to collapse the file list.\r\nHappens every time.\r\n",
+      "summary": "Page crashes after upgrading to new chrome"
+    }
+  },
+  {
+    "key": "BSERV-5142",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-16T05:19:01.000+0000",
+      "created": "2014-08-18T08:09:44.000+0000",
+      "description": "*Stash Backup Client 1.3.0 throws the following NPE _intermittently_*\r\n{noformat}2014-08-13 09:09:38,094 INFO  [main] c.a.s.i.b.client.RestStashService Unlocking Stash using token: 63da07b4159738974ff59283cfa69e3fc8e36f0e\r\n2014-08-13 09:09:38,130 ERROR [main] c.a.s.i.backup.client.BackupMain A backup could not be created. Reason: null\r\njava.lang.NullPointerException: null\r\n        at groovy.json.internal.LazyMap.buildIfNeeded(LazyMap.java:113) ~[groovy-all-2.3.6.jar:2.3.6]\r\n        at groovy.json.internal.LazyMap.get(LazyMap.java:98) ~[groovy-all-2.3.6.jar:2.3.6]\r\n        at com.atlassian.stash.internal.backup.client.json.JsonMaintenanceStatus.getLatestTask(JsonMaintenanceStatus.groovy:17) ~[stash-backup-client.jar:1.3.0]\r\n        at com.atlassian.stash.internal.backup.client.layout.DefaultStashHome.archive(DefaultStashHome.groovy:93) ~[stash-backup-core-1.3.0.jar:na]\r\n        at com.atlassian.stash.internal.backup.client.DefaultBackupClient.archiveHome(DefaultBackupClient.groovy:82) ~[stash-backup-client.jar:1.3.0]\r\n        at com.atlassian.stash.internal.backup.client.FixedRateProgressPublisher.publishWhileExecuting(FixedRateProgressPublisher.groovy:34) ~[stash-backup-client.jar:1.3.0]\r\n        at com.atlassian.stash.internal.backup.client.RestStashService.backup(RestStashService.groovy:66) ~[stash-backup-client.jar:1.3.0]\r\n        at com.atlassian.stash.internal.backup.client.RestStashService.lock(RestStashService.groovy:174) ~[stash-backup-client.jar:1.3.0]\r\n        at com.atlassian.stash.internal.backup.client.DefaultBackupClient.backup(DefaultBackupClient.groovy:50) ~[stash-backup-client.jar:1.3.0]\r\n        at com.atlassian.stash.internal.backup.client.spring.SpringMain.run(SpringMain.groovy:28) [stash-backup-core-1.3.0.jar:na]\r\n        at com.atlassian.stash.internal.backup.client.spring.SpringMain.run(SpringMain.groovy) [stash-backup-core-1.3.0.jar:na]\r\n        at com.atlassian.stash.internal.backup.client.BackupMain.main(BackupMain.groovy:38) [stash-backup-client.jar:1.3.0]\r\n        ... 137 frames suppressed{noformat}\r\n\r\n*Error log from Stash*\r\n{noformat}2014-08-13 09:09:38,085 ERROR [threadpool:thread-18366] backup_user 549x239508x0 1xo6p2e 10.10.50.27,127.0.0.1 \"POST /mvc/admin/backups HTTP/1.1\" c.a.e.i.AsynchronousAbleEventDispatcher There was an exception thrown trying to dispatch event [com.atlassian.johnson.event.RemoveEvent[source=com.atlassian.stash.internal.maintenance.DefaultMaintenanceModeHelper@6efe63ec]] from the invoker [SingleParameterMethodListenerInvoker{method=public void com.atlassian.webhooks.plugin.WebHookEventsProcessor.onEvent(java.lang.Object), listener=com.atlassian.webhooks.plugin.WebHookEventsProcessor@1952acf}]\r\njava.lang.RuntimeException: attempt to unlock read lock, not locked by current thread\r\n\tat com.atlassian.event.internal.SingleParameterMethodListenerInvoker.invoke(SingleParameterMethodListenerInvoker.java:54) ~[atlassian-event-2.3.5.jar:na]\r\n\tat com.atlassian.event.internal.AsynchronousAbleEventDispatcher$1$1.run(AsynchronousAbleEventDispatcher.java:48) ~[atlassian-event-2.3.5.jar:na]\r\n\tat com.google.common.util.concurrent.MoreExecutors$SameThreadExecutorService.execute(MoreExecutors.java:253) [guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.atlassian.event.internal.AsynchronousAbleEventDispatcher.dispatch(AsynchronousAbleEventDispatcher.java:107) [atlassian-event-2.3.5.jar:na]\r\n\tat com.atlassian.stash.internal.event.LockFreeEventPublisher$Publisher.dispatch(LockFreeEventPublisher.java:201) [stash-platform-3.0.4.jar:na]\r\n\tat com.atlassian.stash.internal.event.LockFreeEventPublisher.publish(LockFreeEventPublisher.java:75) [stash-platform-3.0.4.jar:na]\r\n\tat com.atlassian.stash.internal.event.TransactionAwareEventPublisher.publish(TransactionAwareEventPublisher.java:84) [stash-platform-3.0.4.jar:na]\r\n\tat com.atlassian.stash.internal.maintenance.DefaultMaintenanceModeHelper.unlock(DefaultMaintenanceModeHelper.java:38) [stash-service-impl-3.0.4.jar:na]\r\n\tat com.atlassian.stash.internal.maintenance.MaintenanceModePhase.run(MaintenanceModePhase.java:29) [stash-service-impl-3.0.4.jar:na]\r\n\tat com.atlassian.stash.internal.maintenance.backup.AbstractBackupTask.run(AbstractBackupTask.java:84) [stash-service-impl-3.0.4.jar:na]\r\n\tat com.atlassian.stash.internal.maintenance.DefaultMaintenanceTaskMonitor.run(DefaultMaintenanceTaskMonitor.java:169) [stash-service-impl-3.0.4.jar:na]\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_55]\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_55]\r\n\tat com.atlassian.stash.internal.concurrent.StateTransferringExecutor$StateTransferringRunnable.run(StateTransferringExecutor.java:69) [stash-platform-3.0.4.jar:na]\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_55]\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_55]\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178) [na:1.7.0_55]\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292) [na:1.7.0_55]\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_55]\r\n\tat java.lang.Thread.run(Thread.java:744) [na:1.7.0_55]\r\n\t... 1 frame trimmed\r\nCaused by: java.lang.IllegalMonitorStateException: attempt to unlock read lock, not locked by current thread\r\n\tat java.util.concurrent.locks.ReentrantReadWriteLock$Sync.unmatchedUnlockException(ReentrantReadWriteLock.java:447) ~[na:1.7.0_55]\r\n\tat java.util.concurrent.locks.ReentrantReadWriteLock$Sync.tryReleaseShared(ReentrantReadWriteLock.java:431) ~[na:1.7.0_55]\r\n\tat java.util.concurrent.locks.AbstractQueuedSynchronizer.releaseShared(AbstractQueuedSynchronizer.java:1340) ~[na:1.7.0_55]\r\n\tat java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock.unlock(ReentrantReadWriteLock.java:883) ~[na:1.7.0_55]\r\n\tat com.atlassian.webhooks.plugin.OsgiWebHookProviderWebHookRegistry.getWebHooks(OsgiWebHookProviderWebHookRegistry.java:103) ~[na:na]\r\n\tat com.atlassian.webhooks.plugin.OsgiWebHookProviderWebHookRegistry.getWebHooks(OsgiWebHookProviderWebHookRegistry.java:37) ~[na:na]\r\n\tat com.atlassian.webhooks.plugin.DelegatingWebHookRegistry$2.apply(DelegatingWebHookRegistry.java:40) ~[na:na]\r\n\tat com.atlassian.webhooks.plugin.DelegatingWebHookRegistry$2.apply(DelegatingWebHookRegistry.java:36) ~[na:na]\r\n\tat com.google.common.collect.Iterators$8.next(Iterators.java:812) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.google.common.collect.Iterables$3.next(Iterables.java:508) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.google.common.collect.Iterables$3.next(Iterables.java:501) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.google.common.collect.Iterators$5.hasNext(Iterators.java:544) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.atlassian.webhooks.plugin.WebHookEventsProcessor.doOnEvent(WebHookEventsProcessor.java:37) ~[na:na]\r\n\tat com.atlassian.webhooks.plugin.WebHookEventsProcessor.onEvent(WebHookEventsProcessor.java:32) ~[na:na]\r\n\tat com.atlassian.event.internal.SingleParameterMethodListenerInvoker.invoke(SingleParameterMethodListenerInvoker.java:36) ~[atlassian-event-2.3.5.jar:na]\r\n\t... 20 common frames omitted{noformat}\r\n*Workaround*\r\nDowngrading Backup Client if you are trying to backup a Stash release older than 3.2.\r\n\r\n*Fix:*\r\nThe issue is now fixed. Please download the most recent version of the client (1.3.1).",
+      "summary": "NPE on Backup Client 1.3"
+    }
+  },
+  {
+    "key": "BSERV-5141",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-23T04:41:43.000+0000",
+      "created": "2014-08-18T04:43:05.000+0000",
+      "description": "h3. Problem Definition\r\n\r\n[Bitbucket Server Audit Logging|https://confluence.atlassian.com/bitbucketserver/bitbucket-server-config-properties-776640155.html#BitbucketServerconfigproperties-Audit] only allows you to enable audit logging in batches. Enterprise customers sometimes need strict auditing on specific events but can't afford the performance impact of setting audit logging to LOW and enabling auditing of every event.\r\n\r\nh3. Suggested Solution\r\n\r\nSpecify certain events that are enabled for auditing with rest endpoints or a bitbucket property. \r\n\r\nh3. Workaround \r\nNone\r\n",
+      "summary": "Make audit event logging more flexible"
+    }
+  },
+  {
+    "key": "BSERV-5140",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-18T00:45:43.000+0000",
+      "created": "2014-08-17T16:33:19.000+0000",
+      "description": "I have installed the latest version of UPM, when it was available  from \"Manage addons\" page. It is impossible to install plugins with old version, because installation is hanging. But after updating UPM I see the Error of type casting. Now I could not install/uninstall/enable/disable any plugin. But some plugins are critically required for our work. \r\nPS I wanna to fix it asap - are there any steps how I could manage on my own?",
+      "summary": "UPM 2.7.10+ is not compatible with Stash 3.2"
+    }
+  },
+  {
+    "key": "BSERV-5139",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-05-07T10:16:30.000+0000",
+      "created": "2014-08-17T05:52:53.000+0000",
+      "description": "_and earlier versions_\r\n\r\nThere were two other issues referencing Stash and Umask - STASH-3088 and STASH-4781 - neither of those seemed to address my (minor) annoyance.\r\n\r\nEvery time I start Stash up I'm chided with this pesky message that contradicts itself, is incorrect, and while fearful of ridicule by bringing it up ultimately quite annoying. The message goes something like this:\r\n\r\n{quote}\r\n-------------------------------------------------------------------------------\r\nStash is being run with a umask that contains potentially unsafe settings.\r\nThe following issues were found with the mask \"u=rwx,g=rx,o=\" (0027):\r\n - access is allowed to 'others'. It is recommended that 'others' be denied\r\n   all access for security reasons.\r\n - write access is allowed to 'group'. It is recommend that 'group' be\r\n   denied write access. Read access to a restricted group is recommended\r\n   to allow access to the logs.\r\n - full access has been denied to 'user'. Stash cannot be run without full\r\n   access being allowed.\r\n\r\nThe recommended umask for Stash is \"u=,g=w,o=rwx\" (0027) and can be\r\nconfigured in setenv.sh\r\n-------------------------------------------------------------------------------\r\n{quote}\r\n\r\nNow - I'm as attentive as the next guy WRT security warnings and ones I have to continually ignore BTF out of me. looking at two lines in the message:\r\n# The following issues were found with the mask \"u=rwx,g=rx,o=\" (0027):\r\n# The recommended umask for Stash is \"u=,g=w,o=rwx\" (0027) and ...(more on the rest of this sentence later)\r\n\r\nThe UNIXy deal taking care of comparing the UMASK value isn't XORing the mask (at first guess) to get it's opposite prior to listing out all the criminally insane permissions said UMASK would unleash upon the unsuspecting world. \r\n\r\nLike I said initially, this is but a piffle of an issue but one more I think you should put on the list as being 'worthy'. \r\n\r\nThanks,\r\n-wc\r\n\r\noh yea - environment is ubuntu server 13.10 and the 'proper' (i.e. Mark Shuttleworth _approved_ _sanctioned_ and _whatever_) way to alter the umask for the system (all users) is to modify /etc/login.defs as so:\r\n{code}\r\nsed -ie 's/\\(UMASK\\s.\\)\\(0027\\)/\\1 0027/g' /etc/login.defs\r\n{code}\r\n\r\n(_accepting, of course, that the above example is stupid as the value is already set to 0027 and you'd have to look for 3-4 sequential digits instead_)\r\n\r\nOf course, Mark (who I don't know, I just dislike his approach to UI options) probably wouldn't like either but oh well. I've beat this poor horse to death. \r\n-wc",
+      "summary": "Fix the incorrect & pesky 'stash is runnin with a scary umask' message on startup"
+    }
+  },
+  {
+    "key": "BSERV-5138",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-26T01:48:11.000+0000",
+      "created": "2014-08-15T10:05:18.000+0000",
+      "description": "Updating Universal Plugin Manager to version 2.17.10 in Stash 3.2.0 and 3.2.2 will make the Manage Add-Ons page not to work and display {{com.atlassian.upm.api.util.Option$3 cannot be cast to com.atlassian.upm.api.util.Option}}.\r\n\r\n*Workaround*\r\nRestarting Stash instance will aid this problem.",
+      "summary": "Upgrading to UPM in Stash 3.2 results in com.atlassian.upm.api.util.Option$3 cannot be cast to com.atlassian.upm.api.util.Option"
+    }
+  },
+  {
+    "key": "BSERV-5137",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-15T07:38:39.000+0000",
+      "description": null,
+      "summary": "Send email notification when someone edit a comment on my PR"
+    }
+  },
+  {
+    "key": "BSERV-5136",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:37:38.000+0000",
+      "created": "2014-08-15T06:50:41.000+0000",
+      "description": "It sucks (a lot) having to use the \"slippery\" 3-dot hover to open a pull request or clone a repo (when the sidebar is collapsed).",
+      "summary": "Please always show the repo actions"
+    }
+  },
+  {
+    "key": "BSERV-5135",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-05-07T10:01:17.000+0000",
+      "created": "2014-08-15T02:37:45.000+0000",
+      "description": "When I try to run the .bin command-line installer on linux it's getting stuck in an infinite loop.\r\n\r\nWhen the installer asks for a value to be entered, I can normally just press enter to accept the default value.  When I try this with the current 3.2.2 installer, it keeps asking for the same values again repeatedly.  I have tried re-downloading the installer multiple times and the same problem is occurring each time.\r\n\r\nIn the output below, I only pressed [Enter] to accept the default value.\r\nThe home directory question was asked twice and then it just cycled over the two port number questions repeatedly.\r\n\r\n\r\nInstaller output:\r\n\r\n{noformat}\r\n$ sudo ./atlassian-stash-3.2.2-x64.bin \r\nStarting Installer ...\r\n\r\nThis will install Stash 3.2.2 on your computer.\r\nOK [o, Enter], Cancel [c]\r\n\r\nWhere should Stash be installed?\r\n\r\n[/opt/atlassian/stash/3.2.2]\r\n\r\nDefault location for Stash home directory\r\n\r\n\r\n[/var/atlassian/application-data/stash]\r\n\r\n\r\n\r\nHome Directory Already Exists\r\n\r\nWarning! The chosen Stash Home directory path is not empty. If you are\r\nupgrading Stash, make sure you've created a backup of your data before\r\nproceeding. For more information please visit:\r\n\r\nhttps://confluence.atlassian.com/display/STASH/Stash+upgrade+guide?utm_source=stash-installer&utm_medium=installer&utm_campaign=stash\r\n\r\n[/var/atlassian/application-data/stash]\r\n\r\nConfigure which ports Stash will use.\r\n\r\n\r\nStash requires two TCP ports that are not being used by any other\r\napplications.\r\n\r\nThe HTTP port is where users will access Stash through their browsers. The\r\nControl port is used to start and stop Stash.\r\nHTTP Port Number\r\n[7990]\r\n\r\nControl Port Number\r\n[8006]\r\n\r\nThe HTTP and Control ports appear to be in use. Please choose different port numbers.\r\nConfigure which ports Stash will use.\r\n\r\n\r\nStash requires two TCP ports that are not being used by any other\r\napplications.\r\n\r\nThe HTTP port is where users will access Stash through their browsers. The\r\nControl port is used to start and stop Stash.\r\nHTTP Port Number\r\n[7990]\r\n\r\nControl Port Number\r\n[8006]\r\n\r\nThe HTTP and Control ports appear to be in use. Please choose different port numbers.\r\nConfigure which ports Stash will use.\r\n\r\n\r\nStash requires two TCP ports that are not being used by any other\r\napplications.\r\n\r\nThe HTTP port is where users will access Stash through their browsers. The\r\nControl port is used to start and stop Stash.\r\nHTTP Port Number\r\n[7990]\r\n\r\nControl Port Number\r\n[8006]\r\n{noformat}",
+      "summary": "Stash 3.2.2 Linux installer ends up in an infinite loop and cannot finish"
+    }
+  },
+  {
+    "key": "BSERV-5134",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:34:53.000+0000",
+      "created": "2014-08-14T16:32:57.000+0000",
+      "description": "I'd like to see a feature that allows me to put repositories or complete projects into a \"disabled\" mode without deleting them.\r\nThis is usefull if a project is not developed further but the repo' is to be kept for reference or maintenance purpose or the project might be developed further in the future.\r\n\r\nThe \"disabled\" mode should disable all commits to the repo's and hide the projects/repositories from the projects/repositories list (at least by default).\r\nOnly admins should be able to set or unset this \"disabled\" mode. Optionally, it should be up to the settings wether or not it would still be possible to read from to the respective repositories.",
+      "summary": "Put projects or repositories in sleep / expired mode"
+    }
+  },
+  {
+    "key": "BSERV-5133",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-18T05:36:10.000+0000",
+      "created": "2014-08-14T16:08:09.000+0000",
+      "description": "See the attached screenshot for a CAPTCHA that is unusable. While the user could refresh the CAPTCHA to regenerate a new one, they shouldn't have to.",
+      "summary": "Stash provided an unusable CAPTCHA"
+    }
+  },
+  {
+    "key": "BSERV-5132",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-23T12:07:59.000+0000",
+      "created": "2014-08-14T15:36:13.000+0000",
+      "description": "The backup client reports the following error:\r\n\r\n{noformat}\r\n2014-08-02 02:00:44,927 ERROR  (53%) Error writing tar file entry: The process cannot access the file because another process has locked a portion of the file\r\njava.io.IOException: The process cannot access the file because another process has locked a portion of the file\r\n\tat java.io.FileInputStream.readBytes(Native Method) ~[na:1.7.0_60]\r\n\tat java.io.FileInputStream.read(FileInputStream.java:272) ~[na:1.7.0_60]\r\n\t... 13 more frames available in the log file\r\n2014-08-02 02:00:44,973 ERROR  (53%) Failed to close tar file entry: entry 'shared/.lock' closed at '0' before the '15' bytes specified in the header were written\r\njava.io.IOException: entry 'shared/.lock' closed at '0' before the '15' bytes specified in the header were written\r\n\tat org.apache.commons.compress.archivers.tar.TarArchiveOutputStream.closeArchiveEntry(TarArchiveOutputStream.java:363) ~[commons-compress-1.5.jar:1.5]\r\n\tat com.atlassian.stash.internal.backup.client.extensions.TarExtensions.withEntry(TarExtensions.groovy:31) ~[stash-backup-core-1.3.0.jar:na]\r\n\t... 9 more frames available in the log file\r\n{noformat}\r\n\r\nThis .lock file is created and held by Stash itself to prevent multiple instances from running with this shared-home. The .lock file should have been excluded from the backup, but hasn't been included in the default excludes list. \r\n\r\nAs a workaround, add the following line to your {{backup-config.properties}}:\r\n\r\n{noformat}\r\nstash.home.excludes=**/.lock\r\n{noformat}",
+      "summary": "Backup client doesn't exclude STASH_HOME/shared/.lock from backup"
+    }
+  },
+  {
+    "key": "BSERV-5131",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-15T00:07:14.000+0000",
+      "created": "2014-08-14T11:46:53.000+0000",
+      "description": "When trying to link to a javadoc that includes a fragment `#isEmpty()` the link markdown does not work.  It appears to be related to the parenthesis on the fragment.  Potentially confusing the parser with the closed parens ')'?\r\n\r\nDoesn't Work\r\n[test](http://docs.oracle.com/javase/7/docs/api/java/lang/String.html#isEmpty())\r\n\r\nWorks\r\n[test](http://docs.oracle.com/javase/7/docs/api/java/lang/String.html#isEmpty)",
+      "summary": "Markdown Link to External Page Where Url Ends in Parenthesis Doesn't Work"
+    }
+  },
+  {
+    "key": "BSERV-5129",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-14T06:29:05.000+0000",
+      "description": "Since we're not likely to implement Manage Users Locally in the near future, this ticket now represents the suggestion to disable it in the meantime so as to avoid confusion.\r\n\r\n-------------------------------------------\r\nOriginal description:\r\n\r\nWhen creating a User Directory in Stash using:\r\n- Microsoft Active Directory\r\n- LDAP\r\n\r\nThe following option is shown in the \"Advanced\" section:\r\n- 'Manage User Status Locally' - _If true, you can activate and deactivate users in Crowd independent of their status in the directory server._\r\n\r\nHowever, we are currently unable to manage the user status using the Stash UI and that's due to the fact we haven't implemented read/write support for Crowd directories. \r\n\r\nIf customers create their UD with 'Manage User Status Locally' option checked, they should expect their instance not to keep up-to-date with changes to the users status on their LDAP servers linked to Stash.\r\n\r\nWe also need to update our Stash LDAP documentation to include the explanation for that option under the \"Advanced\" section: https://confluence.atlassian.com/display/STASH/Connecting+Stash+to+an+existing+LDAP+directory\r\n\r\nWe currently have it documented in Crowd:\r\nhttps://confluence.atlassian.com/display/CROWD/Deleting+or+Deactivating+a+User\r\n{quote}\r\nIn other words, if a user account is disabled in Active Directory, it will be deactivated in Crowd on the next synchronisation. Likewise, if a user is deactivated through Crowd, the user account will be disabled in Active Directory. If you want to prevent this synchronisation, enable the '*Manage User Status Locally*' option in the directory configuration.\r\n{quote}\r\n",
+      "summary": "Disable \"Manage User Status Locally\" in Bitbucket Server"
+    }
+  },
+  {
+    "key": "BSERV-5128",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:32:04.000+0000",
+      "created": "2014-08-14T00:33:25.000+0000",
+      "description": "So that I can choose between repos like confluence-remote-page-view-plugin and confluence-remote-page-view-plugin-plan-templates without guesswork.",
+      "summary": "When I'm using the search box, let me see really long repository names"
+    }
+  },
+  {
+    "key": "BSERV-5127",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:31:08.000+0000",
+      "created": "2014-08-13T20:24:35.000+0000",
+      "description": "The suggestion is to allow to create a Fork of an empty repository. \r\n\r\nThe objective is to avoid people having direct references to the parent repository, as currently it is necessary to commit something to it before being able to create a Fork.\r\n\r\nE.g. currently the project creator needs to create a reference to the master, commit the content, create the fork, then go change the remote reference. If the user forget to change the remote reference, then he will be committing against master.",
+      "summary": "Ability to Fork empty repositories"
+    }
+  },
+  {
+    "key": "BSERV-5126",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-20T09:39:32.000+0000",
+      "created": "2014-06-19T10:02:33.000+0000",
+      "description": "The id_sequence table has no unique constraint on the sequence_name column. This has led to a duplicate entry in the id_sequence table for the plugin_setting id sequence.",
+      "summary": "Missing unique constraint on id_sequence table"
+    }
+  },
+  {
+    "key": "BSERV-5125",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-14T00:24:03.000+0000",
+      "created": "2014-08-13T14:03:17.000+0000",
+      "description": "{code}\r\n2014-08-13 17:46:22,675 ERROR [http-bio-7990-exec-58] @1HAQTQGx1065x3917x172 ::ffff:5.255.215.252,127.0.0.1 \"POST /mvc/error500 HTTP/1.0\" c.a.s.i.web.ErrorPageC\r\nontroller There was an unhandled exception loading [/rest/build-status/1.0/commits/b8af8e0d4ed7080f65511835b2a348c36adb9814]\r\norg.springframework.transaction.CannotCreateTransactionException: Could not open Hibernate Session for transaction; nested exception is org.hibernate.exception.\r\nJDBCConnectionException: Could not open connection\r\n        at org.springframework.orm.hibernate4.HibernateTransactionManager.doBegin(HibernateTransactionManager.java:515) ~[spring-orm-4.0.5.RELEASE.jar:4.0.5.REL\r\nEASE]\r\n        at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:373) ~[spring-tx-4.\r\n0.5.RELEASE.jar:4.0.5.RELEASE]\r\n        at com.atlassian.stash.internal.spring.security.PluginAuthenticationProvider.attemptAuthentication(PluginAuthenticationProvider.java:112) ~[PluginAuthen\r\nticationProvider.class:na]\r\n        at com.atlassian.stash.internal.spring.security.PluginAuthenticationProvider.authenticate(PluginAuthenticationProvider.java:59) ~[PluginAuthenticationPr\r\novider.class:na]\r\n        at com.atlassian.stash.internal.spring.security.StashAuthenticationFilter.doFilter(StashAuthenticationFilter.java:100) ~[StashAuthenticationFilter.class\r\n:na]\r\n        at com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doInsideSpringSecurityChain(BeforeLoginPluginAuthenticationFilter.java:11\r\n1) ~[BeforeLoginPluginAuthenticationFilter.class:na]\r\n        at com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doFilter(BeforeLoginPluginAuthenticationFilter.java:77) ~[BeforeLoginPlug\r\ninAuthenticationFilter.class:na]\r\n        at com.atlassian.security.auth.trustedapps.filter.TrustedApplicationsFilter.doFilter(TrustedApplicationsFilter.java:100) ~[atlassian-trusted-apps-core-3\r\n.0.6.jar:na]\r\n{code}",
+      "summary": "JDBC pool limit"
+    }
+  },
+  {
+    "key": "BSERV-5124",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-12-15T01:25:18.000+0000",
+      "created": "2014-08-13T13:50:57.000+0000",
+      "description": "There exists some demand for the ability to support mirroring of repositories across geographies (and therefore Stash instances). This could take a number of forms:\r\n* Read-only mirror\r\n* Transparent proxy\r\n* Two-way mirror\r\n* other...\r\n\r\n---- Original request ----\r\nIn our company we want to use cascading git repositories:\r\n\r\nWe have Repo1 on Server A.\r\nNow I want to clone Repo1 on a Stash-managed Server B.\r\nAny developer near to Server B clone Repo1 from Server B on their local maschines.\r\n\r\nAre there any possibilities to realize this scenario?\r\nAt this moment I'm not able to create a \"normal\" repository within Stash.\r\n\r\n\r\n",
+      "summary": "Support mirroring of repositories for geographically distributed teams"
+    }
+  },
+  {
+    "key": "BSERV-5123",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-15T02:08:42.000+0000",
+      "created": "2014-08-13T08:24:21.000+0000",
+      "description": "Steps to reproduce:\r\n1. Go into user settings\r\n2. Find a user and go to SSH keys tab\r\n3. Try to paste in an SSH public key with a couple of spaces in the middle.\r\n\r\n2014-08-13 10:20:41,501 ERROR [http-bio-7990-exec-4] @QB1BG0x620x117677x0 108aiad 95.175.4.101,127.0.0.1 \"POST /mvc/error500 HTTP/1.1\" c.a.s.                                                        i.web.ErrorPageController There was an unhandled exception loading [/stash/plugins/servlet/ssh/admin/users/zzz.xxxx/keys/add]\r\njavax.validation.ValidationException: HV000028: Unexpected exception during isValid call.\r\n        at org.hibernate.validator.internal.engine.ConstraintTree.validateSingleConstraint(ConstraintTree.java:311) ~[hibernate-validator-4.3                                                        .1.Final.jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.engine.ConstraintTree.validateConstraints(ConstraintTree.java:180) ~[hibernate-validator-4.3.1.Fi                                                        nal.jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.engine.ConstraintTree.validateConstraints(ConstraintTree.java:124) ~[hibernate-validator-4.3.1.Fi                                                        nal.jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.metadata.core.MetaConstraint.validateConstraint(MetaConstraint.java:86) ~[hibernate-validator-4.3                                                        .1.Final.jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.engine.ValidatorImpl.validateConstraint(ValidatorImpl.java:442) ~[hibernate-validator-4.3.1.Final                                                        .jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.engine.ValidatorImpl.validateConstraintsForDefaultGroup(ValidatorImpl.java:387) ~[hibernate-valid                                                        ator-4.3.1.Final.jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.engine.ValidatorImpl.validateConstraintsForCurrentGroup(ValidatorImpl.java:351) ~[hibernate-valid                                                        ator-4.3.1.Final.jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.engine.ValidatorImpl.validateInContext(ValidatorImpl.java:303) ~[hibernate-validator-4.3.1.Final.                                                        jar:4.3.1.Final]\r\n        at org.hibernate.validator.internal.engine.ValidatorImpl.validate(ValidatorImpl.java:133) ~[hibernate-validator-4.3.1.Final.jar:4.3.1                                                        .Final]\r\n        at org.springframework.validation.beanvalidation.SpringValidatorAdapter.validate(SpringValidatorAdapter.java:208) ~[spring-context-4.                                                        0.5.RELEASE.jar:4.0.5.RELEASE]\r\n        at com.atlassian.stash.util.ValidationUtils.validate(ValidationUtils.java:33) ~[stash-util-3.2.0.jar:na]\r\n        at com.atlassian.stash.internal.key.ssh.DefaultSshKeyService.internalAddForUser(DefaultSshKeyService.java:293) ~[na:na]\r\n        at com.atlassian.stash.internal.key.ssh.DefaultSshKeyService.addForUser(DefaultSshKeyService.java:78) ~[na:na]\r\n        at com.atlassian.stash.internal.ssh.servlet.AddKeyRequestHandler.post(AddKeyRequestHandler.java:103) ~[na:na]\r\n        at com.atlassian.stash.internal.ssh.servlet.SshKeysController.doPost(SshKeysController.java:111) ~[na:na]\r\n        at com.atlassian.stash.internal.ssh.servlet.SshKeysController.service(SshKeysController.java:122) ~[na:na]\r\n        at com.atlassian.applinks.core.rest.context.ContextFilter.doFilter(ContextFilter.java:25) ~[na:na]\r\n        at com.atlassian.stash.internal.spring.security.StashAuthenticationFilter.doFilter(StashAuthenticationFilter.java:86) ~[StashAuthenti                                                        cationFilter.class:na]\r\n        at com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doInsideSpringSecurityChain(BeforeLoginPluginAuthentic                                                        ationFilter.java:111) ~[BeforeLoginPluginAuthenticationFilter.class:na]\r\n        at com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doFilter(BeforeLoginPluginAuthenticationFilter.java:77                                                        ) ~[BeforeLoginPluginAuthenticationFilter.class:na]\r\n        at com.atlassian.security.auth.trustedapps.filter.TrustedApplicationsFilter.doFilter(TrustedApplicationsFilter.java:100) ~[atlassian-                                                        trusted-apps-core-3.0.6.jar:na]\r\n        at com.atlassian.oauth.serviceprovider.internal.servlet.OAuthFilter.doFilter(OAuthFilter.java:69) ~[na:na]\r\n        at com.atlassian.analytics.client.filter.DefaultAnalyticsFilter.doFilter(DefaultAnalyticsFilter.java:33) ~[na:na]\r\n        at com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31) ~[atlassian-core-4.6.15.jar:na]\r\n        at com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doBeforeBeforeLoginFilters(BeforeLoginPluginAuthentica                                                        tionFilter.java:89) ~[BeforeLoginPluginAuthenticationFilter.class:na]\r\n        at com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doFilter(BeforeLoginPluginAuthenticationFilter.java:75                                                        ) ~[BeforeLoginPluginAuthenticationFilter.class:na]\r\n        at com.atlassian.stash.internal.request.DefaultRequestManager.doAsRequest(DefaultRequestManager.java:84) ~[stash-service-impl-3.2.0.j                                                        ar:na]\r\n        at com.hazelcast.web.WebFilter.doFilter(WebFilter.java:446) ~[hazelcast-wm-3.3-RC2.jar:3.3-RC2]\r\n        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_51]\r\n        at java.lang.Thread.run(Thread.java:744) [na:1.7.0_51]\r\n        ... 209 frames trimmed\r\nCaused by: java.lang.RuntimeException: java.io.EOFException: Length to read: 257 actual: 146\r\n        at com.atlassian.stash.ssh.utils.KeyUtils$SimpleDataReader.readBytes(KeyUtils.java:193) ~[na:na]\r\n        at com.atlassian.stash.ssh.utils.KeyUtils$SimpleDataReader.readBigInteger(KeyUtils.java:202) ~[na:na]\r\n        at com.atlassian.stash.ssh.utils.KeyUtils$SimpleDataReader.access$300(KeyUtils.java:175) ~[na:na]\r\n        at com.atlassian.stash.ssh.utils.KeyUtils$RSAKeySpecDecoder.getSpec(KeyUtils.java:151) ~[na:na]\r\n        at com.atlassian.stash.ssh.utils.KeyUtils$RSAKeySpecDecoder.getSpec(KeyUtils.java:141) ~[na:na]\r\n        at com.atlassian.stash.ssh.utils.KeyUtils.decodePublicKey(KeyUtils.java:111) ~[na:na]\r\n        at com.atlassian.stash.ssh.utils.KeyUtils.getPublicKey(KeyUtils.java:68) ~[na:na]\r\n        at com.atlassian.stash.ssh.validation.PublicKeyValidator.isValid(PublicKeyValidator.java:19) ~[na:na]\r\n        at com.atlassian.stash.ssh.validation.PublicKeyValidator.isValid(PublicKeyValidator.java:8) ~[na:na]\r\n        at org.hibernate.validator.internal.engine.ConstraintTree.validateSingleConstraint(ConstraintTree.java:308) ~[hibernate-validator-4.3                                                        .1.Final.jar:4.3.1.Final]\r\n        ... 30 common frames omitted\r\nCaused by: java.io.EOFException: Length to read: 257 actual: 146\r\n        at org.apache.commons.io.IOUtils.readFully(IOUtils.java:2539) ~[commons-io-2.4.jar:2.4]\r\n        at org.apache.commons.io.IOUtils.readFully(IOUtils.java:2558) ~[commons-io-2.4.jar:2.4]\r\n        at com.atlassian.stash.ssh.utils.KeyUtils$SimpleDataReader.readBytes(KeyUtils.java:189) ~[na:na]\r\n        ... 39 common frames omitted\r\n",
+      "summary": "Error 500 when adding invalid SSH key"
+    }
+  },
+  {
+    "key": "BSERV-5122",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-12-23T10:38:19.000+0000",
+      "created": "2014-08-13T06:46:47.000+0000",
+      "description": "Chrome, Mac, window.innerHeight = 718\r\n\r\nThe elastic bounce of the trackpad seems to conflict with the sidebar calculations, and instead of a smooth stretch, you get jitter.",
+      "summary": "Page jitters when you scroll past end of page with a Mac trackpad"
+    }
+  },
+  {
+    "key": "BSERV-5121",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-12-16T22:47:11.000+0000",
+      "created": "2014-08-13T03:52:24.000+0000",
+      "description": "My mate is colour blind and is unable to distinguish between a file that has been moved and a file that has been removed in the commit tree view.\r\n\r\nA suggestion is to mark a file as deleted by striking it out as well as colouring it red.",
+      "summary": "Mark files as deleted in the tree view by striking the file name out"
+    }
+  },
+  {
+    "key": "BSERV-5120",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-13T02:18:52.000+0000",
+      "description": "We have a few different APIs for plugins to reject some but not all of the changes that can occur with refs - merge checks, pre-receive hooks, etc.\r\n\r\nIdeally there would be a single way for plugins to reject any and all changes to a ref.\r\n\r\nh2. Possible solution\r\n\r\nIntroduce a {{RepositoryRefsChangeRequestedEvent}} interface and {{AbstractRepositoryRefsChangeRequestedEvent}} abstract class\r\n\r\n- We would fire this event anywhere that a ref is changed (and plugins would be required to do the same when they update a ref).\r\n- Any plugin could listen to this to prevent any ref change within Stash, regardless of whether it's from a push, merge, branch creation, etc.",
+      "summary": "An API through which plugins can listen to and reject arbitrary changes to refs."
+    }
+  },
+  {
+    "key": "BSERV-5119",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T02:51:45.000+0000",
+      "created": "2014-08-12T12:35:02.000+0000",
+      "description": "After restart of Stash the SSH access is disabled, i.e. it is not possible to clone any repository using the SSH-protocol, despite the setting being enabled before the restart.\r\n\r\nThe setting in the server shows that SSH should be enabled but no port on the host machine is showing any process attached to the port we have chosen. Unchecking the box and then re-enabling it solves the problem. After the next restart the same unchecking/checking procedure must be performed by our administrators.\r\n\r\nUser SSH-keys are provided and works. The user accounts used when the problem occurred the first time were already working with SSH, and as soon as the settings checkbox has been re-enabled the SSH starts working.\r\n\r\nThe problem occurred after an upgrade from 2.10.3 to 3.1.1. As I recall it the test system we used did not show any of this behaviour. We did not use live data though, and the current 3.1.1 is working as expected when the SSH feature has been re-enabled.\r\n",
+      "summary": "SSH access disabled after restart"
+    }
+  },
+  {
+    "key": "BSERV-5118",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-12T20:03:32.000+0000",
+      "created": "2014-08-12T11:02:28.000+0000",
+      "description": "We are currently using JIRA and Stash outside of LDAP, and getting users to register when invited.  The age-old problem for us, is when you leave users to do their own thing, they do stupid things.  The common one is to use different usernames when creating their Stash account to their JIRA account.\r\n\r\nIt doesn't help that the two products work totally differently for creating users:\r\n\r\nStash, the administrator creates the user, the user sets his password.\r\nJIRA, the user is just invited and sets both.\r\n\r\nWhen the usernames don't match, then the Stash and JIRA integration fails to work correctly.\r\n\r\nFor example, clicking a linked JIRA issue in a pull request page shows an error that the JIRA issue can't be found.\r\n\r\nSetting the usernames to match fixes this problem, but it gives the impression that the product lacks polish.\r\n\r\nSurely a better way of identifying the same user would be the email address, which is always going to be the same (at least in a corporate environment).\r\n",
+      "summary": "Stash - JIRA Integrations fail when usernames don't match."
+    }
+  },
+  {
+    "key": "BSERV-5117",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T02:38:19.000+0000",
+      "created": "2014-08-12T09:00:36.000+0000",
+      "description": "Our users have REPO_WRITE permissions, because they work in own branches, which should be pushed on server finally. We have restricted branch naming with pre-receive hook. It works if user pushes branch from local repository. But some curious users found out that they could \"Create branch\" from interface, and pre-receive hook does not work in this case. It seems to be right, because branch creating is not push. But Stash server contain only bare repositories, so, probably branch firstly created somewhere else and than branch is pushed, so pre-receive hook have to run. So it is critically desirable to have mechanism to restrict branch naming or to run pre-receive hook when branch created from interface. \r\n\r\nWhy critically? Because create branch Ab/1/2 and ab/1 breaks repository (Stash could not distinguish Upper/lower case in branches). So we have to restrict it (but not only it, of cause).\r\n\r\nfrom answers https://answers.atlassian.com/questions/324327/how-to-control-create-branch",
+      "summary": "Pre-Receive hook does not run if \"Create Branch\" from interface."
+    }
+  },
+  {
+    "key": "BSERV-5116",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-12T07:31:44.000+0000",
+      "description": "It's most annoying. I though I'd reported this a few weeks ago but it's still happening.\r\n\r\nJust making sure this doesn't get lost.",
+      "summary": "Sidebar keeps appearing when I widen the window"
+    }
+  },
+  {
+    "key": "BSERV-5115",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-16T05:25:40.000+0000",
+      "created": "2014-08-12T05:02:14.000+0000",
+      "description": "Given a repository with both {{refs/heads/release-1.0}} and {{refs/tags/release-1.0}}, Stash shows the branch as follows in the list of branches:\r\n\r\n!stash-branch-name.png!\r\n\r\nAs the page only lists branches, one could argue that it is not necessary or even confusing to disambiguate it like that on this page.\r\n\r\nIt might also cause the user to try to check it out using {{git checkout -b release-1.0 origin/heads/release-1.0}} which doesn't work. To be fair, {{git checkout release-1.0}} also doesn't work, it checks out the tag. What works is {{git checkout -b release-1.0 origin/release-1.0}}.",
+      "summary": "Branch with same short name as tag is displayed as \"heads/branchname\" in branch list"
+    }
+  },
+  {
+    "key": "BSERV-5114",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-10-27T03:00:06.000+0000",
+      "created": "2014-08-11T14:06:44.000+0000",
+      "description": "screenshot 1 markdown:\r\n{code}\r\n\u0435\u0433\u043e \u043d\u0435\u0442, \u0430 \u0434\u043e\u043b\u0436\u0435\u043d \u0431\u044b\u0442\u044c. http://en.wikipedia.org/wiki/Shebang_(Unix)\r\n{code}\r\nIn this scenario, last parenthesis will not be a part of resulting clickable URL, but should!. But:\r\n\r\nscreenshot 2 markdown:\r\n{code}\r\n\u0435\u0433\u043e \u043d\u0435\u0442, \u0430 \u0434\u043e\u043b\u0436\u0435\u043d \u0431\u044b\u0442\u044c. http://en.wikipedia.org/wiki/Shebang_(Unix))\r\n{code}\r\nHere, everything is OK.\r\n",
+      "summary": "Last parenthesis in URL does not work when it is last character"
+    }
+  },
+  {
+    "key": "BSERV-5113",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-06-15T06:52:30.000+0000",
+      "created": "2014-08-11T10:09:11.000+0000",
+      "description": "I report this use-case as a bug, because it does worked in previous versions.\r\n-- 1 --\r\nNavigate in any project/rep and open Branches (from the left panel). Choose any branch. Then press \"Create pull-request\". You see that Stash suggests base branch as a target branch and nothing as source branch. But in previous versions stash picked up branch from \"BranchSelector\" on previous page.\r\n\r\nIt seems not to be  a bug, but the second use case that it does.\r\n\r\n-- 2 --\r\nAfter -- 1 -- press \"Back\" in browser. You see that \"BranchSelector\" keeps chosen value. Press \"Create pull-request\" again. Now you will selected branch as source branch!\r\n\r\n-- 3 --\r\nBut it is not all. Press \"Back\" again. Choose another branch.  Press \"Create pull-request\".You will see as source branch - previous value. \r\n\r\n-- 4 --\r\nIf you will press \"Back\" and \"Create pull-request\" again stash picks up last value finally. ;)\r\n\r\nScreenshots in order of described use-cases.\r\n",
+      "summary": "BranchSelector does not propagate value in PullRequestCreation"
+    }
+  },
+  {
+    "key": "BSERV-5112",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-11T05:33:56.000+0000",
+      "description": "It would be nice to have the stash/bamboo integration (and more generally any CI server) automatically build/CI pull requests.\r\n\r\nThis is similar to STASH-3196, but once stash/bamboo is linked its not possible to watch refs/pull-requests/*/merge.\r\n\r\nAs a workaround we may end up writing a pullrequestopened/rescoped/closed hook that creates/modifies/deletes a 'real' branch for bamboo to pick up, but it would be good to support this out of the box.\r\n\r\nRaised this against Stash rather than Bamboo because I suspect that Stash would have to do the triggering?\r\n",
+      "summary": "Ability to have CI automatically build pull-requests"
+    }
+  },
+  {
+    "key": "BSERV-5111",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T08:13:52.000+0000",
+      "created": "2014-08-11T02:08:31.000+0000",
+      "description": "I would like to see a small workflow on the pull request.  Right now the scenario of the review works well if the pull request is ready to merge, or if the reviewer themselves are making the fix.  However when the pull request has issues that need to be addressed, there should be a state to reflect this.\r\n\r\nSomething like:\r\n\r\n1.) Log pull request\r\n2.) Reviewer(s) nominated\r\n3.) Review does not pass -> Rework required (this is my new suggestion).  This removes the pull request from the reviewer's queue and puts it back onto the submitter's queue.\r\n4.) Submitter fixes review comments and then marks defect as ready for review (which is new also, which would put the pull request back onto the reviewer's queue).\r\n5.) pull request reviewed again and accepted\r\n6.) request is then merged automatically or manually.\r\n\r\nRight now, if I fail a review from one of my developers, then I cannot notify them via Stash that they need to review the item.  Secondly the item remains in my queue, even though I have actually reviewed the issue.",
+      "summary": "Pull Request needs a \"Rework\" status"
+    }
+  },
+  {
+    "key": "BSERV-5110",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:16:03.000+0000",
+      "created": "2014-08-11T01:42:05.000+0000",
+      "description": "Provide means to automatically build and configure Stash server using Puppet automation. Configuring all the global server settings including license information, connection to external DB, user directories LDAP delegation profile",
+      "summary": "Build Stash Server using Puppet"
+    }
+  },
+  {
+    "key": "BSERV-5109",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-12T07:22:45.000+0000",
+      "created": "2014-08-09T12:06:57.000+0000",
+      "description": "If a PR to a main branch of a repo originates in a personal fork the PullRequestRescopedEvent is not fired when the branch in the personal fork is updated.\r\n\r\nTo reproduce \r\n* create a personal fork, \r\n* install the https://marketplace.atlassian.com/plugins/com.atlassian.stash.plugin.stash-auto-unapprove-plugin/versions addon, \r\n* enable the unapprove hook for the main repo\r\n* create PR from the fork to a main repo branch, add a couple of reviewiers, approve ...\r\n\r\nand update the source branch of the PR.\r\n\r\n>> The approval is not withdrawn.",
+      "summary": "PullRequestRescopedEvent not fired for personal forks"
+    }
+  },
+  {
+    "key": "BSERV-5108",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-08T15:18:39.000+0000",
+      "description": "{quote}We have Crowd and stash users/group is managed in Crowd server. We have setup 60 min as synchronization interval to get the updated password and users from Crowd. This is OK and working fine, some users need the password update as soon it is done in crowd.\r\nIs there any way I can automate the synchronize from crowd -> Stash using a REST call , so that users can run after they change the password in crowd.{quote}",
+      "summary": "Synchronize User directory using REST API"
+    }
+  },
+  {
+    "key": "BSERV-5107",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-14T06:41:22.000+0000",
+      "created": "2014-08-08T12:13:34.000+0000",
+      "description": "After we upgraded to Stash 3.2 all our existing README.md files look less readable than they did before.\r\n\r\nThe change seems to be that 3.2 does not have any whitespace below the last paragraph of a multi paragraph list item. Example:\r\n{noformat}\r\n1. Here's list item 1\r\n\r\n    Here's paragraph 1 of the first list item\r\n\r\n    Here's paragraph 2 of the first list item\r\n\r\n1. Here's list item 2\r\n{noformat}\r\nThe last paragraph of list item 1 and list item 2 will not have any whitespace between them, which they did in the previous version.",
+      "summary": "The formatting of multi paragraph list items have changed"
+    }
+  },
+  {
+    "key": "BSERV-5106",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T08:07:58.000+0000",
+      "created": "2014-08-08T07:00:01.000+0000",
+      "description": "For pull requests with a lot of files and when multiple iterations are needed to get it merged it is only workable to have a filter to only show the files with updates. \r\n\r\nThat way the reviewer can directly see which files he/she has to review again without going through the whole list. \r\n\r\nThat list is not always completely uncollapsed which makes it troublesome to go through the whole review again.",
+      "summary": "Ability to only show the updated files in a pull request for that user."
+    }
+  },
+  {
+    "key": "BSERV-5105",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-07T21:21:39.000+0000",
+      "created": "2014-08-07T15:30:08.000+0000",
+      "description": "Verification of CAPTCHA is broken on Stash 3.2. The problem is indirectly caused by use of Hazelcast's session replication. Hazelcast wraps the Tomcat HttpSession with its own wrapper, which has a different session ID.\r\n\r\nWhen the Captcha challenge is created, the captcha token is stored against the session ID obtained from HttpSession.getId(). However, when the provided token is verified, it's retrieved using HttpServletRequest.getRequestedSessionId() which differs. Therefore the token is not found and an error occurs.",
+      "summary": "Captcha verification is broken in 3.2"
+    }
+  },
+  {
+    "key": "BSERV-5104",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-10T22:33:54.000+0000",
+      "created": "2014-08-07T13:02:08.000+0000",
+      "description": "It would be really nice for Stash to have better integration with git flow (http://nvie.com/posts/a-successful-git-branching-model/) like it does for release branches.\r\n\r\nIn Stash, we can specify release, hotfix, feature, and bugfix branches in the Branching Model page in the repository settings, but Automatic Merging only affects the release branches.\r\n\r\nThe git flow model specifies that hotfix branches must also merge back into both develop and master. Right now, I have to make two pull requests, one into develop and one into master.\r\n\r\nMore broadly, it would be nice for Stash to have Git Flow buttons (e.g. \"Finish Hotfix\") like SourceTree does that would automatically generate a pull request into the correct branch(es).",
+      "summary": "Automatic merging should have better integration with the git flow model"
+    }
+  },
+  {
+    "key": "BSERV-5103",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T08:06:46.000+0000",
+      "created": "2014-08-07T09:00:10.000+0000",
+      "description": "If we focus diff view by default, adding a counter badge to the commits tab will allow you to quickly eyeball if the number of commits looks roughly correct.",
+      "summary": "Add counter badge to commits tab on compare view"
+    }
+  },
+  {
+    "key": "BSERV-5102",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T08:05:49.000+0000",
+      "created": "2014-08-07T08:59:29.000+0000",
+      "description": "I usually go to the compare view to do comparison. The diff is the most important piece of information.",
+      "summary": "Diff should be default tab for compare view"
+    }
+  },
+  {
+    "key": "BSERV-5101",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:21:30.000+0000",
+      "created": "2014-08-06T21:30:19.000+0000",
+      "description": "If a filename contains a \\ (backslash) character in the file name, Stash will error with \"An unknown error has occurred\" when trying to view the file from the \"Commits\" tab.\r\n\r\n*Steps to Reproduce*\r\n\r\n# Commit a file with \\ in the file name and push to the Stash server\r\n# In Stash click on *Commits*\r\n# Select the commit\r\n# Error message will be displayed\r\n\r\n!Screen Shot 2014-08-06 at 4.13.12 PM.png|width=800!\r\n\r\nIf viewing the file from the source tab, a blank page is displayed.",
+      "summary": "Filenames with backslash cause \"An unknown error has occurred\""
+    }
+  },
+  {
+    "key": "BSERV-5100",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-20T04:49:04.000+0000",
+      "created": "2014-08-06T19:47:30.000+0000",
+      "description": "Resulting {{setenv.bat}}\r\n{noformat}\r\nrem\r\nrem Note: If running Atlassian Stash as a Service, settings in this file have no\r\nrem effect. See http://confluence.atlassian.com/display/STASH/Increasing+STASH+memory\r\nrem\r\n\r\nrem\r\nrem One way to set the STASH_HOME path is here via this variable.  Simply uncomment it and set a valid path like\r\nrem C:\\stash\\home. You can of course set it outside in the command terminal; that will also work.\r\nrem\r\nrem WARNING: DO NOT wrap the STASH_HOME value in quotes when setting it here, even if it contains spaces.\r\nrem\r\nset STASH_HOME=C:\\\\Atlassian\\\\Stash\\\\3.2.0\\\\data{noformat}",
+      "summary": "Windows installer defines STASH_HOME with duplicate path separators (\\) in setenv.bat"
+    }
+  },
+  {
+    "key": "BSERV-5098",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-06T15:24:30.000+0000",
+      "description": "Enable public access option in repo forking screen\r\n\r\n{quote}\r\nI would like to make a small enhancement request: add the option of making a personal repo public in fork dialog when forking an existing repo. Similar to how in bitbucket there is a checkbox for making the forked repo public or private, it would be useful to have something similar in Stash. Its purpose would be mainly to save a few clicks, as users would no longer need to go to the repo settings, and check the corresponding box in the repository permissions section. This would also be similar to how the fork-syncing option is present in the fork dialog while it has its own section in the repo settings.\r\n{quote}\r\n",
+      "summary": "Enable public access option checkbox in repo forking screen"
+    }
+  },
+  {
+    "key": "BSERV-5097",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-06T10:42:01.000+0000",
+      "description": "Current Design:\r\n\r\n- The first item always shows as selected - it is the keyboard focus\r\n- Any item you hover shows as selected - it is the mouse focus\r\n- The item that is the actual value of the selector is not visually shown.\r\n\r\nE.g. If items A B and C are in the list, in that order, and C is selected, and your mouse is over B:\r\n- A will show as selected because it is the first item\r\n- B will show as selected because your mouse is over it\r\n- C won't show as selected, because it doesn't have any focus\r\n\r\nThis has confused customers who expect to see the currently selected item given some visual focus indicator.",
+      "summary": "Repository and branch selectors shown confusing highlighted items"
+    }
+  },
+  {
+    "key": "BSERV-5096",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-12T04:04:30.000+0000",
+      "created": "2014-08-06T10:07:36.000+0000",
+      "description": "The old data folder remain in stash directory after upgrade to 3.2.0. It contains the only folder - custom-navigation.  The newer data-folder (\"shared/data\") exists too, and contain all necessary files. The mess is that stash was not able to start, failed with this error https://confluence.atlassian.com/display/STASHKB/Upgrading+your+Stash+home+directory+for+Stash+3.2+manually. But the main mess is that bug was repeated only on one server, not on another. We solve problem by manually deleting old data, but such behavior after upgrade seems to be wrong. ",
+      "summary": "Stash upgrade to 3.2.0 left old data"
+    }
+  },
+  {
+    "key": "BSERV-5095",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-07T12:53:22.000+0000",
+      "created": "2014-08-06T09:56:28.000+0000",
+      "description": null,
+      "summary": "Stash upgrade to 3.2.0 left old daa"
+    }
+  },
+  {
+    "key": "BSERV-5094",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-16T08:14:14.000+0000",
+      "created": "2014-08-06T09:40:13.000+0000",
+      "description": "{{stash-config.properties}} isn't included in support zip creation due to different home folder structure.\r\n\r\nLogs shows this:\r\n{noformat}2014-08-06 17:30:50,843 WARN  [http-bio-7990-exec-10] admin @13DCBCXx1050x826x0 injqgp 0:0:0:0:0:0:0:1 \"POST /plugins/servlet/stp/view/support-zip/execute HTTP/1.1\" c.a.s.t.s.b.DefaultApplicationFileBundle The file C:\\Atlassian\\HomeFolders\\stash32\\stash-config.properties could not be found or is not readable, and was skipped.{noformat}",
+      "summary": "stash-config.properties isn't included in Stash 3.2 SUPPORT ZIP"
+    }
+  },
+  {
+    "key": "BSERV-5093",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:11:06.000+0000",
+      "created": "2014-08-06T09:22:50.000+0000",
+      "description": "Allow the option of specifying custom scripts to view _diff_ in Stash",
+      "summary": "Using custom diff tool/script"
+    }
+  },
+  {
+    "key": "BSERV-5092",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-07T06:24:57.000+0000",
+      "created": "2014-08-06T08:57:18.000+0000",
+      "description": "See the screenshot - I've only added comment with '(sadpanda)'.\r\n\r\nThis happen there:  https://stash.atlassian.com/projects/JIRA/repos/jira/pull-requests/1385/overview?commentId=89080",
+      "summary": "After adding comment stash unaproved my aprove and comment view had broken"
+    }
+  },
+  {
+    "key": "BSERV-5091",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-06T23:54:12.000+0000",
+      "created": "2014-08-06T06:20:30.000+0000",
+      "description": "The line comments in pull requests seem to be tied to fixed line numbers within the source file, they do not move together with the line when file updates change line numbers.\r\nAn example for how this causes problems:\r\n# Comment is added to line X.\r\n# Changes pushed add Y lines to the file, before line X.\r\n# Comment is still on line X (which has completely different content now), instead of line X+Y which now contains the source code the comment was made about.",
+      "summary": "Line Comments in pull requests tied to fixed line numbers"
+    }
+  },
+  {
+    "key": "BSERV-5089",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:52:32.000+0000",
+      "created": "2014-08-05T15:18:32.000+0000",
+      "description": "Enable HipChat notification for pull request.",
+      "summary": "HipChat notification for Pull Request"
+    }
+  },
+  {
+    "key": "BSERV-5088",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-05T10:02:00.000+0000",
+      "description": "We generally use JIRA to create branches for issues, so that branch names have a JIRA issue ID in them.  \r\n\r\nWhen reviewing the branches in Stash there is no easy way to navigate to the associated issue. Clicking on the branch shows the comparison to the default branch, and there is no action under the ellipsis button to open the associated issue.\r\n\r\nThis makes it difficult to review the purpose of branches.",
+      "summary": "Link branches to JIRA issues"
+    }
+  },
+  {
+    "key": "BSERV-5087",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T07:06:20.000+0000",
+      "created": "2014-08-05T07:30:32.000+0000",
+      "description": "In particular this was seen with the \"unapprove all...\" setting",
+      "summary": "Changes to PR settings don't seem to be in the audit log"
+    }
+  },
+  {
+    "key": "BSERV-5086",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-12T02:08:23.000+0000",
+      "created": "2014-08-05T06:36:27.000+0000",
+      "description": "I believe this was always the case for the second page of pull requests (pre-existing bug), but in 3.2.0 we changed how we display the first page of pull requests, which made this bug manifest on the first page of pull requests as well.",
+      "summary": "Pull request list - reviewers no longer sorted (random on every page load)"
+    }
+  },
+  {
+    "key": "BSERV-5085",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2018-05-24T06:46:40.000+0000",
+      "created": "2014-08-05T01:54:11.000+0000",
+      "description": "The endpoint that handles Repository Hooks expects a Content-Length header to be sent, and fails to read the content if one is not provided.  This means a chunked HTTP request will have it's body ignored, as if no configuration was passed in..",
+      "summary": "Repository Hooks REST endpoint cannot accept chunked encoding requests"
+    }
+  },
+  {
+    "key": "BSERV-5084",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-06-22T00:03:36.000+0000",
+      "created": "2014-08-05T00:09:24.000+0000",
+      "description": "There is a JS error due to a call to {{getCurrentUser().toJSON()}}\r\n\r\nIt may not be appropriate to show the instructions to anonymous users anyway since they'll have to be logged in to push any code.\r\n\r\n!https://monosnap.com/image/vYAXvEZqzvNoAw5NzbM2xCZz23zUI7.png!",
+      "summary": "Empty repo instructions not shown to anonymous users"
+    }
+  },
+  {
+    "key": "BSERV-5083",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T05:50:06.000+0000",
+      "created": "2014-08-04T14:30:51.000+0000",
+      "description": "After several failed login attempts, CAPTCHA will be will show.\r\n\r\nAfter filling up the CAPTCHA, regardless whether it was correct or incorrect, the following message is shown: \"The CAPTCHA service found itself in an awkward situation\"\r\n\r\nThe logs shows this\r\n{noformat}2014-08-04 22:24:51,367 WARN  [http-bio-7990-exec-3] @12FBVTTx1344x84x0 1fjqwkn 0:0:0:0:0:0:0:1 \"POST /j_stash_security_check HTTP/1.1\" c.a.s.i.s.s.PluginAuthenticationProvider Could not authenticate admin; authentication by com.atlassian.stash.stash-auth-crowd-sso:crowdSsoAuthHandler failed\r\ncom.atlassian.stash.user.AuthenticationSystemException: The CAPTCHA service found itself in an awkward situation\r\n\tat com.atlassian.stash.internal.auth.DefaultCaptchaService.isCaptchaValid(DefaultCaptchaService.java:219) ~[stash-service-impl-3.2.0.jar:na]\r\n\tat com.atlassian.stash.internal.auth.DefaultCaptchaService.checkCaptcha(DefaultCaptchaService.java:97) ~[stash-service-impl-3.2.0.jar:na]\r\n\tat com.atlassian.stash.internal.spring.security.PluginAuthenticationProvider.attemptAuthentication(PluginAuthenticationProvider.java:109) [PluginAuthenticationProvider.class:na]\r\n\tat com.atlassian.stash.internal.spring.security.PluginAuthenticationProvider.authenticate(PluginAuthenticationProvider.java:59) [PluginAuthenticationProvider.class:na]\r\n\tat com.atlassian.stash.internal.spring.security.StashAuthenticationFilter.doFilter(StashAuthenticationFilter.java:100) [StashAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doInsideSpringSecurityChain(BeforeLoginPluginAuthenticationFilter.java:111) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doFilter(BeforeLoginPluginAuthenticationFilter.java:77) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.security.auth.trustedapps.filter.TrustedApplicationsFilter.doFilter(TrustedApplicationsFilter.java:100) [atlassian-trusted-apps-core-3.0.6.jar:na]\r\n\tat com.atlassian.oauth.serviceprovider.internal.servlet.OAuthFilter.doFilter(OAuthFilter.java:69) [atlassian-oauth-service-provider-plugin-1.9.2_1406589600000.jar:na]\r\n\tat com.atlassian.analytics.client.filter.DefaultAnalyticsFilter.doFilter(DefaultAnalyticsFilter.java:33) [analytics-client-3.35_1406589604000.jar:na]\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31) [atlassian-core-4.6.15.jar:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doBeforeBeforeLoginFilters(BeforeLoginPluginAuthenticationFilter.java:89) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doFilter(BeforeLoginPluginAuthenticationFilter.java:75) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.request.DefaultRequestManager.doAsRequest(DefaultRequestManager.java:84) [stash-service-impl-3.2.0.jar:na]\r\n\tat com.hazelcast.web.WebFilter.doFilter(WebFilter.java:446) [hazelcast-wm-3.3-RC2.jar:3.3-RC2]\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_65]\r\n\tat java.lang.Thread.run(Thread.java:745) [na:1.7.0_65]\r\n\t... 143 frames trimmed{noformat}",
+      "summary": "The CAPTCHA service found itself in an awkward situation"
+    }
+  },
+  {
+    "key": "BSERV-5082",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-05T04:08:53.000+0000",
+      "created": "2014-08-04T11:13:19.000+0000",
+      "description": "The standard(?) way of checking if a service is running on Linux RHEL6 is not supported. I.e. the start/stop script does not support the \"status\" argument.\r\n{code}\r\nservice atlstash status\r\nUsage: /etc/init.d/atlstash {start|stop}\r\n{code}\r\n\r\nI would expect to see something like this:\r\n{code}\r\nservice atlstash status\r\natlstash (pid  1158) is running...\r\n{code}",
+      "summary": "\"service atlstash status\" is not supported"
+    }
+  },
+  {
+    "key": "BSERV-5081",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:34:34.000+0000",
+      "created": "2014-08-04T10:50:36.000+0000",
+      "description": "Currently if a pull request gets updated by a comment, somebody merging it or anything else, the changes are only visible once the user manually refreshes the page. It would be great if the page would update itself when something changes. (Especially the builds.)",
+      "summary": "Automatic updating of details on Pull Request pages"
+    }
+  },
+  {
+    "key": "BSERV-5080",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-05T01:49:01.000+0000",
+      "created": "2014-08-04T07:02:50.000+0000",
+      "description": "From here:\r\n\r\nhttps://answers.atlassian.com/questions/306181/diffing-branches-this-changeset-is-too-large-to-render-showing-the-first-1000-files\r\n\r\n* Configure the {{page.max.changes}} property to be e.g. 50000\r\n* Create a branch with a commit that changes more than 1000 files\r\n* Compare that branch with another branch\r\n* Open the Diff tab\r\n\r\nExpected: Should show all changes\r\nActual: Shows only the first 1000 files with the message \"This changeset is too large to render. Showing the first 1000 files.\"\r\n\r\nCould reproduce this with the current Stash version.",
+      "summary": "Setting page.max.changes doesn't work for diff tab of branch compare"
+    }
+  },
+  {
+    "key": "BSERV-5079",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-04T07:19:36.000+0000",
+      "created": "2014-08-04T06:54:24.000+0000",
+      "description": "It's currently not being passed in.",
+      "summary": "Use the page.max.changes setting on Compare/PR Create pages"
+    }
+  },
+  {
+    "key": "BSERV-5078",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-08-04T05:50:09.000+0000",
+      "description": "When someone forks a repository (into their user space) and makes a pull request to the original repository, there is no good way to review the changes locally, i.e. in a local checkout of the original repository. You could clone the private repository of the PR requester, but you might not even have full access to it. Another workaround is to edit the PR and choose a different target branch (which can be fetched and reviewed before merging into the actual target branch), but that is (1) cumbersome and (2) \"decouples\" the final (decisive) merge from the PR.\r\n\r\nSuggestion: In a PR coming from a different repository, offer the possibility to \"Fetch as local branch\". That local branch has to be given a name; a few quick choices could be offered, e.g. \"pull-requests/<id>\", \"[pull-requests/]<user-name>/<other-repo-name>/<branch-name>\".\r\n\r\nSome sort of integration of this with SourceTree would be nice as well.",
+      "summary": "Allow fetching of a branch in a pull request from a forked repository"
+    }
+  },
+  {
+    "key": "BSERV-5077",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-09T19:25:39.000+0000",
+      "created": "2014-08-04T03:06:22.000+0000",
+      "description": null,
+      "summary": "Test issue"
+    }
+  },
+  {
+    "key": "BSERV-5076",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-14T01:18:38.000+0000",
+      "created": "2014-08-01T19:43:37.000+0000",
+      "description": "In [the dev docs|https://developer.atlassian.com/stash/docs/3.0.1/tutorials-and-examples/controlling-when-pull-requests-can-be-merged.html] \"Remove the <servlet/> element from src/resources/atlassian-plugin.xml\" renders as \"Remove the element from src/resources/atlassian-plugin.xml\" in my browser.\r\n",
+      "summary": "Missing servlet tag in dev docs"
+    }
+  },
+  {
+    "key": "BSERV-5075",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:46:47.000+0000",
+      "created": "2014-08-01T18:42:10.000+0000",
+      "description": "We're using an external pre-receive hook to trigger our own perl script. In this script we have rule:\r\nIf user create a branch and push it to remote where branch name not match pattern (only alphanumeric, hyphen and underscore characters) the hook reject push.\r\nRight now we have a problem: If user create a branch from Stash GUI, the plugin allowed create new branch without any allowed characters rule. After user clone repo and push that branch to remote repo, the hook reject push.\r\n\r\nHow we can set pattern for branch name in Stash?\r\n\r\nI thinking about create a new plug-ins to listening BranchCreatedEvent. If new branch name not match pattern, we'll cancel it.\r\n\r\nPlease, give me a clue if I'm on right way. \r\nDo you know how I can resolve this problem in other way?\r\n",
+      "summary": "Allow Stash create a new branch with alphanumeric and huphen characters only"
+    }
+  },
+  {
+    "key": "BSERV-5074",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:18:16.000+0000",
+      "created": "2014-08-01T18:23:45.000+0000",
+      "description": "E-mails sent by Stash for each comment do not include any context of the source code they are made at. They should include at least the line at which the comment was made.",
+      "summary": "Show code context on PR comments e-mails"
+    }
+  },
+  {
+    "key": "BSERV-5073",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-03-06T16:08:44.000+0000",
+      "created": "2014-08-01T07:03:33.000+0000",
+      "description": "I think I got this by clicking \"add comment\" and then scrolling the page. \r\n\r\nhttp://monosnap.com/image/viEiksGbwF3GhBQJvy2g8W3hkAHcTP.png",
+      "summary": "Orphaned tipsy"
+    }
+  },
+  {
+    "key": "BSERV-5072",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-02-02T02:38:04.000+0000",
+      "created": "2014-08-01T06:36:05.000+0000",
+      "description": "Steps:\r\n1. Click \"reply\" on a comment\r\n2. Click the \"approve\" button\r\n\r\nExpected:\r\n* the Approved activity entry is rendered at the top level\r\n\r\nActual:\r\n* the Approved activity entry is rendered as a reply to a comment\r\n\r\nhttp://monosnap.com/image/UcMs5nu42Pf1NHio1OhffmY60Ow9UH.png",
+      "summary": "\"Approved\" activity rendered as a reply to comment"
+    }
+  },
+  {
+    "key": "BSERV-5071",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:14:59.000+0000",
+      "created": "2014-07-31T20:05:31.000+0000",
+      "description": "'Reviewers' field does not list groups in the create pull request screen. It allows to add only individual users as reviewers.\r\n\r\nIt would be great to have the ability to add groups as well so we do not have to manually add bunch of users individually.",
+      "summary": "Create Pull Request- 'Reviewers' field does not list groups"
+    }
+  },
+  {
+    "key": "BSERV-5070",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:13:15.000+0000",
+      "created": "2014-07-31T17:29:06.000+0000",
+      "description": "We are using pull requests quite extensively in our project (100 PRs open, thousands merged/closed) Sometimes it's useful to find pull requests associated with a given branch but there is no other option than scrolling through all the PRs and hoping for luck.\r\n\r\nIt would be great if there was at least basic filtering for pull requests. Even fulltext search (for title/description) would be great.",
+      "summary": "Filtering pull requests by branch name"
+    }
+  },
+  {
+    "key": "BSERV-5069",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-05T04:32:25.000+0000",
+      "created": "2014-07-31T13:30:46.000+0000",
+      "description": "BackUp Client 1.3.0 not working as expected --> first - no hint that Java 1.7 is mandatory! -- until 1.2.1 Java 1.6 was working ..\r\n\r\ntoday I've switched - but the backuptool was not working --> updating to Java 1.7 --> next problem: Java-Verify failed:\r\n\r\nException in thread \"main\" java.lang.VerifyError: Bad <init> method call from inside of a branch\r\n\r\n\r\nI need to start the backup-client now with (workaround):\r\n\r\njava -noverify -jar /opt/atlassian/stash-backup-client/current/stash-backup-client.jar\r\n\r\nthen everything is working fine...\r\n\r\n",
+      "summary": "Stash-backup-client 1.3.0 crashing"
+    }
+  },
+  {
+    "key": "BSERV-5068",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-07-31T07:58:21.000+0000",
+      "created": "2014-07-31T05:01:41.000+0000",
+      "description": "After upgrading Stash to 3.2 the Stash Backup Client 1.2.1 fails with an error \u00bb...does not appear to be a valid home directory\u00ab. Seems to be related to the home directory changes mentioned in the upgrade notes.\r\n\r\n{code}\r\n2014-07-31 06:41:47,775 INFO         Initializing\r\n2014-07-31 06:41:50,301 ERROR        A backup could not be created. Reason: The configured STASH_HOME, /opt/atlassian/application-data/stash, does not appear to be a valid home directory. Creating a backup requires direct access to the home directory for the running instance to allow it to interact with the repositories.\r\n{code}",
+      "summary": "Stash Backup Client fails with \u00bbdoes not appear to be a valid home directory\u00ab for Stash 3.2"
+    }
+  },
+  {
+    "key": "BSERV-5067",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-12-09T22:56:57.000+0000",
+      "created": "2014-07-31T04:11:45.000+0000",
+      "description": "This button should be a mouse-only feature - when using the keyboard I have great facilities already to select all the text and delete it. It's quite confusing when trying to tab out of the box and into a mode where I can j/k through the search matches.",
+      "summary": "Cancel button in the diff search should have tab index -1"
+    }
+  },
+  {
+    "key": "BSERV-5066",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-07-31T02:41:29.000+0000",
+      "description": "I start a comment, then scroll out of view of the comment box in order to gain context for the comment. I begin typing again in order to try and add more to the comment.\r\n\r\nExpected: Text shows up in the comment I'm writing.\r\nActual: I start triggering all sorts of fun keyboard shortcuts I didn't know existed.",
+      "summary": "Stash unfocuses comment box when scrolled out of view"
+    }
+  },
+  {
+    "key": "BSERV-5065",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-07-31T02:55:34.000+0000",
+      "created": "2014-07-31T01:11:15.000+0000",
+      "description": null,
+      "summary": "I resolved all tasks but \"Merge\" was inactive until I refreshed the page"
+    }
+  },
+  {
+    "key": "BSERV-5064",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-13T07:09:02.000+0000",
+      "created": "2014-07-30T18:34:57.000+0000",
+      "description": "Currently Pull Request merge strategy for repos or projects are set in the \"stash-config.properties\" file and change to the settings require stash restart.\r\n\r\nNike has several teams with different workflows & merge strategies so whenever a new repo or project is created and a change to the merge strategy is required, we need to create make the changes to the file and restart Stash. This is a very painful process.\r\n\r\nIt would be great to have this Merge strategy option available in Settings section of the repo where admins can dynamically change the settings that do not require a Stash restart.",
+      "summary": "Pull request merge strategy options to be included in Settings section of repository"
+    }
+  },
+  {
+    "key": "BSERV-5063",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-27T06:59:41.000+0000",
+      "created": "2014-07-30T12:56:29.000+0000",
+      "description": "When Public Access is enabled for a Project, allow anonymous viewing of pull requests in read-only mode.",
+      "summary": "Extend public read access to pull requests"
+    }
+  },
+  {
+    "key": "BSERV-5062",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-08-15T04:58:38.000+0000",
+      "created": "2014-07-30T03:49:00.000+0000",
+      "description": "While viewing the source tab in jira, Stash sometimes returns error \"500: Internal Server Error\".\r\n\r\nStack trace:\r\n{code}\r\n2014-07-22 15:28:35,717 ERROR [http-bio-7991-exec-4] dcresswell 928x9448x0 imlj5j 192.168.0.217,127.0.0.1 \"GET /rest/jira/1.0/issues/ADM-7525/commits HTTP/1.1\" c.a.s.r.e.UnhandledExceptionMapper Unhandled exception while processing REST call\r\njava.lang.NullPointerException: null\r\n\tat com.atlassian.stash.rest.data.RestDetailedChangeset.<init>(RestDetailedChangeset.java:23) ~[stash-rest-common-3.1.3.jar:na]\r\n\tat com.atlassian.stash.integration.jira.rest.JiraResource$1.apply(JiraResource.java:41) ~[stash-jira-integration-3.1.3_1404865948000.jar:na]\r\n\tat com.atlassian.stash.integration.jira.rest.JiraResource$1.apply(JiraResource.java:37) ~[stash-jira-integration-3.1.3_1404865948000.jar:na]\r\n\tat com.google.common.collect.Iterators$8.next(Iterators.java:812) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.google.common.collect.Lists.newArrayList(Lists.java:139) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.google.common.collect.ImmutableList.copyOf(ImmutableList.java:256) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.google.common.collect.ImmutableList.copyOf(ImmutableList.java:217) ~[guava-11.0.2-atlassian-01.jar:na]\r\n\tat com.atlassian.stash.rest.data.RestPage.<init>(RestPage.java:36) ~[stash-rest-common-3.1.3.jar:na]\r\n\tat com.atlassian.stash.rest.data.RestPage.<init>(RestPage.java:44) ~[stash-rest-common-3.1.3.jar:na]\r\n\tat com.atlassian.stash.rest.data.RestPage.<init>(RestPage.java:26) ~[stash-rest-common-3.1.3.jar:na]\r\n\tat com.atlassian.stash.integration.jira.rest.JiraResource.getCommits(JiraResource.java:64) ~[stash-jira-integration-3.1.3_1404865948000.jar:na]\r\n\tat com.atlassian.applinks.core.rest.context.ContextFilter.doFilter(ContextFilter.java:25) [applinks-plugin-4.2.1_1402545180000.jar:na]\r\n\tat com.atlassian.stash.internal.spring.security.StashAuthenticationFilter.doFilter(StashAuthenticationFilter.java:86) [StashAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doInsideSpringSecurityChain(BeforeLoginPluginAuthenticationFilter.java:111) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doFilter(BeforeLoginPluginAuthenticationFilter.java:77) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.security.auth.trustedapps.filter.TrustedApplicationsFilter.doFilter(TrustedApplicationsFilter.java:100) [atlassian-trusted-apps-core-3.0.6.jar:na]\r\n\tat com.atlassian.oauth.serviceprovider.internal.servlet.OAuthFilter.doFilter(OAuthFilter.java:69) [atlassian-oauth-service-provider-plugin-1.9.2_1402545180000.jar:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doBeforeBeforeLoginFilters(BeforeLoginPluginAuthenticationFilter.java:89) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.web.auth.BeforeLoginPluginAuthenticationFilter.doFilter(BeforeLoginPluginAuthenticationFilter.java:75) [BeforeLoginPluginAuthenticationFilter.class:na]\r\n\tat com.atlassian.stash.internal.request.DefaultRequestManager.doAsRequest(DefaultRequestManager.java:70) [stash-service-impl-3.1.3.jar:na]\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_60]\r\n\tat java.lang.Thread.run(Thread.java:745) [na:1.7.0_60]\r\n\t... 179 frames trimmed\r\n{code}\r\n\r\nIt looks like changeset is coming as null.\r\n\r\nThis happens when stash couldn't find a changeset in Git\r\n{code}\r\nc.a.s.i.s.g.c.d.BatchChangeDiffTreeHandler Changeset '6b72afdfb14a55421bd6f35ebf43dee9eb8db7e2' does not exist in repository 'DEV'\r\n{code}\r\n\r\n",
+      "summary": "When viewing the source tab of an issue in JIRA, it claims that stash returned an error"
+    }
+  },
+  {
+    "key": "BSERV-5061",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-07-30T00:51:41.000+0000",
+      "created": "2014-07-29T22:31:56.000+0000",
+      "description": "after updating from version 3.0.4 to 3.1.3 I started noticing that many pull requests are \"stuck\" because of conflicts while there are no conflict in practice (checking it locally via git confirms it).\r\n\r\nThis is the alert I'm getting:\r\n\"*This pull request can't be merged.* You will need to resolve conflicts to be able to merge\"\r\n\r\nthis issue really slows my flow and gets everyone very irritated.",
+      "summary": "creating a new pull request creates a false conflict message"
+    }
+  },
+  {
+    "key": "BSERV-5059",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-12-30T21:20:24.000+0000",
+      "created": "2014-07-29T17:14:30.000+0000",
+      "description": "bin/permgen.sh contains the following lines - probably set by the linux installer:\r\n{noformat}\r\n# DO NOT remove the following line\r\nJAVA_HOME=\"/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.55.x86_64/jre\"; export JAVA_HOME\r\n{noformat}\r\n\r\nThat specific version of the JDK got removed here via a yum update (moved to 1.7.0.65).\r\n\r\nh4. Possible solution\r\n\r\nInstead of setting the JAVA_HOME in permgen.sh, save it in {{/etc/environment}} or {{~/.profile}} when it's not specified. This lets customer continue using their system JRE (gives more control and won't needlessly bloat their system), but without the risk of overwriting changes in the JAVA_HOME variable during Stash startup. This is more inline with the instructions we use when manually installing Stash, as well.",
+      "summary": "permgen.sh keeps reference to non-existing JAVA_HOME"
+    }
+  },
+  {
+    "key": "BSERV-5058",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-07-29T09:37:42.000+0000",
+      "description": "When adding a user to a group via their profile page (https://stash-lab.optusnet.com.au/admin/users/view?name=user), the permission status image isn't updated until the page is reloaded.\r\n\r\nTo reproduce:\r\n\r\n - Open up a user's profile page for a user who has no special permissions\r\n - add them to a group that gives admin permissions\r\n\r\nExpected: Permission lozange is updated from 'project creator' to 'administrator'\r\nActaul: Permission lozange doesn't change until the page is reloaded. (This is just cosmetic; the actual permissions for the user are updated)\r\n\r\nI found STASH-2538, but that's closed and this is still an issue in 3.1.3.",
+      "summary": "Update the permission lozenge immediately when adding a user to a group"
+    }
+  },
+  {
+    "key": "BSERV-5057",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-09-17T02:51:47.000+0000",
+      "created": "2014-07-29T03:57:20.000+0000",
+      "description": "For files longer than one screen, the page is scrolled too far down when you clikc the \"add file comment\" button.",
+      "summary": "Clicking the Add file comment button scrolls to the wrong location"
+    }
+  },
+  {
+    "key": "BSERV-5056",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-07-28T23:40:58.000+0000",
+      "description": "I would like a feature like fork sync, but for feature branches.\r\n\r\nLike bitbucket has. A button to sync my branch with its parent. \r\nOr maybe an option to do it automatically as fork does.",
+      "summary": "Allow branch sync"
+    }
+  },
+  {
+    "key": "BSERV-5055",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-07-29T03:37:03.000+0000",
+      "created": "2014-07-28T17:52:05.000+0000",
+      "description": "Usually I can click the create a pull request button while viewing either the fork or the upstream repo, and then select fork/master as source and upstream/master as the destination. \r\n\r\nToday, I got errors when attempting to create the PR from the forked repo UI. I could create a PR when I navigated to the upstream repo first.\r\n\r\nOn the error page, I see that the destination has my fork selected rather than the upstream repo I had selected, and this error: Pull requests can only be created between branches of two different repositories, or two different branches of the same repository.\r\n\n\n*Reporter*: Melanie Wright\n*E-mail*: [mailto:mwright@atlassian.com]",
+      "summary": "Pull request from fork to upstream repo failed"
+    }
+  },
+  {
+    "key": "BSERV-5054",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2014-07-28T11:48:15.000+0000",
+      "description": "h3. Problem Definition\r\nBitbucket Server (formerly Stash) does not support SQL Azure as backend database.\r\n\r\nh3. Suggested Solution\r\nProvide support for SQL Azure as backend database.",
+      "summary": "As an admin, I want Bitbucket Server to support SQL Azure as backend database"
+    }
+  },
+  {
+    "key": "BSERV-5053",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-07-28T23:59:31.000+0000",
+      "created": "2014-07-28T09:33:28.000+0000",
+      "description": "Stash should only list user accounts with permission to respective projects or repositories when selecting reviewers in pull request creation.",
+      "summary": "List only users with permission when adding reviewers in pull request"
+    }
+  },
+  {
+    "key": "BSERV-5052",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/13310",
+        "id": "13310",
+        "key": "BSERV",
+        "name": "Bitbucket Server",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=13310&avatarId=105193",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=13310&avatarId=105193",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=13310&avatarId=105193",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=13310&avatarId=105193"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-07-30T10:44:14.000+0000",
+      "created": "2014-07-28T09:14:39.000+0000",
+      "description": "When using Stash with Git 2.0.3, the commit list shows the correct message for each commit. However, picking a commit from the list shows the commit message from the commit before that commit.\r\n\r\n**This is a bug in Git 2.0.2 and 2.0.3.** This is _not_ an issue in Stash, and cannot be corrected by Stash. The only solution is to downgrade Git to 2.0.1 or previous.\r\n\r\nGit output from 2.0.3:\r\n{noformat}\r\nbturner@ubuntu:~/tmp/default-repository$ /opt/git/2.0.3/bin/git rev-list -1 --format=\"commit %H%n%H%x02%h%x02%P%x02%p%x02%aN%x02%aE%x02%at%n%B%n%x03\" --stdin --\r\n0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\n0a943a29376f2336b78312d99e65da17048951db\u00020a943a2\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002e0a3f6d\u0002Anna Buttfield\u0002abuttfield@cascade.sydney.atlassian.com\u00021296709267\r\nCopy C.zip as D.zip\r\n\r\n\u0003\r\nbturner@ubuntu:~/tmp/default-repository$ /opt/git/2.0.3/bin/git diff-tree --no-renames --always --format=\"commit %H%n%H%x02%h%x02%P%x02%p%x02%aN%x02%aE%x02%at%n%B%n%x03\" --root --stdin --\r\n0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\n0a943a29376f2336b78312d99e65da17048951db\u00020a943a29376f2336b78312d99e65da17048951db\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002Anna Buttfield\u0002abuttfield@cascade.sydney.atlassian.com\u00021296709220\r\nAdd binary file C.zip\r\n\r\n\u0003\r\n\r\n:040000 040000 d018ba56fd26ff91e87c10d2424993594f1240e5 f79fda8638b00cf1f457f7f516b2981ea9e74305 M\tbinary\r\n{noformat}\r\n\r\nOutput from Git 2.0.2, manifesting the same issue:\r\n{noformat}\r\nbturner@ubuntu:~/tmp/default-repository$ /opt/git/2.0.2/bin/git rev-list -1 --format=\"commit %H%n%H%x02%h%x02%P%x02%p%x02%aN%x02%aE%x02%at%n%B%n%x03\" --stdin --\r\n0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\n0a943a29376f2336b78312d99e65da17048951db\u00020a943a2\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002e0a3f6d\u0002Anna Buttfield\u0002abuttfield@cascade.sydney.atlassian.com\u00021296709267\r\nCopy C.zip as D.zip\r\n\r\n\u0003\r\nbturner@ubuntu:~/tmp/default-repository$ /opt/git/2.0.2/bin/git diff-tree --no-renames --always --format=\"commit %H%n%H%x02%h%x02%P%x02%p%x02%aN%x02%aE%x02%at%n%B%n%x03\" --root --stdin --\r\n0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\n0a943a29376f2336b78312d99e65da17048951db\u00020a943a29376f2336b78312d99e65da17048951db\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002Anna Buttfield\u0002abuttfield@cascade.sydney.atlassian.com\u00021296709220\r\nAdd binary file C.zip\r\n\r\n\u0003\r\n\r\n:040000 040000 d018ba56fd26ff91e87c10d2424993594f1240e5 f79fda8638b00cf1f457f7f516b2981ea9e74305 M\tbinary\r\n{noformat}\r\n\r\nOutput from Git 2.0.1, no issue:\r\n{noformat}\r\nbturner@ubuntu:~/tmp/default-repository$ /opt/git/2.0.1/bin/git rev-list -1 --format=\"commit %H%n%H%x02%h%x02%P%x02%p%x02%aN%x02%aE%x02%at%n%B%n%x03\" --stdin --\r\n0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\n0a943a29376f2336b78312d99e65da17048951db\u00020a943a2\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002e0a3f6d\u0002Anna Buttfield\u0002abuttfield@cascade.sydney.atlassian.com\u00021296709267\r\nCopy C.zip as D.zip\r\n\r\n\u0003\r\nbturner@ubuntu:~/tmp/default-repository$ /opt/git/2.0.1/bin/git diff-tree --no-renames --always --format=\"commit %H%n%H%x02%h%x02%P%x02%p%x02%aN%x02%aE%x02%at%n%B%n%x03\" --root --stdin --\r\n0a943a29376f2336b78312d99e65da17048951db\r\ncommit 0a943a29376f2336b78312d99e65da17048951db\r\n0a943a29376f2336b78312d99e65da17048951db\u00020a943a29376f2336b78312d99e65da17048951db\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002e0a3f6d8c804c375f49d7609328111e8dc75a4bc\u0002Anna Buttfield\u0002abuttfield@cascade.sydney.atlassian.com\u00021296709267\r\nCopy C.zip as D.zip\r\n\r\n\u0003\r\n\r\n:040000 040000 d018ba56fd26ff91e87c10d2424993594f1240e5 f79fda8638b00cf1f457f7f516b2981ea9e74305 M\tbinary\r\n{noformat}",
+      "summary": "Commit messages are wrong when using Git 2.0.2 and 2.0.3"
+    }
+  }
+]

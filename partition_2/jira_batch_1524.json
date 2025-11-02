@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "CRUC-193",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-05-26T05:20:25.000+0000",
+      "created": "2007-12-12T22:15:23.000+0000",
+      "description": "It seems that when using Crucible with Perforce (I can't speak to other source control systems) that a review can only involve one revision of any given file.  \r\n\r\nIn some cases, a functional change to the code base is made with multiple changelists prior to creating the review.\u2014I want to create one review to review the cumulative effect of a set of related changelists.  Some files might appear on multiple changelists.  \r\n\r\nSo I might update foo.c to revision #10 under changelist 500, and later update it to revision #11 under changelist 600.  I'd like select both changelists and have the review show the difference between revision #9 and #11.   As it is today, I can only get one revision or the other, but not both represented in the difference.  \r\n\r\nI can understand that if another unrelated change is submitted in between my set of two (or more) changelists, that you can't easily generate a valid diff.   In that case, I'd like to see the file listed on the file listed multiple times, once for each consecutive run of revisions.  \r\n\r\nSo for example:  \r\n\r\nI submit changelist 500: \r\nFoo.c# 2\r\nFoo.h#7\r\n\r\nOthers submit totally unrelated changelists 501-519\r\n\r\nI submit changelist 520: \r\n      Foo.c#3\r\n       Bar.c#9\r\n\r\nJoe submits changelist 530 for an entirely unrelated functional change\r\n            Foo.c#4 \r\n\r\nI submit changelist 540: \r\n            Foo.c#5\r\n            Bar.c#10  \r\n\r\nI select changelists 500, 520, 540 for a Crucible review.  It should list the following files and differences:  \r\n            Foo.h (diffed from #6 to #7)\r\n            Foo.c (diffed from #1 to #3)\r\n            Foo.c (diffed from #4 to #5)   Note this file appears twice on the list.\r\n            Bar.c (diffed from #8 to #10)\r\n \r\nThe above process would extrapolate such that a diff might contain a run of several consecutive revisions, and also extrapolate to where a file occurs N times due to N distinct consecutive runs of revisions found on the changelist.\r\n\r\nThis could be enhanced  in stages, where the first stage still only allows each file to be on the review once, but does allow consecutive file revisions (special casing consecutive changelists is mostly useless for us since it rarely occurs in practice that two consecutive changelists are for the same work item.)\r\n\r\nWithout this, we must always submit an entire change in one changelist (not always feasible)   Or expect reviewers to review part of a change in one review and the rest of the change in an other review.\r\n",
+      "summary": "Allow multiple revisions in a review"
+    }
+  },
+  {
+    "key": "CRUC-192",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-12-12T18:07:27.000+0000",
+      "description": "It would be great if reviews could have 'Watchers'.  That is, people or emails that aren't really designated as reviewers, but can see comments being added.  This is particularly useful in the case of mid-size teams.  We have around 9 people, all of which should have the ability to see reviews (because it's eductionally useful), but ideally not all would be considered \"Reviewers\".  Otherwise (if all are Reviewers), reviews can be a real PITA, with a lot of people going to town on the review.\r\n\r\nIf we could designate a default Watcher that was our dev email list, and each review could designate some specific reviewers (say, 2 or 3 people), then it would be a closer integration between the author & reviewers, but watchers would be able to see what's going on and optionally join the review if necessary.",
+      "summary": "Allow Watchers (essentially, a CC field)"
+    }
+  },
+  {
+    "key": "CRUC-191",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-12-12T09:06:02.000+0000",
+      "description": "Currently each user must individually specify when they wish to review notifications, and the default is \"send email all the time for everything\".\r\n\r\nIt would be good if an admin can set the default notification options, so that each user doesn't have to change it.\r\n\r\nIt would be even better if an admin has the option of locking this, preventing the users from changing (or even seeing them at all).\r\n\r\nWe would like email only to be sent when someone has been asked to conduct a review, and when the review has been summarized.  (IE: not to send an email for each and every comment added), and its a pain to have to ask each of our team to go in and make this change manually.",
+      "summary": "Allow administrator to set default notification options"
+    }
+  },
+  {
+    "key": "CRUC-190",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-12-12T09:00:51.000+0000",
+      "description": "It would be great if Crucible reviews could be configured in the same way the JIRA workflows work.\r\n\r\nWhat we'd like to be able to do, is for certain projects (ie: code review) define a process such as:\r\n\r\n\"New Review\" (add reviewers, moderators etc) (can be transitioned to \"Review in Progress\" by the \"Start Review\" action)\r\n\"Review In Progress\" (Can transition back to \"New Review\" by the \"\", Approve and Reject)\r\nEither:\r\n   - Approved (can be transitioned to \"Closed\" via the \"Close Review\" action)\r\n   - Rejected (can be transitioned to \"Feedback\" via the \"Give Feedback\" action)\r\n\"Feedback\" (read-only, can be used to discuss with participants etc. Can be transitioned to \"Closed\" by the \"Close Review\" action)\r\nClosed (no transitions for this status).\r\n\r\nWe can also envisage other work flows for different types of reviews (IE: Document or Specification reviews)\r\n\r\nThis is probably a huge change request, so a possibly smaller solution which would meat our requirements would be to simply support the notion (via a property/metadata that we can query via the new API) of \"Approved/Rejected\".\r\n\r\nWe want our release software (which pushes changes between our environments) to be able to query a changeset for it's review, and then only allow the release if the review has:\r\n\r\nA) Been completed\r\nB) Been approved\r\n\r\nIf the review has been rejected that change set should not be allowed to go out into production (the fixes required would be another change set and thus another review, which would hopefully be approved and thus allowed out into to big bad world.",
+      "summary": "Ability to approve / reject reviews similarly to JIRA"
+    }
+  },
+  {
+    "key": "CRUC-189",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-12-11T14:09:56.000+0000",
+      "description": "When reviewing code, it should be possible to explicitly see the white spaces. This way, it is possible to differ between tabbed tabs and spaced tabs, and to spot unnecessary spaces. Preferably, very bright colored dots should be used for spaces, and arrows should be used for tabs, i.e. the way it is done in Visual Studio (though the color is way too \"strong\" by default in VS).",
+      "summary": "Differ between tabs and spaces in diff view"
+    }
+  },
+  {
+    "key": "CRUC-186",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-08-26T06:42:07.000+0000",
+      "created": "2007-12-06T19:09:49.000+0000",
+      "description": "I don't see any option right now for permanently deleting an abandoned review.  If you know you messed up and don't want to keep the clutter around, you should be able to delete the review.",
+      "summary": "Allow an abandoned review to be deleted"
+    }
+  },
+  {
+    "key": "CRUC-185",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-05-23T04:23:33.000+0000",
+      "created": "2007-12-06T19:09:09.000+0000",
+      "description": "Reviews you create & abandon still show up in FishEye (to everyone).  This is bad because right now there's no permanent delete option for a review, so if you did something accidentally, it's always going to show to everyone.  Abandoned reviews shouldn't show up.",
+      "summary": "Abandoned Reviews Still Show in FishEye"
+    }
+  },
+  {
+    "key": "CRUC-184",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-08T07:53:31.000+0000",
+      "created": "2007-12-06T19:06:28.000+0000",
+      "description": "When clicking the Crucible icon in FishEye to create a review from a commit, the review should default to the a certain project.  If only one project is assigned that repository as the default repository, it should be that project.  If multiple projects are assigned a default repository, you can ask which project (or have another setting for choosing what project is default for a repository).",
+      "summary": "When Creating Review From FishEye, Default to Right Project"
+    }
+  },
+  {
+    "key": "CRUC-183",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-12-06T19:05:07.000+0000",
+      "description": "When changing the project while editing the summary of a new review, it isn't clear that default reviewers are going to be added.  If no reviewers have been set yet in the summary, the default reviewers should be shown immediately after selecting a new project.  If reviewers have been set (because you scrolled through projects, but not manually edited), the reviewers should be changed.  If reviewers have been manually entered, it should ask if you want to use the default reviewers.  Without this, having default reviewers is nice, but since they don't show before you finish creating the review, they're not as useful.",
+      "summary": "When Changing Project, Immediately Show Default Reviewers"
+    }
+  },
+  {
+    "key": "CRUC-182",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-19T05:38:10.000+0000",
+      "created": "2007-12-06T19:00:19.000+0000",
+      "description": "Noticed 1.2 was released, so gave it a whirl... it's really nice, but there's some funky things with the projects.\r\n\r\nAfter I click on 'Create Review' or on the Crucible icon in FishEye, it asks what project I would like to create.  If I choose the project & continue, on the next page the project doesn't persist.  That is, it defaults right back to 'Default Project'.  I need to edit the summary again and change the project.",
+      "summary": "Projects Don't Persist Through Pages"
+    }
+  },
+  {
+    "key": "CRUC-181",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-06T23:02:36.000+0000",
+      "created": "2007-12-06T17:53:45.000+0000",
+      "description": "[This section|http://confluence.atlassian.com/display/CRUCIBLE/Crucible+1.2+Release+Notes#Crucible1.2ReleaseNotes-JIRAintegration] mentions the Crucible tab and enhanced review creation capability but the screenshot doesn't show either.",
+      "summary": "Old screenshot in 1.2 release notes"
+    }
+  },
+  {
+    "key": "CRUC-180",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-10T21:29:58.000+0000",
+      "created": "2007-12-06T14:15:14.000+0000",
+      "description": "'Show Full Source' should continue to highlight the diff.\r\n\r\nThe reason I am interested in the full source is to provide feedback in the context of the rest of the class.  The removal of the diff makes it difficult to spot the changes and forces me to toggle between views.\r\n\r\nWhat is the reasoning behind removing the graphical diff from this view?",
+      "summary": "'Show Full Source' should continue to highlight the diff"
+    }
+  },
+  {
+    "key": "CRUC-179",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-18T01:05:36.000+0000",
+      "created": "2007-12-06T14:04:55.000+0000",
+      "description": "When creating a review, I navigate to the 'manage files' tab and tick the changesets that I want to have reviewed. When the same file is modified more than once across changesets, Crucible only allows review of the latest revision. I'll try to make this a bit more concrete.\r\n\r\nIt is fairly common for a developer to check in multiple times before their task is ready for review. Say the developer checks in revision 1.4, then 1.5, then 1.6 of a particular file. At this point he feels that his code is ready for review. When I tick all 3+ change sets, I want the diff between 1.3 and 1.6 for this file to be added to the code review. Presently, only the diff from 1.5 to 1.6 is added.\r\n\r\nI have been able to navigate to the 'review' tab and successfully 'change diff', but this is time-consuming and error prone.  In the simple case, where the revisions are consecutive (like the case I specified above), Crucible should do this for me when I select the changesets.",
+      "summary": "Support addition of multiple revisions of the same file that appears in multiple changesets"
+    }
+  },
+  {
+    "key": "CRUC-178",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-19T05:20:22.000+0000",
+      "created": "2007-12-06T06:03:16.000+0000",
+      "description": "{code}Exception in thread \"Notifier\" java.lang.NullPointerException\r\n        at com.cenqua.crucible.hibernate.HibernateUtil.currentSession(HibernateUtil.java:69)\r\n        at com.cenqua.crucible.notification.NotificationManager.session(NotificationManager.java:132)\r\n        at com.cenqua.crucible.notification.NotificationManager.processNotifications(NotificationManager.java:114)\r\n        at com.cenqua.crucible.notification.NotificationManager.access$100(NotificationManager.java:23)\r\n        at com.cenqua.crucible.notification.NotificationManager$1.run(NotificationManager.java:84)\r\n        at java.util.TimerThread.mainLoop(Unknown Source)\r\n        at java.util.TimerThread.run(Unknown Source){code}",
+      "summary": "Hit NPE when perform backup"
+    }
+  },
+  {
+    "key": "CRUC-177",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-10T01:30:25.000+0000",
+      "created": "2007-12-05T22:16:24.000+0000",
+      "description": "Crucible is sending out emails that a review has been commented on but there is no sign of the review online. \r\n\r\nHere is an email from Crucible that is missing:\r\n{noformat}\r\nFrom: Osborne Hardison <fisheye@dash.net>\r\nTo: rschultz@dash.net\r\nSubject: [CR-11] Comment: Remote Log Level Configuration\r\nDate: Wed, 5 Dec 2007 10:59:28 -0800 (PST)\r\n\r\nCR-11 Osborne Hardison commented on revision cfg_pkt_handler.c (lines 634)  (see http://fisheye/cru/CR-11#c15 ):-\r\n\r\nisn't this a DNI_BOOL return function?\r\n\r\n---\r\n\r\nID: CR-11 http://fisheye/cru/CR-11/review\r\n\r\nTitle: Remote Log Level Configuration\r\n\r\nStatement of Objectives:\r\nDS-6753.  This required touching most of the apps, and sometimes modifying their main select loops.  Please have a look over the changes I made to applications you are familiar with.\r\n\r\nState: Review\r\n\r\nAuthor: Rick Schultz\r\nModerator: Rick Schultz\r\nReviewers: (5 active, 1 completed*)\r\n  Christine McGavran  (*)\r\n  Andrew Kelly\r\n  Jungle Cui\r\n  uros\r\n  Leonid Milenky\r\n  Osborne Hardison\r\n{noformat}",
+      "summary": "Comments on reviews are being sent but don't appear in the review when viewed online"
+    }
+  },
+  {
+    "key": "CRUC-176",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T03:03:15.000+0000",
+      "created": "2007-12-05T03:16:30.000+0000",
+      "description": "new review, type title, hit 'patch' tab, title goes away\r\n",
+      "summary": "click-away problem when hitting \"patch\" tab"
+    }
+  },
+  {
+    "key": "CRUC-175",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-05T03:42:05.000+0000",
+      "created": "2007-12-05T00:18:52.000+0000",
+      "description": null,
+      "summary": "LHS abandon button on Crucible review screen broken"
+    }
+  },
+  {
+    "key": "CRUC-174",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-09-30T05:58:15.000+0000",
+      "created": "2007-12-05T00:16:59.000+0000",
+      "description": "Create 'Roles & Status Classifications in Crucible' document as part of User Guide revisions.",
+      "summary": "Create 'Roles & Status Classifications in Crucible' document as part of User Guide revisions"
+    }
+  },
+  {
+    "key": "CRUC-173",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-11-13T00:35:51.000+0000",
+      "created": "2007-12-05T00:15:04.000+0000",
+      "description": "Create 'Crucible workflow guide' as part of User Guide revisions.",
+      "summary": "Create 'Crucible workflow guide' as part of User Guide revisions"
+    }
+  },
+  {
+    "key": "CRUC-172",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T00:13:13.000+0000",
+      "created": "2007-12-05T00:13:57.000+0000",
+      "description": "Create 'Getting started with Crucible' document as part of User Guide revisions",
+      "summary": "Create 'Getting started with Crucible' document as part of User Guide revisions"
+    }
+  },
+  {
+    "key": "CRUC-171",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-12-09T00:24:51.000+0000",
+      "created": "2007-12-05T00:11:16.000+0000",
+      "description": "Create updated Crucible overview document as part of User Guide revisions.",
+      "summary": "Create updated Crucible overview document as part of User Guide revisions"
+    }
+  },
+  {
+    "key": "CRUC-166",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-03T23:21:06.000+0000",
+      "created": "2007-12-03T16:22:14.000+0000",
+      "description": "Some files not work like LICENSE without file type\r\n\r\nVersion is 1.1.4\r\n\r\nOn previous versions these files work",
+      "summary": "Some files not work"
+    }
+  },
+  {
+    "key": "CRUC-165",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T00:58:16.000+0000",
+      "created": "2007-12-03T16:17:00.000+0000",
+      "description": "Some reason\r\n\r\nIn my Subversion\r\n\r\nSame folders and files appear to different Tags.\r\n\r\nhttp://dev.teknologiaplaneetta.com/fisheye/browse/public/atlassian/confluence/videoconf/tags/1.1-BETA\r\n\r\nhttp://dev.teknologiaplaneetta.com/fisheye/browse/public/atlassian/confluence/presentations/tags/1.0-BETA\r\n\r\nAs you see some folders not belongs to these tags.",
+      "summary": "Folder Issue"
+    }
+  },
+  {
+    "key": "CRUC-164",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-10-16T07:03:52.000+0000",
+      "created": "2007-11-30T18:28:24.000+0000",
+      "description": "We're previewing Crucible and the one thing that the engineers are really complaining about is the volume of email notifications they get. Every single comment made gets emailed out to every single engineer. This overwhelms the inbox pretty quickly. They do want to know that comments have been made so they can review and participate in a discussion, but the immediate email that goes out on any comment is really noisy. Same thing for a moderator for a review with 10 people knowing about every action each of them does.\r\n\r\nMy feature request is to have a digest option that rolls up summaries of each of the changes made and puts it out in a single email. I'd recommend using an interface similar to Jira's \"Filter Subscription\" screen to choose the frequency etc. Although I'd extend it to permit more frequent than daily updates (perhaps hourly etc).\r\n",
+      "summary": "Organize \"comment spam\" notifications via a digest option"
+    }
+  },
+  {
+    "key": "CRUC-162",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-09T00:33:29.000+0000",
+      "created": "2007-11-29T17:58:17.000+0000",
+      "description": "When you get a comment email from Crucible, the To: field in the header reads as \r\n\r\nFrom: \"Rosen, Dustin\" <sourcecode@mydomain.com>\r\nTo: david.hergert@mydomain.com\r\n\r\nIf you want to contact the user using the email, if you click Reply, the resulting email comes up with the To: as 'Dustin Rosen'.   You'd think it was emailing Dustin's email address, but its really emailing sourcecode@mydomain.com.  (see From: field above).  But I understand why the name in the From field is the person's name, because it looks nice in your inbox that this comment (in email form) came from that person.\r\n\r\nSo, I would recommend either either changing the From to actually be Dustin's email address, so if someone replies to an email, it actually goes to Dustin.  This would make sense since Crucible currently doesn't appear to accept replies through email and add them as a reply-comment (would be a neat feature though).    Or the other option would be to add a Reply-To header to the original email, and set it to 'sourcecode@mydomain.com' so that if someone clicks Reply, you will see in the To: field that its not going to the author of the comment, but rather back to the Crucible server (and so you should change it t go to the person you want, presumably the author of the original comment).",
+      "summary": "From field on emails is incorrect or a least deceiving"
+    }
+  },
+  {
+    "key": "CRUC-161",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-22T01:51:41.000+0000",
+      "created": "2007-11-29T02:04:49.000+0000",
+      "description": "When a customer is purchasing Crucible (and has an older version of FishEye and the software and maintenance has expired) they do not need to purchase the latest version of FishEye.  \r\n\r\nIn a current situation, a customer has a working older version of FishEye (that was purchased from Cenqua).  The software maintenance (updates) has expired.  They are still using FishEye because of there perpetual license and are not considering purchasing the software maintenance package or renewing.  They would like to buy Crucible and run it with the \"old\" version of FishEye (which they have tested and say it works using the evaluation copy of Crucible).  Although Crucible comes bundled with the latest version of FishEye they still can use the older version.\r\n\r\nPlease provide documentation to internal sales group regarding how this will be handled.  If they are allowed to use older versions of FishEye we may want to specify up until which version and/or any other conditions. \r\n\r\nIf possible, please provide this information to the sales team at sales-team@atlassian.com.  We also may want to put it in the FAQ section.\r\n\r\nThank you in advance.",
+      "summary": "Create document stating when a customer purchases Crucible that they do not need to have the latest version of FishEye"
+    }
+  },
+  {
+    "key": "CRUC-159",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-11-04T03:18:18.000+0000",
+      "created": "2007-11-28T09:33:27.000+0000",
+      "description": "Currently this can sort of be accomplished by expanding each diff, choosing the amount of code to show, and then using the browser's print functionality.\r\n\r\nIt would be nice to be able to chooose which files in the review should be printed and whether comments should be included.\r\n\r\nThis would be really helpful when a face-2-face review is needed.",
+      "summary": "Ability to Nicely print out the code with associated comments for a review"
+    }
+  },
+  {
+    "key": "CRUC-158",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-09-14T20:30:57.000+0000",
+      "created": "2007-11-28T07:24:32.000+0000",
+      "description": "It would be nice to have a set of Best Practices available on the web site for Crucible.  Here are some potential topics\r\n\r\n1. Consider the following: a review is created, comments are made, the code is changed based on comments.   How should the new code be added to the review process to show that the comments have been addressed?  I know there is a feature request around this, but I am sure Atlassian must have some recommendations in the meantime.\r\n\r\n2. Recommendations for ensuring that comments in reviews are addressed.  Maybe a way to see if every comment marked as a defect has at least one reply.  I realize that is not fool proof but it would at least give some warnings on things that might not have been addressed.  I know this is not trivial, but does Atlassian have any suggestions.  \r\n\r\n3. Is there an easy way to determine whether reviewers are doing their job, e.g. if someone has been assigned 10 reviews but only did three of them, is there a way to find this out short of looking at each review.  \r\n\r\n4. Probably not a good idea to store the cache on NAS/NFS storage.  It made things very slow for us.\r\n\r\nThis is all I can think of off the top of my head.  I suppose this could also go into the FAQ.",
+      "summary": "Documentation for Best Practices"
+    }
+  },
+  {
+    "key": "CRUC-157",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T03:03:01.000+0000",
+      "created": "2007-11-28T07:12:53.000+0000",
+      "description": "My LDAP knowledge is very limited, so I am not sure this is feasible.\r\n\r\nConsider the following.\r\n\r\nUser A belongs to group X\r\nUser B belongs to group Y\r\ngroup Y by belongs to group X\r\n\r\ncurrently if I want to give access to both users A and B then I must configure the ldap search to check both groups X and Y.  It would be nice if it were only necessary to specify group X and then group Y would be automatically checked.",
+      "summary": "LDAP search should recursively search sub groups of group specified for user authentication"
+    }
+  },
+  {
+    "key": "CRUC-152",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T04:08:01.000+0000",
+      "created": "2007-11-26T22:57:47.000+0000",
+      "description": "see screenshot, but if it is crucible, it should show an extra row showing the cru version number too",
+      "summary": "sysinfo admin screen should show both CRU and FE license string"
+    }
+  },
+  {
+    "key": "CRUC-150",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-08-26T01:04:19.000+0000",
+      "created": "2007-11-26T04:01:44.000+0000",
+      "description": null,
+      "summary": "Allow the email address in the from section of the notification emails to be the user's actual email address"
+    }
+  },
+  {
+    "key": "CRUC-148",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T03:02:26.000+0000",
+      "created": "2007-11-22T23:12:40.000+0000",
+      "description": "From Pete's comment on CRUC-113:\r\n\r\n{quote}\r\nWhat about support for:\r\n\r\n   1. one or more revisions\r\n   2. eyeql\r\n   3. diff options\r\n   4. forcing diff/full source\r\n   5. specifc diff to revision/previous/last reviewed/tag\r\n\r\nThis would give us cru links on most pages in fisheye.\r\n{quote}",
+      "summary": "Extended functionality of /cru/create url"
+    }
+  },
+  {
+    "key": "CRUC-147",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-09T02:21:10.000+0000",
+      "created": "2007-11-21T05:03:21.000+0000",
+      "description": "Add permission checks to:\r\n\r\n- The API (ReviewServiceImpl)\r\n- The ReviewInterceptor\r\n- The reviewLink tag\r\n- Tags used for listing review operations\r\n- The results of review filters",
+      "summary": "Add Permissions Checks to All Operations on Reviews"
+    }
+  },
+  {
+    "key": "CRUC-146",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-22T00:56:08.000+0000",
+      "created": "2007-11-21T04:48:44.000+0000",
+      "description": null,
+      "summary": "Add review information to ALL search result pages"
+    }
+  },
+  {
+    "key": "CRUC-143",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T06:06:33.000+0000",
+      "created": "2007-11-20T04:29:18.000+0000",
+      "description": null,
+      "summary": "add review-constraints in the EyeQL where clause"
+    }
+  },
+  {
+    "key": "CRUC-142",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T03:02:11.000+0000",
+      "created": "2007-11-19T23:07:12.000+0000",
+      "description": "Not that the file name line *needs* any more icons :) but I'd like some way to denote that file has a comment on it when everything is collapsed. Maybe adding the ubiquitous Atlassian comment bubble would do the trick",
+      "summary": "Comment icon for file based review comment"
+    }
+  },
+  {
+    "key": "CRUC-141",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T03:01:03.000+0000",
+      "created": "2007-11-19T22:49:35.000+0000",
+      "description": "When reviewing a massive changeset, you generally want to do an expand all. Once expanded the boundaries between each change is often unclear. \r\n\r\nIt'd be good if we added a bottom border to {{div.change}} when it's expanded, that helps the eye scan through lots of files more easily.",
+      "summary": "Botom border for changes"
+    }
+  },
+  {
+    "key": "CRUC-140",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-18T23:58:56.000+0000",
+      "created": "2007-11-16T06:12:20.000+0000",
+      "description": "you should be able to go from child to parant, and the other way round",
+      "summary": "ensure \"linked\" reviews are exported thru data in remote api"
+    }
+  },
+  {
+    "key": "CRUC-139",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T05:46:44.000+0000",
+      "created": "2007-11-16T06:06:12.000+0000",
+      "description": "in this review, I can't add newer versions (revision 13109) of the files to the review.\r\nhttp://equity.sydney.atlassian.com/crucible/cru/CR-1224\r\n\r\nThe busy icon just stays spinning. There are no js errors, and this behavior occurs in both FF and Safari.\r\n\r\n",
+      "summary": "Can't add new versions of the same file to a review"
+    }
+  },
+  {
+    "key": "CRUC-138",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T03:00:44.000+0000",
+      "created": "2007-11-16T03:17:52.000+0000",
+      "description": null,
+      "summary": ";jsessionid appears in file path in the Files tab of the Manage Files tab"
+    }
+  },
+  {
+    "key": "CRUC-137",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-23T05:43:57.000+0000",
+      "created": "2007-11-14T06:43:30.000+0000",
+      "description": "The way Crucible currently handles notifications for comment edits isn't intuitive.\n\nI made a comment in a review and edited the comment twice:\n\n# Added a general comment with the content _Test comment_.\n# Edited the comment to _Editing test comment_.\n# Edited the comment to _Editing test comment again._\n\nThis generated me the attached three email notifications (I have enabled notifications on my actions), each of which said _CR-6 Simon Lieschke commented_. The notifications were a bit confusing because they don't differentiate between a comment being added and a comment being edited. That said I'd really care about receiving notifications for edited comments. Confluence doesn't send notifications for comment edits and I've never taken issue to that because generally people don't significantly go and alter a comment to change its original meaning once they've made it. Differentiating between comments being added and edited would satisfy me - that should be enough for me to create an email filter that allows me to trash edited comment notifications if they don't help me.\n\nI've also attached the resulting RSS feed from my three actions. It displays three separate entries, all with the latest state of the comment. I'd expect a single item to appear in the RSS feed per comment (and obviously for the state of the item to reflect the latest version of the comment).",
+      "summary": "Improvements to notifications generated from editing comments"
+    }
+  },
+  {
+    "key": "CRUC-133",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-11-07T11:06:11.000+0000",
+      "description": "See CRC-110 in your support system. \r\n\r\nA colleague today tried to create a CR on just everything that was in the repository. Not changesets, just the state of the head revision on the trunk. As we started off with an import, there's no \"empty\" changeset to diff against and whatever we do in the files selection screen, Crucible comes up with a nonsensical set of changes to files. \r\n\r\nThe work-around is to svn copy everything to a new branch in a single changeset and work with that, but what's the use of using Crucible's SVN interface if we have to copy over whole source trees to separate branches before we can get them into a review??",
+      "summary": "Changeset/File selection is too hard"
+    }
+  },
+  {
+    "key": "CRUC-129",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-09-24T13:39:46.000+0000",
+      "created": "2007-11-02T13:54:10.000+0000",
+      "description": "Fisheye users which have been modified by the admin to no longer be crucible users are correctly removed from the selection of possible reviewers, but still wrongly occur in the custom filter lists.",
+      "summary": "Non crucible users are listed in custom filter drop-downs"
+    }
+  },
+  {
+    "key": "CRUC-128",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-09T00:31:44.000+0000",
+      "created": "2007-11-02T06:08:20.000+0000",
+      "description": "Here's the email I just got from crucible:\r\n\r\nNotice *Summary: null*\r\n\r\n{panel}\r\nCR-192 CR-192 has been summarized and closed by Dushan Hanuska\r\n\r\n---\r\n\r\nID: CR-192 https://svn.atlassian.com/privateeye/cru/CR-192/review\r\n\r\nTitle: JavaDoc bugs\r\n\r\nStatement of Objectives:\r\n\r\n\r\nState: Closed\r\n\r\nSummary: null\r\n\r\nAuthor: Dushan Hanuska\r\nModerator: Dushan Hanuska\r\nReviewers: (0 active, 1 completed*)\r\n  Chris Mountford  (*)\r\n\r\n{panel}",
+      "summary": "email notification of review closure prints literal \"null\" for absent field value"
+    }
+  },
+  {
+    "key": "CRUC-127",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T01:11:22.000+0000",
+      "created": "2007-11-02T01:07:31.000+0000",
+      "description": null,
+      "summary": "Improperly stopping crucible causes data loss!"
+    }
+  },
+  {
+    "key": "CRUC-126",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-05-07T05:17:08.000+0000",
+      "created": "2007-10-26T19:21:54.000+0000",
+      "description": "There's been a few times when we want to review code that's been commited over a span of a few days, but review it as a single review.  The process of doing this is kind of difficult right now.  In order for the review to be set up correctly, you need to click the oldest review (date-wise), then the last-oldest, then the last-last-oldest, etc...  After you finally choose the newest, the review should be setup right.  (Still, though, you have to look over the inidividual files diff ranges and make sure it's right, because it's very easy for something to go wrong.)  Additionally, if someone else commited changes in a file between your changes, the other person's change will show up in the review.  It would be much clearer if the review somehow distinguished who changed what, so that you could see what is in the review because you checked it and what is in there because it happened to be added to the file between your changes.\r\n\r\nSo, in summary, the problems are:\r\n - Setting up a review from multiple commits requires a lot of patience and time, and is easy to do wrong.\r\n - Other people's changes are included in the review.\r\n\r\nSpecific areas for improvement are:\r\n - Make setting up a multi-commit review easier.  (Provide a time-span, or start/stop date, possibly letting you exclude commits.)\r\n - Distinguish who changed what in a multi-commit review, so you can see the change but know it's not something you should be reviewing.\r\n\r\n",
+      "summary": "Better Multi-Commit Reviews"
+    }
+  },
+  {
+    "key": "CRUC-124",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-05-21T02:31:02.000+0000",
+      "created": "2007-10-25T01:10:36.000+0000",
+      "description": "See http://www.cenqua.com/forums/thread.jspa?messageID=17461#17461",
+      "summary": "Confirm peekaboo bug in IE6 & 7"
+    }
+  },
+  {
+    "key": "CRUC-123",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-02-03T03:12:53.000+0000",
+      "created": "2007-10-25T00:53:43.000+0000",
+      "description": "create a review with \"fred\" as a reviewer. Delete fred in fisheye. \"fred\" still (appropriately) is listed as a reviewer. now edit review details (eg add another reviewer). Fred disappears as a reviewer.\r\n\r\nFred should appear in the edit list on that page. (or as a hidden field so he gets re-added)",
+      "summary": "editing review detail that contains a deleted user drops the user from the participant list"
+    }
+  },
+  {
+    "key": "CRUC-122",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T06:05:14.000+0000",
+      "created": "2007-10-23T00:19:28.000+0000",
+      "description": "Need a way to move a review to a different project. Especially useful if you keep creating reviews in the wrong project.\r\n\r\nThere needs to be a \"move review\" permission.",
+      "summary": "Move review to another project"
+    }
+  },
+  {
+    "key": "CRUC-121",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-14T05:11:28.000+0000",
+      "created": "2007-10-22T04:58:09.000+0000",
+      "description": "Return something along the following (for Rest API eyeql search specifying \"...return reviews\")\r\n\r\n{code}\r\n<reviews>\r\n\t<review>\r\n              <id>CR-3</id>\r\n              <title>second revisions</title>\r\n              <description>\r\n                 Generated from changeset comments:\r\n                 MAIN:matt:20041116234847: second revisions\r\n              </description>\r\n              <state>Draft</state>\r\n              <isDraft>true</isDraft>\r\n              <isOpen>false</isOpen>\r\n              <isClosed>false</isClosed>\r\n         </review>\r\n         ...\r\n</reviews>\r\n{code}\r\n\r\nImplement same for XML RPC, web UI EyeQL search & CSV formatted search",
+      "summary": "EyeQL return clause: reviews"
+    }
+  },
+  {
+    "key": "CRUC-119",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:59:54.000+0000",
+      "created": "2007-10-18T07:02:56.000+0000",
+      "description": "It would be good to be alerted to the fact if a review is created that contains files already under review.\r\n\r\nAt the most basic level - you could check for changesets which are identical?",
+      "summary": "Detect and report revisions which are already under review"
+    }
+  },
+  {
+    "key": "CRUC-118",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:59:27.000+0000",
+      "created": "2007-10-17T00:52:14.000+0000",
+      "description": "I wanted to create a quick review of some code that Nick checked in. because I was the creator of the review, I was made \"Moderator\", which meant I couldn't be a \"Reviewer\". I think that in itself might be too prescriptive, but at any rate if there is a checkbox saying \"let anyone join as a reviewer\" it should allow the moderator to join. My natural inclination was to think \"how can I be a reviewer of this code - ah look a checkbox that promises to let anyone be a reviewer, that should do it\". \r\n ",
+      "summary": "\"allow anyone to join\" checkbox should do just that"
+    }
+  },
+  {
+    "key": "CRUC-116",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-05-07T05:11:39.000+0000",
+      "created": "2007-10-16T21:03:06.000+0000",
+      "description": "Fully support reviews that span multiple revisions of the same files. \r\n\r\nMust support the ability to switch between original review content (revisions,patches,comments,defects) and content added after changes. \r\n\r\nExample use case:\r\n# Reviewer notes defect\r\n# Author commits fix\r\n# Fix revision added to existing Review\r\n# Reviewers notified and able to view _new_ changes and _old_ changes and comment.\r\n# goto 1\r\n",
+      "summary": "Iterative Review"
+    }
+  },
+  {
+    "key": "CRUC-115",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-13T23:13:56.000+0000",
+      "created": "2007-10-16T19:09:27.000+0000",
+      "description": "A nice little feature to let you paste patches for review from the clipboard.  (Would integrate well with Eclipse's 'paste patch to clipboard'.)",
+      "summary": "Accept Patch Review From Clipboard"
+    }
+  },
+  {
+    "key": "CRUC-114",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-06-15T01:11:22.000+0000",
+      "created": "2007-10-16T12:42:11.000+0000",
+      "description": "Optionally set a due date for reviews. Support reminders as the due time approaches and nagging as it passes.\r\n\r\nvia http://www.cenqua.com/forums/thread.jspa?threadID=3209",
+      "summary": "Due date & Reminders"
+    }
+  },
+  {
+    "key": "CRUC-113",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-22T23:13:41.000+0000",
+      "created": "2007-10-16T05:16:44.000+0000",
+      "description": "Accepted URL params will be:\r\n\r\n+legacy format+\r\n* csid (1 or more)\r\n* repo (repository name)\r\ne.g.\r\n{noformat}\r\nhttp://localhost:6060/foo/cru/create?csid=1234&repo=test\r\n{noformat}\r\n\r\n+new format+\r\n* csid (1 or more, of the form //repo/csid  - %2F is '/' URL encoded)\r\ne.g. \r\n{noformat}\r\nhttp://localhost:6060/foo/cru/create?csid=%2F%2Frepoa%2F1234&csid=%2F%2Frepob%2F7583\r\n{noformat}\r\n\r\nNote that a mixture of old/new format is also accepted\r\n\r\n+optional params+\r\n* title (review title)\r\n* description (review description)",
+      "summary": "Allow creation of reviews for multiple changesets through /cru/create URL"
+    }
+  },
+  {
+    "key": "CRUC-112",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T00:58:16.000+0000",
+      "created": "2007-10-16T01:53:23.000+0000",
+      "description": "Change the help URLs on the Crucible application screens to point to the new doc pages.\r\n\r\n    * Use permanent URLs.\r\n    * Implement a single file containing the help links (as is done for JIRA) - better for maintainability and versioning.\r\n    * Maybe we can host the help-links file on Atlassian servers by default, instead of shipping it with the product? So the code would have to say something like:\r\n          o Look for my help-links file locally.\r\n          o If not found, look for my help-links file on Atlassian servers.\r\n          o Having found my help-links file, look to see if there is a help link for my field (e.g. by field ID).\r\n          o If no help link found, do not display help icon.\r\n          o If help link found, collect the corresponding URL and display the help icon.\r\n\r\nThis way, we can dynamically add the help links as we build the documentation pages. And we can also allow our customers to supply their own help-links file e.g. if they have downloaded our docs and installed the docs on their own Confluence server (e.g. within a firewall).\r\n\r\nNOTE: At each major product release (1.1, 1.2, etc), the doc space on CAC is archived. The online help links will need to take the archiving process into account, because URLs will change. ",
+      "summary": "Point online help links to new Crucible doc space"
+    }
+  },
+  {
+    "key": "CRUC-111",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-11T07:06:58.000+0000",
+      "created": "2007-10-16T01:45:57.000+0000",
+      "description": "The new Crucible doc space is now ready for publication:\r\nhttp://confluence.atlassian.com/display/CRUCIBLE\r\n\r\nAt publication, we need to redirect/update documentation links from other places, including:\r\n\r\n   1. Redirect http://www.cenqua.com/crucible/doc/latest/ to the new Confluence space.\r\n   2. Check Cenqua websites for any other necessary redirects.\r\n   3. READMEs that ship with Crucible for URLs that need changing.\r\n\r\n",
+      "summary": "Update links etc to new Crucible docs on CAC"
+    }
+  },
+  {
+    "key": "CRUC-110",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-12-09T00:25:07.000+0000",
+      "created": "2007-10-16T01:39:34.000+0000",
+      "description": "Review, expand and enhance the Crucible User Guide.\r\n\r\nIn particular, examine the *comments* on the following extranet page: [FE-CRU planning braindump 20-08-2007|http://extranet.atlassian.com/display/FECRU/FE-CRU+planning+braindump+20-08-2007] - the documentation can help by providing:\r\n* Simple overview.\r\n* Attractive,short \"getting started\" page.\r\n* Clear and detailed explanation of the review workflow, roles and statuses.",
+      "summary": "Review and enhance the Crucible User Guide"
+    }
+  },
+  {
+    "key": "CRUC-109",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-14T05:53:03.000+0000",
+      "created": "2007-10-15T03:36:19.000+0000",
+      "description": "When summarizing a review, that still has active reviewers, I am presented with the attached screen.",
+      "summary": "Presented with Post/delete drafts buttons when no comments drafted made"
+    }
+  },
+  {
+    "key": "CRUC-108",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:58:56.000+0000",
+      "created": "2007-10-15T03:08:28.000+0000",
+      "description": "When I followed the instructions using the example at: http://www.cenqua.com/crucible/doc/latest/admin/security/ajp13.html, I received the initial login page without the images when viewing http://servername/fisheye. The images where missing because it didn't know where to find static. When I attempted to login it tried to post to http://servername/login rather then what I would have thought would be http://servername/fisheye/login.\r\n\r\nI attempted to resolve by establishing a web context and it then forced my URL to be http://servername/fisheye/fisheye. I tried the site URL and didn't help either although I'm not sure what difference it really made. \r\n\r\nI changed my Apache config to use \"JkMount /* worker1\" and \"JkMount / worker1\" which allows me to use http://servername/ which is sufficient for my needs.\r\n\r\nWhat I don't see is what the difference was in the ajp configuration recommended and what I was doing incorrectly. My DocumentRoot was set else where but the documentation didn't mention a need to change other settings so figure something is missing.",
+      "summary": "Configuration with AJP didn't work as anticipated"
+    }
+  },
+  {
+    "key": "CRUC-107",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T06:06:23.000+0000",
+      "created": "2007-10-15T02:55:24.000+0000",
+      "description": "Originally the users were created using firstname.lastname syntax but now I'd like to use the ajp connector and bind into the other systems which use firstname.lastname@company.com. \r\n\r\nWondering if there is an easy way to change the username so I don't loose all the existing code reviews associated with the usernames.\r\n\r\nI initially had trouble using the @ sign when creating the users using Crucible internal user which enforces \"Username can only contain alphanumeric, underscore, dot or dash\". When creating through ajp the restriction is not enforced (thankfully :-)).",
+      "summary": "Ability to change username"
+    }
+  },
+  {
+    "key": "CRUC-106",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-10-16T01:30:03.000+0000",
+      "created": "2007-10-12T03:51:18.000+0000",
+      "description": "Work with Matt to ensure that this page is complete before we put the Confluence documentation space live:\r\nhttp://confluence.atlassian.com/display/CRUCIBLE/Crucible+and+FishEye",
+      "summary": "Add content to new documentation page ' Crucible and FishEye'"
+    }
+  },
+  {
+    "key": "CRUC-105",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-10-25T00:32:56.000+0000",
+      "created": "2007-10-10T22:59:42.000+0000",
+      "description": "Once the new Crucible doc space is published, upload PDF, XML and HTML versions to the Documentation (ALLDOCS) space.",
+      "summary": "Upload PDF, XML and HTML versions of Crucible docs"
+    }
+  },
+  {
+    "key": "CRUC-104",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-10-25T05:55:21.000+0000",
+      "created": "2007-10-10T16:13:33.000+0000",
+      "description": "Reviewing a patch is causing an error to appear in Crucible.  The logs print out: \r\n--\r\n2007-10-10 12:01:15,635 INFO  [btpool0-2032] fisheye.app AnnotatorTag-doStartTag - AnnotatorTag error\r\njava.lang.ArrayIndexOutOfBoundsException\r\n--\r\n\r\nCrucible shows:\r\n--\r\nThe reported problem was: \r\nAnnotatorTag\r\nYou are running release CR1.1.2 FE1.3.7 (build-246 2007-10-02), please report your release number when reporting bugs.\r\n--\r\n\r\nI will attach the patch that causes the problem.",
+      "summary": "AnnotatorTag error reviewing patch"
+    }
+  },
+  {
+    "key": "CRUC-103",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T05:18:05.000+0000",
+      "created": "2007-10-10T06:39:53.000+0000",
+      "description": "Create/Update/Delete projects, set default moderators and reviewers",
+      "summary": "Create admin page for Projects"
+    }
+  },
+  {
+    "key": "CRUC-102",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T05:17:27.000+0000",
+      "created": "2007-10-10T06:38:27.000+0000",
+      "description": "Create a model object, a schema update and initialisation task to create a default project and assign existing reviews to it.",
+      "summary": "Create Project Model object and Hibernate DB upgrade"
+    }
+  },
+  {
+    "key": "CRUC-101",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T05:19:00.000+0000",
+      "created": "2007-10-10T06:35:48.000+0000",
+      "description": "Crucible/FishEye Projects are analogous to JIRA projects.\r\n\r\nSee http://extranet.atlassian.com/display/FECRU/Projects",
+      "summary": "Add 'Projects'"
+    }
+  },
+  {
+    "key": "CRUC-100",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T00:58:16.000+0000",
+      "created": "2007-10-10T01:32:06.000+0000",
+      "description": "Move Crucible documentation from Cenqua site (http://www.cenqua.com/crucible/doc/latest) to new Crucible space on Confluence CAC (http://confluence.atlassian.com/display/CRUCIBLE/).\r\n\r\n# {color:green}DONE: {color}  Migrate the docs to the above space.\r\n# {color:green}DONE: {color}  Unhide http://confluence.atlassian.com/display/CRUCIBLE.\r\n# Redirect http://www.cenqua.com/crucible/doc/latest/ to the new Confluence space. See CRUC-111.\r\n# Redirect http://www.atlassian.com/software/crucible/docs to the new Confluence space. See WEB-612.\r\n# {color:green}DONE: {color} Add a link to new space on this page : http://confluence.atlassian.com/display/ALLDOC/Atlassian+Documentation.\r\n# Check Cenqua websites for any other necessary redirects. See CRUC-111\r\n#  Check READMEs that ship with Crucible for URLs that need changing. See CRUC-111.\r\n# Check for any context-sensitive help links that need changing. See CRUC-112.\r\n# {color:green}DONE: {color} See specific questions on [extranet|http://extranet.atlassian.com/display/TECHWRITING/Crucible+migration+-+questions].\r\n# {color:green}DONE: {color}  Branch off separate JIRA tasks for more detailed updates to the documentation e.g. more comprehensive user guide.\r\n# {color:green}DONE: {color} Check all doc spaces on CAC for any links to Crucible/FishEye docs which need updating.",
+      "summary": "Move Crucible docs to Confluence"
+    }
+  },
+  {
+    "key": "CRUC-99",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T00:54:56.000+0000",
+      "created": "2007-10-09T23:16:07.000+0000",
+      "description": "   2. As a team leader, I would like to see statistics about number of major and minor issues found per developer.\r\n\r\n \r\n\r\nBest regards,\r\n\r\n \r\n\r\nLubos\r\n\r\n \r\n\r\nLubo\u0161 Miku\u0161iak | Team Leader Development | TomTom | lubos.mikusiak@tomtom.com | +31 (0)20 753 5095 desk | +31 (0)6 5424 6427 mobile\r\n\r\n ",
+      "summary": "Feature request: I would like to see statistics about number of major and minor issues found per developer."
+    }
+  },
+  {
+    "key": "CRUC-98",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-09-28T22:20:56.000+0000",
+      "created": "2007-10-09T21:42:05.000+0000",
+      "description": "From an IM conversation I just had:\r\n\r\n(5:38:50 PM) him: quick ?\r\n(5:38:56 PM) me: shoot\r\n(5:39:03 PM) him: does it piss people off when I respond to every fisheye [ed: meant crucible] comment?\r\n(5:39:09 PM) me: not me!\r\n(5:39:24 PM) him: i wish there was a checkbox thingy or something so I can know I've done it\r\n(5:39:31 PM) me: yeah...\r\n\r\nSo yeah... a checkbox to know your comment has been grokked, and for the reviewee to remember he's grokked it.",
+      "summary": "Comment Checkbox, as in, \"I've done this\""
+    }
+  },
+  {
+    "key": "CRUC-97",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-10-09T21:24:38.000+0000",
+      "description": "When committing changes to code, allow for the change to be 'linked' to a particular review or possibly even a specific review comment.  For example, when making a commit, if the commit comment contains \"CR-45\" it would be linked to review 45.  Or if it contains \"CR-45-124\" it would link it to review 45, comment 124.  And then if you were looking at the review in Crucible, there would be some way to see all the changesets that were made as a result of the review or as a result of comments made on a review.   Maybe an indicator next to a comment if a change was made that was linked to that comment.",
+      "summary": "Link code changes to reviews or review comments"
+    }
+  },
+  {
+    "key": "CRUC-96",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-10-09T17:42:32.000+0000",
+      "description": "It'd be great if there was an option to expand the context of the diff shown in Crucible so you could just see a little more of what's before & after the change.  Right now you can choose to view the whole file, but that's a lot bigger than necessary most times.  Even just being able to click on the arrows or ... area and drag up or down to reveal more context would be great.",
+      "summary": "Ability to Expand Context"
+    }
+  },
+  {
+    "key": "CRUC-95",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T06:59:18.000+0000",
+      "created": "2007-10-09T16:06:21.000+0000",
+      "description": "The \"Change Diff\" buttons lose state when changing the diff on a file.\r\n\r\nSteps to Reproduce:\r\n{quote}\r\n1. Go to an Open Review of which you are the Author\r\n2. Go to the Review Tab (1.jpg)\r\n3. Click \"Show Choose Diff Buttons\" (2.jpg)\r\n4. Click \"Change Diff\" (3.jpg)\r\n5. Click \"Update\" (4.jpg)  ->  *Notice that the file that has been updated no longer has the \"Change Diff\" button while the rest do*\r\n6. Click \"Hide Choose Diff Buttons\" -> *Notice that the changed file now has the button while the rest do not*\r\n{quote}\r\n\r\nAfter these steps, you can repeatedly click the Hide/Show Change Diff Buttons to see the problem.",
+      "summary": "Change Diff Buttons Losing State"
+    }
+  },
+  {
+    "key": "CRUC-94",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T06:09:13.000+0000",
+      "created": "2007-10-09T04:54:28.000+0000",
+      "description": "When viewing a repository in fisheye, show links to existing reviews along with the link to create a new review.",
+      "summary": "Show Existing Reviews In Fisheye"
+    }
+  },
+  {
+    "key": "CRUC-93",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-14T05:11:04.000+0000",
+      "created": "2007-10-09T01:04:23.000+0000",
+      "description": "if I'm not logged into cru and I click \"create review\" from a fisheye changeset, I get redirected to a login page and then once logged in I get plopped into the dashboard page, rather than the create review page. \r\n\r\n",
+      "summary": "Crucible should preserve request params/URLs through login redirects"
+    }
+  },
+  {
+    "key": "CRUC-92",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T01:06:55.000+0000",
+      "created": "2007-10-08T17:21:26.000+0000",
+      "description": "The new 'allow anonymous review browsing' option is great, but it should be extended to have permissions per repository.  Somehow the uploading of diff files would have to be placed into the correct repository too to get the right permissions.",
+      "summary": "Allow Anonymous Access Per Repository"
+    }
+  },
+  {
+    "key": "CRUC-91",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:58:11.000+0000",
+      "created": "2007-10-08T17:19:01.000+0000",
+      "description": "Just like FishEye can group CVS/SVN modules into different repositories, Crucible should be able to group reviews.  A single Crucible instance can be used to manage code reviews for very different products & teams.  Currently the dashboard page can bleed all these reviews together.  It should be possible to see \"All\", \"Open\", \"Pending\", \"Draft\", etc... within the group categories instead of just over the entire field.",
+      "summary": "Group Reviews According to FishEye Repositories (Other Something Else)"
+    }
+  },
+  {
+    "key": "CRUC-90",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-03T03:52:51.000+0000",
+      "created": "2007-10-08T17:15:54.000+0000",
+      "description": "Please allow an administrator the ability to cleanup other people's reviews.  If someone leaves the team or goes on vacation, an administrator currently needs to login as that user and alter their reviews.",
+      "summary": "More Administrator Options"
+    }
+  },
+  {
+    "key": "CRUC-89",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-03T03:53:08.000+0000",
+      "created": "2007-10-08T17:14:31.000+0000",
+      "description": "Please allow each repository to have a 'default reviewer' setting.  This would make sure that any review created from a FishEye commit within that repository would default to the given reviewer(s).  If the review was created from Crucible directly, each user could also have default reviewer(s).",
+      "summary": "Add 'Default Reviewers'"
+    }
+  },
+  {
+    "key": "CRUC-88",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-27T06:07:57.000+0000",
+      "created": "2007-10-08T17:12:53.000+0000",
+      "description": "On fast-growing teams, it is difficult for all team members to remember & add each person on the team as a reviewer.  Our team reviews everyone else's code, so it is very important that every person knows there's a new review going on.  Currently the only way to do this is to add each team member as a reviewer (or, with the new 'join a review' option, send an additional email out to the team's email list).\r\n\r\nPlease add the ability to group certain members into a team and add a 'team' as a reviewer.  (This would internally add all the individual members of the team.)",
+      "summary": "Review Groups"
+    }
+  },
+  {
+    "key": "CRUC-86",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-05T06:08:38.000+0000",
+      "created": "2007-10-07T23:46:24.000+0000",
+      "description": "via CRUC-57",
+      "summary": "add \"allow anyone\" as a per-project default"
+    }
+  },
+  {
+    "key": "CRUC-85",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T01:08:57.000+0000",
+      "created": "2007-10-05T21:47:55.000+0000",
+      "description": "   1. Sometimes we need to see differences in UNICODE files. These are, for example, files with localized messages. Crucible does not seem to be able to handle UNICODE files. Last time I tried to see the differences, Crucible simply displayed the latest version of the file.\r\n \r\n\r\nBest regards,\r\n\r\n \r\n\r\nLubos\r\n\r\n \r\n\r\nLubo\u0161 Miku\u0161iak | Team Leader Development | TomTom | lubos.mikusiak@tomtom.com | +31 (0)20 753 5095 desk | +31 (0)6 5424 6427 mobile\r\n\r\n ",
+      "summary": "Sometimes we need to see differences in UNICODE files."
+    }
+  },
+  {
+    "key": "CRUC-84",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2008-04-10T00:54:55.000+0000",
+      "created": "2007-10-05T15:50:37.000+0000",
+      "description": "Contributors are sometimes providing patches on JIRA tickets.\r\nWe need to be able to create a review directly from JIRA when ready to integrate the change.",
+      "summary": "Ability to create a review directly from JIRA"
+    }
+  },
+  {
+    "key": "CRUC-83",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-05-12T06:01:28.000+0000",
+      "created": "2007-10-05T04:27:39.000+0000",
+      "description": "'Assign' page - mention that you can restrict who is eligible to be a reviewer; and define default reviewers\r\nNEW PAGE: 'Security'\r\nNEW PAGE: 'Metrics'\r\nNEW PAGE: 'Projects'\r\nNEW PAGE: 'Integration / Customise'\r\nAdd to 'Audit Trail': 'As well as being searchable within Crucible, all reviews and comments can be browsed from within FishEye.'\r\n",
+      "summary": "updates to Crucible Feature Tour (post 1.2 launch)"
+    }
+  },
+  {
+    "key": "CRUC-82",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:57:30.000+0000",
+      "created": "2007-10-04T03:31:42.000+0000",
+      "description": "\r\nThe FE link in Cru should do the following:\r\n\r\n * if 1 repo configured, go to that.\r\n * if >1 repo configured, the link should be a drop down which submits on change",
+      "summary": "improve navigation from Crucible to FishEye"
+    }
+  },
+  {
+    "key": "CRUC-80",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-12T03:44:20.000+0000",
+      "created": "2007-10-02T00:05:48.000+0000",
+      "description": null,
+      "summary": "Should be able to create a review when there are no configured repositories"
+    }
+  },
+  {
+    "key": "CRUC-79",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:57:11.000+0000",
+      "created": "2007-09-28T11:42:08.000+0000",
+      "description": "see example screenshot, it shows revisions that were the result of a directory move",
+      "summary": "crucible shows \"move to\" when it really is a \"move from\""
+    }
+  },
+  {
+    "key": "CRUC-78",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-14T05:06:13.000+0000",
+      "created": "2007-09-28T10:55:19.000+0000",
+      "description": null,
+      "summary": "merge cru/fe src and content trees"
+    }
+  },
+  {
+    "key": "CRUC-77",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:56:52.000+0000",
+      "created": "2007-09-28T01:43:09.000+0000",
+      "description": "With large reviews, IE seems to respond very slowly to mouse-over and mouse-click events. For example, mouse-over the title to edit the title, or mouse-dragging lines to add a comment.",
+      "summary": "IE responds slowly with large reviews"
+    }
+  },
+  {
+    "key": "CRUC-76",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-09-28T07:39:13.000+0000",
+      "created": "2007-09-27T23:13:06.000+0000",
+      "description": "create a review, don't assign any reviewers, and hit abandon.\r\n\r\nOn the confirm screen, the reviewer-autocompleter no longer works.",
+      "summary": "reviewer autocomplete doesn't work in abandon-confirm screen"
+    }
+  },
+  {
+    "key": "CRUC-75",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-08-17T02:54:04.000+0000",
+      "created": "2007-09-27T11:20:59.000+0000",
+      "description": "see screenshots:\r\n1) an unexpanded file\r\n2) expanding the file (pressing triangle expander)\r\n3) same as 2) but with lines selected (shows anything interesting?)",
+      "summary": "expanding a file makes other visual elements \"go funny\""
+    }
+  },
+  {
+    "key": "CRUC-74",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2007-09-27T08:02:32.000+0000",
+      "description": "Enable the moderator/creator to change the diff version for a whole review. \r\n\r\nSpecifically for a whole review choose:\r\n * no diff - i.e. show annotations instead of diffs\r\n * previous \r\n\r\nfor bonus points\r\n * last reviewed\r\n * date \r\n\r\nAs well as changing a review at the preview stage, it would be good to select this option in the \"manage files\" tab when initially selecting items for review. This could also be a sticky user pref too.",
+      "summary": "Change diff revision for entire review."
+    }
+  },
+  {
+    "key": "CRUC-73",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-12-03T04:08:23.000+0000",
+      "created": "2007-09-27T07:26:09.000+0000",
+      "description": "Add all the files from a directory to a review in one click. In the \"File\" tab, this could be as simple as a \"select all\" based on the current constraint. \r\n\r\nA recursive option and a \"one click\" from fisheye Browse would score bonus points.\r\n\r\n",
+      "summary": "Generate HEAD review from directory"
+    }
+  },
+  {
+    "key": "CRUC-72",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-09-27T11:21:52.000+0000",
+      "created": "2007-09-27T06:59:10.000+0000",
+      "description": "When you select a file via the \"Files\" tab in create review you get an error (see screenshot). The file is added to the review but the checkbox does not show as checked.",
+      "summary": "Javascript error when selecting revisions via the file tab"
+    }
+  },
+  {
+    "key": "CRUC-71",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-07-12T12:53:32.000+0000",
+      "created": "2007-09-27T06:49:35.000+0000",
+      "description": "Directories are erroneously marked as empty in the \"Files\" tab of create review.",
+      "summary": "Dirtree broken in select files tab "
+    }
+  },
+  {
+    "key": "CRUC-70",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-09-28T01:44:07.000+0000",
+      "created": "2007-09-27T06:43:19.000+0000",
+      "description": "1) After committing a comment on a review, the code diff is pushed off the right edge of the browser and only the comment is visible. I was using the side-by-side view at the time, if that matters. Works fine in FF.\r\n\r\n2) When clicking on certain action buttons, Crucible seems to lockup my browser. If doesn't happen everywhere - just some buttons. I believe clicking the \"Commit Log\" button completely locked up IE. In the task manager, it was using 95%+ of the cpu. Have yet to see the same sort of thing happen in FF.\r\n\r\n3) When viewing a diff in IE (side-by-side at least), the indentation in the code, isn't working.",
+      "summary": "Various UI issues when using IE6 or 7"
+    }
+  },
+  {
+    "key": "CRUC-69",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-09-28T12:06:49.000+0000",
+      "created": "2007-09-27T04:37:05.000+0000",
+      "description": "<%@page session=\"false\" contentType=\"text/html;charset=UTF-8\" %> and all that, plus any unnecessary session creation in the crucible UI code",
+      "summary": "ensure pages don't create sessions unnecessarily "
+    }
+  },
+  {
+    "key": "CRUC-68",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2007-11-12T04:45:57.000+0000",
+      "created": "2007-09-26T05:58:54.000+0000",
+      "description": "You can drag to select source lines when making a comment. You used to be able to drag to deselect lines. Now you can't. I'm not certain when this regression happened.",
+      "summary": "Dragging to deselect source lines no longer works"
+    }
+  },
+  {
+    "key": "CRUC-67",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/11771",
+        "id": "11771",
+        "key": "CRUC",
+        "name": "Crucible",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=11771&avatarId=105292",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=11771&avatarId=105292",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=11771&avatarId=105292",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=11771&avatarId=105292"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-05-29T01:49:57.000+0000",
+      "created": "2007-09-26T05:56:20.000+0000",
+      "description": "Whitespace changes don't get highlighted in the ediff view. See screenshot.",
+      "summary": "Change not highlighted in ediff"
+    }
+  }
+]

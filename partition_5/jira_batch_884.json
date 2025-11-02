@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "JRASERVER-19145",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2009-09-17T07:29:58.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19145].\n  {panel}\n\nWhen a Jira instance has a large number of issue, an optimise can cause HTTP threads to time out.  For example, on this instance, there are 190K issue with a 1.9G main index.  When the limit of 4000 issues is reached, the thread that causes that to be reached will kick off an optimised.  This means that the whole 1.9Gb index will be rewritten.  In this case, it took 111 seconds:\r\n\r\n{noformat}\r\n2009-09-17 17:17:06,293 http-8000-Processor49 INFO tstcreateissue73 62195x782165x2 1bxkl5q http://localhost:8000/secure/AddComment.jspa [jira.issue.index.DefaultIndexManager] Optimizing the\r\n index because 4009 issues have been re-indexed since last optimize. Threshold is 4000.\r\n2009-09-17 17:18:27,154 http-8000-Processor32 INFO tstcreateissue230 62195x782163x8 779gde http://localhost:8000/secure/CreateIssueDetails.jspa [jira.issue.index.DefaultIndexManager] Optimize index completed in 111623ms.\r\n{noformat}\r\n\r\nThis led to a timeout for a thread attempting to add a comment:\r\n\r\n{noformat}\r\n2009-09-17 17:18:57,865 http-8000-Processor32 ERROR tstcreateissue230 62307x782180x10 779gde http://localhost:8000/secure/AddComment.jspa [jira.issue.index.DefaultIndexManager] Wait attempt timed out - waited 30000 milliseconds\r\ncom.atlassian.jira.issue.index.IndexException: Wait attempt timed out - waited 30000 milliseconds        at com.atlassian.jira.issue.index.DefaultIndexManager.obtain(DefaultIndexManager.java:525)\r\n        at com.atlassian.jira.issue.index.DefaultIndexManager.await(DefaultIndexManager.java:466)        at com.atlassian.jira.issue.index.DefaultIndexManager.reIndexIssues(DefaultIndexManager.java:330)\r\n        at com.atlassian.jira.issue.index.DefaultIndexManager.reIndexIssues(DefaultIndexManager.java:282)        at com.atlassian.jira.issue.index.DefaultIndexManager.reIndexIssueObjects(DefaultIndexManager.java:292)\r\n        at sun.reflect.GeneratedMethodAccessor352.invoke(Unknown Source)        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)\r\n        at java.lang.reflect.Method.invoke(Method.java:597)        at com.atlassian.util.profiling.object.ObjectProfiler.profiledInvoke(ObjectProfiler.java:70)\r\n        at com.atlassian.jira.config.component.SwitchingInvocationHandler.invoke(SwitchingInvocationHandler.java:28)        at $Proxy63.reIndexIssueObjects(Unknown Source)\r\n        at com.atlassian.jira.event.listeners.search.IssueIndexListener.reIndex(IssueIndexListener.java:155)        at com.atlassian.jira.event.listeners.search.IssueIndexListener.issueCommented(IssueIndexListener.java:88)\r\n        at com.atlassian.jira.event.issue.AbstractIssueEventListener.workflowEvent(AbstractIssueEventListener.java:112)        at com.atlassian.jira.event.issue.IssueEventDispatcher.dispatchEvent(IssueEventDispatcher.java:125)\r\n        at com.atlassian.jira.event.issue.IssueEventDispatcher.dispatchEvent(IssueEventDispatcher.java:83)        at com.atlassian.jira.web.action.issue.AddComment.alertSystemOfComment(AddComment.java:101)\r\n        at com.atlassian.jira.web.action.issue.AddComment.doExecute(AddComment.java:85)        at webwork.action.ActionSupport.execute(ActionSupport.java:153)\r\n        at com.atlassian.jira.action.JiraActionSupport.execute(JiraActionSupport.java:59)        at webwork.dispatcher.GenericDispatcher.executeAction(GenericDispatcher.java:141)\r\n        at com.atlassian.jira.web.dispatcher.JiraServletDispatcher.service(JiraServletDispatcher.java:181)        at javax.servlet.http.HttpServlet.service(HttpServlet.java:729)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:269)        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n        at com.atlassian.core.filters.HeaderSanitisingFilter.doFilter(HeaderSanitisingFilter.java:44)        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)        at com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n        at com.atlassian.jira.web.filters.accesslog.AccessLogFilter.executeRequest(AccessLogFilter.java:154)        at com.atlassian.jira.web.filters.accesslog.AccessLogFilter.doFilter(AccessLogFilter.java:133)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n        at com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:119)        at com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:55)\r\n        at com.atlassian.jira.web.filters.SitemeshExcludePathFilter.doFilter(SitemeshExcludePathFilter.java:40)\r\n        at com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n        at com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n        at com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerF\r\n...\r\n{noformat}",
+      "summary": "Index optimise on large instances can cause timeouts for some requests"
+    }
+  },
+  {
+    "key": "JRASERVER-19144",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-17T07:13:54.000+0000",
+      "created": "2009-09-17T06:26:54.000+0000",
+      "description": "When linking an issue, the dropdown contains duplicate entries for 'relates to' and 'is related to'.",
+      "summary": "Link Issues dropdown has duplicate entries"
+    }
+  },
+  {
+    "key": "JRASERVER-19142",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-18T00:41:52.000+0000",
+      "created": "2009-09-17T04:58:16.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Create a custom field X of type select list. The options are 01,02,03,04.\r\n3. I encounter this error while testing with customer data.\r\n4. Now go to Advanced view and type X =, JQL auto complete gives you all the valid option. User select option say 02. Now the query is X = 02. Press enter to run query.\r\n\r\nResult:\r\n1. The query fails with message The option '2' for field 'X' does not exist.\r\n2. Just put quotes around the value and its start working but it can confuse user.\r\n\r\nExpected:\r\n1. Auto complete should take care of putting quotes.",
+      "summary": "User can't successfully use custom fields(of type select list) for searching using autocomplete in JQL view if values contain number. "
+    }
+  },
+  {
+    "key": "JRASERVER-19141",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-17T04:56:44.000+0000",
+      "created": "2009-09-17T04:17:18.000+0000",
+      "description": "I'd like to be able to add a gadget to my dashboard, that only I can see and use, that is not Whitelisted by the Admin.\r\n\r\n",
+      "summary": "Private Gadgets, from an arbitrary location?"
+    }
+  },
+  {
+    "key": "JRASERVER-19139",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-16T22:40:57.000+0000",
+      "created": "2009-09-17T01:48:05.000+0000",
+      "description": "Steps to reproduce:\r\n# Add voted issues gadget\r\n# Configure the gadget\r\n\r\nWhen you click the \"Include resolved issues\" label, it selects the checkbox for the \"Show the total votes per issue\" label.",
+      "summary": "Voted issues gadget \"Include resolved issues\" label selects wrong check box"
+    }
+  },
+  {
+    "key": "JRASERVER-19138",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-07-04T12:30:36.000+0000",
+      "created": "2009-09-17T01:29:15.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding bug report|http://jira.atlassian.com/browse/JRACLOUD-19138].\n  {panel}\n\nTextUtils.closeTags() does not handle self closing input fields.\r\nE.g.\r\n{code:java}\r\nTextUtils.closeTags(\"<input type='submit' name='Nick'/>\");\r\n{code}\r\n\r\nwill produce:\r\n{noformat}\r\n\"<input type='submit' name='Nick'/></input>\"\r\n{noformat}\r\n\r\nThis creates invalid html.  The only place I know that this can cause issues is in the introduction where we try to close off tags (not sure why).",
+      "summary": "TextUtils.closeTags() does not handle self closing input fields"
+    }
+  },
+  {
+    "key": "JRASERVER-19137",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-11-28T03:43:55.000+0000",
+      "created": "2009-09-17T01:19:45.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19137].\n  {panel}\n\nImprove the Your Watches and Your Votes actions so that they:\r\n* allow sorting of the issues\r\n* allow filtering of resolved issues",
+      "summary": "Your Watches and Your Votes actions should allow sorting and filtering of resolved issues"
+    }
+  },
+  {
+    "key": "JRASERVER-19136",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-06-29T18:08:47.000+0000",
+      "created": "2009-09-17T00:34:43.000+0000",
+      "description": "I have a Mantis database which stores attachments in the database.  Some of the issues have filenames that are not valid on Unix filesystems:\r\n{noformat}\r\nmysql> select filename from mantis_bug_file_table where filename like '%/%';\r\n+-------------------+\r\n| filename          |\r\n+-------------------+\r\n| mylyn/context/zip | \r\n| mylyn/context/zip | \r\n+-------------------+\r\n2 rows in set (0.02 sec)\r\n{noformat}\r\n\r\nTrying to import these issues breaks with:\r\n\r\n{noformat}\r\n2009-09-16 09:38:55,652 TP-Processor15 INFO [atlassian.jira.util.MantisImportBean]   Added attachment: \"mylyn/context/zip\" from database to MTD-584\r\n2009-09-16 09:38:55,656 TP-Processor15 ERROR [web.action.util.MantisImport] java.io.FileNotFoundException: /data/jirastudio/jira/attachments/MTD/MTD-584/10101_mylyn/context/zip (No such file or directory)\r\njava.io.FileNotFoundException: /data/jirastudio/jira/attachments/MTD/MTD-584/10101_mylyn/context/zip (No such file or directory)\r\n    at java.io.FileOutputStream.open(Native Method)\r\n    at java.io.FileOutputStream.<init>(FileOutputStream.java:179)\r\n    at java.io.FileOutputStream.<init>(FileOutputStream.java:131)\r\n    at com.atlassian.jira.util.MantisImportBean.importAttachments(MantisImportBean.java:1357)\r\n    at com.atlassian.jira.util.MantisImportBean.importIssues(MantisImportBean.java:632)\r\n    at com.atlassian.jira.util.MantisImportBean.importProjects(MantisImportBean.java:1155)\r\n    at com.atlassian.jira.util.MantisImportBean.doImport(MantisImportBean.java:307)\r\n    at com.atlassian.jira.web.action.util.MantisImport.doRun(MantisImport.java:188)\r\n    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n    ....\r\n{noformat}\r\n",
+      "summary": "Mantis importer tries to create attachment files with slashes"
+    }
+  },
+  {
+    "key": "JRASERVER-19135",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-17T23:27:03.000+0000",
+      "created": "2009-09-17T00:14:46.000+0000",
+      "description": "Steps:\r\n1. Restore the attached data.\r\n2. Login as veenu/pass. Goto Advanced view. Search for all issues in project Dashboard and try to order by \"textfield\" or \"MS\". Both are custom field which search option disable.\r\n\r\n\r\nResult:\r\n1. User can't get this fields as option for order by. Once user add them in issue navigator and sort on them, they get added to the query\r\n\r\nExpected:\r\n1. Auto complete show them as an option for OrderBy field.",
+      "summary": "JQL Auto complete doesn't show non searchable custom fields as option for Order By."
+    }
+  },
+  {
+    "key": "JRASERVER-19134",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-11-28T03:42:34.000+0000",
+      "created": "2009-09-17T00:04:39.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19134].\n  {panel}\n\nBecause the project gadget is not complicated enough already.\r\n\r\nWould love to add 2 more pieces of information to the gadget:\r\n* Project Avatar - we should display the avatar (on all views?).  Though due to the fact that viewing this is based on permissions, you need a way to be able get this image either via a proxy (only for remote) or via an ajax call.  An ajax call may be easier.\r\n* Project Description - for the detailed view we should add the project description.  This may blowout some layout...\r\n",
+      "summary": "Add more information to the detailed project view in the project gadget"
+    }
+  },
+  {
+    "key": "JRASERVER-19133",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-17T23:01:09.000+0000",
+      "created": "2009-09-17T00:03:39.000+0000",
+      "description": "Steps:\r\n1. Restore the attached data.\r\n2. Login as veenu/pass. Search for all issues in project Dashboard.\r\n3. Edit the columns by choosing Tools->Configure Columns and add fields like progress and sub tasks.\r\n4. Go to View issue mode and try to sort on progress/sub tasks.\r\n\r\nResult:\r\n1. Nothing happens.\r\n2. Its working fine in 3.13.5\r\n\r\nExpected:\r\n1. User should be able to sort on these fields.\r\n",
+      "summary": "User can't sort on fields like progress  and sub tasks in issue navigator."
+    }
+  },
+  {
+    "key": "JRASERVER-19132",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-17T00:38:39.000+0000",
+      "created": "2009-09-16T23:34:39.000+0000",
+      "description": "Currently in support, it is common practice to comment on an bug and link back to a support issue which exposed it. If this comment is set to public, any user viewing the comment may try to click on the link and will not find the support request as it's NOT public. It would be great if Jira could detect and warn about these potential security clashes at the time of comment submittal. I'm aware that this would only work for a single instance, and would also require parsing the URL (altho hopefully Don W's link canonicalising work will handle this), but would be hugely useful.",
+      "summary": "Autodetect link permission problems"
+    }
+  },
+  {
+    "key": "JRASERVER-19130",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T06:32:21.000+0000",
+      "created": "2009-09-16T06:05:04.000+0000",
+      "description": "{{JiraSafeActionParameterSetter}} holds a {{Map<Class<? extends Action>, PropertyDescriptor[]>}} to cache the action class's checked parameter lookup. The key in this class is a strong reference, and the class itself is held for the lifetime of the application by WebWork.\r\n\r\nThe key in this map needs to be a weak reference, not a strong one.",
+      "summary": "Permgen leak when doing Import All if a Plugins2 Webwork Action plugin is loaded"
+    }
+  },
+  {
+    "key": "JRASERVER-19129",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T05:48:08.000+0000",
+      "created": "2009-09-16T05:33:50.000+0000",
+      "description": "Steps to reproduce:\r\n\r\nAdd the voted issues gadget\r\nConfigure the gadget\r\nSelect show total votes\r\nSelect default columns\r\nSave gadget config\r\n\r\nThe gadget will only display the total votes column, the default columns get lost.",
+      "summary": "Voted Issue Gadget doesn't show default columns"
+    }
+  },
+  {
+    "key": "JRASERVER-19128",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2009-09-16T05:10:10.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Add any gadget having preferences dialog.\r\n3. Try clicking and selecting options from project/filter drop down to other options using mouse.\r\n\r\nResult:\r\n1. Its so slow.\r\n2. Try using keyboard and tab navigation, its fast.\r\n\r\nExpected:\r\n1. User should be able to perform selection easily.",
+      "summary": "Clicking on drop downs and other options in gadget preferences dialog in IE is slow"
+    }
+  },
+  {
+    "key": "JRASERVER-19126",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T06:03:08.000+0000",
+      "created": "2009-09-16T01:03:48.000+0000",
+      "description": "On EACJ when i click between the system dashboard and my own I see the throbbers still showing while the gadgets start showing content. Check out the attached video.\r\n\r\nThe content still seems to be correct.",
+      "summary": "The throbbers on the gadgets seem to still display while the html is rendering."
+    }
+  },
+  {
+    "key": "JRASERVER-19124",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-17T01:18:15.000+0000",
+      "created": "2009-09-16T00:55:02.000+0000",
+      "description": "The JQL history URLs use the executeAdvanced command on the issue navigator. This command does not set the edit mode to \"advanced\" in the session, which means:\r\n\r\n1. Perform a Jql search and copy and paste the url from the history \r\n2. create a new search and browse to simple edit mode\r\n3. paste the history url into the path bar and load\r\n4. Notice that your on advanced screen but your given the option to switch to the advanced mode and not simple.\r\n\r\nFix:\r\nexecuteAdvanced should set the edit mode to advanced in the session and cookie.\r\n\r\n",
+      "summary": "JQL History Urls show \"switch to advanced\" when already in advanced."
+    }
+  },
+  {
+    "key": "JRASERVER-19123",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-11-28T03:43:04.000+0000",
+      "created": "2009-09-16T00:52:59.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19123].\n  {panel}\n\nIn order to help support understand the state of a customer's JIRA, please let us know in the Support Request feature if the customer's JIRA is in need of a re-index due to a field change, etc.",
+      "summary": "Add the state of indexing information to the Submit Support Request feature."
+    }
+  },
+  {
+    "key": "JRASERVER-19122",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-16T23:20:16.000+0000",
+      "created": "2009-09-15T22:52:32.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. On a Dashboard X user has 20 gadgets, maximum allowed in any dashboard. Trying to add gadget thru gadget directory give proper error message.\r\n3. Now open an already saved filter and click view_charts.\r\n4. Try to save the chart on dashboard and select the dashboard X.\r\n\r\nResult:\r\n1. User can save on the dashboard without any issue.\r\n2. From functionality point of view no issue, no sure if this cause any major problem while user is performing other actions.\r\n\r\nExpected:\r\n1. User should be allowed to save on the Dashboard X or any dashboard with already having max gadget.OR may be JIRA should be smart to detect that and no show the dashboard in list.",
+      "summary": "User can add gadget on Dashboard(with already having maximum number of gadgets) thru charts dialog"
+    }
+  },
+  {
+    "key": "JRASERVER-19121",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T01:19:02.000+0000",
+      "created": "2009-09-15T22:40:45.000+0000",
+      "description": "Steps:\r\n1. Restore the data from attached file.\r\n2. Login as veenu/pass. User has a custom field called project picker of type project picker.\r\n3. Add a pie chart gadget on the dashboard and try to configure with statistics type \"Project picker\"\r\n\r\nResult:\r\n1. User get internal server error. There is null pointer exception in logs\r\n\r\nExpected:\r\n1. The gadget should work without any error message. ",
+      "summary": "Trying to configure pie chart gadget with statistics type custom field(of type Project picker) giving internal server error"
+    }
+  },
+  {
+    "key": "JRASERVER-19119",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-17T00:24:03.000+0000",
+      "created": "2009-09-15T06:56:59.000+0000",
+      "description": "Please update the Japanese language pack in JIRA",
+      "summary": "Update Japanese translation files"
+    }
+  },
+  {
+    "key": "JRASERVER-19118",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T07:04:10.000+0000",
+      "created": "2009-09-15T04:56:17.000+0000",
+      "description": "Steps:\r\n1. Restore the data from attached file.\r\n2. Login as veenu/pass. User has a custom field called version picker of type version picker.\r\n3. Add a pie chart gadget on the dashboard and try to configure with statistics type \"Version picker\"\r\n\r\nResult:\r\n1. User get internal server error. There is null pointer exception in logs\r\n\r\nExpected:\r\n1. The gadget should work without any error message. ",
+      "summary": "Trying to configure pie chart gadget with statistics type custom field(of type version picker) giving internal server error"
+    }
+  },
+  {
+    "key": "JRASERVER-19117",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T04:41:42.000+0000",
+      "created": "2009-09-15T03:05:19.000+0000",
+      "description": "Validation of previous days in Created Vs Resolved Chart allows values > 300\r\nPreviously we didn't allow values > 300. Is this behavior expected? ",
+      "summary": "Validation of previous days in Created Vs Resolved Chart allows values > 300"
+    }
+  },
+  {
+    "key": "JRASERVER-19116",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T02:40:08.000+0000",
+      "created": "2009-09-15T02:17:46.000+0000",
+      "description": "[3.0.8|https://maven.atlassian.com/contrib/com/atlassian/jira/plugins/jira-fisheye-plugin/3.0.8/] fixes all known issues preventing Fisheye plugin gadgets being deployed to external containers.",
+      "summary": "Upgrade bundled JIRA FishEye plugin to 3.0.8"
+    }
+  },
+  {
+    "key": "JRASERVER-19115",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2011-02-12T12:46:58.000+0000",
+      "created": "2009-09-15T02:15:31.000+0000",
+      "description": "The JIRA FishEye plugin gadgets (FishEye Charts, Crucible Charts and FishEye Recent Commits) are currently broken in the iGoogle gadget container.\r\n\r\nHowever, they work locally and in the Atlassian refapp, so the suspicion is that iGoogle is caching something that it shouldn't be.\r\n\r\nThe current plan is to re-test with iGoogle once JAC is upgraded to a JIRA beta with version 3.0.8 of the JIRA FishEye plugin deployed.",
+      "summary": "FishEye Gadgets Don't Work in iGoogle"
+    }
+  },
+  {
+    "key": "JRASERVER-19114",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-12-31T02:47:27.000+0000",
+      "created": "2009-09-15T01:50:41.000+0000",
+      "description": "I received a JVM segfault after performing the JIRA setup wizard with Sun JVM 1.6.0_16-b01 on linux.\r\n\r\nI have not been able to reproduce it, so I do not have a core dump or a log file.",
+      "summary": "Sun Java JVM segfault (SIGSEGV) on 1.6.0_16-b01 after setup"
+    }
+  },
+  {
+    "key": "JRASERVER-19113",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T01:25:13.000+0000",
+      "created": "2009-09-15T00:44:32.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA. Time tracking is \r\n2. Create a issue with estimate as 4h.\r\n3. The tooltip for \"Remaining Estimate\" and \"Time spent\" show \"Remaining Estimate -4 hours\"\r\n4. Log some work 2 hours.Now all tool tips are relevant.\r\n5. Now user has log another 2 h of work.\r\n6. View the tool tip for \"Remaining Estimate\" and \"Time spent\".\r\n\r\nResult:\r\n1. Both says \"Time Spent -4 hrs\". \r\n\r\nExpected:\r\n1. The tool tip for Remaining Estimate should be \"Remaining Estimate -0 hours\"\r\n2. Similarly when user has created issue, \"Time spent\" should show \"Time Spent -0 hrs\"",
+      "summary": "Tooltip for \"Remaining Estimate\" and \"Time Spent\" is wrong in certain scenarios"
+    }
+  },
+  {
+    "key": "JRASERVER-19112",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-02-17T05:25:30.000+0000",
+      "created": "2009-09-15T00:14:19.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Add \"Time Since Chart\" and \"Issue Statistics\" gadget on dashboard.\r\n3. Configure them with project name.\r\n4. Click on \"issue\" link in gadget.\r\n\r\nResult:\r\n1. It take user to issue navigator.\r\n\r\nExpected:\r\n1. Gadget configured with project name should be directed to issue tab in \"browse project\" for configured project.",
+      "summary": "For \"Time Since chart\" and \"Issue Statistics\" gadget configured with project name, clicking on issues link opens issues in issue navigator."
+    }
+  },
+  {
+    "key": "JRASERVER-19111",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-11-12T01:27:46.000+0000",
+      "created": "2009-09-15T00:06:07.000+0000",
+      "description": "Not sure how to repeat this.\r\n\r\nWhen I clicked on a link in a filter displayed on my dashboard, the next page rendered inside of the gadget.",
+      "summary": "click on dashboard widget container didn't open a new page but rendered the page in the container"
+    }
+  },
+  {
+    "key": "JRASERVER-19110",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T04:08:05.000+0000",
+      "created": "2009-09-14T23:58:46.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Add \"Time Since Chart\" gadget to dashboard.\r\n3. Configure the gadget with period \"daily\" and put number of days as 300. Save it\r\n4. Now click \"Edit\" to edit the preferences for gadget.\r\n5. Change the period to \"Weekly\" and put number of days above the limit 3000.\r\n6. It give proper error message, user cancel the operation.\r\n\r\nResult:\r\n1. User gets its earlier chart back, but there is also an error message related to weekly period...which is not required.\r\n2. Now if user click on \"Edit\", there is not \"cancel\" button in dialog.\r\n\r\nExpected:\r\n1. No error message should be there when user cancel the preferences setting.",
+      "summary": "Chart gadgets show error message when user enter some invalid value and then cancel it."
+    }
+  },
+  {
+    "key": "JRASERVER-19109",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T03:31:07.000+0000",
+      "created": "2009-09-14T23:34:45.000+0000",
+      "description": "Donna reported this problem: [ADM-4891|https://extranet.atlassian.com/jira/browse/ADM-4891]\r\n\r\nI noticed errors in the JIRA XML output:\r\n\r\n{Code}\r\nAn error occurred whilst rendering this message.  Please contact the administrators, and inform them of this bug.\r\n\r\nDetails:\r\n-------\r\norg.apache.velocity.exception.MethodInvocationException: Invocation of method 'getCustomFieldXML' in  class com.atlassian.jira.issue.views.IssueXMLView threw exception class java.lang.NoSuchMethodError : com.atlassian.jira.issue.statistics.util.OneDimensionalTermHitCollector.<init>(Ljava/lang/String;Ljava/util/Map;Lorg/apache/lucene/index/IndexReader;Lcom/atlassian/jira/web/FieldVisibilityManager;)V\r\n{Code}\r\n\r\nTo replicate this create a issue filter, then click the Views menu, then select XML.  It seems to happen on every filter.",
+      "summary": "Errors in filter xml view"
+    }
+  },
+  {
+    "key": "JRASERVER-19108",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-06-25T08:07:04.000+0000",
+      "created": "2009-09-14T20:40:14.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19108].\n  {panel}\n\nThis ticket is a follow up of JSP-43756.\r\n\r\nOur business case is as follow :\r\n* We are using Confluence as a requirement management tool to keep track of the User Stories\r\n* When an enhancement is requested by a client, it is captured in JIRA\r\n* When this enhancement is approved, we change the code and tie it back to the JIRA ticket using the Subversion Plugin\r\n* We *would like* to change the user story to account for the enhancement, and tie this change to the Confluence page back to the JIRA ticket, in pretty much the same way we are doing in Subversion\r\n\r\nWe could enter the ticket number in the Confluence change comment, and have a plugin pick that up and link it to the JIRA ticket.\r\n\r\nThat way, we would have a link from the ticket to the change in the code and the change in the requirement. We would have a link from both the code and  the requirement using the change comment.\r\n\r\nCurrently I have only see the possiblity of linking the complete Confluence page to the ticket as opposed to a particular changeset of this page.",
+      "summary": "Provide a way to link a Confluence Changeset to a JIRA ticket"
+    }
+  },
+  {
+    "key": "JRASERVER-19107",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-21T04:47:50.000+0000",
+      "created": "2009-09-14T18:38:15.000+0000",
+      "description": "We have a custom field with 2 contexts, one global, one for one specific project.  If you create a 2D filter statistics portlet, and pick that custom field as either of the axis fields, most of the links within the portlet return incorrect results.  The results get filtered to the 1 project with its own context.\r\n\r\nFor example:\r\n\r\ncustom field called Tester\r\n1 global context, 1 context for project FD (id=10082)\r\n2D filter stats portlet with Tester as Y axis, Status as X axis\r\npid=10082 gets added to the URLs for each Tester (row header), each cell, and each row total\r\n",
+      "summary": "2D Filter Statistics portlet links broken if one of the axis fields has more than one context"
+    }
+  },
+  {
+    "key": "JRASERVER-19106",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T02:45:59.000+0000",
+      "created": "2009-09-14T13:55:47.000+0000",
+      "description": "My navigator columns include the \"Since Last Comment\" field. When I select \"Recently Updated\" issues from JRA project and then click on the \"Since Last Comment\" column heading, it reverts back to \"Updated\" and refuses to sort as requested.\r\n\r\nThe URL is\r\nhttp://jira.atlassian.com/secure/IssueNavigator.jspa?sorter/field=customfield_10160&sorter/order=ASC",
+      "summary": "Sort by \"Since last Comment\" not working in latest release"
+    }
+  },
+  {
+    "key": "JRASERVER-19105",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T01:55:18.000+0000",
+      "created": "2009-09-14T08:41:47.000+0000",
+      "description": "If I add a maximisable gadget to the dashboard, then modify the frame colour of the gadget, then maximise the gadget, the following Tomcat error appears in the gadget's iframe.\r\n\r\n{quote}HTTP Status 404 - /secure/://undefined\r\n\r\ntype Status report\r\n\r\nmessage /secure/://undefined\r\n\r\ndescription The requested resource (/secure/://undefined) is not available.{quote}",
+      "summary": "Maximising gadget after changing the frame colour results in 404 error"
+    }
+  },
+  {
+    "key": "JRASERVER-19104",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T01:57:19.000+0000",
+      "created": "2009-09-14T07:27:19.000+0000",
+      "description": "The pom.xml needs to be included with the JIRA source release so it can be installed with the jar file.",
+      "summary": "pom.xml is not included in JIRA source release"
+    }
+  },
+  {
+    "key": "JRASERVER-19103",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-11-28T03:42:17.000+0000",
+      "created": "2009-09-14T06:18:51.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19103].\n  {panel}\n\nFor instance, if I specify -Djira.autoexport=true on the command line, this should be respected over and above whats set in the application properties.  This should happen for all properties.",
+      "summary": "Allow properties in jira-application.properties to be overiden from command line"
+    }
+  },
+  {
+    "key": "JRASERVER-19102",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T06:12:53.000+0000",
+      "created": "2009-09-14T06:07:02.000+0000",
+      "description": "{noformat}JVM Input Arguments                 : -Djava.util.logging.config.file=/opt/bamboo-agents/bamboo-agent-1/bamboo-agent-home/jira-4.0/target/apache-tomcat-5.5.27/conf/logging.properties -\r\nXX:MaxPermSize=128m -Djava.awt.headless=true -Xmx3072m -XX:+PrintGCTimeStamps -verbose:gc -XX:+PrintGCDetails -XX:+PrintTenuringDistribution -Xloggc:/opt/bamboo-agents/bamboo-agent-1/bamboo\r\n-agent-home/jira-4.0/target/gc.log -Djira.autoexport=false -Datlassian.mail.senddisabled=true -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Djira.home=/opt/performance/data\r\ndir/jira//data/ -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/opt/bamboo-agents/bamboo-agent-1/bamboo-agent-home/jira-4.0/target/apache-tomcat-5.5.\r\n27/common/endorsed -Dcatalina.base=/opt/bamboo-agents/bamboo-agent-1/bamboo-agent-home/jira-4.0/target/apache-tomcat-5.5.27 -Dcatalina.home=/opt/bamboo-agents/bamboo-agent-1/bamboo-agent-ho\r\nme/jira-4.0/target/apache-tomcat-5.5.27 -Djava.io.tmpdir=/opt/bamboo-agents/bamboo-agent-1/bamboo-agent-home/jira-4.0/target/apache-tomcat-5.5.27/temp{noformat}\r\n\r\nAs you can see, there's a -D for the auto export, however, Jira exports the data:\r\n{noformat}\r\n***************************************************************************************\r\nJIRA 4.0-SNAPSHOT build: 460 started. You can now access JIRA through your web browser.\r\n***************************************************************************************\r\n\r\n2009-09-14 00:57:20,934 main INFO     [atlassian.jira.upgrade.UpgradeManagerImpl] Detected that an upgrade is needed; existing data at build 438\r\n2009-09-14 00:57:20,935 main INFO     [atlassian.jira.upgrade.UpgradeManagerImpl] Exporting the existing data..\r\n2009-09-14 00:57:21,095 main INFO     [jira.action.admin.DataExport] Starting data export to file '/opt/performance/datadir/jira/data/indexes/jira_autoexport_20090914_005720.zip'.\r\n[Unloading class sun.reflect.GeneratedMethodAccessor43]\r\n[Unloading class sun.reflect.GeneratedConstructorAccessor37]\r\n[Unloading class sun.reflect.GeneratedConstructorAccessor34]\r\n2009-09-14 00:58:30,292 main INFO     [jira.action.admin.DataExport] Data export completed in 69197ms. Wrote 3249843 entities to export file '/opt/performance/datadir/jira/data/indexes/jira\r\n_autoexport_20090914_005720.zip'.\r\n2009-09-14 00:58:30,312 main INFO     [atlassian.jira.upgrade.UpgradeManagerImpl] Exported pre-upgrade data to: /opt/performance/datadir/jira/data/indexes/jira_autoexport_20090914_005720.zi\r\np{noformat}",
+      "summary": "Setting -Djira.autoexport=false does not prevent auto-export on startup"
+    }
+  },
+  {
+    "key": "JRASERVER-19101",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T08:04:51.000+0000",
+      "created": "2009-09-14T05:54:18.000+0000",
+      "description": "See the attached screenshot.",
+      "summary": "In german, some links are too wide in the admin section"
+    }
+  },
+  {
+    "key": "JRASERVER-19100",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T05:49:59.000+0000",
+      "created": "2009-09-14T05:23:52.000+0000",
+      "description": "Need to centre the table.",
+      "summary": "The table on the moveissue-updateworkflow.jsp page is not centered"
+    }
+  },
+  {
+    "key": "JRASERVER-19099",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T06:08:46.000+0000",
+      "created": "2009-09-14T05:10:01.000+0000",
+      "description": "This seems to be a regression as a result of JRA-15876.\r\n\r\nThe icon URL used to be escaped before being output into the XML view. Now it is not.\r\n\r\nThis causes the XML view to render incorrectly when the URL has certain characters in it e.g. ampersand. It was observed that if viewing the Search Request results as an XML view, the result source would be complete, however the view of that source in Firefox would be truncated (or not present at all).\r\n\r\nIt can also affect the JIRA Issues Macro in Confluence as the macro will be unable to parse the XML, e.g.\r\n\r\n{noformat}\r\n2009-09-14 13:56:30,058 WARN [http-8080-4] [confluence.extra.jira.JiraIssuesServlet] doGet An IO Exception has been encountered: Error on line 188: The reference to entity \"modificationDate\" must end with the ';' delimiter.\r\n -- url: /plugins/servlet/issue-retriever | userName: admin | referer: http://localhost:8080/display/ds/list\r\njava.io.IOException: Error on line 188: The reference to entity \"modificationDate\" must end with the ';' delimiter.\r\n\tat com.atlassian.confluence.extra.jira.DefaultJiraIssuesManager.getChannelElement(DefaultJiraIssuesManager.java:163)\r\n\tat com.atlassian.confluence.extra.jira.DefaultJiraIssuesManager.retrieveXML(DefaultJiraIssuesManager.java:192)\r\n\tat com.atlassian.confluence.extra.jira.JiraIssuesServlet.getResultJson(JiraIssuesServlet.java:165)\r\n{noformat}",
+      "summary": "XML view does not escape icon URLs"
+    }
+  },
+  {
+    "key": "JRASERVER-19098",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T04:59:33.000+0000",
+      "created": "2009-09-14T04:22:23.000+0000",
+      "description": "{code}\r\n009-09-13 21:56:39,449 TP-Processor10 ERROR pdzwart 78993x102x3 1yxrkgx /secure/CreateIssue.jspa [webwork.util.ValueStack] METHOD: \"createHtml\", exception: \r\njava.lang.NoSuchMethodError: com.atlassian.jira.issue.statistics.util.OneDimensionalTermHitCollector.<init>(Ljava/lang/String;Ljava/util/Map;Lorg/apache/lucene/index/IndexReader;Lcom/atlassian/jira/web/FieldVisibilityMan\r\nager;)V\r\n        at com.atlassian.jira.plugin.labels.utils.LabelUtils.getOneDimensionalTermHitCollector(LabelUtils.java:343)\r\n        at com.atlassian.jira.plugin.labels.utils.LabelUtils.getLabelFrequencyMap(LabelUtils.java:250)\r\n        at com.atlassian.jira.plugin.labels.utils.LabelUtils.getLabels(LabelUtils.java:159)\r\n        at com.atlassian.jira.plugin.labels.utils.LabelUtils.getSuggestedLabels(LabelUtils.java:204)\r\n        at com.atlassian.jira.plugin.labels.LabelsCFType.getLabelSuggestion(LabelsCFType.java:70)\r\n        at com.atlassian.jira.plugin.labels.LabelsCFType.getVelocityParameters(LabelsCFType.java:132)\r\n{code}\r\n\r\n\r\nIt seems to be the right version of the plugin\r\n\r\ntotal 2400\r\n-rw-r--r--  1 j2ee_extranet.atlassian.com-jira j2ee_extranet.atlassian.com-jira  557589 Sep 13 21:40 jira-calendar-plugin-1.10-beta6.jar\r\n-rw-r--r--  1 j2ee_extranet.atlassian.com-jira j2ee_extranet.atlassian.com-jira 1676330 Sep 13 21:40 jira-greenhopper-plugin-4.0-SNAPSHOT-jira40-complete.jar\r\n-rw-r--r--  1 j2ee_extranet.atlassian.com-jira j2ee_extranet.atlassian.com-jira   92028 Sep 13 21:40 jira-labels-plugin-2.3-beta6.jar\r\n-rw-r--r--  1 j2ee_extranet.atlassian.com-jira j2ee_extranet.atlassian.com-jira  103931 Sep 13 21:40 jira-toolkit-0.8-Beta5.jar\r\n",
+      "summary": "EACJ has 2d stats filter errors messages with the Labels plugin"
+    }
+  },
+  {
+    "key": "JRASERVER-19095",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-11-28T03:42:48.000+0000",
+      "created": "2009-09-14T01:57:52.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19095].\n  {panel}\n\n{quote}There are many factors impacting the visibility (and editability) of a field. I have had several cases where I made sure a screen included a field, only to find out the field was still not shown, or shown but read-only. Fiddling with screen schemes, screen definitions, field configurations, and field configuration schemes usually worked out, but there was no clear route, and no clear winner in what eventually caused the desired effect.{quote}\r\n\r\nI agree that JIRA is very complex and it can be difficult to ascertain why a field is visible/hidden or editable/read-only. We should create an FAQ that summarises the reasons why a field might be visible/hidden or editable/read-only, linking to the relevant documentation.",
+      "summary": "Create a FAQ on issue visibility and editability "
+    }
+  },
+  {
+    "key": "JRASERVER-19094",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-06-01T03:22:46.000+0000",
+      "created": "2009-09-14T01:31:32.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19094].\n  {panel}\n\nThis is a third party issue caused by bugs in IE8 that will cause it to request invalid urls such as:\r\n{quote}\r\n152.91.9.133 - - [14/Sep/2009:01:55:48 -0500] \"GET /s/448/1/1.0/_/download/bat%20%20%20%20%20acc=subText%3E%3Cspan%20class=date%3E21/Jun/09%2007:23%20PM%3C/span%3E%3C/span%3E%20%20%3C/div%3E%20%20%20%20%3Cdiv%20class= HTTP/1.1\" 404 1081 \"http://jira.atlassian.com/browse/CWD-86\" \"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.0.30729; .NET CLR 1.1.4322; .NET CLR 3.5.30729; InfoPath.2)\" 1224\r\n{quote}\r\n\r\nThe problem is described in more detail here:\r\n* http://blogs.msdn.com/ieinternals/archive/2009/07/27/Bugs-in-the-IE8-Lookahead-Downloader.aspx\r\n* http://connect.microsoft.com/IE/feedback/ViewFeedback.aspx?FeedbackID=467062\r\n\r\nThere's no ill effects for the end user but it does cause some ugly exceptions in the logs. See attachment for more details.\r\n",
+      "summary": "IE8's lookahead download will sometimes request invalid URLs"
+    }
+  },
+  {
+    "key": "JRASERVER-19093",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T01:51:52.000+0000",
+      "created": "2009-09-14T01:25:34.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Add any gadget where user need to select filter/project.\r\n3. Press space to see the list of all project/filters.\r\n\r\nResult:\r\n1. Nothing happens.\r\n\r\nExpected:\r\n1. User should see the list of projects and filters.",
+      "summary": "Project/filter drop down in gadgets is not showing any entry."
+    }
+  },
+  {
+    "key": "JRASERVER-19091",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-01-03T15:17:34.000+0000",
+      "created": "2009-09-14T00:18:43.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19091].\n  {panel}\n\n{panel:title=Atlassian Update - 9 January 2017|borderStyle=solid|borderColor=#ebf2f9|titleBGColor=#ebf2f9|bgColor=#ffffff}\r\nHi everyone,\r\n\r\nWe're pleased to announce that this suggestion was implemented in JIRA Server 7.3.\r\n\r\nWe'll keep you informed, once we decide to release this improvement to JIRA Cloud.\r\n\r\nPlease don't hesitate to contact us if you have any questions or feedback.\r\n\r\nRegards,\r\n Dave Meyer (Cloud)\r\n Eve Stankiewicz (Server)\r\n JIRA Product Managers\r\n{panel}\r\nIf you create a workflow with a few steps, but don't add any transitions to them, no transitions can be added and the steps cannot be deleted once the workflow scheme is associated to a project, even if you make a draft workflow.\r\n\r\nAs soon as you disassociate all projects from the workflow scheme, you can add transitions or delete the step.\r\n\r\nHow to reproduce:\r\n\r\n1. Create a workflow.\r\n 2. Create multiple steps in the workflow but add no transitions.\r\n 3. Create a workflow scheme.\r\n 4. Associate the workflow to an issue type in the workflow scheme.\r\n 5. Associate the workflow scheme to a project.\r\n 6. Create a draft of the workflow.\r\n 7. Try to add a transition to any of the steps.\r\n 8. Try to delete any of the steps.\r\n\r\nThis is not a support request, as I have a workaround: make sure every step has at least one transition before associating them to a project.",
+      "summary": "Allow to add transitions to a step on an active workflow even if it has no outgoing transitions when there are no issues in that step"
+    }
+  },
+  {
+    "key": "JRASERVER-19089",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T03:31:48.000+0000",
+      "created": "2009-09-14T00:01:45.000+0000",
+      "description": "Steps:\r\n1. View Group browser in IE 8.\r\n\r\nResult.\r\n1. All the group names are centrally indented.\r\n\r\nExpected:\r\n1. They should be left indented",
+      "summary": "Group name in \"Group Browser\" is not left indented in IE 8"
+    }
+  },
+  {
+    "key": "JRASERVER-19088",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T05:49:37.000+0000",
+      "created": "2009-09-13T23:31:15.000+0000",
+      "description": "When I set the \"Original Estimate\" with \"12h\" and I spent 8h in the issue.The \"Work Ratio\" is 67% and the \"Progress\" is 66%.\r\nI think they should be same.Is it a problem??\r\n\r\nSteps to replicate:\r\n\r\n# Create an issue ,set the \"Original Estimate\" with \"12h\" ,and then record the time spent with \"8h\" in the work log.\r\n# See the value of \"Work Ratio\" and \"Progress\" of the issue.",
+      "summary": "\"Work Ratio\" and \"Progress\" is not same"
+    }
+  },
+  {
+    "key": "JRASERVER-19087",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T06:03:29.000+0000",
+      "created": "2009-09-13T15:38:02.000+0000",
+      "description": "See screenshot attached, space (red bars on the screenshot) is very different between portlets, portlets and border.\r\nDoesn't look good.",
+      "summary": "Vertical and Horizontal space between portlets must be the same"
+    }
+  },
+  {
+    "key": "JRASERVER-19086",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T02:13:05.000+0000",
+      "created": "2009-09-11T20:14:00.000+0000",
+      "description": "A bug description should be short.  We get long descriptions because people paste entire email threads into the description when they create an issue.  If the comment field were available at the time of creation, they could type a short description, then paste their thread in the comment field, where it belongs.  This seems like \"low hanging fruit,\" and easy request to enhance the product.",
+      "summary": "Include \"comment\" field when creating a new issue."
+    }
+  },
+  {
+    "key": "JRASERVER-19085",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T02:09:20.000+0000",
+      "created": "2009-09-11T14:52:07.000+0000",
+      "description": "See the discussion at: http://www.nabble.com/Jira-SOAP-interface-and-remotely-updating-custom-fields-td22421561.html\r\n\r\nRemote API (SOAP or rest) needs to be able to update all fields associated with an issue independent of screen configuration. There are many use cases for automation being able to do things that are not possible to end users.\r\n\r\nA specific case is having a field that is replicated from an external system and any edits that would be done by users would be overridden on the next update from the external system.",
+      "summary": "Remote API support for changing fields not on edit screen"
+    }
+  },
+  {
+    "key": "JRASERVER-19084",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-18T03:37:04.000+0000",
+      "created": "2009-09-11T13:39:28.000+0000",
+      "description": "I am supplying valid a valid username & password to the SMTP Email Server and yet I'm still getting an Authentication Unsuccessful message.\r\n\r\n\r\nAn error has occurred with sending the test email:\r\ncom.atlassian.mail.MailException: javax.mail.AuthenticationFailedException\r\n\tat com.atlassian.mail.server.impl.SMTPMailServerImpl.send(SMTPMailServerImpl.java:191)\r\n\tat com.atlassian.jira.web.action.admin.mail.SendTestMail.doExecute(SendTestMail.java:88)\r\n\tat webwork.action.ActionSupport.execute(ActionSupport.java:153)\r\n\tat com.atlassian.jira.action.JiraActionSupport.execute(JiraActionSupport.java:58)\r\n\tat webwork.dispatcher.GenericDispatcher.executeAction(GenericDispatcher.java:141)\r\n\tat com.atlassian.jira.web.dispatcher.JiraServletDispatcher.service(JiraServletDispatcher.java:181)\r\n\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:803)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:269)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.core.filters.HeaderSanitisingFilter.doFilter(HeaderSanitisingFilter.java:44)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.jira.web.filters.accesslog.AccessLogFilter.executeRequest(AccessLogFilter.java:154)\r\n\tat com.atlassian.jira.web.filters.accesslog.AccessLogFilter.doFilter(AccessLogFilter.java:133)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.parsePage(PageFilter.java:119)\r\n\tat com.opensymphony.module.sitemesh.filter.PageFilter.doFilter(PageFilter.java:55)\r\n\tat com.atlassian.jira.web.filters.SitemeshExcludePathFilter.doFilter(SitemeshExcludePathFilter.java:40)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.seraph.filter.SecurityFilter.doFilter(SecurityFilter.java:206)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.security.auth.trustedapps.filter.TrustedApplicationsFilter.doFilter(TrustedApplicationsFilter.java:98)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.seraph.filter.BaseLoginFilter.doFilter(BaseLoginFilter.java:131)\r\n\tat com.atlassian.jira.web.filters.JiraLoginFilter.doFilter(JiraLoginFilter.java:70)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter$1.doFilter(DelegatingPluginFilter.java:66)\r\n\tat com.atlassian.oauth.serviceprovider.internal.servlet.OAuthFilter.doFilter(OAuthFilter.java:69)\r\n\tat com.atlassian.plugin.servlet.filter.DelegatingPluginFilter.doFilter(DelegatingPluginFilter.java:74)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:42)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.util.profiling.filters.ProfilingFilter.doFilter(ProfilingFilter.java:99)\r\n\tat com.atlassian.jira.web.filters.JIRAProfilingFilter.doFilter(JIRAProfilingFilter.java:16)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.jira.web.filters.ActionCleanupDelayFilter.doFilter(ActionCleanupDelayFilter.java:59)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.jira.web.filters.RequestCleanupFilter.doFilter(RequestCleanupFilter.java:53)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.johnson.filters.AbstractJohnsonFilter.doFilter(AbstractJohnsonFilter.java:72)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat org.tuckey.web.filters.urlrewrite.UrlRewriteFilter.doFilter(UrlRewriteFilter.java:350)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.gzipfilter.GzipFilter.doFilterInternal(GzipFilter.java:75)\r\n\tat com.atlassian.gzipfilter.GzipFilter.doFilter(GzipFilter.java:51)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.plugin.servlet.filter.IteratingFilterChain.doFilter(IteratingFilterChain.java:46)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:55)\r\n\tat com.atlassian.plugin.servlet.filter.ServletFilterModuleContainerFilter.doFilter(ServletFilterModuleContainerFilter.java:41)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.jira.web.filters.CurlyQuotesFilter.doFilter(CurlyQuotesFilter.java:24)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.core.filters.cache.AbstractCachingFilter.doFilter(AbstractCachingFilter.java:33)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.core.filters.encoding.AbstractEncodingFilter.doFilter(AbstractEncodingFilter.java:41)\r\n\tat com.atlassian.core.filters.AbstractHttpFilter.doFilter(AbstractHttpFilter.java:31)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat com.atlassian.jira.startup.JiraStartupChecklistFilter.doFilter(JiraStartupChecklistFilter.java:51)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:215)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:188)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:174)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:117)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:108)\r\n\tat org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:548)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:174)\r\n\tat org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:874)\r\n\tat org.apache.coyote.http11.Http11BaseProtocol$Http11ConnectionHandler.processConnection(Http11BaseProtocol.java:665)\r\n\tat org.apache.tomcat.util.net.PoolTcpEndpoint.processSocket(PoolTcpEndpoint.java:528)\r\n\tat org.apache.tomcat.util.net.LeaderFollowerWorkerThread.runIt(LeaderFollowerWorkerThread.java:81)\r\n\tat org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:689)\r\n\tat java.lang.Thread.run(Thread.java:619)\r\nCaused by: javax.mail.AuthenticationFailedException\r\n\tat javax.mail.Service.connect(Service.java:319)\r\n\tat javax.mail.Service.connect(Service.java:169)\r\n\tat javax.mail.Service.connect(Service.java:118)\r\n\tat javax.mail.Transport.send0(Transport.java:188)\r\n\tat javax.mail.Transport.send(Transport.java:118)\r\n\tat alt.javax.mail.TransportImpl.send(TransportImpl.java:18)\r\n\tat com.atlassian.mail.server.impl.SMTPMailServerImpl.send(SMTPMailServerImpl.java:177)\r\n\t... 105 more\r\n\r\n\r\nDEBUG: getProvider() returning javax.mail.Provider[TRANSPORT,smtp,com.sun.mail.smtp.SMTPTransport,Sun Microsystems, Inc]\r\nDEBUG: getProvider() returning javax.mail.Provider[TRANSPORT,smtp,com.sun.mail.smtp.SMTPTransport,Sun Microsystems, Inc]\r\nDEBUG SMTP: useEhlo true, useAuth true\r\nDEBUG SMTP: useEhlo true, useAuth true\r\nDEBUG SMTP: trying to connect to host \"145.65.30.28\", port 25, isSSL false\r\n220 CLIFTON28.Clifton.TheCliftonGroup.com Microsoft ESMTP MAIL Service, Version: 6.0.3790.3959 ready at  Fri, 11 Sep 2009 08:24:31 -0500 \r\nDEBUG SMTP: connected to host \"145.65.30.28\", port: 25\r\n\r\nEHLO CLIFTONUTIL2\r\n250-CLIFTON28.Clifton.TheCliftonGroup.com Hello [10.4.1.60]\r\n250-TURN\r\n250-SIZE\r\n250-ETRN\r\n250-PIPELINING\r\n250-DSN\r\n250-ENHANCEDSTATUSCODES\r\n250-8bitmime\r\n250-BINARYMIME\r\n250-CHUNKING\r\n250-VRFY\r\n250-X-EXPS GSSAPI NTLM LOGIN\r\n250-X-EXPS=LOGIN\r\n250-AUTH GSSAPI NTLM LOGIN\r\n250-AUTH=LOGIN\r\n250-X-LINK2STATE\r\n250-XEXCH50\r\n250 OK\r\nDEBUG SMTP: Found extension \"TURN\", arg \"\"\r\nDEBUG SMTP: Found extension \"SIZE\", arg \"\"\r\nDEBUG SMTP: Found extension \"ETRN\", arg \"\"\r\nDEBUG SMTP: Found extension \"PIPELINING\", arg \"\"\r\nDEBUG SMTP: Found extension \"DSN\", arg \"\"\r\nDEBUG SMTP: Found extension \"ENHANCEDSTATUSCODES\", arg \"\"\r\nDEBUG SMTP: Found extension \"8bitmime\", arg \"\"\r\nDEBUG SMTP: Found extension \"BINARYMIME\", arg \"\"\r\nDEBUG SMTP: Found extension \"CHUNKING\", arg \"\"\r\nDEBUG SMTP: Found extension \"VRFY\", arg \"\"\r\nDEBUG SMTP: Found extension \"X-EXPS\", arg \"GSSAPI NTLM LOGIN\"\r\nDEBUG SMTP: Found extension \"X-EXPS=LOGIN\", arg \"\"\r\nDEBUG SMTP: Found extension \"AUTH\", arg \"GSSAPI NTLM LOGIN\"\r\nDEBUG SMTP: Found extension \"AUTH=LOGIN\", arg \"\"\r\nDEBUG SMTP: Found extension \"X-LINK2STATE\", arg \"\"\r\nDEBUG SMTP: Found extension \"XEXCH50\", arg \"\"\r\nDEBUG SMTP: Found extension \"OK\", arg \"\"\r\nDEBUG SMTP: Attempt to authenticate\r\nAUTH LOGIN\r\n334 VXNlcm5hbWU6\r\nY2xpZnRvblxtYW5kZXJzb24=\r\n334 UGFzc3dvcmQ6\r\nU3Bpa2U3MDI=\r\n535 5.7.3 Authentication unsuccessful.\r\n",
+      "summary": "Email Authentication Unsuccessful"
+    }
+  },
+  {
+    "key": "JRASERVER-19083",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2012-11-11T21:18:38.000+0000",
+      "created": "2009-09-11T13:18:51.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19083].\n  {panel}\n\n{panel:title=Atlassian Status as of 12 November 2012|borderStyle=solid|borderColor=#3C78B5| titleBGColor=#3C78B5| bgColor=#E7F4FA}\r\nHi everyone,\r\n\r\nThanks so much for your votes and comments on this issue.\r\n\r\nWe're happy to announce that this new feature is resolved in JIRA 5.2, satisfying 171 votes!\r\n\r\nThe Filter Results Gadget in JIRA 5.2 now supports ordering of fields. The ability to order columns has also been added to the Assigned to Me, Voted Issues, Watched Issues and In Progress Issues gadgets.\r\n\r\nThanks for your patience and we hope you appreciate our open approach to feature requests.\r\n\r\nCheers,\r\n\r\nBryan\r\nJIRA Product Management\r\nbrollins at atlassian dot com\r\n\r\n{panel}\r\n\r\n*Original description*\r\n\"Filter Results\" gadget is a very nice gadget and it allows one to select the fields to display, however there is no option to control the field order.",
+      "summary": "Allow ordering of fields in gadgets"
+    }
+  },
+  {
+    "key": "JRASERVER-19082",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T01:59:50.000+0000",
+      "created": "2009-09-11T10:06:12.000+0000",
+      "description": "Wanted to share a dashboard with a group called 'Project Leads'\r\nThis group didn't show up when editing the sharing properties of the dashboard.\r\nWhen I changed the group name from 'Project Leads' to 'ProjectLeads', I could select the group.\r\n(Maybe this is a duplicate but couldn't find it yet)",
+      "summary": "Not able to share a dashboard with a group if the groupname has a space in it"
+    }
+  },
+  {
+    "key": "JRASERVER-19081",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T01:21:22.000+0000",
+      "created": "2009-09-11T07:39:03.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Add \"Time since gadget\". I was able to see the problem with \"recently created charts\" too.\r\n3. Configure the gadget by selecting the project/filter from list and not from advanced search.\r\n4. Click save.\r\n\r\nResult.\r\n1. The gadget doesn't show up in full view. Refresh helps\r\n\r\nExpected:\r\n1. Gadget should show up in full view once configured.\r\n",
+      "summary": "Time since gadget doesn't show in full size if configured using project/filter list in Safari 4"
+    }
+  },
+  {
+    "key": "JRASERVER-19080",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2010-11-15T04:45:00.000+0000",
+      "created": "2009-09-11T06:49:14.000+0000",
+      "description": "Up until JIRA 3.10, the Mantis importer appeared to able to import into an existing project.  What it actually did was create a new project with the same key as the existing project (which shouldn't be possible) and import the issues into that project.\r\n\r\nThis was discovered and fixed in 3.10 (JRA-12827), but the 'fix' was to simply disallow importing into existing projects.  Currently you'll get an error if you try:\r\n\r\n!mantisimporter.png!\r\n\r\nBeing able to import into an existing project is fairly essential, especially since, because of JRA-8248, one cannot bulk move projects around without losing versions/components.",
+      "summary": "Allow Mantis importer to import into existing project"
+    }
+  },
+  {
+    "key": "JRASERVER-19079",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T03:01:17.000+0000",
+      "created": "2009-09-11T06:25:15.000+0000",
+      "description": "this has recently broken, they target the top frame",
+      "summary": "Edit and Refresh buttons on Gadgets don't work on iGoogle"
+    }
+  },
+  {
+    "key": "JRASERVER-19078",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T02:35:43.000+0000",
+      "created": "2009-09-11T06:19:27.000+0000",
+      "description": "Got stack trace while working with JIRA, not sure what has caused it. ",
+      "summary": "Got stack trace with \"null pointer exception\"..not sure about culprit"
+    }
+  },
+  {
+    "key": "JRASERVER-19077",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-13T23:36:41.000+0000",
+      "created": "2009-09-11T05:51:55.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA and add project gadget on dashboard.\r\n2. Suppose we have some project and some categories defined in JIRA\r\n3. By default the project radio button is select and \"All projects\" is selected. Set the focus to projects radio button. Can we set the focus on gadget configuration after immediately adding of gadgets?\r\n4. Try selecting options in list by up and down arrow keys.\r\n\r\nResult:\r\n1. Its moving between \"Projects\" and \"Categories\" radio button.\r\n2. By default for categories \"All categories\" is not selected.\r\n\r\nExpected:\r\n1. User should be able to select project or categories using up and down arrow keys.\r\n2. All categories should be default selection for categories radio button.\r\n",
+      "summary": "In project gadget using key up and down move between \"Project\" and category options "
+    }
+  },
+  {
+    "key": "JRASERVER-19076",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T06:43:40.000+0000",
+      "created": "2009-09-11T05:15:27.000+0000",
+      "description": "We need to test Showing X of Y feature and more/less link in 2D Stats gadget.\r\n\r\n",
+      "summary": "Create selenium tests for Showing X of Y feature and more/less link in 2D Stats gadget"
+    }
+  },
+  {
+    "key": "JRASERVER-19075",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T05:21:02.000+0000",
+      "created": "2009-09-11T05:03:57.000+0000",
+      "description": "Unable to load configuration files of Services that live in Plugins2 plugins.\r\nThe file is loaded as a Resource on the classpath, but OSGi plugins don't live on the standard classpath.",
+      "summary": "Unable to load configuration files of Services that live in Plugins2 plugins."
+    }
+  },
+  {
+    "key": "JRASERVER-19074",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T03:04:37.000+0000",
+      "created": "2009-09-11T04:59:22.000+0000",
+      "description": "ensure no cache",
+      "summary": "audit cache headers on all gadget resources"
+    }
+  },
+  {
+    "key": "JRASERVER-19073",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T04:07:29.000+0000",
+      "created": "2009-09-11T04:05:15.000+0000",
+      "description": "Steps:\r\n1. Suppose some user has setup JIRA with evaluation license, the license gadget show the correct license info and all.\r\n2. Now suppose the license is expired and user update the license with commercial or any other license type.\r\n3. View the info in admin gadget.\r\n\r\nResult:\r\n1. It still show the last status your license is expired.\r\n\r\nExpected:\r\n1. The admin gadget should always show latest update.\r\n ",
+      "summary": "admin gadget is caching the licensing information"
+    }
+  },
+  {
+    "key": "JRASERVER-19072",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-11-28T03:43:09.000+0000",
+      "created": "2009-09-11T03:49:04.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19072].\n  {panel}\n\nSteps:\r\n1. Setup JIRA 4.0\r\n2. To test the support Request, I setup mail server with some arbitrary values.\r\n3. Go to user browser and create a user and check \"Send password Email\" option. Click \"ok\".\r\n\r\nResult:\r\n1. In UI there is no message regarding no sending of mail but in logs user can lot of logging.\r\n\r\nExpected:\r\n1. In case when the mail server is not setup properly we should be giving some error message when sending mail fail.\r\n2. No stack trace.",
+      "summary": "If there is problems communicating with the mail server the errors only appear in the server log"
+    }
+  },
+  {
+    "key": "JRASERVER-19071",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T00:48:06.000+0000",
+      "created": "2009-09-11T03:36:56.000+0000",
+      "description": "Steps:\r\n1. Setup JIRA with JIRA evaluation license key.\r\n2. By default we issue user unlimited user evaluation license key.\r\n3. Login to try to add users.\r\n\r\nResult:\r\n1. We keep on giving message that you have now x number of user and count toward your license but in licensing dialog no details\r\n\r\nExpected:\r\n1. We should be adding a text saying unlimited user license.\r\n  ",
+      "summary": "JIRA unlimited user evalution license doesn't give any information regarding user in licensing window."
+    }
+  },
+  {
+    "key": "JRASERVER-19070",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T04:08:05.000+0000",
+      "created": "2009-09-11T02:26:13.000+0000",
+      "description": "After starting the JVM and JIRA's bootstrap, the following error is written to {{logs/catalina.out}}:\r\n\r\n{noformat}\r\n2009-09-11 12:22:13,135 JiraQuartzScheduler_Worker-0 ERROR ServiceRunner   Service Provider Token Remover [atlassian.jira.service.ServiceRunner\r\n] An error occured while trying to run service 'Service Provider Token Remover'. null\r\njava.lang.NullPointerException\r\n        at com.atlassian.sal.jira.scheduling.JiraPluginSchedulerService.run(JiraPluginSchedulerService.java:53)\r\n        at com.atlassian.jira.service.JiraServiceContainerImpl.run(JiraServiceContainerImpl.java:61)\r\n        at com.atlassian.jira.service.ServiceRunner.execute(ServiceRunner.java:48)\r\n        at org.quartz.core.JobRunShell.run(JobRunShell.java:191)\r\n        at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:516)\r\n{noformat}",
+      "summary": "Service Provider Token Remover java.lang.NullPointerError after JIRA bootstrap"
+    }
+  },
+  {
+    "key": "JRASERVER-19069",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T06:15:41.000+0000",
+      "created": "2009-09-11T01:48:38.000+0000",
+      "description": "Steps:\r\n1. Setup JIRA 4.0 and restore data through xml file having V1 license. \r\n2. User has put a JIRA 4.0 maintenance expired license. Click OK.\r\n\r\nResult:\r\n1. It import the data and not perform upgrade as expected.\r\n2. On going to the browser, it give user relevant error message but doesn't provide a link to edit or update license.\r\n\r\nExpected:\r\n1. The page should have a link to update the license.\r\n\r\n",
+      "summary": "Trying to start JIRA with maintenance expired license, doesn't give user any option to update license"
+    }
+  },
+  {
+    "key": "JRASERVER-19068",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-10-06T05:16:27.000+0000",
+      "created": "2009-09-11T01:36:47.000+0000",
+      "description": "The doco on http://confluence.atlassian.com/x/F4FiCw needs to be updated with pointers to the 4.0 javadoc. May also need to update the code examples to ensure that the data is correct.",
+      "summary": "Fix the JQL doco to point to the latest JavaDOC "
+    }
+  },
+  {
+    "key": "JRASERVER-19067",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T01:08:31.000+0000",
+      "created": "2009-09-11T01:33:09.000+0000",
+      "description": "When the user first logs in after a server reset and clicks a filter in his favourite filters gadget, they are taken to the issue navigator with no fitler in session and are just shown the \"create new\" link.\r\n\r\nIf the user then creates a new filter, goes back to the dash board and tries to load the filter again, it works.\r\n\r\nIt seems the the \"requestId\" url parameter isn't working as expected when there isn't already a request in session.",
+      "summary": "Favourite filters gadget does not load filter if there isnt already one in session"
+    }
+  },
+  {
+    "key": "JRASERVER-19065",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T01:09:44.000+0000",
+      "created": "2009-09-11T00:36:56.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA\r\n2. From \"Manage Filter\" dialog open any already saved filter.\r\n3. Click View_Charts and click \"Save to Dashboard\"\r\n\r\nResult:\r\n1. Beside selecting dashboard option, user has option to save that filter.\r\n2. We never used to show the filter save dialog when user create charts with already save filter.\r\n\r\nExpected:\r\n1. Only Dashboard selection drop down should be there. \r\n",
+      "summary": "Opening charts dialog with already saved filter is showing create filter option."
+    }
+  },
+  {
+    "key": "JRASERVER-19064",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-11-09T06:31:43.000+0000",
+      "created": "2009-09-11T00:29:46.000+0000",
+      "description": "Often I want to refresh my dashboard, (in order to refresh the lists of Issues in my Gadgets).\r\n\r\nNow, I automatically want to click on the Dashboard tab again, but there are only links on the inactive tabs.\r\n\r\nAdd to this the fact that clicking the browser refresh button takes 10 seconds to load the page, whereas the tab links take 5 seconds (browser refresh does a lot of checking for updates on resources, it seems to get \"304 Not modified\" most the time, but this still adds up).\r\n",
+      "summary": "Let the active tab on the Dashboard have a link that will \"refresh\" the current Dashboard."
+    }
+  },
+  {
+    "key": "JRASERVER-19063",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T02:09:45.000+0000",
+      "created": "2009-09-11T00:22:00.000+0000",
+      "description": "Legacy portlets are displayed in the add gadget browser. We should probably hide them if we have replacement gadgets available.",
+      "summary": "hide legacy portlets from gadget browser"
+    }
+  },
+  {
+    "key": "JRASERVER-19062",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T01:30:28.000+0000",
+      "created": "2009-09-10T22:34:03.000+0000",
+      "description": "From Rich:\r\n{quote}\r\nThe atl.popup decorator is pretty sparse.  I was logging in and\r\napproving tokens as different users and never knew which user I was\r\nlogged in as and approving the token for.  Probably adding the users\r\nname to the upper right similar to the regular JIRA pages would be\r\ngood enough.  It doesn't even have to be a menu or anything, just\r\nsomething so users can tell who they're logged in as.\r\n{quote}",
+      "summary": "The popup decorator in JIRA is too sparse"
+    }
+  },
+  {
+    "key": "JRASERVER-19060",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-15T00:59:16.000+0000",
+      "created": "2009-09-10T21:09:44.000+0000",
+      "description": "Javascript code below works in firefox.\r\n<script type=\"text/javascript\">\r\n\r\ndocument.jiraform.onsubmit=myFunction;\r\n\r\nfunction myFunction()\r\n{\r\nvar d = new java.util.Date();\r\nvar curr_day = d.getDate();\r\nvar curr_year = d.getYear()+1900;\r\nvar curr_month = d.getMonth();\r\nvar cur_time = d.getTime();\r\nvar curr_hour = d.getHours();\r\nvar curr_min = d.getMinutes();\r\nvar m_names = new Array(\"Jan\", \"Feb\", \"Mar\", \r\n\"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \r\n\"Oct\", \"Nov\", \"Dec\");\r\n\r\nvar ap = \"AM\";\r\nif (curr_hour   > 11) { ap = \"PM\"; }\r\nif (curr_hour   > 12) { curr_hour = curr_hour - 12; }\r\nif (curr_hour   == 0) { curr_hour = 12;        }\r\n\r\n\r\ndue_date = curr_day+\"/\"+m_names[curr_month]+\"/\"+curr_year+\" \"+curr_hour+\":\"+curr_min+\" \"+ap;\r\n\r\n\r\n//java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(new Date().getTime());\r\n\r\n//alert(\"due date string =\" +due_date);\r\nif (document.getElementById(\"customfield_10300\").value == \"\")\r\n{document.getElementById(\"customfield_10300\").value = due_date;}\r\nreturn true;\r\n}\r\n</script>",
+      "summary": "Java script error when using javascript to set a value on a custom date field in internet explorer"
+    }
+  },
+  {
+    "key": "JRASERVER-19058",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T01:54:48.000+0000",
+      "created": "2009-09-10T18:20:17.000+0000",
+      "description": "Hi Team\r\n\r\nWe need to enable captcha on our corporate jira applications , We do have option to enable captcha in jira , but that only work in case of signing up new user .\r\n\r\nWe want to enable captcha when login attempts are made to our application 5-6 times .\r\n\r\nPlease let us know the way to do it\r\n\r\nRegards\r\nVikas",
+      "summary": "We want to enable captcha when login attempts are made to our application 5-6 times"
+    }
+  },
+  {
+    "key": "JRASERVER-19057",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-06-25T08:08:44.000+0000",
+      "created": "2009-09-10T16:42:57.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *JIRA Server*. Using *JIRA Cloud*? [See the corresponding suggestion|http://jira.atlassian.com/browse/JRACLOUD-19057].\n  {panel}\n\nFor some issues, our team captures screencasts for reproducing an issue.  There are many tools out there for this, but we happen to use Wink - http://www.debugmode.com/wink/   .  This greatly simplifies the reproduction steps for certain issues, as instead of spending lots of time describing the issue, you can simply record your clicks, export it as a SWF, and then pass that along as the reproduction steps.\r\n\r\nWe can attach the flash files to an existing issue with no problem, however, they are not easy to view within jira, as they're treated like any other file attachment instead of being treated like an image where they can just be viewed from within jira.\r\n\r\nSimilar to CONF-991 which was implemented in Confluence 1.5, we'd like to have the ability to attach flash movies just like images and have Jira be able to play them on screen (or potentially via a new popup/div like the confluence gallery plugin).  This way, someone can view the reproduction of an issue from directly inside jira instead of having to download 1-3 files (sometimes a wrapper HTML and JS file are needed, both about 2 lines each, just so the browser activates the movie) into the same directory and launch locally.\r\n\r\nTheoretically, this could apply to Quicktime MOV's or other common file types that can be <EMBED>'d within the browser, but Flash is the primary concern here.",
+      "summary": "Add \"Attach Flash\" or \"Attach Movie\" similar to \"Attach Screenshot\""
+    }
+  },
+  {
+    "key": "JRASERVER-19054",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-16T22:31:49.000+0000",
+      "created": "2009-09-10T07:06:09.000+0000",
+      "description": "The POP/IMAP fetcher service does not validate the value of the PORT when the user enters it. This allows them to enter in invalid values like -20, 3482048823894283. We should validate the entered value.\r\n\r\nImplementing this is harder than it seems because services use object configurable for their configuration screens. At the moment JIRA does not provide any way for services to have their properties validated. \r\n\r\n",
+      "summary": "The POP/IMAP fetcher service does not validate the value of the PORT when the user enters it."
+    }
+  },
+  {
+    "key": "JRASERVER-19053",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T04:12:50.000+0000",
+      "created": "2009-09-10T06:39:01.000+0000",
+      "description": "Need to investigate if the new dashboard works correctly with -Dhttp.proxyHost.  \r\n\r\nSee http://confluence.atlassian.com/display/JIRA/Adding+a+Gadget+to+the+Directory?focusedCommentId=200708351#comment-200708351.",
+      "summary": "Investigate if new dashboard works correctly with -Dhttp.proxyHost "
+    }
+  },
+  {
+    "key": "JRASERVER-19052",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T04:18:50.000+0000",
+      "created": "2009-09-10T06:34:50.000+0000",
+      "description": "If an invalid portletkey is specified (or the plugin for the legacy portlet is not installed) the dashboard displays this error in the gadget:\r\n{quote}\r\nError loading gadget: org.apache.shindig.gadgets.GadgetException: Unable to retrieve gadget xml. HTTP error 404\r\n{quote}\r\n\r\nThis doesn't help the user in any way.  We should make the LegacyPortletResource return a gadget-spec with a nice error message in it also telling the user which portletkey seems to be invalid.",
+      "summary": "If legacy portlet can't be found, legacy portlet bridge displays useless 404 error"
+    }
+  },
+  {
+    "key": "JRASERVER-19051",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-03-31T11:03:28.000+0000",
+      "created": "2009-09-10T06:11:34.000+0000",
+      "description": "JIRA is not able to be deployed on multi-level context on Tomcat 6.0 environment. JIRA fails to start with the following error message:\r\n{noformat}\r\nSEVERE: Error filterStart\r\nSep 9, 2009 9:37:14 AM org.apache.catalina.core.StandardContext start\r\nSEVERE: Context [/pu/buildtest52a/build/jira] startup failed due to previous errors\r\n{noformat}",
+      "summary": "JIRA cannot be deployed on multi context environment"
+    }
+  },
+  {
+    "key": "JRASERVER-19049",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T06:30:57.000+0000",
+      "created": "2009-09-10T05:02:33.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA\r\n2. Add any gadget on dashboard where user needs to select project/filter.\r\n3. Press spac to view the list of available options.\r\n\r\nResult:\r\n1. In IE as there is no scroll bar, the focus shift to inbetween of data when it open.\r\n2. Scrolling is also difficult.\r\n\r\nExpected:\r\n1. Scroll bar can make things better.",
+      "summary": "Project/filter list in gadget preferences doesn't have scroll bar in IE which make it difficult to use in case of large data."
+    }
+  },
+  {
+    "key": "JRASERVER-19047",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-12-04T13:49:26.000+0000",
+      "created": "2009-09-10T04:48:23.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Add a gadget supporting canvas view on dashboard.\r\n3. Before configuring the gadget go to canvas view. Now choose filter/project and configure.\r\n4. Restore the gadget to normal view.\r\n\r\nResult:\r\n1. Gadget preferences got reset and user has preferences dialog to again set.\r\n2. Now If user set and save the preferences, it will get reset again when user goes to canvas view.\r\n\r\nExpected:\r\n1. preferences should be retain once set.\r\n",
+      "summary": "Gadget preferences configured in canvas view are not retain when user restore the gadget to normal view in IE"
+    }
+  },
+  {
+    "key": "JRASERVER-19046",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-11-16T22:40:59.000+0000",
+      "created": "2009-09-10T04:45:58.000+0000",
+      "description": "The _Dashboard_ allows for the creation of more dashboards than can be displayed on the left hand side panel:\r\n\r\nh5.Dashboards\r\n!http://img.skitch.com/20090910-j78y77jdqbgpuis43h3qutf6pb.jpg!\r\n\r\nh5.Dashboards side panel\r\nThe 27th dashboard is no longer visible:\r\n!http://img.skitch.com/20090910-6g3c2xiigntayn39px9542nge.jpg!",
+      "summary": "Dashboard allows for more dashboards than can be displayed in dashboard sidepanel"
+    }
+  },
+  {
+    "key": "JRASERVER-19045",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T09:48:25.000+0000",
+      "created": "2009-09-10T04:43:01.000+0000",
+      "description": "This is because the {{com.atlassian.jira.plugin.renderercomponent.SimpleRendererComponentFactory}} tries to load the actual component using Pico ({{(RendererComponent) JiraUtils.loadComponent(rendererComponentClass)}}).\r\n\r\nAn example of such a descriptor I have that fails in AppLinks:\r\n{code:xml}\r\n    <renderer-component-factory key=\"applinks.crucible.review\"\r\n                                name=\"Applinks Crucible Review Link Renderer Component Factory\"\r\n                                class=\"com.atlassian.jira.plugin.renderercomponent.SimpleRendererComponentFactory\">\r\n        <order>209</order>\r\n        <param name=\"rendererComponentClass\">\r\n            com.atlassian.applinks.core.renderer.crucible.CrucibleReviewLinkRendererComponent\r\n        </param>\r\n        <resource type=\"velocity\" name=\"help\" location=\"templates/applinks/cruciblereviewlinkrendererhelp.vm\">\r\n            <param name=\"help-section\">links</param>\r\n        </resource>\r\n        <resource type=\"i18n\" name=\"i18n\" location=\"templates.applinks.cruciblereviewlinkrendererhelp\"/>\r\n    </renderer-component-factory>\r\n{code}",
+      "summary": "Cannot use renderer-component-factory module descriptors in JIRA 4"
+    }
+  },
+  {
+    "key": "JRASERVER-19042",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T06:06:51.000+0000",
+      "created": "2009-09-10T03:50:37.000+0000",
+      "description": "Go to an issue, and click on EDIT to add a label.\r\n\r\nThe 'Add Labels' dialog opens, but then you are required to click inside the text box to start typing. This is annoying.\r\n\r\nIn JIRA 3.13 (and Confluence), you can open the 'Add Labels' dialog and then immediately start typing.",
+      "summary": "Need to click inside text field when adding labels to an issue"
+    }
+  },
+  {
+    "key": "JRASERVER-19040",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T02:17:46.000+0000",
+      "created": "2009-09-10T02:05:49.000+0000",
+      "description": "When saving a gadget configuration, the configuration fields do not disappear and the progress bar is displayed behind them.",
+      "summary": "Gadget configuration save progress is shown behind the fields"
+    }
+  },
+  {
+    "key": "JRASERVER-19039",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T03:26:01.000+0000",
+      "created": "2009-09-10T02:05:11.000+0000",
+      "description": "I started to add a comment to a JIRA and thought better of it, discarding the change. When I went to navigate away form the page, I received a confirm popup saying my changes would not be saved.",
+      "summary": "Confirm popup comes up even when change has been discarded"
+    }
+  },
+  {
+    "key": "JRASERVER-19038",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T01:56:48.000+0000",
+      "created": "2009-09-10T01:40:29.000+0000",
+      "description": "\r\n{code}\r\n, com.atlassian.plugins.rest.atlassian-rest-module, com.atlassian.sal.jira, com.atlassian.gadgets.publisher, com.atlassian.templaterenderer.api], 55 seconds remaining\r\n2009-09-09 20:20:03,052 main INFO     [atlassian.plugin.util.WaitUntil] Plugins that have yet to be enabled: [com.atlassian.oauth.admin, com.atlassian.gadgets.directory, com.atlassian.gadgets.dashboard, com.atlassian.jir\r\na.gadgets, com.atlassian.streams.streams-jira-plugin, com.atlassian.gadgets.embedded, com.atlassian.gadgets.renderer, com.atlassian.jira.plugin.ext.bamboo, com.atlassian.oauth.serviceprovider, com.atlassian.sal.jira], 54\r\n seconds remaining\r\n2009-09-09 20:20:04,129 main INFO     [atlassian.plugin.util.WaitUntil] Plugins that have yet to be enabled: [com.atlassian.gadgets.dashboard, com.atlassian.jira.gadgets, com.atlassian.jira.plugin.ext.bamboo, com.atlassi\r\nan.oauth.serviceprovider, com.atlassian.sal.jira], 53 seconds remaining\r\n2009-09-09 20:20:05,131 main INFO     [atlassian.plugin.util.WaitUntil] Plugins that have yet to be enabled: [com.atlassian.jira.plugin.ext.bamboo], 52 seconds remaining\r\n2009-09-09 20:20:06,133 main INFO     [atlassian.plugin.util.WaitUntil] Plugins that have yet to be enabled: [com.atlassian.jira.plugin.ext.bamboo], 51 seconds remaining\r\n2009-09-09 20:20:07,134 main INFO     [atlassian.plugin.util.WaitUntil] Plugins that have yet to be enabled: [com.atlassian.jira.plugin.ext.bamboo], 50 seconds remaining\r\n2009-09-09 20:20:08,136 main INFO     [atlassian.plugin.util.WaitUntil] Plugins that have yet to be enabled: [com.atlassian.jira.plugin.ext.bamboo], 49 seconds remaining\r\n2009-09-09 20:20:09,138 main INFO     [atlassian.plugin.util.WaitUntil] Plugins that have yet to be enabled: [com.atlassian.jira.plugin.ext.bamboo], 48 seconds remaining\r\n2009-09-09 20:20:10,877 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.pyxis.greenhopper.jira:greenhopper-ranking'. Is it enabled and on the classpath\r\n?\r\n2009-09-09 20:20:10,990 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:reporterdomain'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,010 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.ext.charting:firstresponsedate'. Is it enabled and on the classp\r\nath?\r\n2009-09-09 20:20:11,013 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:message'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,033 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:multikeyfield'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,033 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.plugin.labels:labels'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,072 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:lastupdaterorcommenter'. Is it enabled and on the classp\r\nath?\r\n2009-09-09 20:20:11,072 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:lastusercommented'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,111 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:comments'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,139 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:participants'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,147 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.pyxis.greenhopper.jira:greenhopper-ranking'. Is it enabled and on the classpath\r\n?\r\n2009-09-09 20:20:11,197 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:dayslastcommented'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,208 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:message'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,208 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:message'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,214 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:message'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,245 main ERROR     [jira.issue.managers.DefaultCustomFieldManager] Could not load custom field type plugin with key 'com.atlassian.jira.toolkit:supporttools'. Is it enabled and on the classpath?\r\n2009-09-09 20:20:11,843 main ERROR     [atlassian.plugin.manager.PluginEnabler] Unable to start the following plugins: com.atlassian.jira.plugin.ext.bamboo\r\n\r\n{code}\r\n\r\nThe full log is attached\r\n\r\n\r\nmachine\r\n\r\nqa-jac.atlassian.com\r\n\r\n/opt/j2ee/domains/atlassian.com/qa-jac/tomcat/atlassian-jira.log\r\n\r\n",
+      "summary": "JIRA Beta5 - cant get access to custom fields during startup"
+    }
+  },
+  {
+    "key": "JRASERVER-19036",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-11T05:54:30.000+0000",
+      "created": "2009-09-10T01:02:14.000+0000",
+      "description": "At the moment we just show the first X stats.  We should ay show X of Y and maybe even add a \"more\" link to display the whole data set.",
+      "summary": "Show X of Y for 2D Stats gdaget"
+    }
+  },
+  {
+    "key": "JRASERVER-19033",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T06:11:18.000+0000",
+      "created": "2009-09-09T23:40:28.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Add \"Time Since Chart\" gadget on dashboard.\r\n3. Configure it with previous day options as 500.\r\n4. Click save to view the gadget.\r\n\r\nResult:\r\n1. The gadget view says it showing data for last 500 days but if you click on issues link, the query has -300d day define and that is thelimit.\r\n2. If user search less then 300d everything will be fine but more then 300....no luck.\r\n3. Its working in 3.13.5\r\n\r\nExpected:\r\n1. User should see correct result.",
+      "summary": "Chart gadgets don't display warning if user is trying to view more data than allowed for a certain period"
+    }
+  },
+  {
+    "key": "JRASERVER-19032",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-16T00:30:55.000+0000",
+      "created": "2009-09-09T22:28:10.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA.\r\n2. Goto Simple nav and search for some project.\r\n3. Click \"Advanced\" link or you can save the filter and then click on advanced.\r\n\r\nResult:\r\n1. User see project key in place of project name in advance view.\r\n2. If user create a project in advance view and use auto complete, on selecting project from list, we show project name. User can save it as filter and it get retain.\r\n3. Hence it look a bit inconsistent between simple nav and advanced. Plus it always not easy to know the name of project by seeing its key.\r\n\r\nExpected:\r\n1. user sees project name and not key when moving from simple nav to advance. ",
+      "summary": "From usability point of view it will be great if we show project name(in advanced view) for queries created or saved in simple navigator"
+    }
+  },
+  {
+    "key": "JRASERVER-19031",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T02:49:28.000+0000",
+      "created": "2009-09-09T20:55:37.000+0000",
+      "description": "On my home dashboard I have a portlet of all my votes and watches. Until the recent upgrade it showed all issues. Now it has a max of 50 (!!!!). That just won't do. I typically use this page and search using the browser search key because searching via JIRA is slower and less helpful.\r\n\r\nPlease remove or drastically increase this arbitrary limit !",
+      "summary": "Allow to configure the limit of 50 issues for my Watches or Votes portlet"
+    }
+  },
+  {
+    "key": "JRASERVER-19029",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T06:35:44.000+0000",
+      "created": "2009-09-09T12:05:34.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA and add project gadget on dashboard.\r\n2. The project has some projects and 1 category defined.\r\n3. By default the focus is on Projects.\r\n4. Select Categories radio button.\r\n\r\nResult:\r\n1. Nothing happens. Now if user click \"Projects\", it display categories information in window and vice versa.\r\n\r\nExpected:\r\n1. The radio button selection should show correct relevant information. ",
+      "summary": "Moving between project and category for project gadget is not working fine in IE"
+    }
+  },
+  {
+    "key": "JRASERVER-19028",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T06:09:54.000+0000",
+      "created": "2009-09-09T11:56:51.000+0000",
+      "description": "Steps:\r\n1. Login to JIRA and add project gadget to your dashboard.\r\n2. Click on Report/Filter drop down.\r\n\r\nResult\r\n1. The whole gadget UI shifts. More details in snapshot.\r\n2. versions option is not visible by default, till user set focus there.\r\n3. Opening report drop down after opening filter only displays summary.\r\n\r\n\r\nExpected:\r\n1. As both the icons are new, tooltip will be really helpful.\r\n2. Moving between the options should be smooth as in FF",
+      "summary": "Issues with project gadget \"Report\" and \"Filter\" drop down in IE"
+    }
+  },
+  {
+    "key": "JRASERVER-19027",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T05:00:40.000+0000",
+      "created": "2009-09-09T11:39:49.000+0000",
+      "description": "Steps:\r\n1. Login to gadget.\r\n2. Add any gadget where user need to select project/filter to configure it.\r\n3. Press space to view all options for project/filter.\r\n4. Try to scroll down by clicking the down arrow button in FF\r\n\r\nResult:\r\n1. The drop down closes\r\n\r\nExpected:\r\n1. It should take user to next set of data down in list",
+      "summary": "Clicking on up and drop arrow buttons in gadget preferences for filter/project drop down closes it in FF"
+    }
+  },
+  {
+    "key": "JRASERVER-19026",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T00:28:49.000+0000",
+      "created": "2009-09-09T08:55:34.000+0000",
+      "description": "{noformat}\r\n2009-09-09 18:45:13,033 Sending mailitem com.atlassian.jira.mail.SubscriptionMailQueueItem \r\n  subject: 'Subscription: My Open Issues' \r\n  owner: 'yamini.namasivayam' \r\n  ERROR anonymous   Mail Queue Service [atlassian.jira.mail.SubscriptionMailQueueItem] java.lang.NullPointerException\r\njava.lang.NullPointerException\r\n\tat com.atlassian.jira.jql.context.StatusClauseContextFactory.getContextFromStatusValues(StatusClauseContextFactory.java:96)\r\n\tat com.atlassian.jira.jql.context.StatusClauseContextFactory.getClauseContext(StatusClauseContextFactory.java:60)\r\n\tat com.atlassian.jira.jql.context.MultiClauseDecoratorContextFactory.getClauseContext(MultiClauseDecoratorContextFactory.java:89)\r\n\tat com.atlassian.jira.jql.context.ValidatingDecoratorContextFactory.getClauseContext(ValidatingDecoratorContextFactory.java:34)\r\n\tat com.atlassian.jira.jql.context.QueryContextVisitor.visit(QueryContextVisitor.java:134)\r\n\tat com.atlassian.jira.jql.context.QueryContextVisitor.visit(QueryContextVisitor.java:34)\r\n\tat com.atlassian.query.clause.TerminalClauseImpl.accept(TerminalClauseImpl.java:137)\r\n\tat com.atlassian.jira.jql.context.QueryContextVisitor.visit(QueryContextVisitor.java:80)\r\n\tat com.atlassian.jira.jql.context.QueryContextVisitor.visit(QueryContextVisitor.java:34)\r\n\tat com.atlassian.query.clause.AndClause.accept(AndClause.java:34)\r\n\tat com.atlassian.jira.jql.context.QueryContextVisitor.createContext(QueryContextVisitor.java:55)\r\n\tat com.atlassian.jira.jql.context.QueryContextVisitor.visit(QueryContextVisitor.java:73)\r\n\tat com.atlassian.jira.jql.context.QueryContextVisitor.visit(QueryContextVisitor.java:34)\r\n\tat com.atlassian.query.clause.AndClause.accept(AndClause.java:34)\r\n\tat com.atlassian.jira.bc.issue.search.DefaultSearchService.getQueryContext(DefaultSearchService.java:192)\r\n\tat com.atlassian.jira.mail.SubscriptionMailQueueItem.getColumns(SubscriptionMailQueueItem.java:227)\r\n\tat com.atlassian.jira.mail.SubscriptionMailQueueItem.getTableLayout(SubscriptionMailQueueItem.java:197)\r\n\tat com.atlassian.jira.mail.SubscriptionMailQueueItem.getContextParams(SubscriptionMailQueueItem.java:325)\r\n\tat com.atlassian.jira.mail.SubscriptionMailQueueItem.sendSearchRequestEmail(SubscriptionMailQueueItem.java:149)\r\n\tat com.atlassian.jira.mail.SubscriptionMailQueueItem.send(SubscriptionMailQueueItem.java:123)\r\n\tat com.atlassian.mail.queue.MailQueueImpl.sendBuffer(MailQueueImpl.java:68)\r\n\tat com.atlassian.jira.service.services.mail.MailQueueService.run(MailQueueService.java:23)\r\n\tat com.atlassian.jira.service.JiraServiceContainerImpl.run(JiraServiceContainerImpl.java:61)\r\n\tat com.atlassian.jira.service.ServiceRunner.execute(ServiceRunner.java:48)\r\n\tat org.quartz.core.JobRunShell.run(JobRunShell.java:191)\r\n\tat org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:516)\r\n{noformat}\r\n\r\n",
+      "summary": "NPE in StatusClauseContextFactory.getContextFromStatusValues()"
+    }
+  },
+  {
+    "key": "JRASERVER-19024",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-14T06:44:04.000+0000",
+      "created": "2009-09-09T08:44:17.000+0000",
+      "description": "2009-09-09 18:43:12,491 JiraQuartzScheduler_Worker-3 ERROR ServiceRunner   Service Provider Token Remover [atlassian.jira.service.ServiceRunner] An error occured while trying to run service 'Service Provider Token Remover'. null\r\njava.lang.NullPointerException\r\n\tat com.atlassian.sal.jira.scheduling.JiraPluginSchedulerService.run(JiraPluginSchedulerService.java:53)\r\n\tat com.atlassian.jira.service.JiraServiceContainerImpl.run(JiraServiceContainerImpl.java:61)\r\n\tat com.atlassian.jira.service.ServiceRunner.execute(ServiceRunner.java:48)\r\n\tat org.quartz.core.JobRunShell.run(JobRunShell.java:191)\r\n\tat org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:516)",
+      "summary": "NullPointerException in JiraPluginSchedulerService (SAL)"
+    }
+  },
+  {
+    "key": "JRASERVER-19023",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T02:42:14.000+0000",
+      "created": "2009-09-09T08:20:23.000+0000",
+      "description": "I have added in issue three files with different comments. All files have the same name. After this operation it is very hard to understand what comment relate to one of the attached files. Sample sheet is attached.",
+      "summary": "File attachment identification problem"
+    }
+  },
+  {
+    "key": "JRASERVER-19022",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-10T00:23:43.000+0000",
+      "created": "2009-09-09T08:11:54.000+0000",
+      "description": "A user will be unable to install JIRA 4.0 under any directory that already has 61 characters in it.\r\n\r\nThe file {{AbstractSingleValueCustomFieldSearchInputTransformer$NavigatorConversionResult.class}} in {{atlassian-jira-enterprise-4.0-SNAPSHOT-standalone/atlassian-jira/WEB-INF/classes/com/atlassian/jira/issue/customfields/searchers/transformer/}} creates a path that is too long for NTFS when there are already 61 characters in the path, see [http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx].\r\n\r\n!http://img.skitch.com/20090909-ctcs694yecgkndxhju2fbn3d9n.jpg!",
+      "summary": "Document AbstractSingleValueCustomFieldSearchInputTransformer$NavigatorConversionResult.class and parent directories causes 'name too long' for Win32 NTFS workaround in CAC"
+    }
+  },
+  {
+    "key": "JRASERVER-19021",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/10240",
+        "id": "10240",
+        "key": "JRASERVER",
+        "name": "Jira Server and Data Center",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=10240&avatarId=105190",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=10240&avatarId=105190",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=10240&avatarId=105190",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=10240&avatarId=105190"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2009-09-09T07:38:49.000+0000",
+      "created": "2009-09-09T07:19:56.000+0000",
+      "description": "When clicking on links in Jira issues, especially custom fields or links in comments that are URL's external to the Jira server, the link should open in a new tab.\r\n\r\nFor example, I often find that when linking to documents in our document storage system, that it is distracting to have to \"back\" button to return to my Jira issue after checking the documentation.\r\n\r\nI have begun receiving requests to this effect from the users in my company.  Is there any chance that this is a planned change in the next version?",
+      "summary": "Links should open in new tabs"
+    }
+  }
+]

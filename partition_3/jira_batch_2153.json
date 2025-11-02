@@ -1,0 +1,2802 @@
+[
+  {
+    "key": "CONFCLOUD-29699",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-12T20:59:37.000+0000",
+      "created": "2013-06-21T01:20:23.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29699].\n  {panel}\n\nUser loses access to the category picker forever more once they select a category that returns no results (or at least until the category gets some updates).\n\n!https://jira.atlassian.com/secure/attachment/94770/Screenshot-CONF-29699.gif!\n\n*How to Reproduce*\nFrom the Dashboard, click the Space Category tab and select a category with no updates from the Category Picker.\n\n*Workaround*\nAdding this javascript to your sites Custom HTML simply extends the code that lists the category updates. If there are no results the code ensures that the user still gets access to the category picker...\n{code:title=Custom HTML - Confluence 4.3|Collapsible=true}\n<script>\n// Workaround bug CONF-29699 - Confluence 4\n  Confluence.Templates.Dashboard.Updates.updates_old = Confluence.Templates.Dashboard.Updates.updates;\n  Confluence.Templates.Dashboard.Updates.updates = function(opt_data, opt_sb) {\n    var output = Confluence.Templates.Dashboard.Updates.updates_old(opt_data, opt_sb);\n    if (opt_data.changeSets.length == 0 && opt_data.selectedTab == 'team') {\n      var output_old = output;\n      output = opt_sb || new soy.StringBuilder();\n      if (opt_data.viewableCategories.length > 0) {\n        output.append('<div class=\"team-selection\"><label for=\"updatesSelectedCategory\">', soy.$$escapeHtml(\"Select:\"), '</label><select id=\"updatesSelectedCategory\" name=\"updatesSelectedTeam\">');\n        var categoryLabelList123 = opt_data.viewableCategories;\n        var categoryLabelListLen123 = categoryLabelList123.length;\n        for (var categoryLabelIndex123 = 0; categoryLabelIndex123 < categoryLabelListLen123; categoryLabelIndex123++) {\n          var categoryLabelData123 = categoryLabelList123[categoryLabelIndex123];\n          output.append('<option value=\"', soy.$$escapeHtml(categoryLabelData123.name), '\" ', (categoryLabelData123.name == opt_data.selectedCategory) ? 'selected' : '', '>', soy.$$escapeHtml(categoryLabelData123.capitalised), '</option>');\n        }\n        output.append('</select></div>');\n      } else {\n        output.append('<div class=\"loading-container\"><div class=\"loading-text\">', soy.$$escapeHtml(\"No categories have been created yet. A category is used to group together a list of spaces. A space or site administrator is required to set up this type of category. This can be done in the edit space labels page under space administration.\"), '</div></div>');\n      }\n      output.append(output_old.toString());\n    }\n    return opt_sb ? '' : output.toString();\n  }\n</script>\n{code}\n{code:title=Custom HTML - Confluence 5.1|Collapsible=true}\n<script>\n// Workaround bug CONF-29699 - Confluence 5\n  Confluence.Templates.Dashboard.Updates.updates_old = Confluence.Templates.Dashboard.Updates.updates;\n  Confluence.Templates.Dashboard.Updates.updates = function(opt_data, opt_sb) {\n    var output = Confluence.Templates.Dashboard.Updates.updates_old(opt_data, opt_sb);\n    if (opt_data.changeSets.length == 0 && opt_data.selectedTab == 'team') {\n      var output_old = output;\n      output = opt_sb || new soy.StringBuilder();\n      if (opt_data.viewableCategories.length > 0) {\n        output.append('<div class=\"team-selection\"><form class=\"aui\"><label for=\"updatesSelectedCategory\">', soy.$$escapeHtml(\"Select:\"), '</label><select id=\"updatesSelectedCategory\" name=\"updatesSelectedTeam\" class=\"select\">');\n        var categoryLabelList123 = opt_data.viewableCategories;\n        var categoryLabelListLen123 = categoryLabelList123.length;\n        for (var categoryLabelIndex123 = 0; categoryLabelIndex123 < categoryLabelListLen123; categoryLabelIndex123++) {\n          var categoryLabelData123 = categoryLabelList123[categoryLabelIndex123];\n          output.append('<option value=\"', soy.$$escapeHtml(categoryLabelData123.name), '\" ', (categoryLabelData123.name == opt_data.selectedCategory) ? 'selected' : '', '>', soy.$$escapeHtml(categoryLabelData123.capitalised), '</option>');\n        }\n        output.append('</select></form></div>');\n      } else {\n        output.append('<div class=\"loading-container\"><div class=\"loading-text\">', soy.$$escapeHtml(\"No categories have been created yet. A category is used to group together a list of spaces. A space or site administrator is required to set up this type of category. This can be done in the edit space labels page under space administration.\"), '</div></div>');\n      }\n      output.append(output_old.toString());\n    }\n    return opt_sb ? '' : output.toString();\n  }\n</script>\n{code}",
+      "summary": "Space List Macro Category Picker vanishes if a category returns no results"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29698",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-20T22:25:17.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29698].\n  {panel}\n\nCould be very helpful if we can embed Bitbucket hosted content inside Confluence pages.",
+      "summary": "Include the possibility to link/embed/display Bitbucket content into Confluence spaces/pages"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29697",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-20T20:43:59.000+0000",
+      "created": "2013-06-20T20:36:29.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29697].\n  {panel}\n\nThe page properties macro is only able to retrieve property values from its own body text if the properties are contained within a HTML table element that declares a TBODY element containing its rows.\n\nAccording to the HTML 5 spec, the TBODY element may be omitted from a table declaration if the table contains only TR elements and no table header and footer. (http://www.w3.org/TR/html-markup/tbody.html#tbody-tags)\n\nThis means that if another macro embedded within the page properties macro produces table output, even if the output of the macro is well-formed and valid HTML or Confluence Storage Format, the properties may not always be picked up.\n\nThis is the case for Bob Swift's SQL Query macro, which generates table output that omits the TBODY element declaration.",
+      "summary": "Page Properties macro cannot determine properties from a well-formed table generated by a child macro"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29696",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-20T14:29:04.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29696].\n  {panel}\n\nCurrently, in Confluence, the indicator for whether or not there are any attachments in a page is a paperclip icon on the top left corner of the page. \n\nHowever, this can be somewhat easily missed at times. Hence, it would be better if we had a better indicator of any attachments in the page; something that would clearly indicate at first glance of the page whether or not there are any attachments. ",
+      "summary": "Have a better indication of whether or not there are any attachments"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29692",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:44.000+0000",
+      "created": "2013-06-20T11:30:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29692].\n  {panel}\n\nThe popular labels macro could benefit from having more parameters to narrow down what labels to output, just like some of the other macros have.\nA field to exclude specific labels, and a field to include specific labels would be great.\nAlso the ability to limit to a specific page branch would be great.\n\n",
+      "summary": "Popular Labels Macro missing parameter to limit output"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29690",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-08-06T11:50:38.000+0000",
+      "created": "2013-06-20T09:53:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29690].\n  {panel}\n\nWhen inserting a JIRA issue link in Confluence, the new styling in Confluence 5 makes it very difficult to see the difference between selected and not-selected issues in the list.\n\nOn my particular monitor there was barely any difference between the light-blue background of the selected row and the white background of the unselected rows. I strongly suspect that the small difference in contrast would be difficult for some partially-sighted users to discern as well.\n\nI would suggest making the blue a bit darker, or having a more obvious indicator of which row is selected such as an arrow at the start of the row...",
+      "summary": "Link to JIRA issue: hard to see the difference between selected / not selected"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29689",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-20T09:18:08.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29689].\n  {panel}\n\nWould be great if there is a Autoformatic function in Pages and Comments for #Hastags. Like Twitter / Facebook hashtags.",
+      "summary": "Add Twitter like hashtag / label functionality to Confluence Pages and Comments"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29688",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-21T04:32:51.000+0000",
+      "created": "2013-06-20T09:08:48.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29688].\n  {panel}\n\nThe documentation of the List Style Parameter  in Table of Content Macro is inaccurate. The default List Style should be disc and not none. This is very Confusing  and misleading for the user.\n!list-style.png!\n\nhttps://confluence.atlassian.com/display/CONF43/Table+of+Contents+Macro\nhttps://confluence.atlassian.com/display/DOC/Table+of+Contents+Macro",
+      "summary": "Update the Table of Content Macro default list Style to 'disc' instead of 'none'"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29687",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:43.000+0000",
+      "created": "2013-06-20T08:12:29.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29687].\n  {panel}\n\nAllow administrators to completely remove 'remember me' and disallow remembering usernames and passwords via HTML5.\n\nIn various cases administrators may want to prevent their users to have their passwords saved. While various browsers will override this settings, but preventing to have a remember-me cookie and adding {{autocomplete=off}} for such login forms would at least give the best-effort ability to prevent such.\n\n",
+      "summary": "Allow cookie-less instance for security reasons"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29683",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-08-18T05:31:04.000+0000",
+      "created": "2013-06-20T03:59:08.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29683].\n  {panel}\n\nOn the Confluence desktop site, if you hit the 'reply' link in an email, you get taken to the page with the comment box expanded.\n\nIf you're on a mobile, the 'reply' link just takes you to the top of the page on the Confluence mobile site.",
+      "summary": "Hitting reply in a mobile email notification should take you to the comment with a reply text box open"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29674",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-02-04T06:07:31.000+0000",
+      "created": "2013-06-19T08:07:00.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29674].\n  {panel}\n\nWhen you share with a group, Workbox shows the individuals inside that group rather than the group name in the 'also shared with' list.\n\nFor very large groups, this won't be as useful as acting like the 'also shared with' list in the email notifications, which shows the group name.",
+      "summary": "Workbox should show group name, not individuals in it, when a page is shared with a group"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29672",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-11-19T02:26:32.000+0000",
+      "created": "2013-06-19T01:41:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29672].\n  {panel}\n\n\nID: CONF-001 - Information Exposure\nCWE ID: 200\nCWE Description: An information exposure is the intentional or unintentional disclosure of information to an actor that is not explicitly authorized to have access to that information.\nAdditional description: One REST service (/rest/likes/1.0/content) doesn't (properly) authenticate requests. An anonymous user can request a list of 'likes' from arbitrary pages that aren't accessible for anonymous users. Confluence returns a list of Confluence usernames as well as full usernames that 'like' that page.\nThis could help an attacker: By bruteforcing page_ID it's possible to obtain a list of usernames and full usernames of all persons that have 'liked' one or more pages.\nAffected URL(s):\n/rest/likes/1.0/content/<page_ID>/likes\n/rest/likes/1.0/content/<page_ID>/comment-likes\n",
+      "summary": "/rest/likes/1.0/content does not check page permissions properly"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29670",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-07-29T07:23:04.000+0000",
+      "created": "2013-06-18T16:45:57.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29670].\n  {panel}\n\nIt would be helpful if we could reorganize our favorites.  Ideally, we'd at least be able to move the position each favorite is currently in.  Furthermore, it would be great if we could create groups of favorites to logically group together like pages (i.e., \"Network\", \"Systems\", \"FAQ\", etc).  Instead of just having 100 favorites, doing this would make finding specific favorites easier.",
+      "summary": "Manually re-organize favorites"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29667",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-02-24T22:07:13.000+0000",
+      "created": "2013-06-18T15:25:48.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29667].\n  {panel}\n\nTo help manage our space requirements, we go through and delete unnecessary versions. In some instances, we save alot when updating to minimize risk of losing updates.  The new RTE can corrupt updates so versions are often necessary. Plus, we have alot of old content that has numerous versions. \n\nRight now, we go into every page and remove history.  It would be helpful to have: \n\nFor a single page, ability to select one, more, or all version history and remove the versions. \n\nAn option to clear all versions prior to a certain date within a space or across all spaces. ",
+      "summary": "Ability to mass remove selected history"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29664",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-08-02T05:47:51.000+0000",
+      "created": "2013-06-18T13:58:08.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29664].\n  {panel}\n\nHello, We have noticed that Confluence adds a prefix to anchor names, which is really odd.\nWhen I add an anchor macro to a page, with name lets say 'prices' the anchor is renamed to 'pagename-prices' and a link like 'confluenceinstalation/wiki/display/pagename#prices' <- doesn't work. \nWe have to use the prefixed anchor which would be 'confluenceinstalation/wiki/display/pagename#pagename-prices. Why the redundant page name? \nThis means the anchor will change the name with the page. If I use a link like the above it's not a big inconvenience , but all short links will be invalid, and also links of type 'viewpage.action?pageId=12313#pagename-prices' will become invalid if the 'pagename' is changed to lets say 'changedname'. Now the links would be 'viewpage.action?pageId=12313#changedname-prices' also short links will change like '/xTxY/WszA#changedname-prices'. If the anchor was not prefixed all those links would still be valid. I am also talking about the heading anchors that are generated automatically. \n\nCan this be made configurable, so that we can choose if Confluence should add prefix to the anchor name or no prefix at all?",
+      "summary": "Page name prefix in anchors"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29663",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T01:01:07.000+0000",
+      "created": "2013-06-18T13:57:39.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29663].\n  {panel}\n\nIt would be nice, when running the export utility, to have the space name listed in the Running Task title Bar showing detailed information of what's being currently exported.",
+      "summary": " Have the Space Name listed in the Running Task Information When Exporting a Space "
+    }
+  },
+  {
+    "key": "CONFCLOUD-29662",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-05-05T10:20:19.000+0000",
+      "created": "2013-06-18T11:22:56.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29662].\n  {panel}\n\nAs of now, it is possible to delete the only user that has administration rights in a Space without realizing it. \n\nThis is an issue especially for the OnDemand users, as without the sysadmin rights, they lose all administrative access to a Space and can only regain it with Support's help. It would be handy to have a warning displayed upon an attempt to delete the only admin user, informing that it would mean losing admin access to a Space.",
+      "summary": "A warning before deleting the only administrator of a Space"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29660",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-08-31T05:40:12.000+0000",
+      "created": "2013-06-18T08:21:13.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29660].\n  {panel}\n\nSteps to reproduce:\n# Create a page with a colon (\":\") in the title and attach PDF documents.\n# Go to insert a PDF macro.\n\nInstead of the drop-down containing a list of PDF documents attached to the page, it will be empty.\n\nThe AJAX call to {{/json/attachmentsearch.action}} will fail with a 404 because it is using bad {{spaceKey}} and {{title}} parameters. The colon seems to confuse whatever is trying to extract them.",
+      "summary": "PDF macro breaks on pages with a colon in the title"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29659",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-08-02T05:46:42.000+0000",
+      "created": "2013-06-18T07:59:19.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29659].\n  {panel}\n\nIf an actions are raised in one meeting, but the action is still on-going (not checked), generally the action item should raised on the next meeting.  \n\nWith the above scenario, the user must copy the previous un-finished tasks (un-checked) in Confluence's Meeting Notes to a new Confluence's Meeting.  It would be convenience for users to automatically copy any tasks that are not \"checked\" yet to the next meeting.",
+      "summary": "All actions items that are not completed in Meeting Notes should be created on a new Meeting Notes"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29658",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-26T06:30:47.000+0000",
+      "created": "2013-06-18T07:51:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29658].\n  {panel}\n\nAt the moment, on Confluence's Meeting Notes, users are able to mentioned one user for a specific task on action item, but not mentioning/assigning to multiple users.   \n\nIn real world scenario, some actions do require multiple people to get involved.",
+      "summary": "Add the ability to assign a task to multiple users on Meeting Notes"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29655",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-02-04T06:05:03.000+0000",
+      "created": "2013-06-17T08:51:16.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29655].\n  {panel}\n\nWhen Confluence is connected with Crowd and Crowd fails during the time that a user is using Confluence, the following stacktrace is displayed : \n{noformat}\ncom.atlassian.crowd.exception.runtime.CommunicationException\n\tat com.atlassian.crowd.embedded.core.CrowdServiceImpl.convertOperationFailedException(CrowdServiceImpl.java:866)\n\tat com.atlassian.crowd.embedded.core.CrowdServiceImpl.authenticate(CrowdServiceImpl.java:79)\n\tat com.atlassian.crowd.embedded.core.DelegatingCrowdService.authenticate(DelegatingCrowdService.java:35)\n\tat com.atlassian.crowd.embedded.core.FilteredCrowdServiceImpl.authenticate(FilteredCrowdServiceImpl.java:51)\n\tat com.atlassian.jira.security.login.LoginManagerImpl$InternalStaticDependencies.authenticate(LoginManagerImpl.java:415)\n{noformat} \n\nSteps to reproduce :\n* Integrate Confluence with Crowd\n* Login to Confluence with a user from Crowd\n* Shutdown Crowd \n* Try to perform some action on Confluence.\n\nConfluence should catch the Crowd exception in a better way and communicate to the user that the Crowd server is no longer accessible.",
+      "summary": "Confluence should catch Crowd failures gracefully"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29653",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-08-26T02:45:05.000+0000",
+      "created": "2013-06-17T04:40:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29653].\n  {panel}\n\nXss exploit found when using the existing Confluence Jira Macro.\n\nOccurs when adding this url to the Macro's dialog and selecting the 'refresh' icon on the dialog also appears when saving and viewing the page after the page has been saved with the exploit. (see screenshot)\n\nhttp://kshekhar-pc:8080/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?jqlQuery=&tempMax=1000\n\nTo replicate:\n\nSetup Jira Instance with attach dataset\nOn Confluence Instance setup an applinks with the Jira instance that has the dataset\nCopy the JQL url by going into the search issues and listing all issues in the 'XSS' project and select 'Export' -> 'XML'\nIn Confluence Create a new Jira Issue Macro via the editor shortcut '{jira' \nPaste the above url\nShould get exploit upon selecting the refresh button on the dialog and also when saving the page",
+      "summary": "XSS vulnerability in Jira Macro *Existing*"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29652",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:47.000+0000",
+      "created": "2013-06-17T05:40:30.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29652].\n  {panel}\n\nThe browser gives you some feedback while the embedded db is being created during an evaluation installation, but it does take a while and you begin to wonder what is happening... \n\nWe should darken the screen and put a spinner with 'Creating Database' underneath it (or maybe just 'Loading') once you click the \"Evaluation Install\" button on this screen.\n\n!Screen Shot 2013-05-20 at 10.32.16 AM.png!",
+      "summary": "Installer could use a 'spinner' while creating the embedded db"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29651",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-02-24T22:04:28.000+0000",
+      "created": "2013-06-17T01:37:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29651].\n  {panel}\n\nAs a user I would like to be able to use `import from word` simply by dragging and dropping a word file into the editor.\n\n----\nA friend of mine who uses Confluence at work bought this up the other day as feedback.\n\nCurrently drag and dropping a word doc uploads the word doc as an attachment. Instead it should detect the file type and automatically run `import from word` on that file.\n\nIf the user wants to upload from the file as an attachment they should be able to navigate to the attachments dialog and do it there.",
+      "summary": "Make drag and drop into editor automatically do the correct operation for that file type."
+    }
+  },
+  {
+    "key": "CONFCLOUD-29649",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-10T06:50:44.000+0000",
+      "created": "2013-06-16T00:59:12.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29649].\n  {panel}\n\nProblem: You're on the go, you want to read something you know someone worked on recently, but you can't remember the page title.\n\nProposed solution: Just like in desktop, you can search for someone in Confluence mobile and view their profile (We have this already). What we don't have is the ability to see their recent activity from the profile. \n\nQuick concept: \nWhat we have today:\n!http://cl.ly/image/3Q1p0f3W1V3k/Image%202013.06.16%2010%3A55%3A23%20AM.png!\n\nWhat we could have:\n!http://cl.ly/image/233F053W1j1e/Image%202013.06.16%2010%3A58%3A41%20AM.png!\n\nThis needs a lot of design polish, but you get the idea - a quick 1 min photoshop. ",
+      "summary": "Ability to view a users recent activity via Confluence Mobile"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29645",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:58:21.000+0000",
+      "created": "2013-06-14T19:55:14.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29645].\n  {panel}\n\nhttps://confluence.atlassian.com/display/DOC/JIRA+Issues+Macro#JIRAIssuesMacro-Parameters\n\nYour documentation says \"Example columns are: key, summary, type, created, fixversion, updated, due, assignee, reporter, priority, status and resolution.\" \n\nHowever if you add \"key, summary, type\" into the text box, it doesn't work. If you read more and find out that you should be using semicolons, you might try \"key; summary; type\", but that also doesn't work, because there are spaces. It really needs \"key;summary;type\". \n\nI would suggest either changing the example that you give in the help text, or making the parsing a bit more user-friendly. ",
+      "summary": "make the input format for the JIRA-Confluence gadget better"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29644",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-17T02:15:53.000+0000",
+      "created": "2013-06-14T19:03:18.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29644].\n  {panel}\n\nIt would be nice to have an option to make Confluence directly connect to a database, in order to bypass SSO problems.\n\nWe're using Siteminder from CA as our enterprise SSO solution, which isn't supported by Atlassian. And because the Siteminder wants the Confluence server to authenticate via it's own login, Confluence is not able to authenticate itself against JIRA, which makes it impossible to use the JIRA Macro in Confluence.\n\nThere's only way I can think of to bypass the SSO, which is, creating a DB-connection from Confluence to the JIRA-DB and executing the SELECT queries directly on the database.",
+      "summary": "Confluence - Jira Connector using direct database connection"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29643",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-08-18T05:24:34.000+0000",
+      "created": "2013-06-14T15:36:41.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29643].\n  {panel}\n\nIn Confluence 3.x, users are allowed to choose a template from a link to an undefined page:\n!template.png!\n\nOn the latest Confluence version, this feature is not available anymore.  It would be great to have this feature back on the latest version.\n\n----\nNote: this should be a regression (bug), as there is no mentioned the feature is removed on the release notes \n",
+      "summary": "The ability to choose a template from a Link to an undefined page"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29641",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-17T05:20:12.000+0000",
+      "created": "2013-06-14T14:55:39.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29641].\n  {panel}\n\nSince the backup created using the Confluence OnDemand backup manager is not importable to another OnDemand instance, we should have a warning explaining that. And to point out the purpose of the Backup Manager is to keep data and to be imported to a local instance.",
+      "summary": "Add a warning in the Confluence OnDemand backup manager"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29639",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-14T09:49:18.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29639].\n  {panel}\n\nThere appears to have been a change on the Twitter end of the connection so embedding Twitter feeds in the Widget Connector no longer works. When embedding a Twitter URL and clicking preview nothing is displayed, even though the instances had their whitelists disabled.\n\nThis behaviour has been reproduced in Confluence v4.3.7, v5.1.3 and also on the EAC. When changing the embedded URL for a YouTube video the content was embedded as expected, which suggests this is Twitter specific.\n\nRelated WC ticket: https://ecosystem.atlassian.net/browse/WC-61",
+      "summary": "Twitter feeds have stopped working in the Widget Connector"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29634",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T06:45:57.000+0000",
+      "created": "2013-06-14T03:21:18.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29634].\n  {panel}\n\nWe should document the Confluence.Binder components.\n\nThis will be particularly useful for plugin developers who write forms on pages. \n\n*Background:* \n\nIn Confluence 5.2, we introduced a nice new feature for developers: \"Multi-user selection fields\". This is not very useful for developers who want to be able to use it in the macro browser. They would have to get into the complexity of {{setMacroJsOverride}}.\n\nBut not all plugin developers live in the macro browser. Sometimes they write forms on pages too. For example, a plugin that asks people to enter comma-separated usernames. Adding a class to the field would greatly improve the UX.\n\nWe currently don't have any public documentation on the Confluence.Binder components, and for that reason we didn't document the new \"Multi-user selection fields\" feature either.",
+      "summary": "Developer docs: Document the Confluence.Binder components"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29628",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:58:34.000+0000",
+      "created": "2013-06-13T12:12:22.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29628].\n  {panel}\n\nWhenever I create a link in an email or external site that points to a Wiki page I use this format.\n\n    Wiki : \"Title of page\" (http://wiki.mycompany.com/x/tinylink)\n\nNow I have sufficient self-discipline to keep this up, but most of my colleagues keep on making a mess. Just putting in the address bar URL or only the tiny link. My reason for doing it like this is that it is more descriptive than just a tiny link. And in case that it does break users have a title and the name Wiki to go and search.\n\nMy request would be to have this as a complete formatted string available in the \"Link to this page\" popup that you get when pressing the \"k\" in view mode. Possibly by making the mask configurable per space.\n\nA plugin or macro that would give me the same effect would be good too. But I prefer it to be in the standard product. Seems like an easy win even.\n\nRegards,\nPeter",
+      "summary": "Custom \"Link to this page\" link text"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29626",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-02-04T06:07:41.000+0000",
+      "created": "2013-06-13T09:54:52.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29626].\n  {panel}\n\nWe do have documentation about what steps to perform when migrating from OnDemand to self-hosted in case of JIRA and Confluence, but not for the case when both.\n\nThis is typically problematic in terms of application links, but various other features can break in relation to that (gadget feeds, issue links between JIRA and Confluence, macro browser, etc). A documentation would be needed to list all the steps required for the two products migrated together would keep working after going self-hosted. Purely loading the two backups and setting up application links will not work in most of the cases.",
+      "summary": "Documentation Request: Ondemand to Installed migration with Confluence and JIRA linked"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29625",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-13T22:53:24.000+0000",
+      "created": "2013-06-13T09:41:55.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29625].\n  {panel}\n\nHi Atlassian, I tried to comment on one of the pages, this page in particular: https://confluence.atlassian.com/display/DOC/Working+with+Anchors \nSteps:\n* Wrote the comment, entered the captcha.\n* Click Save  \n* The loading takes forever, so I click cancel. (Forever I mean really long, like half a minute or so)\n* Click cancel.\n* Got message: \"Failed to add comment: Error: \" \n* Comment was added despite the error message.\n\nNext time this happened on the same page, as I wanted to add a reply to my own comment, same thing happens, but comment is not added. I was using Chrome.",
+      "summary": "Got \"Failed to add comment error\", but comment is added."
+    }
+  },
+  {
+    "key": "CONFCLOUD-29623",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:38.000+0000",
+      "created": "2013-06-13T08:50:23.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29623].\n  {panel}\n\nBe able to theme the confluence mobile sidebar to fit in with themes on the desktop site.",
+      "summary": "Ability to theme the Confluence Mobile sidebar"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29620",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:57:40.000+0000",
+      "created": "2013-06-13T06:49:17.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29620].\n  {panel}\n\n!LicenseInformationImprovement.jpg!",
+      "summary": "Improve Communication In the Licenses Page"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29619",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:42.000+0000",
+      "created": "2013-06-13T05:53:42.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29619].\n  {panel}\n\nWhen searching for \"retrospective\" in quicknav, pages with titles containing \"retrospectives\" (plural) are not returned. \n\nThe current behaviour is that _only_ exact matches are returned. \n\nThis can be improved if Quicknav ranks singular matches higher than plural matches. ",
+      "summary": "Quicknav should include plural matches"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29618",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-12T21:01:43.000+0000",
+      "created": "2013-05-28T22:52:49.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29618].\n  {panel}\n\nIn a documentation theme space where the space logo is actually a large image, the editor preview shows the image at full size.\n\n",
+      "summary": "Preview does not keep the space logo size"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29616",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-13T04:05:08.000+0000",
+      "created": "2013-06-12T21:50:55.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29616].\n  {panel}\n\nWe have the ability to watch spaces and watch pages.\n\nOur customers would benefit from the ability to add a watch on a certain label.  This would allow them to get notifications across pages and spaces for content relevant to their interest..\n\nA helpful option would be to include only receiving notifications on newly created pages with this label.",
+      "summary": "Add The Ability to Watch Labels"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29615",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2015-05-05T10:20:23.000+0000",
+      "created": "2013-06-12T20:24:58.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29615].\n  {panel}\n\nAfter logo upload, the \"Reset to Default Logo\" link reverts to the default Confluence colour scheme. This is because there is now a relationship between the logo and the colour scheme in Confluence 5.x - uploading a logo will customise your colour scheme to match the logo. Resetting the logo to default also updates the colour scheme to match, but this is not communicated and there is no option to undo it.\n\nFound in Confluence 5.0.3, 5.1.3.\n\nh3 .Steps to Reproduce:\n# In the admin panel, create a custom colour scheme.\n# Upload a new site logo. The colour scheme changes to match the logo.\n# Click the Reset to Default Logo button.\n#- Notice that color scheme reverts to the standard Atlassian colour scheme, not the previously selected custom colour scheme.\n\nh3. Desired behaviour\nOne of these options:\n# A way to undo the colour scheme change after resetting the logo\n# Stop the logo reset changing the colour scheme\n# Communicate the impending colour scheme change in the link text",
+      "summary": "After logo upload, \"Undo\" link doesn't revert the colour scheme"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29612",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-12T22:55:14.000+0000",
+      "created": "2013-06-12T10:51:23.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29612].\n  {panel}\n\nSteps to recreate:\n1. Create a wiki page with attached images and display them in the wiki page and Save\n2: Click edit and copy text and images \n3. Create a blog post and paste text and images on the page and save.\n4. Now the blogpost looks exactly as the wiki page\n5. BUT when other users are viewing the blogpost no images are shown; probably because they're not attached.\n6. But I continue as the only user to be able to see the images even after closing browser or  emptying the browser cache.",
+      "summary": "Copy and paste of images fails using IE9 browser"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29611",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-02-04T02:54:14.000+0000",
+      "created": "2013-06-12T10:01:34.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29611].\n  {panel}\n\nA customer has expressed an interest in having a \"Reply\" button for comments to save them manually having to quote the content themselves. They suggested the following: \n\n\"What I need is when replying to a previous comment by someone else to be able to start with a quoted copy of his/her text. Say someone said\n{code}\nI believe that's bug XYZ, right?\n{code}\nI want to hit a button \"Reply quoted\" or something that puts\n{code}\n{quote}\nI believe that's bug XYZ, right?\n{quote}\n{code}\ninto the text field where I start typing my reply similar to what \"Reply\" does in Bugzilla and what [JRA-6412|https://jira.atlassian.com/browse/JRA-6412] is asking for JIRA.\"",
+      "summary": "Provide \"Reply To\" button for comments to auto-quote content"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29608",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-07-15T05:43:59.000+0000",
+      "created": "2013-06-12T03:45:35.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29608].\n  {panel}\n\nIn many different contexts, Confluence will not be able to start because the Build Number in the home-dir is different from the one in the installation files.\n\nThe following error is reported:\n\"Confluence will not start up because the build number in the home directory\"\n\nThe page doesn't have instructions for the Admin forcing them to create a Support ticket.\n\nThe error message page should explain the problem and point to a KB with solutions.\n\n!BuildNumber.png!",
+      "summary": "Update Build Number Error Message so that it can tell Admins what to do"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29605",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-12T01:26:55.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29605].\n  {panel}\n\nThere is an Apple Keynote setting that lets you embed images inside your keynote file. http://cl.ly/image/2v2d2I0J3q3o\n\nOnce this is done, we can read the images form the keynote file and support Keynote files inside the viewfile macro, so that when you drag and drop a keynote file into Confluence, it does what we do with Powerpoint files and preview them inline using the viewfile macro. \n",
+      "summary": "Keynote support for viewfile macro"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29604",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-04-16T05:32:13.000+0000",
+      "created": "2013-06-12T01:22:39.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29604].\n  {panel}\n\nSimilar to what we did with the WidgetConnector YouTube macro - we load an image in the editor, we could do the same for the Viewfile macro PPT files.\n\nSo when you upload your PPT file inside Confluence, instead of getting this: \n!http://cl.ly/image/413x1C002A0D/Image%202013.06.12%2011%3A19%3A42%20AM.png!\n\nYou get this:\n!http://cl.ly/image/1c1p0q1R0Q1f/Image%202013.06.12%2011%3A22%3A11%20AM.png!\n\nWhere that is the first slide",
+      "summary": "For the viewfile macro PPT files, load the first image of the slide as the macro placeholder"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29603",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-12-19T00:18:48.000+0000",
+      "created": "2013-06-11T22:39:21.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29603].\n  {panel}\n\nIf you use the attachments macro and specify a page to use in the macro properties, when the macro is rendered out the attachment preview fails. It seems it is looking to the local page for the attachment to render it rather than the page the attachment is really on.\nh3. Steps to reproduce:\n # In a space, create a page and insert an attachment.\n # Create another page, and insert the attachment macro. Configure it to list the attachment from the page in step 1.\n # Save the page and view it. The attachment from the other page is linked, and the link is valid. But when you expand to see the details of the attached file, there's no preview, and the following error is thrown: \"Error rendering macro 'viewfile' : The viewfile macro is unable to locate the attachment \"xxxx.xxx\" on this page\"\n\nThe viewfile macro is looking for the attachment on the page that references the attachment.",
+      "summary": "Attachments Macro Errors Rendering Attachment"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29596",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-12T08:51:26.000+0000",
+      "created": "2013-06-11T13:43:48.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29596].\n  {panel}\n\nWould be nice to have the button and allow \"watch\" the whole page tree in order to Confluence  send notificatios about the updates of all pages.",
+      "summary": "Watch a Page Tree in Confluence"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29594",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-02-04T06:07:40.000+0000",
+      "created": "2013-06-10T08:27:06.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29594].\n  {panel}\n\nWhen running the installer on Linux system, it will add a user (confluence) to start up the application, currently our setup script is creating a new user within the total UID range.\n\nIn case that the user do have a UID range defined for the no system user in the file adduser.conf, it has a chance to create user in the no system user UID range (for example LDAP user), which is not expected as the user created should only served as a system user.\n\nThe installer can run commend useradd with parameter \"-r\" to force the creation to pick up a system UID. ",
+      "summary": "Installer added user should be created within system UID range in Linux"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29592",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-11T04:57:53.000+0000",
+      "created": "2013-06-11T02:55:47.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29592].\n  {panel}\n\nWe are in contact with the Atlassian Japan members using confluence.atlassian.co.jp.\n\nWhen replying or editing to  the comment on confluence.atlassian.co.jp, we have to wait a long time.\n\nThis happens when using Chrome or Firefox. It does not happen when using  IE.\n\nAnd it did not happen when we used the 32bit PC. After changing to the 64bit PC, it began to happen.\n\nI recorded this phenomenon.\nPlease extract the attached file and see the confluence.atlassian.co.jp.html.",
+      "summary": "It takes a long time to edit confluence.atlassian.co.jp."
+    }
+  },
+  {
+    "key": "CONFCLOUD-29583",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:57:13.000+0000",
+      "created": "2013-06-10T08:02:09.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29583].\n  {panel}\n\nAt Conflunce 3.x parameters to \"noformat\" were possible:\n\n\\{noformat:borderWidth=4|borderColor=red\\}\nThis text will not be \n                              formatted...\n\\{noformat\\}\n => \n{noformat:borderWidth=4|borderColor=red}\nThis text will not be \n                              formatted...\n{noformat} \n\nThe convertion to 4.x works, you can see the parameters in editor.\nAlso the input with \"insert Wiki Markup\" works - but it is not possible to edit the parameters in the macro browser.",
+      "summary": "Undocumented but possible parameters to \"noformat\""
+    }
+  },
+  {
+    "key": "CONFCLOUD-29581",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-08T14:11:30.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29581].\n  {panel}\n\nRight now when you add a *Create from template* macro in a Confluence page you have to pre-configure on which space the page will be created, but there are some situations where asking on which space or parent page will that page be created when the macro is clicked on is a more desirable behavior.\n\nTake as an example a page from a *Global Template* which has the *Create from template* macro: once that page get's created the macro still points to the space that was defined on the Global Template, it would make more sense if you could choose the space and parent page where the page will be created (without having to go in and edit the macro each time you create a page from a template or moving the created page afterwards) or the macro should assume that the page should be created on the current space. ",
+      "summary": " Create from template macro should ask on which location the page will be created"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29577",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-17T05:25:20.000+0000",
+      "created": "2013-06-07T19:57:55.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29577].\n  {panel}\n\nIt would be great if we could have the ability to have a Confluence User Server, just like it is possible with JIRA, to handle all the users in Confluence and use Confluence as the user server for other Atlassian applications",
+      "summary": "Add ability to have a Confluence User Server"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29576",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T06:45:43.000+0000",
+      "created": "2013-06-07T16:47:34.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29576].\n  {panel}\n\nFishible and Jira are added automatically when application links to them are entered into Confluence's setup, but Stash does not. ",
+      "summary": "Stash doesn't show up in the Application Navigator"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29574",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2016-02-24T22:04:28.000+0000",
+      "created": "2013-06-07T15:06:50.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29574].\n  {panel}\n\nEmail notification get sent whenever the state of the light weight task list item is changed.  Sometimes the state change is accidental but checking and unchecking of a task would generate two emails.  A debouncing mechanism should reduce this type of excessive email.",
+      "summary": "Add debouncing for task notification"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29573",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:44.000+0000",
+      "created": "2013-06-07T14:43:58.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29573].\n  {panel}\n\nIt used to be possible to customize (_\"Confluence Admin\" > \"Look and Feel\" > \"Layout\" > \"Global Layout\" > \"Edit\"_)Confluence Favorites gadget to change the number of displayed pages, in 3.5.x, from Confluence 4.x that is no longer possible.\n\n{noformat}\n#set ($maxFavouritePages = \"40\")  ## Change this value to increase the default number of favourite pages displayed on the Dashboard\n{noformat}\n\nDocumentation reference:\nhttps://confluence.atlassian.com/display/DOC/Customising+the+Confluence+Dashboard\n",
+      "summary": "Changes to favorites max number of pages displayed on dashboard do not work"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29570",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-11T00:32:14.000+0000",
+      "created": "2013-06-07T14:00:34.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29570].\n  {panel}\n\nThe document [here|https://confluence.atlassian.com/display/DOC/Migrating+from+Confluence+OnDemand+to+a+Confluence+Installed+Site#MigratingfromConfluenceOnDemandtoaConfluenceInstalledSite-Upgraderequiredassoonasfullreleaseisavailable] needs to be updated to clarify what version are supported by Atlassian. \n\n\n\nbq. For example, if your OnDemand release is 'Confluence 5.0-OD-1', then we will support it until Confluence 5.0 is released.\n\nThis statement is not correct and needs to be fixed!",
+      "summary": "Confluence migration documentation is confusing"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29569",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2017-02-27T04:02:39.000+0000",
+      "created": "2013-06-07T13:44:31.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29569].\n  {panel}\n\nWhen you try to select or deselect all permissions for a specific user at *Confluence Admin > Space Permissions > Individual Users* for usernames that have number-only username, a Javascript error is thrown and the action is not performed.\n\n*Steps to reproduce*\n# Create an user with username containing only numbers e.g. 12345\n# Navigate to *Confluence Admin > Space Permissions > Manage Permissions> Individual Users*, click *Edit Permissions*\n# Select and *Add* the user\n# Click on the cog icon, press *Select All* or *Deselect All*",
+      "summary": "Space permissions for individual users/groups - de/select all does not work with number-only names"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29568",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-16T01:39:56.000+0000",
+      "created": "2013-06-07T13:06:49.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29568].\n  {panel}\n\nSteps to reproduce:\n\n1.) Create a requirment page in Confluence (Blueprints).\n2.) Modify the page title to \"Test\".\n3.) Insert a Jira Issue with the Jira Issue Macro somewhere in the template.\n\nProblem: I have to copy the page title of the requirment manually to the summary of the jira issue. It would be much more comfortable if the macro could use page title of the requirement as default for the jira summary.\n\nAnother really useful feature would be a macro to create a button \"Create Jira Issue\" on the requirements template. The jira issue could be generated without any interaction of the user by configure this button to use a special jira project and a special issue type e.g. requirement. The summary and the description could be generated with the content of the requirement blueprint.\nThere is to much work needed (clicking and user interaction) to create an jira issue in my opinion.",
+      "summary": "Copy requirement page title (Blueprints) automatically to Jira Issue Summary"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29564",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:57:33.000+0000",
+      "created": "2013-06-07T04:28:09.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29564].\n  {panel}\n\nI'd like to see a configurable warning displayed on the login screen if you are using an old browser. Default to something like \"Please upgrade your browser or prepare yourself for greatly reduced user experience and possible loss of functionality... Muhhahaha!\". See functionality provided by the jReject jQuery plugin project (there are no doubt lots of these kinds of plugins for jQuery).\n\nFor public wikis, it probably makes more sense to have a banner, like you see on github.com when you visit it using IE version less than 9. Actually, I like the fact they include the note about turning off compatibility mode. One improvement I'd like to see over the github solution is to allow the user to ignore the message for the remaining duration of the session (as supported by jReject).",
+      "summary": "Please consider adding a sexy \"incompatible browser\" notice"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29562",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:56:30.000+0000",
+      "created": "2013-06-06T15:44:30.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29562].\n  {panel}\n\nI have this, using Source Editor (since I have not other ideas):\n\n{code}\n<ac:macro ac:name=\"section\">\n  <ac:rich-text-body>\n    <h5>Private Release</h5>\n    <ac:macro ac:name=\"column\">\n      <ac:parameter ac:name=\"width\">30%</ac:parameter>\n      <ac:rich-text-body>\n        <ol>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"XML-RUN\"/>\n            </ac:link>\n          </li>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"XML-FINISH\"/>\n            </ac:link>\n          </li>\n          <li>KRAKEN CACHE<ol>\n              <li>\n                <ac:link>\n                  <ri:page ri:content-title=\"KRAKEN-UNIPROTKB\"/>\n                </ac:link>\n              </li>\n              <li>\n                <ac:link>\n                  <ri:page ri:content-title=\"KRAKEN-GO\"/>\n                </ac:link>\n              </li>\n              <li>\n                <ac:link>\n                  <ri:page ri:content-title=\"KRAKEN-KEYWORD\"/>\n                </ac:link>\n              </li>\n              <li>\n                <ac:link>\n                  <ri:page ri:content-title=\"KRAKEN-UNIPARC\"/>\n                </ac:link>\n              </li>\n              <li>\n                <ac:link>\n                  <ri:page ri:content-title=\"SYNC-UNIREF\"/>\n                </ac:link> =&gt; <ac:link>\n                  <ri:page ri:content-title=\"KRAKEN-UNIREF\"/>\n                </ac:link>\n              </li>\n              <li>INTERPRO READY =&gt; <ac:link>\n                  <ri:page ri:content-title=\"KRAKEN-XREFSUMMARY\"/>\n                </ac:link>\n              </li>\n            </ol>\n          </li>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"SYNC-IDMAPPING\"/>\n            </ac:link>\n          </li>\n        </ol>\n      </ac:rich-text-body>\n    </ac:macro>\n    <ac:macro ac:name=\"column\">\n      <ac:parameter ac:name=\"width\">30%</ac:parameter>\n      <ac:rich-text-body>\n        <ol>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"SYNC-DECOY-RDF\"/>\n            </ac:link>\n          </li>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"SYNC-HTML\"/>\n            </ac:link>\n          </li>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"SYNC-DOCS\"/>\n            </ac:link>\n          </li>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"4EBIES\"/>\n            </ac:link>\n          </li>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"PUBLIC-FTP\"/>\n            </ac:link>\n          </li>\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"MAKE TREMBL STATS ALIVE\"/>\n            </ac:link>\n          </li>\n        </ol>\n      </ac:rich-text-body>\n    </ac:macro>\n  </ac:rich-text-body>\n</ac:macro>\n{code}\n\nI've tried this:\n\n{code}\n        <ol start=\"5\">\n          <li>\n            <ac:link>\n              <ri:page ri:content-title=\"SYNC-DECOY-RDF\"/>\n            </ac:link>\n          </li>\n{code}\n\nAnd it doesn't work. My addition {{start=\"5\"}} is removed.\nWhat's the point of the Source Editor if I cannot use it?\nIs there any way of doing what I want (e.g. see http://en.wikipedia.org/wiki/Help:List#Multi-column_numbered_list)?",
+      "summary": "Using 2 columns with numbered list and can't make 2nd column to pick up from the number where column 1 finished"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29561",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-08-14T04:20:09.000+0000",
+      "created": "2013-06-06T14:49:44.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29561].\n  {panel}\n\nh3. Background of Request\n\nThe \"arrow\" expand icon attached, use by Confluence 5 and above to replace the \"Plus\" expand icon that has been used by Confluence documentation theme page tree till Confluence release version 4.x.\n\nCustomer has been reporting that their users does not realize it is an icon to expand the page tree as it is harder to identified compared with the previous expand page tree icon.\n\nh3. Suggested Solution\n\nAs mentioned on this [request|https://jira.atlassian.com/browse/CONF-29482] if we can improve the button to be a little bit bigger and higher contrast, which help to identified it easier.\n\nh3. Workaround\n\n*Please note that this workaround is space specific, hence it is necessary to be implemented on each spaces that use \"Documentation Theme*\n\n# Click \"*Browse*\" >> \"*Space Admin*\"\n# Under \"Look & Feel\" section, go to \"Stylesheet\"\n# Click \"Edit\"\n# Input the following lines{code}.expand-control-icon.expanded, .ui-tree li.opened>.click-zone, #children-section.children-showing a.children-show-hide.icon, .icon-section-opened {\nbackground-image: url('<Server Base URL>/images/icons/tree_minus.gif') !important;\n}\n.expand-control-icon, .ui-tree li.closed>.click-zone, #children-section.children-hidden a.children-show-hide.icon, .icon-section-closed {\nbackground-image: url('<Server Base URL>/images/icons/tree_plus.gif') !important;\n}\n{code}\n# Saved",
+      "summary": "Expand Page Tree Icon for Documentation Theme Is Harder to Identified"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29560",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:58:34.000+0000",
+      "created": "2013-06-06T14:24:59.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29560].\n  {panel}\n\nRe: https://support.atlassian.com/browse/JST-66314\n\nSometimes, for no reason apparent to me, Confluence will mess up the formatting on headings/ToC and the workaround seems to be to switch the headings in question over to \"preformatted\" and then back to the previous heading #.\n\nIt would be nice to have an option under Tools to automatically do this fix on all elements in the document.",
+      "summary": "Add option to force a reset/reapply of formatting"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29557",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-07T01:38:56.000+0000",
+      "created": "2013-06-06T10:10:36.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29557].\n  {panel}\n\nAlthough the Page Properties Report macro supports the ability to specify which columns can be shown, the actual output shows the columns in a fixed order.\n\nPlease add the ability to have the output shown in the column sequence based on what the user supplied for the \"Columns to show\" parameter.",
+      "summary": "Extend Page Properties Report macro to support specified column order"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29556",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-10-22T06:20:54.000+0000",
+      "created": "2013-06-06T10:08:37.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29556].\n  {panel}\n\nAlthough the output of the Page Properties Report macro can be sorted by clicking within the table header, there is no sort parameter for the macro and therefore the output may appear in an undesired sort sequence.\n\nPlease add the ability specify the column(s) by which the output can be sorted. ",
+      "summary": "Extend Page Properties Report macro to support sorting"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29552",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-05T22:37:43.000+0000",
+      "created": "2013-06-05T20:52:38.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29552].\n  {panel}\n\nI am using the Gliffy plugin for Confluence.  The Gliffy diagrams embedded in the wiki are not displaying a horizontal scrollbar, even when the diagram is large and should scroll.  \n\nIn order to see the scrollbar I have to open the diagram for editing.  ",
+      "summary": "Gliffy diagrams are missing horizontal scrollbar"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29548",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-12T21:01:26.000+0000",
+      "created": "2013-06-05T14:50:18.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29548].\n  {panel}\n\nh3. Summary of bug\n\nUsually, in the file system, the user wouldn't be able to add certain special characters (like '/'). However, in Confluence, once an attachment has been added, they can do that. This would result in the attachment being unable to be found.\n\nh3. Steps to replicate\n\nThese steps would use the slash ('/') as an example of a special character\n\n# Attach a file into your Confluence page\n# At the attachments page, click on the 'Properties' of the attachment\n# Edit the name of the attachment so that there is a '/' in the name of the attachment\n# Save the changes, and then try to access the attachment",
+      "summary": "Confluence allows changing of attachment name to special characters that are usually not permitted"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29545",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T05:03:20.000+0000",
+      "created": "2013-05-09T01:49:17.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29545].\n  {panel}\n\n!favicon.png!\n\nOn PUG anyway the favicon is pretty low res. Compare it to JAC in the screenshot.\n\nBoth EAC and CAC actually look alright, so this is probably something PUG specific.",
+      "summary": "The favicon on PUG is too low res for retina displays"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29539",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T06:33:28.000+0000",
+      "created": "2012-08-28T00:13:31.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29539].\n  {panel}\n\nIf you have already entered a few recipients in the Share dialog, then when you press ESC it should warn the user that they will lose their changes.\n\nI had pressed escape to get rid of a bad suggestion from the autocomplete, and accidentally pressed it twice. I then lost my whole list of recipients.",
+      "summary": "Pressing ESC on Share dialog after recipients have been entered does not warn user"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29534",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-05T06:39:16.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29534].\n  {panel}\n\nPasswords for configured mail accounts are stored in clear text in the database as can be seen e.g. by:\n{code}\nSELECT * FROM BANDANA WHERE BANDANAKEY = 'atlassian.confluence.space.mailaccounts';\n{code}\n\nEven when being an admin I should *NOT* be able to read-out other users email account password!\n\nThis problem exists for Confluence *AND* Jira as well.",
+      "summary": "Passwords of configured SMTP mail accounts are stored in cleartext"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29532",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:57:12.000+0000",
+      "created": "2013-06-04T19:13:13.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29532].\n  {panel}\n\nWhen using check boxes on a page, I notice that when you print the page (after checking some or all of the boxes) checked items print out gray - I assume to signify that they are done. However the actual check mark does not appear. Is there a way to change the grey color of completed items to red or another customizable color?",
+      "summary": "Improving Printing of Check Lists in Confluence - changing colors"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29531",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:37.000+0000",
+      "created": "2013-06-04T19:13:01.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29531].\n  {panel}\n\nWhen using check boxes on a page, I notice that when you print the page (after checking some or all of the boxes) checked items print out gray - I assume to signify that they are done. However the actual check mark does not appear. Is there a way to make the check mark appear?",
+      "summary": "Improving Printing of Check Lists in Confluence - printing the actual check icon"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29527",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:41.000+0000",
+      "created": "2013-06-04T11:20:01.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29527].\n  {panel}\n\nUpon clicking on Thumbnail image does not open if placed in Table.\nSteps to reproduce:\n1) Attach Image to Confluence page (0.5meg, 1280x720, .jpg in my case)\n2) Resize thumbnail to any size \n3) Save page and notice thumbnail opens large image upon clicking\n4) Edit page\n5) Create Table (1 columns, 2 rows)\n6) Move image into 1st table row. \n7) Save page and notice thumbnail now does not open image any more.\n(moving image back out of table, makes it work again)\n\nJust extend functionality you already have (tables+picture tool):\n\n* Add \"caption\" option in picture tools / or in effects. \n* Caption option opens sort of \"insert table\" menu with picture in middle and selectable Left/Right/Up/Down options. Selecting those 1-4 basically creates table cells around picture(with disabled ordering feature).\n* Add options for text rotation inside that cell if not already there, so it's possible to write from top to bottom on right side for instance. (didn't try)\n* If adding it into \"effect\" don't name it Instant Camera it's confusing. \n\n\n",
+      "summary": "Image placed in table does not resize."
+    }
+  },
+  {
+    "key": "CONFCLOUD-29521",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-12T20:58:12.000+0000",
+      "created": "2013-06-04T05:51:36.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29521].\n  {panel}\n\nSo if we attach a MS-Word-File to a confluence page and try to show it by using the Word-Plugin we only get to see the text, but no Pictures that were in the doc.\n\nIt worked in 4.3.7 without Problems",
+      "summary": "Images from MS-Word while using viewdoc-macro are not shown in confluence"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29520",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-10-18T05:47:44.000+0000",
+      "created": "2013-06-04T05:04:17.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29520].\n  {panel}\n\nWhen you increase the number of pages with referenced properties, the time taken to render the report increases exponentially.\n\n+10 pages containing properties+ \nResponse is 1.72s from the space and ~2 seconds to render the report successfully.\n\n+20 pages containing properties+ \nResponse is 5.85 seconds from the space and 6 seconds to render the report.\n\n+30 pages containing properties+ \nResponse is 15.5 seconds from the space and 16 seconds to render the report.\n\nTo improve this performance could a cache of the results be saved and be referenced before reload.  Alternatively could the delta between content additions be referenced instead of the entire space?\n\nThis behaviour has been replicated on multiple instances.",
+      "summary": "Page Property Report Macro Performance"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29518",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-07T01:35:42.000+0000",
+      "created": "2013-06-04T01:01:10.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29518].\n  {panel}\n\nThis would be useful for a lightweight editorial process. \n\nAs a user, I'd like to be able to co-author a blog entry (e.g. for announcements) without having to publish it or make it publicly available. \n\nThis allows for collaboration in blog posts and would make it easier to use the blog. Mind that some people are shy about their writing and ask for peer reviews before publishing a final version.",
+      "summary": "Page restrictions should be available in blog posts"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29517",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-27T04:24:43.000+0000",
+      "created": "2013-06-04T00:35:08.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29517].\n  {panel}\n\nThis is required to bind label suggestions plugin to labels dialog.",
+      "summary": "Trigger dialog open/update event for labels dialog."
+    }
+  },
+  {
+    "key": "CONFCLOUD-29516",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:57:52.000+0000",
+      "created": "2013-06-03T21:35:40.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29516].\n  {panel}\n\nWhen you have a Horizontal Rule at the top of an area, it is difficult to put something above it. Often, hitting enter just puts more horizontal rules on the page. Also, as described in CONF-14672, users have difficulty moving and deleting Horizontal Rules while editing pages in Confluence, and a good improvement would be having the ability of selecting it so that users can delete and move it to a different position with more ease.",
+      "summary": "The use of Horizontal Rules should be more user friendly"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29515",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:57:39.000+0000",
+      "created": "2013-06-03T16:26:21.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29515].\n  {panel}\n\nHi team, would it be feasible to move the gallery's horizontal scroll bar to the top of the gallery?\n\nWe've discovered that when employees use the Gallery macro and they have the sidebar expanded, they only see three out of the default four columns of the gallery macro. Often, due to the way that the gallery shows three columns almost perfectly in the default theme, it's not clear that there is a fourth column at all, unless one scrolls down the entire gallery and notices the horizontal scroll bar at the bottom. As a result, employees sometimes miss an entire column of images.\n\nWould it be feasible to move the scroll bar to the top of the gallery when there are too many columns to display onscreen? This would be a quick and easy visual indicator that the employee will need to scroll to see the full gallery.\n\nThanks for considering it,\nJoe",
+      "summary": "request to move the gallery scroll bar to the top of the gallery"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29512",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2019-12-12T20:59:39.000+0000",
+      "created": "2013-06-03T11:01:00.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29512].\n  {panel}\n\nh3. Summary of Bug\n\nWhen using the Confluence Page Gadget to show more than 1 page at a time, sometimes the display of certain pages gets shortened. This behavior is random, and sometimes which display gets shortened changes.\n\nh3. Steps to replicate\n\n# Create a page, and insert two (or more) Confluence Page Gadget into it\n# Configure the Page gadget to show different pages, and then save it\n\nh3. Additional Info\n\n* The display of the Confluence Page Gadget appears to be rather random, and can change once the page is refreshed. \n* Sometimes, both of them appear fine :\n\n** !Page gadget C.png|thumbnail!\n\n* Sometimes, one of them are shortened :\n\n** !Page gadget A.png|thumbnail!\n\n** !Page gadget B.png|thumbnail!\n\n* So far, this can be reproduced in Chrome (version 27), and Internet Explorer 10. Firefox (version 21) does not seem to be affected",
+      "summary": "Confluence Page Gadget display is sometimes shortened"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29511",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T05:04:47.000+0000",
+      "created": "2013-06-03T10:51:15.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29511].\n  {panel}\n\nOpen the page when the exact title is entered through the search box rather than returning a list of results. This will increase efficiency of the search.",
+      "summary": "Open page when searching for exact title name"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29510",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-06-03T06:31:03.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29510].\n  {panel}\n\nUsers currently can not be disabled from within Confluence if they are sourced from an LDAP directory which is configured as read-only.\n\nUntil Confluence 5.1.4 (fixed in CONF-22337), a link was offered hinting that it was possible to do so, but on trying to perform the operation users were confronted with an error message like\n\n{code}\nUser \"xxxxxx\" could not be disabled. The directory may be read-only.\n{code}\n\nThe _active_ column in _cwd_user_ table (Embedded Crowd cache) indicates if a user is disabled as _F_(alse). If a user is disabled, he is not counted towards the license since he is not able to use Confluence. Currently, this property is not synchronised back to the LDAP directory (e.g. in form of a custom attribute). \n\n[CWD-995|https://jira.atlassian.com/browse/CWD-995] is going to change this behaviour for Active Directory connectors, meaning that disabling a user would synchronise back to the [User-Account-Control|http://msdn.microsoft.com/en-us/library/windows/desktop/ms680832(v=vs.85).aspx] attribute. Once this is implemented, we will be working on getting it shipped in Confluence.\n\nIn order to currently disable a user which is sourced from a read-only LDAP directory, one must remove the user from the groups granting him use permission (e.g. _confluence-users_) or configure the directory with _Read Only, with Local Groups_ and only assign use permission to those local groups. \n\nThis issue tracks a possible feature allowing disabling users which are sourced from an LDAP directory configured as read-only from within Confluence. Before voting on it, please make sure you've read [Connecting to an LDAP Directory|https://confluence.atlassian.com/display/DOC/Connecting+to+an+LDAP+Directory#ConnectingtoanLDAPDirectory-AddingUserstoGroupsAutomatically] and have considered alternative solutions. You will give this issue more momentum by detailing your use case in a comment and the reason why this can not be solved otherwise.",
+      "summary": "Allow disabling users which are sourced from a read-only LDAP directory"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29509",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-13T02:21:14.000+0000",
+      "created": "2013-06-03T05:41:09.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29509].\n  {panel}\n\nIf you try to create a Balsamiq mockup while on a page the editor sidebar gets in the way. See attached image.\n\nReproduction steps:\n1. Create a page\n2. Start a comment on a page\n3. Insert menu\n4. Create mockup (must have balsamiq plugin installed)\n5. Edit the mockup\n\nExpected results: Mockup editor should be the only thing on the page.\nActual results: Space sidebar covers important controls on the left hand side of the page like the `save mockup` button.\n\nI've marked this as major because it makes saving a little confusing.",
+      "summary": "Confluence Space Sidebar occludes part of Balsimiq mockup editor"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29507",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2021-06-02T07:15:45.000+0000",
+      "created": "2013-06-01T12:03:22.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29507].\n  {panel}\n\nCreate link to an anchor from another web page or another Confluence site is very complex. See: https://confluence.atlassian.com/display/CONF51/Linking+to+Pages#LinkingtoPages-Linkingtoananchor \n\nCould be useful to add 'Copy link to this Anchor' in the contextual menu. Similar at \"link to page\" into the page menu.\n\nSee attach.\n\nThanks",
+      "summary": "Add \"Copy link to a Anchor\" in contextual menu for anchor macro"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29504",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:56:04.000+0000",
+      "created": "2013-06-02T10:12:37.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29504].\n  {panel}\n\nThe tasklist works well with text, but sometimes I want to refer to a confluence page or attachment related to the task. \n\nThere is no easy way to do that, but it would be really nice to have!",
+      "summary": "Link to Page or Attachment in Dynamic Tasklist"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29503",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:58:13.000+0000",
+      "created": "2013-06-01T22:17:06.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29503].\n  {panel}\n\nWhen removing a page in Confluence, there is a warning stating how many pages have links which relate to the page being removed.  This allows the user to known that removing the page will create a null link elsewhere.  However, we do not have this same luxury when a Jira issue is linked to a page.  It would be great to have a similar warning for Jira links connected to pages in Confluence.  Perhaps, an 'external link' section could be created on pages which are connected, most likely possible via fully trusted application links.",
+      "summary": "Note Incoming Page Links From Jira in Confluence"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29502",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:56:16.000+0000",
+      "created": "2013-06-01T09:34:14.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29502].\n  {panel}\n\nI am currently writing a plug-in which shares pages by parsing incoming e-mail (https://github.com/schakko/Confluence-Mail-to-News-Plugin). The plug-in is realized as a trigger so there is no HttpServletContext available.\n\nFor the plug-in I use the SharePageImpl.sharePage() method but the call results in a NullPointerException: createWebResourceDataSource() access the ServletContextThreadLocal which is not available. \nTo solve this issue I have to use the deprecated API method ServletContextThreadLocal.setRequest(new MockHttpServletRequest()) with a mocked/stubbed instance of HttpServletRequest (https://github.com/schakko/Confluence-Mail-to-News-Plugin/blob/master/src/main/java/com/midori/confluence/plugin/mail2news/MailToBlogPostPublisher.java#L109).\n\nPlease provide a method which initializes the ServletContextThreadLocal if a non-servlet plug-in runs or remove the @deprecated tag from ServletContextThreadLocal.setRequest().",
+      "summary": "API: Please provide a method to initialize the ServletContextThreadLocal from a trigger plug-in"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29499",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-05-31T17:47:33.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29499].\n  {panel}\n\nOur very early versions of Blueprints enforced structure.\n\nFor example, no matter where you were in the space, if you said Add > Meeting, it _always_ went under the meeting notes index page.\n\nWe had a bit of feedback about this from customers who typically had the \"multiple projects per space\" use case that this was frustrating. As an example, they would want a \"file list\" for every project. So they always had to move the page they created to under the appropriate project page. \n\nWe feel that the primary problem here stems from the fact that Blueprints can only have one index page per space. If we had the ability to create multiple index pages per space, we could always enforce that blueprints are created under their index page and enforce this structure. ",
+      "summary": "Enforce all blueprints to be placed under their index page / support multiple index pages per space"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29496",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-10-10T21:45:38.000+0000",
+      "created": "2013-05-31T14:22:50.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29496].\n  {panel}\n\nConfluence should allow results in columns in the {{Page Properties Report Macro}} to wrap",
+      "summary": "Allow results in columns in the Page Properties Report Macro to wrap"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29494",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T06:45:51.000+0000",
+      "created": "2013-05-31T12:37:42.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29494].\n  {panel}\n\nHi,\n\nwe would be very happy with possibilty of copy attachments between spaces.\n\nHow it should works/scenario:\n\nPage view -> Attachments\n1. each attachment has tick box\n2. at bottom of the page are fields\n                  a) Page field using autocomplete \n                  b) Space field using autocomplete\n3. confirmation button \"Copy\"\n\nProcedure:\n1. user tick attachments \n2. chose space\n3. chose page\n4. click on \"Copy\"\n5. attachments are copied\n",
+      "summary": "Bulk copy of attachments"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29493",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-02T22:53:14.000+0000",
+      "created": "2013-05-31T09:25:03.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29493].\n  {panel}\n\nWhen removing an application link the affected rows are removed from the table 'trustedapp' (or something), but the settings (IP-restrictions. URL-restrictions) are not removed from the trustedapprestrictions table. The ID connecting the restriction to a specific app-link is set to NULL, but this is no good as it will lead to the table growing indefinitely if many links are created, edited and removed. I see no reason to keep the information in the database after an app-link has been removed.",
+      "summary": "Removing Application Link from JIRA or Confluence does not remove rows in database"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29492",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T06:45:50.000+0000",
+      "created": "2013-05-31T08:39:10.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29492].\n  {panel}\n\nIn Confluence to set a space to be the \"Site Homepage\" the \"confluence-users\" group is a hardcoded requirement.\n\nFor installations where the \"confluence-users\" group is not in use, this makes no sense.\n\nIf a permissions check is required, I'd suggest that *all* the groups with the the \"use\" Global Permission are checked.  However, I'd also say that this should be a warning, not an error.",
+      "summary": "Hardcoded group name for setting home space"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29491",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-25T22:03:39.000+0000",
+      "created": "2013-05-31T08:05:15.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29491].\n  {panel}\n\nThis gives single-tweet embedding functionality.",
+      "summary": "Bump Confluence Widget Connector to Version 2.1.4"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29490",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-08-13T16:16:16.000+0000",
+      "created": "2013-05-31T05:46:52.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29490].\n  {panel}\n\n3rd party plugin macros (such as \\{adhocboard} etc may #requireResource when rendering via velocity. These additional resources are ignored by the PDF renderer.\n\nsee http://community.comalatech.com/comalatech/topics/export_to_pdf_formatting_issues\n\naffects all versions 4x 5x",
+      "summary": "Update Flying PDF. Provide a way for plugins to supply CSS for PDF export"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29489",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T06:45:53.000+0000",
+      "created": "2013-05-30T21:22:41.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29489].\n  {panel}\n\nThe 'user-list' macro currently list the the following pieces of information when used on a page.\n\n* Username\n* User display name\n* Email Address\n\nThere are a number of other details which are stored in a users profile that would be helpful to have displayed when showing a list of users.  For example, any of the following could be added.\n\n* Phone\n* IM\n* Website\n* Postion\n* Department\n* Location\n\nA list of these attributes with check box's to decide which to include when the 'user-list' macro is inserted would be excellent to see",
+      "summary": "Add Option(s) to Display Additional Details in 'user-list' macro From User Profiles"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29485",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-16T05:58:28.000+0000",
+      "created": "2013-05-30T11:55:53.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29485].\n  {panel}\n\nActually the \"Export to XML\" Function doesn't work\nSee the Screenshot for Error Message\n\nWhat can we do, to resplv this Issue?",
+      "summary": "Export Fail"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29483",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-31T02:57:21.000+0000",
+      "created": "2013-05-30T08:26:24.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29483].\n  {panel}\n\nWhen launching the following command to fire a REST call to keyboard shortcut plugin, it return an Internal server error due the validation failure: \n\n{code}\n[root@test ~]# curl -I -X GET \"https://confluence.atlassian.com/rest/prototype/1/i18n?locale=%3Cscript%20src%3Dhttp%3A%2F%2Flocalhost%2Fj%20&pluginKeys=com.atlassian.confluence.keyboardshortcuts&pluginKeys=com.atlassian.plugins.editor\"\nHTTP/1.1 500 Internal Server Error\nDate: Tue, 28 May 2013 07:45:22 GMT\nServer: Apache-Coyote/1.1\nCache-Control: no-cache, must-revalidate\nExpires: Thu, 01 Jan 1970 00:00:00 GMT\nContent-Type: text/html; charset=UTF-8\nSet-Cookie: JSESSIONID=170C9ADB0247492D66B79F72E1B34A23; Path=/; HttpOnly\nVary: Accept-Encoding\nConnection: close\nTransfer-Encoding: chunked\n{code}",
+      "summary": "URL validation failed for REST call to  the keyboard shortcut plugin"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29482",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": null,
+      "created": "2013-05-30T06:56:15.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29482].\n  {panel}\n\nh3. Background of Request\n\nThe current behavior of Confluence is to hide both child pages list in the lower part of the page and child page tree in the side navigation bar of \"Documentation Theme\".\n\nThis behavior require user to click at least once to see the list of child pages  of the parent page accessed and due to the design of the new drop down button it is hard to differentiate pages that have children and the one that doesn't have child pages. Since opening up the whole child page list in the lower part of the page could be aesthetically unpleasing if the number of child pages is huge, we should provide the option for this at side bar navigation. \n\nh3. Proposed Solution\n\nSince \"Documentation Theme\" provide side  navigation bar to, it would be great if administrator or users of Confluence has the ability to configure it to open the child page tree automatically when the parent page accessed.\n\nHence user will be able to use side navigation bar to see the list of child pages without clicking it.\n\nFor administrator, this configuration should be provided at theme configuration. For users, this configuration should be provided at user profile preferences option.\n\nAnother method is to improve the button icon to be a bigger and higher contrast so user would at least able to differentiate it easily.",
+      "summary": "Expand Child Pages Tree Automatically When Opening Parent Page"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29480",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-05-31T05:30:03.000+0000",
+      "created": "2013-05-29T19:04:05.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29480].\n  {panel}\n\nThe sidebar can be unwanted from time to time and it would be nice to be have more control over how/when it appears.  Specifically, when sharing a page to users, an option to have the sidebar minimized upon arrival would be nice.  That way, the page can appear as the author intended if the entire width of the page is needed.",
+      "summary": "Add Option to Hide Sidebar When Sharing a Page"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29479",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2013-06-04T00:09:39.000+0000",
+      "created": "2013-05-29T18:55:23.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This bug report is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding bug report|http://jira.atlassian.com/browse/CONFSERVER-29479].\n  {panel}\n\nI used personal label in the past and the newest version still can access it via url: /users/viewmylabels.action\n\nHowever I found that when a page with my personal label on it gets deleted, the above URL still list that deleted page under certain label. I think it is a bug, when the page gets deleted, it should not appear on the personal label page.\n\n",
+      "summary": "personal label when the page gets deleted"
+    }
+  },
+  {
+    "key": "CONFCLOUD-29478",
+    "fields": {
+      "project": {
+        "self": "https://jira.atlassian.com/rest/api/2/project/18513",
+        "id": "18513",
+        "key": "CONFCLOUD",
+        "name": "Confluence Cloud",
+        "projectTypeKey": "software",
+        "avatarUrls": {
+          "48x48": "https://jira.atlassian.com/secure/projectavatar?pid=18513&avatarId=106090",
+          "24x24": "https://jira.atlassian.com/secure/projectavatar?size=small&pid=18513&avatarId=106090",
+          "16x16": "https://jira.atlassian.com/secure/projectavatar?size=xsmall&pid=18513&avatarId=106090",
+          "32x32": "https://jira.atlassian.com/secure/projectavatar?size=medium&pid=18513&avatarId=106090"
+        },
+        "projectCategory": {
+          "self": "https://jira.atlassian.com/rest/api/2/projectCategory/10031",
+          "id": "10031",
+          "description": "",
+          "name": "Atlassian Products"
+        }
+      },
+      "resolutiondate": "2014-06-23T04:46:49.000+0000",
+      "created": "2013-05-29T17:55:26.000+0000",
+      "description": "{panel:bgColor=#e7f4fa}\n  *NOTE:* This suggestion is for *Confluence Cloud*. Using *Confluence Server*? [See the corresponding suggestion|http://jira.atlassian.com/browse/CONFSERVER-29478].\n  {panel}\n\nh3. Background of Request\n\nAs of now, Confluence what's new feature can only be configurable to point to another Confluence page or link through modifying {{help.prefix}} as describe here:\n\n* [Configuring the What's New Dialog|https://confluence.atlassian.com/display/DOC/Configuring+the+What's+New+Dialog]\n\nHowever, help prefix also necessary when customer want to localized their help section as describe [here|https://confluence.atlassian.com/display/DOC/Local+Confluence+Documentation#LocalConfluenceDocumentation-helppagelinks]. This made the current method of What's New configuration unusable if customer want to use its own locale but keep the what's new to Atlassian site as describe [here|https://jira.atlassian.com/browse/CONF-29065].\n\nh3. Proposed Solution\n\nIt would be great if Confluence provide a user interface method for What's new feature that cover the following option:\n\n* Follow {{help.prefix}}, and provide the field to input the prefix\n* Follow Atlassian site. This means it will always follow Atlassian What's new link repository which check against its version\n* Full Path URL. This provide the option to point to a specific URL",
+      "summary": "User Interface Configuration for What's New"
+    }
+  }
+]
